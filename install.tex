@@ -1,0 +1,76 @@
+\section{Obtaining, installing and running a Groovy compiler on a PC}
+
+You can download a free copy of the Groovy compiler and runtime from the web:
+
+\begin{verbatim}
+    http://groovy.codehaus.org/Download
+\end{verbatim}
+
+Groovy can run in any computer with Java installed, including the main
+operating systems like Windows, Linux, and Mac. If you do not have
+Java installed in your computer, you can install it from the web:
+
+\begin{verbatim}
+    http://www.java.com/en/download/index.jsp
+\end{verbatim}
+
+Java will be used intensively throughout the MSc in Computer Science
+at Birkbeck, so it is a good idea to install it if you do not have it
+yet (which is usually the case).
+
+If you do not know whether you have Java or Groovy installed in your
+system, you can open a command prompt\footnote{You can find it in Windows in
+  ``Accesories''} and type \verb+java -version+ or \verb+groovy -version+. 
+
+If they are installed, the result should be something similar to this:
+
+\begin{verbatim}
+    > java -version
+    java version "1.6.0_23"
+    OpenJDK Runtime Environment (IcedTea6 1.11pre) (6b23~pre11-0ubuntu1.11.10.1)
+    OpenJDK Server VM (build 20.0-b11, mixed mode)
+
+    > groovy -version
+    Groovy Version: 1.7.10 JVM: 1.6.0_23
+\end{verbatim}
+
+
+
+\subsection{Compiling and running programs}
+
+The Groovy compiler is run from the command line.
+
+You first type your program in a text editor. Notepad (in Windows) or
+gedit (in Linux) are good options, but any simple editor will
+do. Note: If you use a word-processor (like Microsoft Word or
+LibreOffice Writer), make sure you save the file as text.
+
+Give the filename a \texttt{.groovy} extension.
+
+\subsection*{Executing Groovy programs (scripts)}
+
+Open the command prompt. 
+Go to the folder where you have saved your Groovy
+program using the command "cd" (change directory). (You don not have to
+do this but it is easier if you do, otherwise you have to type the full
+path for your source code file.)
+
+Suppose your program is in a file called 
+\texttt{Myprog.groovy}. You can compile and run your program in one step typing 
+
+\begin{Verbatim}
+    groovy  Myprog.groovy
+\end{Verbatim}
+
+If the compilation was successful, you will see the result of your
+program on the screen.
+%
+If there were errors you would get error messages and you would need
+to go back to the text editor, correct and save the program again,
+then recompile.
+
+
+
+%%% Local Variables:
+%%% TeX-master: "primer"
+%%% End:

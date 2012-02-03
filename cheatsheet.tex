@@ -1,0 +1,43 @@
+\section{A short introduction to computer programming, using Groovy}
+
+\subsection{Summary of the language features mentioned in this introduction}
+
+\begin{tabular}{@{\ttfamily}l l}
+// & Introduces a comment\\
+int i & Defines an integer variable called \texttt{i}\\
+int x, y & Defines integer variables called \texttt{x} and \texttt{y}\\
+boolean b & Defines a boolean variable called \texttt{b}\\
+String s & Defines a string variable called \texttt{s}\\
+int num = 0 & Defines and initializes an integer variable called \texttt{num}\\
+num = sc.nextInt() & Takes a value from the input and puts it into \texttt{num}\\
+s = sc.next() & Takes a string from the input (ignoring leading spaces) \\
+& and puts it into \texttt{s}\\
+s = sc.nextLine() & Takes a whole line from the input and puts it into \texttt{s}\\
+print num; & Outputs the value of \texttt{num}\\
+print "The answer is " + x & Outputs "The answer is " followed by the value of \texttt{x}\\
+print  s + x; & Outputs the value of \texttt{s} followed by the value of \texttt{x}\\
+println() & Outputs an end-of-line\\
+x = 99 & Assigns the value 99 to \texttt{x}\\
++, ---, *, /, \% & Arithmetic operators.  *, / and \% take precedence over + and ---\\
+s.length() & Gives length of string \texttt{s}\\
+s.substring(x, y) & Gives substring of \texttt{s} starting at character position x \\
+& and ending at character position y\\
+ & (The first character of the string is character zero.)\\
+if (A) B; else C; & If A is true, do B, else do C.\\
+(x == y) & Tests whether \texttt{x} is equal to \texttt{y}.  Note double "="\\
+!=, > <, >=, <= & Not equal to, greater than, less than, etc\\
+\{ & Used to bracket together separate statements\\
+\} & to make them into a block\\
+while (A) B; & While A is true, do B.  B can be a block.\\
+true, false & The boolean values \texttt{true} and\texttt{ false}.\\
+!, \verb+&&+, or !!  & The boolean operators \emph{not}, \emph{and} and \emph{or}.\\
+\end{tabular}
+\vspace*{5pt}
+
+\noindent and
+\verb+Scanner sc = new Scanner(System.in)+  sets up the input for reading.
+
+
+%%% Local Variables:
+%%% TeX-master: "primer"
+%%% End:
