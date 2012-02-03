@@ -1,0 +1,380 @@
+\section{Loops, booleans, package}
+
+How would you write a program to add up a series of numbers?
+If you knew that there were, say, four numbers, you might write
+this program:
+
+\VerbatimInput[frame=single,label=Example]{src/s3Example.groovy}
+
+But a similar program to add up 100 numbers would be very long.
+More seriously, each program would be tailor-made for a particular
+number of numbers.  It would be better if we could write a program
+to handle \emph{any} series of numbers.  We need a \emph{loop.}
+
+One way to create a loop is to use the keyword \texttt{while}.
+For example:
+
+\VerbatimInput[frame=single,label=Example]{src/s3Example2.groovy}
+
+Having initialized the variable  \texttt{num} to zero, it checks whether
+the value of  \texttt{num} is less than 100.  It is, so it enters the loop.
+Inside the loop, it adds 5 to the value
+of \texttt{num} and then outputs this value (so the first thing that
+appears on the screen is a \texttt{5).  Then it goes back to the while}
+and checks whether the value of \texttt{num} is less than 100.  The current value of \texttt{num} is 5, which is less than
+100, so it enters the loop again.  It adds 5 to \texttt{num,} so \texttt{num} takes
+the value 10, and outputs this value.  It goes back to the \texttt{while},
+checks whether 10 is less than 100 and enters the loop again.
+It carries on doing this with \texttt{num} getting larger each time round the
+loop.  Eventually  \texttt{num} has the value 95.  95 is less than 100 so
+it enters the loop again, adds 5 to  \texttt{num} to make it 100 and outputs
+this number.  Then it goes back to the \texttt{while} and this time sees that
+ \texttt{num} is not less than 100.  So it stops looping and goes on to the line
+beyond the end of the loop.  (In the case of this program, there are
+no more lines, so it finishes.)
+The output of this program is the numbers 5, 10, 15, 20 and so on up
+to 95, 100.
+
+Note the use of curly braces to mark the start and end of the loop.
+Each time round the loop it does everything inside the curly braces.
+When it decides not to execute the loop again, it jumps to the point
+beyond the closing brace.
+
+What would happen if the \texttt{while} line of this program was
+\texttt{while (num != 99)}?
+The value of \texttt{num} would eventually reach 95.  The computer would
+decide that 95 was not equal to 99 and would go round the loop again.
+It would add 5 to \texttt{num,} making 100.
+It would now decide that 100 was not equal to 99 and would go round the
+loop again.  Next time \texttt{num} would have the value 105, then 110,
+then 115 and so on.  The value of \texttt{num} would never be equal to 99
+and the computer would carry on for ever.  This would be an example of
+an \emph{infinite loop}.
+
+Note that the computer makes the test \emph{before} it enters the loop.
+What would happen if the \texttt{while} line of this program was
+\texttt{while (num > 0)}?   \texttt{num} begins with the value zero and the computer would first
+test whether this value was greater than zero.  Zero is not greater than
+zero, so it would not enter the loop.  It would skip straight to the end
+of the loop and finish, producing no output.
+
+It is not essential to indent the lines inside the loop, but it makes the
+program easier to read and it is a good habit to get into.
+
+\subsection*{Exercise 3A}
+
+Write a program that outputs the squares of all the numbers
+from 1 to 10, ie the output will be the numbers 1, 4, 9, 16 and so on up to
+100.
+
+To check your answers, click on  Answers to the exercises. ** TO DO **
+
+\subsection{Booleans (true/false expressions)}
+
+So far we have just used integer and string variables.  But we can have variables of
+other types and, specifically, we can have \emph{boolean} variables, which in
+Groovy are variables of type \texttt{boolean}.  (The word "boolean" was coined
+in honour of an Irish mathematician of the nineteenth century called
+\emph{George Boole}.  A variable of type \texttt{boolean} does not
+hold numbers; it can hold just the values \texttt{true} and \texttt{false}.  We might
+declare and initialize a boolean variable thus:
+\begin{Verbatim}
+bool positive = true
+\end{Verbatim}
+Note that we do not have quote marks around the word \texttt{true}.  
+\texttt{true}, without quote marks, is not a string; it's the name of a
+boolean value.  Contrast it with:
+\begin{Verbatim}
+String stringvar = "true"
+\end{Verbatim}
+\texttt{stringvar} is a String variable which is being initialized with the
+four-character string "\texttt{true}".  We could assign any other string
+to \texttt{stringvar}.  \texttt{positive}, by contrast, is a boolean variable.
+We cannot assign strings to \texttt{positive}.  It can hold only the values
+\texttt{true} or \texttt{false}.
+
+You have already met boolean expressions.  They are also called conditional
+expressions and they are the sort of expression you have in brackets
+after \texttt{ if} or \texttt{while}.  When you evaluate a boolean expression,
+you get the value \texttt{ true} or \texttt{false} as the result.
+
+Consider the kind of integer assignment statement with which you are now familiar:
+\begin{Verbatim}
+num = count + 5
+\end{Verbatim}
+The expression on the right-hand side, the \texttt{count + 5}, is an
+integer expression.  That is, when we evaluate it, we get an integer value
+as the result.  And of course an integer value is exactly the right kind of
+thing to assign to an integer variable.
+
+Now consider a similar-looking boolean assignment statement:
+\begin{Verbatim}
+positive = num >= 0
+\end{Verbatim}
+The expression on the right-hand side, the \texttt{num >= 0}, is a
+boolean expression.  That is, when we evaluate it, we get a boolean value
+(true/false) as the result.  And of course a boolean value is exactly the
+right kind of thing to assign to a boolean variable.  You can achieve
+the same effect by the more long-winded:
+\begin{Verbatim}
+if (num >= 0)
+     positive = true
+else positive = false
+\end{Verbatim}
+The variable \texttt{positive} now stores a simple fact about the value of
+ \texttt{num} at this point in the program.  (The value of  \texttt{num} might
+subsequently change, of course, but the value of \texttt{positive} will not
+change with it.)  If, later in the program, we wish to test
+the value of \texttt{positive}, we need only write
+\begin{Verbatim}
+if (positive)
+\end{Verbatim}
+You can write \texttt{if (positive == true)} if you prefer, but the \texttt{== true}
+is redundant.  \texttt{positive} itself is either true or false.  Once the
+computer has evaluated \texttt{positive} (established whether it is true or
+false) there is nothing more to do.  We can also write
+\begin{Verbatim}
+if (not positive)       // (! positive) on some compilers
+\end{Verbatim}
+which is the same as \texttt{if (positive == false)}  If \texttt{positive} is
+true, then not \texttt{positive} is false, and vice-versa.  (You will have to use "\texttt{!}" instead of \texttt{not}, i.e., you have
+to write \texttt{if (!positive)} instead of \texttt{if (not positive)}.
+
+Boolean variables are often called \emph{flags}.  The idea is that,
+leaving aside subtleties such as half-mast, a flag has basically two states
+--- either it's flying or it isn't.
+
+So far we have constructed simple boolean expressions using the operators
+introduced in the last chapter --- \texttt{(x == y), (s >= t)} and so on ---
+now augmented with \texttt{not}.  We can make more complex boolean expressions
+by joining simple ones with \emph{and}  (\verb!&&!) and \emph{or} (\texttt{||}).
+For example, we can express "if x is a non-negative odd number" as
+\verb+if (x >= 0 && x \% 2 == 1)+  We can express "if the name begins with an
+A or an E" as \texttt{if (name.substring(0,1) == "A" || name.substring(0,1) == "E")}.
+The rules for evaluating \emph{and} and \emph{or} are as follows:
+ 
+\begin{tabular}{llllrrr}
+& left & \verb!&&! & right & left & \verb+||+ & right\\
+1 & true & \textbf{true} & true&true&\textbf{true}&true\\
+2 & true & \textbf{false} & false&true&\textbf{true}&false\\
+3 & false & \textbf{false} & true&false&\textbf{true}&true\\
+4 & false & \textbf{false} & false&false&\textbf{false}&false\\
+\end{tabular}
+
+Taking line 2 as an example, this says that, given that you have two simple
+boolean expressions joined by \emph{and} and that the one on the left is
+true while the one on the right is false, the whole thing is false.  If,
+however, you had the same two simple expressions joined by \emph{or}, the
+whole thing would be true.  As you can see, \emph{and} is true only if both
+sides are true, otherwise it's false; \emph{or} is false only if both sides
+are false, otherwise it's true.
+
+\subsection{Exercise 3B}
+
+Given that \texttt{x} has the value 5, \texttt{y} has the value 20,
+and  \texttt{s} has the value "\texttt{Birkbeck}", decide whether these expressions
+are true or false:
+\begin{Verbatim}
+(x == 5 and y == 10)
+(x < 0 or y > 15)
+(y % x == 0 and s.length() == 8)
+(s.substring(1,3) == "Bir" or x / y > 0)
+\end{Verbatim}
+
+To check your answers, Answers to the exercises. ** TO BE DONE - APPENDIX? **
+
+\subsection{Back to loops}
+
+Returning now to the problem of adding up a series of numbers, have a look at this program:
+
+\VerbatimInput[frame=single,label=Example]{src/s3Example3.groovy}
+
+If we want to input a series of numbers, how will the program know when we have
+put them all in?  That is the tricky part, which
+accounts for the added complexity of this program.
+
+The\texttt{ boolean} variable
+\texttt{finished} is being used to help us detect when there are no more
+numbers.  It is initialized to \texttt{ false}.  When the computer detects
+that there are no more numbers to input, it will be set to \texttt{true}.
+When \texttt{finished} is true, it means that we have finished reading in
+the input.  (More precisely it means that the input has failed, as I will
+explain shortly, but the reason for this is usually that there is no more
+input.)  The \texttt{while} loop begins by testing whether \texttt{finished}
+is true or not.  If \texttt{finished} is not true, there is some more input
+to read and we enter the loop.  If \texttt{finished} is true, there are
+no more numbers to input and we skip to the end of the loop.
+
+The variable \texttt{total} is initialized to zero.
+Each time round the loop, the computer reads a new value into \texttt{num}
+and adds it to \texttt{total}. \texttt{ total} holds the total of all the values
+input so far.
+
+Actually it only adds  \texttt{num} to \texttt{total} if the input has been
+successful.  There are two main reasons why the input might fail.
+The first is that there are no more numbers to input.
+The user will signal that there are no more numbers by keying in a special
+character.  (On Unix this is a Control-D; on PCs it is usually a Control-Z.
+If this is gobbledygook to you, just imagine that the user strikes a special
+key on the keyboard.)  The other reason why the input might have failed
+is that what was entered was not an integer --- perhaps the user entered
+a letter or a punctuation mark.  If the program is expecting an integer
+and instead receives something like "abc" or "W" or "**!", the input will fail.
+We can test whether the input has finished with the line \texttt{ if (sc.hasNext())}.
+If this is false, then there is no more input available and we set \texttt{finished} to \texttt{true}
+in order to terminate the loop.
+
+A real-life program ought not to respond to a user error by aborting
+with a terse error message, though regrettably many of them do.
+However, dealing with the problem properly would make this little program
+more complicated than I want it to be at this stage.
+
+You have to take some care in deciding whether a line should go in the
+loop or outside it.  This program, for example, is only slightly different
+from the one above but it will perform differently:
+
+\VerbatimInput[frame=single,label=Example]{src/s3Example4.groovy}
+
+It resets \texttt{total} to zero \emph{each time round the loop.}  So \texttt{total}
+gets set to zero,
+has a value added to it, then gets set to zero, has another value added to
+it, then gets set to zero again, and so on.  When the program finishes,
+\texttt{total} does not hold the total of all the numbers, just the value
+zero.
+
+Here is another variation:
+
+\VerbatimInput[frame=single,label=Example]{src/s3Example5.groovy}
+
+This one has the \texttt{print} line inside the loop, so it outputs the value
+of \texttt{total} each time round the loop.  If you keyed in the numbers
+4, 5, 6, 7 and 8, then, instead of just getting the total (30) as the output,
+you would get 4, 9, 15, 22 and then 30.
+
+\subsection*{Exercise 3C}
+
+Write a program that reads a series of numbers and then tells
+you how many numbers you have keyed in.  For example, if you keyed in the
+numbers 5, 10, 50, 22, 945, 12, it would output 6.
+
+To check your answers, click on Answers to the exercises. ** TO DO ** Appendix?
+
+\subsection{System libraries}
+
+The purpose of libraries is to provide the programmer with extensions
+to the language which can be pulled in, as and when needed. 
+Some libraries, known as the standard libraries, are provided with every
+Groovy implementation.  Other libraries can be created for special purposes.
+
+One team of programmers might produce a library of routines for another
+team of programmers to use.  When teams of programmers divide up the
+work on a large program in this way, it is all too easy
+for programmers in team A to choose a name for some item in their library
+and for programmers in team B to choose
+the same name for some quite unrelated item elsewhere in the program.
+This can be a serious nuisance.  To help contain the problem, Groovy
+provides \emph{packages}.  Team A declares one namespace and team B
+declares another.  Now it doesn't matter if they accidentally choose the
+same name.  Team B can still use names from A's package, but they have to
+tell the compiler specifically which names they are going to use.
+
+\subsection*{Exercise X1}
+
+What does this program do?
+
+\VerbatimInput[frame=single,label=Example]{src/s3Example6.groovy}
+
+\subsection*{Exercise X2}
+
+If you have worked out what the above program does, can you
+see that, for certain series of numbers, it will not produce the correct
+output?  In what circumstances will it not work correctly, and how could
+you change the program to make it work properly?
+
+\subsection*{Exercise X3}
+
+Write a program that takes a series of numbers and counts
+the number of times that the number 100 appears in the list.  For example,
+for the series 2, 6, 100, 50, 101, 100, 88, it would output 2.
+
+\subsection*{Exercise X4}
+
+Write a program that takes a series of lines and,
+at the end, outputs the longest line.
+You may assume there is at least one line in the input.
+
+\subsection*{Exercise X5 (this one is a bit harder)}
+
+Write a program that takes
+a series of numbers.  If the
+current number is the same as the previous number, it says "Same";
+if the current number is greater than the previous one, it says "Up",
+and if it's less than the previous one, it says "Down".
+It makes no response at all to the
+very first number.  For example, its output for the list 9, 9, 8, 5, 10, 10,
+would be Same, Down, Down, Up, Same
+(comparing, in turn, 9 and 9, 9 and 8, 8 and 5, 5 and 10, 10 and 10).
+You may assume there are at least two numbers in the input.
+
+To check your answers, Answers to the exercises. ** TO DO ** Appendix?
+
+\section{A short introduction to computer programming, using Groovy}
+
+\subsection{Summary of the language features mentioned in this introduction}
+
+\begin{tabular}{@{\ttfamily}l l}
+// & Introduces a comment\\
+int i & Defines an integer variable called \texttt{i}\\
+int x, y & Defines integer variables called \texttt{x} and \texttt{y}\\
+boolean b & Defines a boolean variable called \texttt{b}\\
+String s & Defines a string variable called \texttt{s}\\
+int num = 0 & Defines and initializes an integer variable called \texttt{num}\\
+num = sc.nextInt() & Takes a value from the input and puts it into \texttt{num}\\
+s = sc.next() & Takes a string from the input (ignoring leading spaces) \\
+& and puts it into \texttt{s}\\
+s = sc.nextLine() & Takes a whole line from the input and puts it into \texttt{s}\\
+print num; & Outputs the value of \texttt{num}\\
+print "The answer is " + x & Outputs "The answer is " followed by the value of \texttt{x}\\
+print  s + x; & Outputs the value of \texttt{s} followed by the value of \texttt{x}\\
+println() & Outputs an end-of-line\\
+x = 99 & Assigns the value 99 to \texttt{x}\\
++, ---, *, /, \% & Arithmetic operators.  *, / and \% take precedence over + and ---\\
+s.length() & Gives length of string \texttt{s}\\
+s.substring(x, y) & Gives substring of \texttt{s} starting at character position x \\
+& and ending at character position y\\
+ & (The first character of the string is character zero.)\\
+if (A) B; else C; & If A is true, do B, else do C.\\
+(x == y) & Tests whether \texttt{x} is equal to \texttt{y}.  Note double "="\\
+!=, > <, >=, <= & Not equal to, greater than, less than, etc\\
+\{ & Used to bracket together separate statements\\
+\} & to make them into a block\\
+while (A) B; & While A is true, do B.  B can be a block.\\
+true, false & The boolean values \texttt{true} and\texttt{ false}.\\
+!, \verb+&&+, or !!  & The boolean operators \emph{not}, \emph{and} and \emph{or}.\\
+\end{tabular}
+\vspace*{5pt}
+
+\noindent and
+\verb+Scanner sc = new Scanner(System.in)+  sets up the input for reading.
+
+\subsection{Obtaining, installing and running a Groovy compiler on a PC}
+
+You can download a free copy of the Groovy compiler and runtime from \texttt{somewhere}.
+
+\subsection{Compiling and running programs}
+
+The Groovy compiler is run from the command line.
+You first type your program in a text editor. Notepad will do. If you use a word-processor, make sure you save the file as text. 
+Give the filename a \texttt{.groovy} extension.
+
+\subsection*{Open a DOS Window (Command Prompt from the Start Menu.)}
+
+Change to the directory (folder) where you have saved your program. 
+(You don't have to do this but it's easier if you do, otherwise you have to type the full path for your source code file.)  Suppose your program is in a file called
+\texttt{Myprog.groovy} then to compile your program you would type
+\begin{Verbatim}
+groovyc  Myprog.groovy
+\end{Verbatim}
+If the compilation was successful you will then be returned to the prompt. 
+The compiler would make an executable file called \texttt{Myprog.class}, and you would type \texttt{groovy Myprog} to run your program.
+If there were errors you would get error messages and you would need to go back to the text editor, correct and save the program again, then recompile.
