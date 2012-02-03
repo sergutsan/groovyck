@@ -1,7 +1,5 @@
-int num
-Scanner sc = new Scanner(System.in)
-
-print "Please key in a number: "
-num = sc.nextInt()
-print "The number was "
-println num
+String str
+print "Please key in a word: "
+str = System.console().readLine()
+print "The word was: "
+println str
