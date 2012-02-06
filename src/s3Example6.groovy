@@ -1,13 +1,15 @@
-Scanner sc = new Scanner(System.in)
-boolean finished = false
 int m = 0
+boolean finished = false
 while (!finished) {
-    int num
-    if (sc.hasNext()) {
-        num = sc.nextInt()
-        if (num > m)
+    print "Enter another number (0 to finish): "
+    String s = System.console().readLine()
+    int num = Integer.parseInt(s)    
+    if (num != 0) {
+        if (num > m) {
             m = num
-    } else
+	}
+    } else {
         finished = true
+    }
 }
 println m

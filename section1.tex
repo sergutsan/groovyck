@@ -66,8 +66,13 @@ and the capital letters.}):
 
 \verb!System.console().readLine()! (pronounced \emph{system dot
   console dot read line}) is a phrase which has a special meaning to
-the computer.  The combination of these instructions means "Take
-some input, a sequence of characters, and put it into the memory."
+the computer. The combination of these instructions
+means\footnote{Strictly speaking, it means ``Take the current system
+  ---this computer---, take its console ---its keyboard and screen---,
+and read a line from it as introduced by the user'' (from the keyboard,
+not the screen because the user cannot type a line on the screen... or
+could not before they invented touchscreens!)).} ``Take
+some input, a sequence of characters, and put it into the memory.''
 
 \verb!str! by contrast, is a word that I (the programmer) have chosen.
 I could have used \verb!characters! or \verb!thingy! or \verb!foodle!
@@ -203,7 +208,8 @@ programs on a computer.  However, it's possible that you have a PC with
 a Groovy compiler and will try to run some of the programs given in these
 notes. 
 If you have a PC but you don't have a compiler, I attach a few notes telling
-you how you can obtain one.
+you how you can obtain one (see Section~\ref{sec:obta-inst-runn} on
+page~\pageref{sec:obta-inst-runn}).
 
 \subsection{Outputting words and ends of lines}
 
@@ -279,7 +285,7 @@ And this one was Jackie
 \end{Verbatim}
 
 
-\subsection{Exercise 1A}
+\subsection*{Exercise A}
 
 Now pause and see if you can write
 \begin{enumerate}
@@ -346,7 +352,7 @@ testing whether \verb!str! has the value "Some text" or not, nor are we stating 
 An assignment instruction such as this:
 
 \begin{Verbatim}
-str = str + " and some more"
+    str = str + " and some more"
 \end{Verbatim}
 
 looks a little strange at first but makes perfectly good sense.
@@ -399,7 +405,7 @@ variable \emph{declarations}.  When you learn more about Groovy you will
 find that you can have declarations which are not definitions, but the
 ones in these introductory notes are both definitions and declarations.
 
-\subsection{Exercise 1B}
+\subsection*{Exercise B}
 
 Now see if you can write a program in Groovy that takes
 two words from the keyboard and outputs one after the other. E.g., if

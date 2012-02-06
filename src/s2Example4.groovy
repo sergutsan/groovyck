@@ -1,2 +1,3 @@
-if (num == 180)
+if (num == 180) {
     println "One hundred and eighty!"
+}

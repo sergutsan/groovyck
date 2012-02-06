@@ -1,14 +1,14 @@
-Scanner sc = new Scanner(System.in)
-boolean finished = false
 int total
+boolean finished = false
 while (!finished) {
     total = 0
-    int num
-    if (sc.hasNext()) {
-        num = sc.nextInt()
+    println "Please enter a number (end with 0):"
+    String s = System.console().readLine()
+    int num = Integer.parseInt(s)
+    if (num != 0) {
         total = total + num
-    }
-    else
+    } else {
         finished = true
+    }
 }
 println "Total is " + total

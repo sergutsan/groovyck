@@ -1,6 +1,8 @@
-int  exammark
-Scanner sc = new Scanner(System.in)
-println "Please key in your exam mark: "
-exammark = sc.nextInt()
-if (exammark >= 40)
-    println "A satisfactory result"
+int examMark
+String s
+print "Please key in your exam mark: "
+s = System.console().readLine()
+examMark = Integer.parseInt(s)
+if (examMark >= 40) {
+    println "A satisfactory result!"
+}

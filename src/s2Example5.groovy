@@ -1,8 +1,11 @@
-Scanner sc = new Scanner(System.in)
 int num1, num2
+String s
 print "Please key in a number: "
-num1 = sc.nextInt()
+s = System.console().readLine()
+num1 = Integer.parseInt(s)
 print "And another: "
-num2 = sc.nextInt()
-if (num1 == num2)
+s = System.console().readLine()
+num2 = Integer.parseInt(s)
+if (num1 == num2) {
     println "They are the same"
+}

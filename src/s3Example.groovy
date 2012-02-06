@@ -1,10 +1,18 @@
-Scanner sc = new Scanner(System.in)
+String s
 int num1, num2, num3, num4
 
-print "Please key in four numbers: "
-num1 = sc.nextInt()
-num2 = sc.nextInt()
-num3 = sc.nextInt()
-num4 = sc.nextInt()
+println "Please key in four numbers: "
+print "> "
+s = System.console().readLine()
+num1 = Integer.parseInt(s)
+print "> "
+s = System.console().readLine()
+num2 = Integer.parseInt(s)
+print "> "
+s = System.console().readLine()
+num3 = Integer.parseInt(s)
+print "> "
+s = System.console().readLine()
+num4 = Integer.parseInt(s)
 int total = num1 + num2 + num3 + num4
-println total
+println "Total: " + total
