@@ -1,0 +1,4 @@
+v1.01  - 7 Feb 2012 - Fixed some typos
+v1.00  - 5 Feb 2012 - First version to send to the world
+v0.30  - 3 Feb 2012 - First thing SG sent to Thomas: only section 1
+v0.25  - 1 Feb 2012 - First draft KM sent to SG
