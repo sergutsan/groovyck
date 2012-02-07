@@ -10,8 +10,8 @@ while (str.length() > 0) {
     max = str.length()
   }
 }
-if (max == 0)
+if (max == 0) {
     println "There were no words."
-else
+} else {
     println "The longest sentence was " + max + " characters long."
-
+}
