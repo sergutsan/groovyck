@@ -99,18 +99,18 @@ them names.
       str = System.console().readLine()
 \end{Verbatim}
 
-means "Take a string of characters until the user presses RETURN and
-then put it in the box called \verb!str!."  When the program runs and
+means ``Take a string of characters until the user presses RETURN and
+then put it in the box called \verb!str!.''  When the program runs and
 this instruction gets executed, the computer will take the words which
 you type at the keyboard (whatever you like) and will put them into
 the box which has the (temporary) name of \verb!str.!
 
 Each of these boxes can hold only one string at a time.  If a box is
-holding, say, "hello", and you put a "Good bye!" into it, the
-"Good bye!" replaces the "hello".  In computer parlance these
+holding, say, ``hello'', and you put a ``Good bye!'' into it, the
+``Good bye!'' replaces the ``hello''.  In computer parlance these
 boxes are called \emph{variables} because the content inside the box
-can vary; you can put a "I" in it to start with and later change it
-to a "you" and change it again to "That was a hurricane" and so on
+can vary; you can put a ``I'' in it to start with and later change it
+to a ``you'' and change it again to ``That was a hurricane'' and so on
 as often as you want.
 
 In Groovy you have to tell the computer that you want to use a variable
@@ -151,8 +151,8 @@ of the box.  For example
       print str
 \end{Verbatim}
 
-If the contents of the box called \verb!str! happened to be "Karl" when the
-computer came to execute \verb!print str! then the word "Karl" would appear
+If the contents of the box called \verb!str! happened to be ``Karl'' when the
+computer came to execute \verb!print str! then the word ``Karl'' would appear
 on the screen.  
 
 % Arithmetic expressions such as \verb!num + 5! can also appear in a \verb!print!
@@ -222,7 +222,7 @@ Tom
 Tom
 \end{Verbatim}
 
-The first line is the result of you keying in a word.  The system "echoes"
+The first line is the result of you keying in a word.  The system ``echoes''
 the keystrokes to the screen, in the usual way.  When you hit RETURN, the
 computer executes the \verb!str = System.console().readLine()! line, 
 i.e., it reads the word or words.  Then it
@@ -256,7 +256,7 @@ For example, we could combine the last two lines of the program into one:
 println "The word was " + str
 \end{Verbatim}
 
-and the output would be exactly the same. The symbol "+" does not
+and the output would be exactly the same. The symbol ``+'' does not
 represent addition, only concatenation: writing one string after the
 other. We will see addition of numbers in the next section.
 
@@ -327,17 +327,17 @@ There is another way to get a string into a box apart from using
 str = "Some text"
 \end{Verbatim}
 
-This has the effect of putting the string "Some text" into the
+This has the effect of putting the string ``Some text'' into the
 \verb!str! box.  Whatever was in \verb!str! before is obliterated; the
 new text replaces the old one. 
 
 In programming, this is called \emph{assignment}.  We say that the
-value "Some text" is
+value ``Some text'' is
 assigned to the variable \verb!str!, or that the variable \verb!str! takes the
-value "Some text".  The "=" symbol is the assignment operator in Groovy.  We are not
-testing whether \verb!str! has the value "Some text" or not, nor are we stating that
-\verb!str! has the value "Some text"; we are \emph{giving} the value
-"Some text" to \verb!str!.
+value ``Some text''.  The ``='' symbol is the assignment operator in Groovy.  We are not
+testing whether \verb!str! has the value ``Some text'' or not, nor are we stating that
+\verb!str! has the value ``Some text''; we are \emph{giving} the value
+``Some text'' to \verb!str!.
 
 % Unneeded. Probably should delete.
 %
@@ -357,13 +357,13 @@ An assignment instruction such as this:
 
 looks a little strange at first but makes perfectly good sense.
 Let's suppose the current value of \verb!str! (the contents of the
-box) is "Some text".
-The instruction says, "Take the value of \verb!str!
-("Some text"), add " and some more"  to it ("Some text and some
-more") 
-and put the result into \verb!str!".
-So the effect is to put "Some text and some more" into \verb!str! in
-place of the earlier "Some text".
+box) is ``Some text''.
+The instruction says, 'Take the value of \verb!str!
+(``Some text''), add `` and some more''  to it (``Some text and some
+more'') 
+and put the result into \verb!str!'.
+So the effect is to put ``Some text and some more'' into \verb!str! in
+place of the earlier ``Some text''.
 
 The \verb!=! operator is also used to initialise variables.  When the computer
 allocates a portion of memory to store one of your variables, it does not
@@ -393,10 +393,10 @@ This is very like assignment since we are giving a value to \verb!str! but
 this is a special case where \verb!str! did not have any defined value before,
 so it is known as \emph{initialisation.}
 
-Finally a word about terminology.  I have used the word "instruction"
+Finally a word about terminology.  I have used the word ``instruction''
 to refer to lines such as \verb!println str! and \verb!str = 5!
 It seems a natural word to use since we are giving the computer instructions.
-But the correct word is actually "statement".  \verb!println str! is
+But the correct word is actually ``statement''.  \verb!println str! is
 an output statement, and \verb!str = "Hello"! is an assignment statement.
 The lines in which we tell the computer about the variables we intend to
 use, such as \verb!String str! or \verb!String str = ""! are called
@@ -409,8 +409,8 @@ ones in these introductory notes are both definitions and declarations.
 
 Now see if you can write a program in Groovy that takes
 two words from the keyboard and outputs one after the other. E.g., if
-you keyed in "Humpty" and "Dumpty" 
-it would reply with "Humpty Dumpty" (note the space in between).
+you keyed in ``Humpty'' and ``Dumpty'' 
+it would reply with ``Humpty Dumpty'' (note the space in between).
 A run of the program should look like this:
 \begin{Verbatim}
 Please key in a word: Humpty

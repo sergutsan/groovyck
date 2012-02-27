@@ -18,11 +18,11 @@ the conditional expression is true.
 
 Note also that, to test whether  \verb!num! has the value 180
 or not, we have to write \verb!if (num == 180)! and not \verb!if (num = 180)!.
-We have to remember to hit the "=" key twice.
+We have to remember to hit the ``='' key twice.
 This is a serious nuisance in Groovy, especially for beginners.
-It comes about because the language uses the "=" operator for a different
-purpose, namely assignment.  \verb!num = 180! does not mean, " \verb!num! is
-equal to 180."  It means, "Give the value 180 to  \verb!num!."  You may feel
+It comes about because the language uses the ``='' operator for a different
+purpose, namely assignment.  \verb!num = 180! does not mean, `` \verb!num! is
+equal to 180''.  It means, ``Give the value 180 to  \verb!num!''.  You may feel
 that it is obvious that assignment is not what is intended in
 \verb!if (num = 180)!, but unfortunately that is
 how the computer will interpret it ---and complain.
@@ -51,31 +51,28 @@ can be formed using the following operators:
 When these operators are used with integers, their meaning is obvious,
 but they can also be used with strings.  Here their meaning corresponds
 to something like alphabetical order.  For instance, \verb!if (s < t)!,
-where  \verb!s! and \verb!t! are strings means "If  \verb!s! comes before \verb!t!
-in alphabetical order."  So it would be true if  \verb!s! had the value
-"\verb!Birkbeck!" and \verb!t! had the value "\verb!College!".  All the
+where  \verb!s! and \verb!t! are strings means ``If  \verb!s! comes before \verb!t!
+in alphabetical order''.  So it would be true if  \verb!s! had the value
+``\verb!Birkbeck!'' and \verb!t! had the value ``\verb!College!''.  All the
 upper-case letters come before the lower-case, so \verb!(s < t)! would
-still be true if  \verb!s! had the value "\verb!Zebra!" and \verb!t! had the
-value "\verb!antelope!" (upper-case 'Z' comes before lower-case 'a').
+still be true if  \verb!s! had the value ``\verb!Zebra!'' and \verb!t! had the
+value ``\verb!antelope!'' (upper-case 'Z' comes before lower-case 'a').
 
 But what about strings that contain non-alphabetic characters?  Would
-\verb!s!  come before \verb!t! if \verb!s! had the value "\verb!#+*!"
-and \verb!t! had the value "\verb!$&!!"?  To find the answer we have
+\verb!s!  come before \verb!t! if \verb!s! had the value ``\verb!#+*!''
+and \verb!t! had the value ``\verb+$&!+''?  To find the answer we have
 to consult the \emph{UNICODE table} -- the Universal Character Set.
 UNICODE defines a particular ordering of all the characters on the
 keyboard.  (There are other orderings in use, notably EBCDIC which is
 used on IBM mainframe computers, and ASCII, which was adopted by PCs,
 which became the de facto standard for english based languages.)
 UNICODE table tells us that the character '\#' comes before the
-character "\verb!$!", for instance.  The latest version of Unicode
+character '\verb!$!', for instance.  The latest version of Unicode\footnote{The full list can be downloaded from many
+places, including Wikipedia
+(http://en.wikipedia.org/wiki/List\_of\_Unicode\_characters).}
 consists of a repertoire of more than 109,000 characters covering 93
 different scripts (including latin, cyrillic, arabic, all the Japanese
-ones, and many more).
-%
-% There is a listing of the printable characters in the UNICODE set at the
-% end of this section.  
-%
-Some points worth remembering are:
+ones, and many more). Some points worth remembering are:
 
 \begin{itemize}
 \item
@@ -115,7 +112,7 @@ $<$~40?  The program does nothing.  This kind of \verb!if! statement is a
 one-way branch.  If the condition is true, we do something; if not, we do
 nothing.  But in this case
 this seems unsatisfactory.  If the exam mark is $<$~40, we would like
-it to display "I'm afraid you have failed."  We could arrange this by
+it to display ``I'm afraid you have failed.''  We could arrange this by
 including another test --- \verb!if (exammark < 40)!  --- or, better, we could
 do it by using the keyword \verb!else!, thus:
 
@@ -157,9 +154,9 @@ them into a programming unit called a \emph{block}\footnote{A block
 \VerbatimInput[frame=single,label=Example]{src/s2Example9.groovy}
 
 If the exam mark is $>$= 40, the whole of the block is executed and both
-lines "A satisfactory result!" and "You may proceed with your
-project." will be printed.  If the mark is $<$~40, the computer skips to
-the \verb!else! and executes the "I'm afraid" line.
+lines ``A satisfactory result!'' and ``You may proceed with your
+project.'' will be printed.  If the mark is $<$~40, the computer skips to
+the \verb!else! and executes the ``I'm afraid'' line.
 
 You will find that different programmers, and different textbooks, have
 different ideas about the precise placement of the curly braces.  Some would
@@ -187,8 +184,8 @@ You may proceed with your project.
 \end{Verbatim}
 
 The problem is that if a mark is $>$= 70, it is also $>$~40.  The first
-condition is true, so we get the "exceptional" part, but then the second
-condition is also true, so we get the "satisfactory" part.  We want to
+condition is true, so we get the ``exceptional'' part, but then the second
+condition is also true, so we get the ``satisfactory'' part.  We want to
 proceed to the $>$= 40 test only if the mark is $<$~70.  We need another
 \verb!else!:
 
@@ -204,16 +201,16 @@ whether or not their combined income makes them due for tax at the higher rate
 \subsection*{Exercise C}
 
 Extend the program about students' marks so that all the candidates
-get two lines of output, the unsuccessful ones getting "I'm afraid you
-have failed," and "You may re-enter next year."
+get two lines of output, the unsuccessful ones getting ``I'm afraid you
+have failed,'' and ``You may re-enter next year.''
 
 \subsection*{Exercise D}
 
 Write a program which takes two integers as input.
 If the first is exactly divisible
 by the second (such as 10 and 5 or 24 and 8, but not 10 and 3 or 24 and 7)
-it outputs "Yes", otherwise "No", except when the second
-is zero, in which case it outputs "Cannot divide by zero". Remember
+it outputs ``Yes'', otherwise ``No'', except when the second
+is zero, in which case it outputs ``Cannot divide by zero''. Remember
 you can use the modulo operator (``\%'') to find out whether one
 number is divisible by another. 
 
@@ -222,7 +219,7 @@ number is divisible by another.
 Write a program which takes an integer as its input representing the time
 using the 24-hour clock.  930 is 9.30 am; 2345 is 11.45 pm.  Midnight is
 zero. The program responds with a suitable greeting for the time of day.
-If you want to make this a bit harder, make the program respond with a "?"
+If you want to make this a bit harder, make the program respond with a '?'
 if the time represented by the number is impossible, such as 2400, -5 or
 1163.
 

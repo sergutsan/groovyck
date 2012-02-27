@@ -58,7 +58,7 @@ symbol represents concatenation. Therefore, the statement
     String str = "My name is " + "Inigo Montoya"
 \end{Verbatim}
 
-results in \verb+str+ having the value "My name is Inigo Montoya",
+results in \verb+str+ having the value ``My name is Inigo Montoya'',
 while the statement
 
 \begin{Verbatim}
@@ -119,7 +119,7 @@ Groovy uses the following arithmetic operators (amongst others):
 \verb!%! & modulo\\
 \end{tabular}
 
-The last one is perhaps unfamiliar.  The result of \verb!x \% y! ("x mod y")
+The last one is perhaps unfamiliar.  The result of \verb!x \% y! (``x mod y'')
 is the remainder that you get after dividing the integer x by the integer y.
 For example, \verb!13 % 5! is \verb!3!; \verb!18 % 4! is \verb!2!; 
 \verb!21 % 7! is \verb!0!, and \verb!4 % 6 is 4! (6 into 4 won't go, 
@@ -204,7 +204,7 @@ holding the total of a series of integers and another is holding the
 largest of a series of integers, for example, call them \verb!total!
 and \verb!max! rather than \verb!x! and \verb!y!.
 
-The aim in programming is to write programs that are "self-documenting",
+The aim in programming is to write programs that are ``self-documenting'',
 meaning that a (human) reader can understand them without having to read
 any supplementary documentation.  A good choice of identifiers helps to
 make a program self-documenting.
@@ -270,23 +270,23 @@ sometimes not). You could say, for example:
 \end{Verbatim}
 
 And you can obtain a substring of a string with the \verb!substring! function.
-For example if the string \verb!s! has the value "\verb!Silverdale!", then
+For example if the string \verb!s! has the value ``\verb!Silverdale!'', then
 \verb!s.substring(0,6)! will give you the first six letters, i.e., the string
-"\verb!Silver!".  The first number in brackets after the \verb!substring!
+``\verb!Silver!''.  The first number in brackets after the \verb!substring!
 says where you want the substring to begin, and the second number says how
 long you want it to be. \emph{Note that the initial character of the string
 is at position~0, not position~1}.  If you leave out the second number,
 you get the rest of the string.  For example, \verb!s.substring(6)! would
-give you "\verb!dale!", i.e., the tail end of the string beginning at
+give you ``\verb!dale!'', i.e., the tail end of the string beginning at
 character 6 ('d' is character 6, not 7, because the first one is
 character 0). 
 
 You can output substrings with \verb!print! or assign them to other
-strings or combine them with the "+" operator.  For example:
+strings or combine them with the ``+'' operator.  For example:
 
 \VerbatimInput[frame=single,label=Example]{src/s2Example2.groovy}
 
-will output "soft ices".
+will output ``soft ices''.
 
 \subsection*{Exercise C}
 

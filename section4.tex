@@ -72,7 +72,7 @@ Write a program that outputs the squares of all the numbers from 1 to
 So far we have just used integer and string variables.  But we can
 have variables of other types and, specifically, we can have
 \emph{boolean} variables, which in Groovy are variables of type
-\texttt{boolean}\footnote{The word "boolean" was coined in honour of an
+\texttt{boolean}\footnote{The word ``boolean'' was coined in honour of an
 Irish mathematician of the nineteenth century called \emph{George
   Boole}}.  A variable of type \texttt{boolean} does not hold numbers;
 it can hold just the values \texttt{true} and \texttt{false}.  We
@@ -91,7 +91,7 @@ boolean value.  Contrast it with:
 \end{Verbatim}
 
 \texttt{stringvar} is a String variable which is being initialized
-with the four-character string "\texttt{true}"; we could assign any
+with the four-character string ``\texttt{true}''; we could assign any
 other string to \texttt{stringvar}. By contrast, \texttt{positive}
 is a boolean variable and we cannot assign strings to it.
 It can hold only the values \texttt{true} or \texttt{false}.
@@ -166,9 +166,9 @@ introduced in the last chapter --- \texttt{(x == y), (s >= t)} and so on ---
 now augmented with negation~(``!'').
 We can make more complex boolean expressions by joining simple ones
 with \emph{and} (\verb!&&!) and \emph{or} (\texttt{||}).  For example,
-we can express "if x is a non-negative odd number" as
-\verb+if (x >= 0 && x \% 2 == 1)+. We can express "if the name begins
-with an A or an E" as \texttt{if (name.substring(0,1) == "A" ||
+we can express ``if x is a non-negative odd number'' as
+\verb+if (x >= 0 && x \% 2 == 1)+. We can express ``if the name begins
+with an A or an E'' as \texttt{if (name.substring(0,1) == "A" ||
   name.substring(0,1) == "E")}.  The rules for evaluating \emph{and}
 and \emph{or} are as follows:
 
@@ -197,7 +197,7 @@ if and only if both sides are false, otherwise it's true.
 \subsection*{Exercise B}
 
 Given that \texttt{x} has the value 5, \texttt{y} has the value 20,
-and \texttt{s} has the value "\texttt{Birkbeck}", decide whether these
+and \texttt{s} has the value ``\texttt{Birkbeck}'', decide whether these
 expressions are true or false:
 
 \begin{Verbatim}
@@ -243,7 +243,7 @@ case. The first is that there are no more numbers to input.
 The other reason is that the input might have failed
 because what was entered was not an integer --- perhaps the user entered
 a letter or a punctuation mark.  If the program is expecting an integer
-and instead receives something like "abc" or "W" or "**!", the input will fail.
+and instead receives something like ``abc'' or ``W'' or ``**!'', the input will fail.
 % We can test whether the input has finished with the line \texttt{if (sc.hasNext())}.
 % If this is false, then there is no more input available and we set \texttt{finished} to \texttt{true}
 % in order to terminate the loop.
