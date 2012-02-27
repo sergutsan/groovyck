@@ -1,45 +1,58 @@
 \documentclass[11pt,a4paper]{article} 
 \usepackage[pdftex]{geometry}
-%\usepackage{moreverb} % env: comment
 \usepackage{fancyvrb}
+%\usepackage{moreverb} % env: comment
 %\usepackage{alltt} 
 %\usepackage{pifont} 
 %\usepackage{color} 
 %\usepackage{subfigure}
 %\usepackage{listings}
-%\usepackage{graphicx}
+\usepackage[dvips]{graphicx}
 %\usepackage{amssymb}
 %\usepackage{epstopdf}
 %\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
-
 %\usepackage{draftwatermark} 
 %\SetWatermarkLightness{0.9}
 %\SetWatermarkFontSize{20cm}
 %\SetWatermarkScale{5.0} 
 
 \title{A short introduction to computer programming\\
-  using Groovy (v1.06)}
+  using Groovy~\input{version.txt}}
 \author{Keith Mannock and Sergio Gutierrez-Santos\\(based on work by
   Roger Mitton)\\
 Birkbeck, University of London}
-\date{(last revision: \today)}
+\date{}
+
+\pagestyle{plain}
 
 \begin{document}
+
 \maketitle
+\thispagestyle{empty}
 
-
-%\VerbatimInput[frame=single,label=Example]{src/AB.groovy}
+%\vfill
 
 \noindent This document forms some of the pre-course reading for the
-MSc Computer Science at Birkbeck. This is required pre-interview reading. 
+MSc Computer Science at Birkbeck. This is required pre-interview
+reading. 
+(Last revision: \today.)
 
+\vfill 
+
+\begin{figure*}[h!]
+  \centering
+  \includegraphics[height=2cm]{bbk.eps}
+\end{figure*}
+
+\vfill 
+
+%\tableofcontents
+
+\newpage
 \textbf{Important note: }If anything is unclear, or you have any 
 sort of problem (e.g.,
 downloading or installing Groovy on your computer) please send an
 email to Sergio Gutierrez-Santos (\emph{sergut@dcs.bbk.ac.uk}).
-
-%\tableofcontents
-
 \newpage
 \input{section1}
 \newpage
