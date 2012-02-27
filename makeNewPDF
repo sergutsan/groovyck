@@ -1,0 +1,13 @@
+#/bin/sh
+if [ "$1" = "" ]; then
+  echo "USAGE: makeNewPDF <version>  (e.g. makeNewPDF 1.0)"
+  exit 0
+fi
+latex main
+latex main
+latex main
+dvips main.dvi -o 
+ps2pdf main.ps
+TITLE="MSc CS - notes for aptitude test v${1}.pdf"
+mv main.pdf "$TITLE"
+echo Created $TITLE
