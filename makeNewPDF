@@ -1,5 +1,8 @@
 #/bin/sh
-if [ "$1" = "" ]; then
+if [ "$1" != "" ]; then
+  echo $1 > version.txt
+fi
+if [ ! -e version.txt ]; then
   echo "USAGE: makeNewPDF <version>  (e.g. makeNewPDF 1.0)"
   exit 0
 fi
