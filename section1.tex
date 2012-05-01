@@ -27,7 +27,7 @@ Here is a complete, short program written in Groovy:
 \VerbatimInput[frame=single,label=Example]{src/Example1.groovy}
 
 When you write a program, you have to be very careful to keep to the
-syntax, i.e., to the rules of the language.  For example, the above program would
+syntax, i.e. to the rules of the language.  For example, the above program would
 behave incorrectly if we wrote 
 
 \begin{Verbatim}
@@ -46,7 +46,7 @@ or if we put a semi-colon immediately after
       if (s.length() > max)
 \end{Verbatim}
 
-The computer would refuse to accept it if we added semi-colons in strange places
+The computer would refuse to accept it if we added dots or semi-colons in strange places
 or if any of the parentheses (or curly braces) were missing, or if we wrote
 \verb!leng! instead of \verb!length()! or even \verb!Length()! instead of \verb!length()!.
 
@@ -123,7 +123,7 @@ known in Groovy as \verb!String!, with capital S.  To tell the computer that we 
 variable of type \verb!String! called \verb!str!, we write
 
 \begin{Verbatim}
-      String str;
+      String str
 \end{Verbatim}
 
 If we wanted more than one variable, we could use two lines:
@@ -195,8 +195,14 @@ executable version of your program, i.e., your program has been translated
 into the internal machine instructions of the computer and the computer
 can run your program.
 
-Now you issue a command (or click on an icon) and the computer executes
-your program.  If you are lucky, your program does what it is supposed
+Now you issue a command and the computer executes
+your program. You can issue commands\footnote{In
+    a modern operating system, you can click on an icon to execute a
+    program. However, this only makes sense for graphical applications
+    and not for the simple programs that you will do at first.}
+from the command prompt in Windows (you can find it under \emph{Start $->$
+    Accesories}), or the terminal in Linux and Mac OS/X.  
+If you are lucky, your program does what it is supposed
 to do first time.  Often it doesn't.  You look at what your program is
 doing, look again at your program and try to see why it is not doing what
 you intended.  You correct the program, recompile and run it again.
@@ -386,7 +392,7 @@ an initial value when you declare it.  If you wanted \verb!str! to begin
 with empty, you should declare it thus:
 
 \begin{Verbatim}
-      String str = "";
+      String str = ""
 \end{Verbatim}
 
 This is very like assignment since we are giving a value to \verb!str! but
