@@ -22,9 +22,9 @@
   (based on work by Roger Mitton)\\
   Birkbeck, University of London}
 
-\InputIfFileExists{version.txt}
-    {\date{v\input{version.txt}}}
-    {\date{no version info}}
+\date{\InputIfFileExists{version.txt}
+     {v\input{version.txt}}
+     {no version info}}
 
 \pagestyle{plain}
 
