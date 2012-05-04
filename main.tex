@@ -1,13 +1,13 @@
 \documentclass[11pt,a4paper]{article} 
 \usepackage[pdftex]{geometry}
 \usepackage{fancyvrb}
+\usepackage[dvips]{graphicx}
 %\usepackage{moreverb} % env: comment
 %\usepackage{alltt} 
 %\usepackage{pifont} 
 %\usepackage{color} 
 %\usepackage{subfigure}
 %\usepackage{listings}
-\usepackage[dvips]{graphicx}
 %\usepackage{amssymb}
 %\usepackage{epstopdf}
 %\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
@@ -16,59 +16,69 @@
 %\SetWatermarkFontSize{20cm}
 %\SetWatermarkScale{5.0} 
 
-\title{A short introduction to computer programming\\
-  using Groovy} 
+\title{A Short Introduction to Computer Programming\\
+  Using Groovy}
 \author{Sergio Gutierrez-Santos and Keith Mannock\\
   (based on work by Roger Mitton)\\
   Birkbeck, University of London}
-\date{v\input{version.txt}}
+
+\InputIfFileExists{version.txt}
+    {\date{v\input{version.txt}}}
+    {\date{no version info}}
 
 \pagestyle{plain}
 
 \begin{document}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%      TITLE PAGE       %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \maketitle
 \thispagestyle{empty}
-
-%\vfill
-
-\noindent This document forms some of the pre-course reading for the
-MSc Computer Science at Birkbeck. This is required pre-interview
-reading. 
+\noindent This document forms some of the pre-course reading for
+several MSc courses at Birkbeck, and it is required pre-interview
+reading for the MSc Computer Science.
 (Last revision: \today.)
 
 \vfill 
 
-\begin{figure*}[h!]
+\begin{figure*}[h!]  % BBK logo
   \centering
   \includegraphics[height=2cm]{bbk.eps}
 \end{figure*}
 
 \vfill 
 
-%\tableofcontents
-
 \newpage
-~ \vspace{8cm}
+
+~\vspace{8cm}
 
 \textbf{Important note: } If anything is unclear, or you have any 
 sort of problem (e.g.,
-downloading or installing Groovy on your computer) please send an
+downloading or installing Groovy on your computer), please send an
 email to Sergio Gutierrez-Santos (\emph{sergut@dcs.bbk.ac.uk}).
 \newpage
+
 \input{section1}
 \newpage
+
 \input{section2}
 \newpage
+
 \input{section3}
 \newpage
+
 \input{section4}
 \newpage
+
 \input{extra}
 \newpage
+
 \section{Summary of the language features mentioned in this introduction}
 \input{cheatsheet}
 \newpage
+
 \input{install}
 
 \end{document}  
