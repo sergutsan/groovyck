@@ -22,9 +22,15 @@
   (based on work by Roger Mitton)\\
   Birkbeck, University of London}
 
+% \date{InputIfFileExists{version.txt}
+%      {v\input{version.txt}}
+%      {\emph{``version.txt'' not found}}}
+
 \date{\InputIfFileExists{version.txt}
-     {v\input{version.txt}}
-     {no version info}}
+     {v}
+     {\emph{``version.txt'' not found}}}
+
+%\date{v\input{version.txt}} 
 
 \pagestyle{plain}
 
@@ -35,6 +41,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \maketitle
+
 \thispagestyle{empty}
 
 \vfill 
