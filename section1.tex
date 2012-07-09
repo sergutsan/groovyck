@@ -8,6 +8,10 @@ You write a program in a \emph{programming language}.
 Many programming languages have been devised; well known ones include
 Fortran, BASIC, Cobol, Algol, Lisp, Ada, C++, Python, Ruby, Scala, and Java.
 
+The language we will use in this document is named \emph{Groovy}, and
+it is \emph{very similar to the Java programming language but with a
+simplified syntax} that better fits the purposes of this introduction. 
+
 Programming languages vary a lot, but
 an instruction in a typical programming language might contain
 some English words (such as \verb!while! or \verb!return!), perhaps a mathematical
@@ -18,7 +22,7 @@ The following three lines are in BASIC, Cobol and C++ respectively:
 
       PERFORM RECORD-TRANSACTION UNTIL ALL-DONE = "T"
 
-      if (x > 100) cout << "Big"; else cout <<; "Small";
+      if (x > 100) cout << "Big"; else cout << "Small";
 \end{Verbatim}
 
 Programs can vary in length from a few lines to thousands of lines.
@@ -27,8 +31,9 @@ Here is a complete, short program written in Groovy:
 \VerbatimInput[frame=single,label=Example]{src/Example1.groovy}
 
 When you write a program, you have to be very careful to keep to the
-syntax, i.e. to the rules of the language.  For example, the above program would
-behave incorrectly if we wrote 
+syntax of the programming language, i.e. to the grammar rules of the language.  
+For example, the above Groovy program would
+behave incorrectly if in the 13$^{th}$ line we wrote 
 
 \begin{Verbatim}
 	if (max = 0)
@@ -40,25 +45,27 @@ instead of
 	if (max == 0)
 \end{Verbatim}
 
-or if we put a semi-colon immediately after 
+or if in the 9$^{th}$ line we put a semi-colon immediately after 
 
 \begin{Verbatim}
       if (s.length() > max)
 \end{Verbatim}
 
-The computer would refuse to accept it if we added dots or semi-colons in strange places
+The computer would refuse to accept the program if we added dots or semi-colons 
+in strange places
 or if any of the parentheses (or curly braces) were missing, or if we wrote
 \verb!leng! instead of \verb!length()! or even \verb!Length()! instead of \verb!length()!.
 
-The language we will use in this document is named \emph{Groovy}, and
-it is \emph{very similar to the Java programming language but with a
-simplified syntax} that better fits the purposes of this introduction. 
+% Moved to earlier:
+% 
+%The language we will use in this document is named \emph{Groovy}, and
+%it is \emph{very similar to the Java programming language but with a
+%simplified syntax} that better fits the purposes of this introduction. 
 
 \subsection{Input and output}
 
 To get the computer to take some input and to store it
-in its memory, we write, for example\footnote{Pay attention to the brackets
-and the capital letters.}):
+in its memory, we write in Groovy:
 
 \begin{Verbatim}
       str = System.console().readLine()
@@ -67,19 +74,19 @@ and the capital letters.}):
 \verb!System.console().readLine()! (pronounced \emph{system dot
   console dot read line}) is a phrase which has a special meaning to
 the computer. The combination of these instructions
-means\footnote{Strictly speaking, it means ``Take the current system
-  ---this computer---, take its console ---its keyboard and screen---,
-and read a line from it as introduced by the user'' (from the keyboard,
-not the screen because the user cannot type a line on the screen... or
-could not before they invented touchscreens!)).} ``Take
-some input, a sequence of characters, and put it into the memory.''
+means\footnote{More precisely, it means ``Take the current system
+  --- this computer, take its console --- its keyboard and screen,
+and read a line of character input from it as entered by the user'' (from the keyboard,
+not the screen because the user cannot type a line onto the screen... or
+could not before they invented touchscreens!)).} 
+``Take some input which is a sequence of characters and put it into the computer's memory.''
 
 \verb!str! by contrast, is a word that I (the programmer) have chosen.
 I could have used \verb!characters! or \verb!thingy! or \verb!foodle!
 or just \verb!s! or almost any word I wanted. (There are some
-restrictions which I will deal with in the next section.)  You may
-occasionally see the semi-colon used in a program and that signals the
-end of this instruction.
+restrictions which I will deal with in the next section.)  
+% You may occasionally see the semi-colon used in a program and that signals the
+% end of this instruction.
 
 Computers can take in all sorts of things as input --- numbers,
 letters, words, records and so on --- but, to begin with, we will
@@ -87,8 +94,8 @@ write programs that generally handle strings of characters (like
 "I", "hi", "My mother has 3 cats", or "This is AWESOME!").
 We'll also assume that the computer is taking its input from the
 keyboard, i.e., when the program is executed, you key in one or more
-words at the keyboard and these are the characters that it puts into
-its memory.
+words at the keyboard and these are the characters that the computer 
+puts into its memory.
 
 You can imagine the memory of the computer as consisting of lots of
 little boxes.  Programmers can reserve some of these boxes for
@@ -99,41 +106,42 @@ them names.
       str = System.console().readLine()
 \end{Verbatim}
 
-means ``Take a string of characters until the user presses RETURN and
-then put it in the box called \verb!str!.''  When the program runs and
+means ``Take a string of characters input using the keyboard and
+terminated when the user presses RETURN, and
+then put this string into the box called \verb!str!.''  When the program runs and
 this instruction gets executed, the computer will take the words which
 you type at the keyboard (whatever you like) and will put them into
-the box which has the (temporary) name of \verb!str.!
+the box which has the name \verb!str.!
 
-Each of these boxes can hold only one string at a time.  If a box is
-holding, say, ``hello'', and you put a ``Good bye!'' into it, the
+Each of these boxes in the computer's memory can hold only one string at a time.  If a box is
+holding, say, ``hello'', and you put ``Good bye!'' into it, the
 ``Good bye!'' replaces the ``hello''.  In computer parlance these
 boxes are called \emph{variables} because the content inside the box
-can vary; you can put a ``I'' in it to start with and later change it
+can vary; you can put an ``I'' in it to start with and later change it
 to a ``you'' and change it again to ``That was a hurricane'' and so on
 as often as you want.
 
-In Groovy you have to tell the computer that you want to use a variable
+In Groovy, you have to tell the computer that you want to use a variable
 with a certain name before you use it.  You can't just pitch in using \verb!str!
-without telling it what \verb!str! is.  Most of the time you also have to
-tell it what type of variable it is, i.e., what sort of thing you are going
-to put into it.  In this case we are going to put strings of characters into it.
+without telling the computer what \verb!str! is.  Most of the time you also have to
+tell the computer what {\em type} of variable this is, i.e., what sort of thing you are going
+to put into it. In this case we are going to put strings of characters into \verb!str!. 
 Strings of characters, or simply \emph{strings} as they are called in programming, are
 known in Groovy as \verb!String!, with capital S.  To tell the computer that we want to use a
-variable of type \verb!String! called \verb!str!, we write
+variable of type \verb!String! called \verb!str!, we write in our program:
 
 \begin{Verbatim}
       String str
 \end{Verbatim}
 
-If we wanted more than one variable, we could use two lines:
+If we wanted to declare more than one variable, we could use two lines:
 
 \begin{Verbatim}
       String myName
       String yourName
 \end{Verbatim}
 
-or we could declare them both on one line, separated by a comma
+or we could declare them both on one line, separated by a comma:
 \begin{Verbatim}
       String myName, yourName
 \end{Verbatim}
@@ -145,14 +153,14 @@ program, but you mustn't try to use a variable before you've declared it.
 
 If you want the computer to display (on the screen) the contents of one of
 its boxes, you use \verb!print! followed by the name
-of the box.  For example
+of the box.  For example, we can print the contents of \verb!str! by writing:
 
 \begin{Verbatim}
       print str
 \end{Verbatim}
 
-If the contents of the box called \verb!str! happened to be ``Karl'' when the
-computer came to execute \verb!print str! then the word ``Karl'' would appear
+If the contents of the box called \verb!str! happened to be ``Karl'', then when the
+computer came to execute the instruction \verb!print str! the word ``Karl'' would appear
 on the screen.  
 
 % Arithmetic expressions such as \verb!num + 5! can also appear in a \verb!print!
@@ -167,11 +175,11 @@ but it's a start):
 \VerbatimInput[frame=single,label=Example]{src/Example2.groovy}
 
 This program takes some text as input from the keyboard and displays it
-on the screen.
+back on the screen.
 
-It is customary to lay out programs like this with each part on a line 
+It is customary to lay out programs like this with each instruction on a line 
 of its own. The indentation, if there is any, is just for the benefit
-of human readers, not for the computer.
+of human readers, not for the computer which ingnores any indentations. 
 
 \subsection{Compiling and running a program}
 
@@ -187,11 +195,11 @@ before you can run the program, you have to \emph{compile} it.  This means that
 you pass it through a piece
 of software called a \emph{compiler}.  The compiler checks whether your program
 is acceptable according to the syntax of Groovy.  If it isn't, the compiler
-issues one or more error messages telling you, in a more or less unhelpful
-fashion, what it objects to in your program and where the problem lies.
+issues one or more error messages telling you
+what it objects to in your program and where the problem lies.
 You try to see what the problem is, correct it and try again.  You keep
 doing this until the program compiles successfully.  You now have an
-executable version of your program, i.e., your program has been translated
+{\em executable} version of your program, i.e., your program has been translated
 into the internal machine instructions of the computer and the computer
 can run your program.
 
@@ -199,10 +207,11 @@ Now you issue a command and the computer executes
 your program. You can issue commands\footnote{In
     a modern operating system, you can click on an icon to execute a
     program. However, this only makes sense for graphical applications
-    and not for the simple programs that you will do at first.}
-from the command prompt in Windows (you can find it under \emph{Start $->$
-    Accesories}), or the terminal in Linux and Mac OS/X.  
-If you are lucky, your program does what it is supposed
+    and not for the simple programs that you will write at first.}
+from the command prompt in Windows (you can find the command prompt under 
+\emph{Start $\rightarrow$
+    Accesories}), or from the terminal in Linux and Mac OS/X.  
+If you are lucky, your program does what you expect it 
 to do first time.  Often it doesn't.  You look at what your program is
 doing, look again at your program and try to see why it is not doing what
 you intended.  You correct the program, recompile and run it again.
@@ -213,26 +222,28 @@ As I said earlier, you can study this introduction without running your
 programs on a computer.  However, it's possible that you have a PC with
 a Groovy compiler and will try to run some of the programs given in these
 notes. 
-If you have a PC but you don't have a compiler, I attach a few notes telling
-you how you can obtain one (see Section~\ref{sec:obta-inst-runn} on
-page~\pageref{sec:obta-inst-runn}).
+If you have a PC but you don't have a Groovy compiler, I attach a few notes telling
+you how you can obtain one (see Section~\ref{sec:obta-inst-runn}).
+
 
 \subsection{Outputting words and ends of lines}
 
-Let's suppose that you managed to compile your program in one way or
-another and that you then ran it.  Your running of the above program
-would produce something like this on the screen:
+Let's suppose that you manage to compile your program 
+and that you then run it.  Your running of the above program
+would produce something like this on the screen if you typed in
+the word Tom followed by RETURN: 
 
 \begin{Verbatim}
 Tom
 Tom
 \end{Verbatim}
 
-The first line is the result of you keying in a word.  The system ``echoes''
+The first line is the result of you keying in the word Tom.  The system ``echoes''
 the keystrokes to the screen, in the usual way.  When you hit RETURN, the
-computer executes the \verb!str = System.console().readLine()! line, 
-i.e., it reads the word or words.  Then it
-executes the \verb!println! line and the sentence appears on the screen again.
+computer executes the \verb!str = System.console().readLine()! instruction, 
+i.e., it reads the word or words that have been input.  Then it
+executes the \verb!println! instruction and the word or words that were
+input appear on the screen again.
 
 We can also get the computer to display additional words by putting
 them in quotes after the \verb!println!, for example:
@@ -245,60 +256,60 @@ We can use this to improve the above program:
 
 \VerbatimInput[frame=single,label=Example]{src/Example3.groovy}
 
-A run of this program might appear on the screen thus:
+An execution, or ``run'', of this program might appear on the screen thus:
 \begin{Verbatim}
 Please key in a word: Tom
 The word was: Tom
 \end{Verbatim}
 
-Note the spaces in the \verb!print! lines after \verb!word:! and \verb!was:!.
+Note the spaces in lines 2 and 4 of the program after \verb!word:! and \verb!was:!.
 This is so that what appears on the screen is \verb!word: Tom! and
 \verb!was: Tom! rather than \verb!word:Tom! and \verb!was:Tom!.
 
-It's possible to output more than one item with a single \verb!print! line.
-For example, we could combine the last two lines of the program into one:
+It's possible to output more than one item with a single \verb!print! instruction.
+For example, we could combine the last two lines of the above program into one:
 
 \begin{Verbatim}
 println "The word was " + str
 \end{Verbatim}
 
 and the output would be exactly the same. The symbol ``+'' does not
-represent addition, only concatenation: writing one string after the
-other. We will see addition of numbers in the next section.
+represent addition in this context, it represents concatenation i.e. 
+writing one string after the other. We will look at addition of numbers in the next section.
 
 Let's suppose that we now added three lines to the end of our program, thus:
 
 \VerbatimInput[frame=single,label=Example]{src/Example4.groovy}
 
-The screen would look something like this:
+After running this program, the screen would look something like this:
 \begin{Verbatim}
 Please key in a word: Tom
 The word was TomNow please key in another: Jack
 And this one was Jack
 \end{Verbatim}
 
-Which is probably not what we wanted.  If we want a new line after the
-output of the first word, we have to use the \verb!println! instruction we mentioned earlier:
+which is probably not what we wanted.  If we want a new line after the
+the first word is printed, we need to use the \verb!println! instruction we mentioned earlier:
 
 \VerbatimInput[frame=single,label=Example]{src/Example5.groovy}
 
 Now we would get:
 \begin{Verbatim}
-Please key in a word: Thomas
-The word was Thomas
-Now please key in another: Jackie
-And this one was Jackie
+Please key in a word: Tom
+The word was Tom
+Now please key in another: Jack
+And this one was Jack
 \end{Verbatim}
 
 
 \subsection*{Exercise A}
 
-Now pause and see if you can write
+Now pause and see if you can write:
 \begin{enumerate}
 \item
-a line of Groovy which would output a blank line.
+a Groovy instruction which would output a blank line.
 \item
-a line of  which would output
+an instruction which would output
 
 \begin{Verbatim}
 Hickory, Dickory, Dock
@@ -306,7 +317,7 @@ Hickory, Dickory, Dock
 
 \item
 a program which reads in two words, one after the other, and then displays them
-in reverse order. If the input was 
+in reverse order. For example, if the input was 
 
 \begin{Verbatim}
 First
@@ -334,7 +345,7 @@ str = "Some text"
 \end{Verbatim}
 
 This has the effect of putting the string ``Some text'' into the
-\verb!str! box.  Whatever was in \verb!str! before is obliterated; the
+\verb!str! box.  Whatever content was in \verb!str! before is obliterated; the
 new text replaces the old one. 
 
 In programming, this is called \emph{assignment}.  We say that the
@@ -365,7 +376,7 @@ looks a little strange at first but makes perfectly good sense.
 Let's suppose the current value of \verb!str! (the contents of the
 box) is ``Some text''.
 The instruction says, 'Take the value of \verb!str!
-(``Some text''), add `` and some more''  to it (``Some text and some
+(``Some text''), add `` and some more''  to it (obtaining ``Some text and some
 more'') 
 and put the result into \verb!str!'.
 So the effect is to put ``Some text and some more'' into \verb!str! in
@@ -378,7 +389,8 @@ happened to have the last time it was used.  Its value is said to be
 \emph{undefined.}
 
 Using undefined values is a common cause of program
-bugs.  % Suppose a program uses the variable \verb!str! without giving it an
+bugs.  
+% Suppose a program uses the variable \verb!str! without giving it an
 % initial value and suppose that, on the computer the programmer is using,
 % the initial value in \verb!num! happens to be zero and that, by happy chance,
 % zero is just what the programmer wants it to be.
@@ -388,14 +400,14 @@ bugs.  % Suppose a program uses the variable \verb!str! without giving it an
 % computer, does not work on the second one.
 %
 To prevent yourself from using undefined values, you can give a variable
-an initial value when you declare it.  If you wanted \verb!str! to begin
+an initial value when you declare it.  For example, if you wanted \verb!str! to begin
 with empty, you should declare it thus:
 
 \begin{Verbatim}
       String str = ""
 \end{Verbatim}
 
-This is very like assignment since we are giving a value to \verb!str! but
+This is very like assignment since we are giving a value to \verb!str!. But
 this is a special case where \verb!str! did not have any defined value before,
 so it is known as \emph{initialisation.}
 
@@ -414,8 +426,8 @@ ones in these introductory notes are both definitions and declarations.
 \subsection*{Exercise B}
 
 Now see if you can write a program in Groovy that takes
-two words from the keyboard and outputs one after the other. E.g., if
-you keyed in ``Humpty'' and ``Dumpty'' 
+two words from the keyboard and outputs one after the other on the same line. 
+E.g., if you keyed in ``Humpty'' and ``Dumpty'' 
 it would reply with ``Humpty Dumpty'' (note the space in between).
 A run of the program should look like this:
 \begin{Verbatim}
@@ -431,3 +443,4 @@ You have typed: Humpty Dumpty
 %%% Local Variables:
 %%% TeX-master: "primer"
 %%% End:
+

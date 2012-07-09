@@ -1,4 +1,4 @@
-\section{Loops, booleans, package}
+\section{Loops and booleans}
 
 How would you write a program to add up a series of numbers?
 If you knew that there were, say, four numbers, you might write
@@ -7,8 +7,8 @@ this program:
 \VerbatimInput[frame=single,label=Example]{src/s3Example.groovy}
 
 But a similar program to add up 100 numbers would be very long.
-More seriously, each program would be tailor-made for a particular
-number of numbers.  It would be better if we could write a program
+More seriously, each program would need to be tailor-made for a particular
+number of numbers.  It would be better if we could write one program
 to handle \emph{any} series of numbers.  We need a \emph{loop.}
 
 One way to create a loop is to use the keyword \texttt{while}.
@@ -16,7 +16,11 @@ For example:
 
 \VerbatimInput[frame=single,label=Example]{src/s3Example2.groovy}
 
-Having initialized the variable \texttt{num} to zero, it checks
+It is not essential to indent the lines inside the loop, but it makes the
+program easier to read and it is a good habit to get into.
+
+
+Having initialized the variable \texttt{num} to zero, the program checks
 whether the value of \texttt{num} is less than 100.  It is, so it
 enters the loop.  Inside the loop, it adds 5 to the value of
 \texttt{num} and then outputs this value (so the first thing that
@@ -24,20 +28,20 @@ appears on the screen is a \texttt{5}).  Then it goes back to the
   \texttt{while} and checks whether the value of \texttt{num} is less than
 100.  The current value of \texttt{num} is 5, which is less than 100,
 so it enters the loop again.  It adds 5 to \texttt{num}, so
-\texttt{num} takes the value 10, and outputs this value.  It goes back
+\texttt{num} takes the value 10, and then outputs this value.  It goes back
 to the \texttt{while}, checks whether 10 is less than 100 and enters
 the loop again.  It carries on doing this with \texttt{num} getting
 larger each time round the loop.  Eventually \texttt{num} has the
 value 95. As 95 is still less than 100, it enters the loop again, adds 5 to
 \texttt{num} to make it 100 and outputs this number.  Then it goes
 back to the \texttt{while} and this time sees that \texttt{num} is not
-less than 100.  So it stops looping and goes on to the line beyond the
+less than 100.  So it stops looping and goes on to the line after the
 end of the loop.  (In the case of this program, there are no more
 lines, so it finishes.)  The output of this program is the numbers 5,
 10, 15, 20 and so on up to 95, 100.
 
 Note the use of curly braces to mark the start and end of the loop.
-Each time round the loop it does everything inside the curly braces.
+Each time round the loop the program does everything inside the curly braces.
 When it decides not to execute the loop again, it jumps to the point
 beyond the closing brace.
 
@@ -49,7 +53,7 @@ It would add 5 to \texttt{num,} making 100.
 It would now decide that 100 was not equal to 99 and would go round the
 loop again.  Next time \texttt{num} would have the value 105, then 110,
 then 115 and so on.  The value of \texttt{num} would never be equal to 99
-and the computer would carry on for ever.  This would be an example of
+and the computer would carry on for ever.  This is an example of
 an \emph{infinite loop}.
 
 Note that the computer makes the test \emph{before} it enters the loop.
@@ -59,8 +63,8 @@ test whether this value was greater than zero.  Zero is not greater than
 zero, so it would not enter the loop.  It would skip straight to the end
 of the loop and finish, producing no output.
 
-It is not essential to indent the lines inside the loop, but it makes the
-program easier to read and it is a good habit to get into.
+% It is not essential to indent the lines inside the loop, but it makes the
+% program easier to read and it is a good habit to get into.
 
 \subsection*{Exercise A}
 
@@ -71,10 +75,10 @@ Write a program that outputs the squares of all the numbers from 1 to
 
 So far we have just used integer and string variables.  But we can
 have variables of other types and, specifically, we can have
-\emph{boolean} variables, which in Groovy are variables of type
-\texttt{boolean}\footnote{The word ``boolean'' was coined in honour of an
-Irish mathematician of the nineteenth century called \emph{George
-  Boole}}.  A variable of type \texttt{boolean} does not hold numbers;
+\emph{boolean} variables\footnote{The word ``boolean'' was coined in honour of an
+Irish mathematician of the nineteenth century called \emph{George Boole}}.  
+In Groovy, these are variables of type \texttt{boolean}.
+A variable of type \texttt{boolean} does not hold numbers;
 it can hold just the values \texttt{true} and \texttt{false}.  We
 might declare and initialize a boolean variable thus:
 
@@ -83,7 +87,7 @@ might declare and initialize a boolean variable thus:
 \end{Verbatim}
 
 Note that we do not have quote marks around the word \texttt{true}.  
-\texttt{true}, without quote marks, is not a string; it's the name of a
+The word \texttt{true}, without quote marks, is not a string; it's the name of a
 boolean value.  Contrast it with:
 
 \begin{Verbatim}
@@ -123,7 +127,7 @@ The expression on the right-hand side, the \texttt{num >= 0}, is a
 boolean expression.  That is, when we evaluate it, we get a boolean value
 (true/false) as the result.  And of course a boolean value is exactly the
 right kind of thing to assign to a boolean variable.  You can achieve
-the same effect by the more long-winded:
+the same effect by the following more long-winded statement:
 
 \begin{Verbatim}
     if (num >= 0) {
@@ -145,9 +149,10 @@ the value of \texttt{positive}, we need only write
 
 You can write \texttt{if (positive == true)} if you prefer, but the
 \texttt{== true} 
-is redundant.  \texttt{positive} itself is either true or false.  Once the
-computer has evaluated \texttt{positive} (established whether it is true or
-false) there is nothing more to do.  We can also write
+is redundant.  \texttt{positive} itself is either true or false.  
+%Once the computer has evaluated \texttt{positive} 
+%(established whether it is true or false) there is nothing more to do.  
+We can also write
 
 \begin{Verbatim}
     if (!positive)
@@ -157,15 +162,16 @@ false) there is nothing more to do.  We can also write
   (positive == false)}. If \texttt{positive} is true, then not
 \texttt{positive} is false, and vice-versa. 
 
-Boolean variables are often called \emph{flags}.  The idea is that,
-leaving aside subtleties such as half-mast, a flag has basically two states
+Boolean variables are often called \emph{flags}.  The idea is that
+% , leaving aside subtleties such as half-mast, 
+a flag has basically two states
 --- either it's flying or it isn't.
 
 So far we have constructed simple boolean expressions using the operators
 introduced in the last chapter --- \texttt{(x == y), (s >= t)} and so on ---
-now augmented with negation~(``!'').
+now augmented with negation~(\verb+!+).
 We can make more complex boolean expressions by joining simple ones
-with \emph{and} (\verb!&&!) and \emph{or} (\texttt{||}).  For example,
+with the operators \emph{and} (\verb!&&!) and \emph{or} (\texttt{||}).  For example,
 we can express ``if x is a non-negative odd number'' as
 \verb+if (x >= 0 && x \% 2 == 1)+. We can express ``if the name begins
 with an A or an E'' as \texttt{if (name.substring(0,1) == "A" ||
@@ -233,24 +239,25 @@ Each time round the loop, the computer reads a new value into \texttt{num}
 and adds it to \texttt{total}. So \texttt{total} holds the total of all
 the values input so far.
 
-Actually it only adds  \texttt{num} to \texttt{total} if a new number
-has been entered. There are two main reasons why this could not be the
-case. The first is that there are no more numbers to input.
+Actually the program only adds  \texttt{num} to \texttt{total} if a (non-zero) 
+number has been entered. 
 % The user will signal that there are no more numbers by keying in a special
 % character.  (On Unix this is a Control-D; on PCs it is usually a Control-Z.
 % If this is gobbledygook to you, just imagine that the user strikes a special
 % key on the keyboard.)  
-The other reason is that the input might have failed
-because what was entered was not an integer --- perhaps the user entered
-a letter or a punctuation mark.  If the program is expecting an integer
-and instead receives something like ``abc'' or ``W'' or ``**!'', the input will fail.
+If the user enters something other than an integer 
+--- perhaps a letter or a punctuation mark --- 
+then the parsing of the input will fail 
+and the program will stop, giving an error message.
+% If the program is expecting an integer
+% and instead receives something like ``abc'' or ``W'' or ``**!'', the input will fail.
 % We can test whether the input has finished with the line \texttt{if (sc.hasNext())}.
 % If this is false, then there is no more input available and we set \texttt{finished} to \texttt{true}
 % in order to terminate the loop.
 
 A real-life program ought not to respond to a user error by aborting
 with a terse error message, though regrettably many of them do.
-However, dealing with the problem properly would make this little program
+However, dealing with this problem properly would make this little program
 more complicated than I want it to be at this stage.
 
 \textbf{You have to take some care in deciding whether a line should go in the
@@ -277,9 +284,9 @@ you would get 4, 9, 15, 22 and then 30.
 
 \subsection*{Exercise C}
 
-Write a program that reads a series of numbers and then tells you how
-many numbers you have keyed in.  For example, if you keyed in the
-numbers~5, 10, 50, 22, 945, and~12, it would output ``You have entered 6
+Write a program that reads a series of numbers, ending with 0, and then tells you how
+many numbers you have keyed in (other than the last 0).  For example, if you keyed in the
+numbers~5, -10, 50, 22, -945, 12, 0 it would output ``You have entered 6
 numbers.''.
 
 
@@ -309,3 +316,4 @@ numbers.''.
 %%% mode: latex
 %%% TeX-master: "main"
 %%% End:
+

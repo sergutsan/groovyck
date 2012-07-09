@@ -1,19 +1,18 @@
-\section{Arithmetic expressions}
+\section{Variables, identifiers and expressions}
 
-In this section we will discuss arithmetic expressions, identifiers
-and comments, numeric (integer) variables, conditionals, two-way
-branches, and the ASCII code set.
+In this section we will discuss integer variables, arithmetic expressions, 
+identifiers, comments, and string variables.
 
 \subsection{Integer variables}
 
 As well as variables of type \verb!String! we can have variables of
 type \verb!int!. We call them integer variables or just
-\emph{integers}. Integers can contain any\footnote{Actually, computers
-  are finite and therefore they put limits to the possible values for an
+\emph{integers}. Integers can contain any\footnote{Actually, a computer's memory
+  is finite and therefore they put limits to the possible values for an
   integer variable, but they are big enough for most programs.}
 integer value like~0,~-1,~-200, or~1966.
 
-We could declare an \verb!int! variable as follows:
+We would declare an \verb!int! variable called \verb!i! as follows:
 
 \begin{Verbatim}
     int i
@@ -25,7 +24,7 @@ and also initialise it if we wanted to:
     int i = 0
 \end{Verbatim}
 
-We can change the value of an integer with assignment:
+We can change the value of an integer with an assignment:
 
 \begin{Verbatim}
     i = 1
@@ -49,9 +48,9 @@ which results in \verb.i. having the value 4.
 \subsection*{Integers and strings}
 \label{sec:intstr}
 
-You have probably noted that, when dealing with integer
-variables, the symbol ``+'' represents addition of numbers while ---as
-we saw in the last section--- when dealing with strings the same
+You have probably noticed that, when dealing with integer
+variables the symbol ``+'' represents addition of numbers, while --- as
+we saw in the last section --- when dealing with strings the same
 symbol represents concatenation. Therefore, the statement
 
 \begin{Verbatim}
@@ -65,9 +64,10 @@ while the statement
     int n = 10 + 7
 \end{Verbatim}
 
-results in \verb+n+ having the value 17, not 107. What happens if we
-mix integer and string variables? In that case, Groovy converts all
-integers to strings and the small program
+results in \verb+n+ having the value 17 (not 107). What happens if we
+mix integer and string variables when using ``+'' ? 
+In that case, Groovy converts the integers to strings and performs
+concatenation. For example, the small program
 
 \begin{Verbatim}
     String str = "My name is " + "Inigo Montoya"
@@ -79,7 +79,7 @@ integers to strings and the small program
 will print on the screen ``My name is Inigo Montoya and I am 17''. It
 is important to know that the same symbol can be used for different
 things, but we will come to this later again; now let's go back to
-making programs with a bit of maths in them using integer variables.
+writing programs with a bit of maths in them using integer variables.
 
 \subsection{Reading integers from the keyboard}
 \label{sec:intkeyboard}
@@ -89,19 +89,22 @@ from the keyboard,
 using \verb+System.console().readLine()+. We can use the same command
 to read a number\ldots but the computer will not know it is a number,
 it will think it is a string of characters. If we want to tell the
-computer that a number \emph{is} a number, we need to convert it. We
-can do it easily by \emph{parsing} it with the command
+computer that a sequence of characters \emph{is} a number, we need to convert it. 
+We can do this easily by \emph{parsing} it using the command
 \verb+Integer.parseInt()+: 
 
 \VerbatimInput[frame=single,label=Example]{src/s2Example1.groovy}
 
 When we parse a string that contains an integer we obtain an integer
-with the right value. If we try to parse something that is not an
-integer (for example, a word) the program will terminate with an error
+with the correct value. If we try to parse a string that is not an
+integer (for example, the word ``Tom'') the program will terminate with an error
 message on the screen. If we do not parse the string and use it as if
-it was an integer, the results will be crazy and unpredictable. This
+it was an integer, the results will be unpredictable. This
 is a common source of errors in programs. You can check for yourself
-what happens if you do not parse the string in the former example. 
+what happens if you do not parse the string in the former example e.g.
+what happens with this program:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example1_noParsing.groovy}
 
 Now, assuming that you read your integers and always remember to parse
 them, what maths can you do with them?
@@ -119,15 +122,15 @@ Groovy uses the following arithmetic operators (amongst others):
 \verb!%! & modulo\\
 \end{tabular}
 
-The last one is perhaps unfamiliar.  The result of \verb!x \% y! (``x mod y'')
+The last one is perhaps unfamiliar.  The result of \verb!x % y! (``x mod y'')
 is the remainder that you get after dividing the integer x by the integer y.
 For example, \verb!13 % 5! is \verb!3!; \verb!18 % 4! is \verb!2!; 
 \verb!21 % 7! is \verb!0!, and \verb!4 % 6 is 4! (6 into 4 won't go, 
-remainder 4).  \verb!num = 20 \% 7! would assign the value 6
+remainder 4).  \verb!num = 20 % 7! would assign the value 6
 to \verb!num!.
 
-How does the computer evaluate an expression if there is more than one
-operator in it? For example, given \verb!2 + 3 * 4!, does it do the
+How does the computer evaluate an expression containing more than one
+operator? For example, given \verb!2 + 3 * 4!, does it do the
 addition first, thus getting \verb!5 * 4!, which comes to 20, or does
 it do the multiplication first, thus getting \verb!2 + 12!, which
 comes to 14?  Groovy, in common with other programming languages and
@@ -157,9 +160,9 @@ screen.
 
 \subsection*{Exercise A}
 
-Write down the output of this program without executing it:
+Write down the output of the above program without executing it.
 
-\VerbatimInput[frame=single,label=Example]{src/s2Example.groovy}
+% \VerbatimInput[frame=single,label=Example]{src/s2Example.groovy}
 
 Now execute it and check if you got the right values. Did you get them
 all right? If you got some wrong, why was it?
@@ -197,11 +200,11 @@ Programmers often use very short names for variables, such as
 \verb!i!, \verb!n!, or 
 \verb!x! for integers.  There is no harm in this if the variable is used to
 do an obvious job, such as counting the number of times the program goes round
-a loop and its purpose is immediately clear from the context.  If, however, its
+a loop, and its purpose is immediately clear from the context.  If, however, its
 function is not so obvious, it should be given a name that
 gives a clue as to the role it plays in the program.  If a variable is
 holding the total of a series of integers and another is holding the
-largest of a series of integers, for example, call them \verb!total!
+largest of a series of integers, for example, then call them \verb!total!
 and \verb!max! rather than \verb!x! and \verb!y!.
 
 The aim in programming is to write programs that are ``self-documenting'',
@@ -232,7 +235,7 @@ statements of the obvious such as:
 \end{Verbatim}
 
 Judicious use of comments can add greatly to a program's readability, but they
-are second best to self-documentation.  Their weakness is that it is all too
+are second-best to self-documentation.  Their weakness is that it is all too
 easy for a programmer to modify the program but forget to make any
 corresponding modification to the comments, so the comments no longer quite
 go with the program.  At worst, the comments can become so out-of-date as
@@ -250,15 +253,19 @@ first-choice, 2nd_choice, third_choice
 \subsection{A bit more on String variables}
 
 We have done already many things with string variables: we have
-created them, printed them on the screen, even concatenated many of
+created them, printed them on the screen, even concatenated several of
 them together to get a longer value. But there are many other useful
 things we can so with strings. 
 
 For example, if you want to know how long a string is, you can find
 out with the \verb!length()! 
-method. If  \verb!str! is the string, \verb!str.length()! is the
-length. Do not forget the dot or the brackets: methods always start
-with a dot and end with brackets\footnote{Now you can see that
+{\em method}\footnote{A method is a named sequence of instructions. We 
+{\em call} the method using its name in order to execute its instructions.
+We can call a method without knowing what instructions it consists of, so
+long as we know what it does.}. 
+If  \verb!str! is the string, then \verb!str.length()! gives its 
+length. Do not forget the dot or the brackets: methods are always 
+prefixed with a dot and followed by brackets\footnote{Now you can see that
   console() and readLine() are also methods.} (sometimes empty,
 sometimes not). You could say, for example:
 
@@ -269,16 +276,16 @@ sometimes not). You could say, for example:
     println "The string " + str + " has " + len + " characters."
 \end{Verbatim}
 
-And you can obtain a substring of a string with the \verb!substring! function.
+You can obtain a substring of a string with the \verb!substring! method.
 For example if the string \verb!s! has the value ``\verb!Silverdale!'', then
 \verb!s.substring(0,6)! will give you the first six letters, i.e., the string
 ``\verb!Silver!''.  The first number in brackets after the \verb!substring!
 says where you want the substring to begin, and the second number says
 where you want it to end. \emph{Note that the initial character of the string
-is at position~0, not position~1}.  If you leave out the second number,
+is treated as being at position~0, not position~1}.  If you leave out the second number,
 you get the rest of the string.  For example, \verb!s.substring(6)! would
 give you ``\verb!dale!'', i.e., the tail end of the string beginning at
-character 6 ('d' is character 6, not 7, because the first one is
+character 6 ('d' is character 6, not 7, because the 'S' character is
 character 0). 
 
 You can output substrings with \verb!print! or assign them to other
@@ -301,3 +308,4 @@ Then run the program and see if you were right.
 %%% mode: latex
 %%% TeX-master: "main"
 %%% End:
+
