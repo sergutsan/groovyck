@@ -1,4 +1,4 @@
-if (examMark >= 40) 
+if (examMark >= 50) 
 {
     println "A satisfactory result!"
     println "You may proceed with your project."

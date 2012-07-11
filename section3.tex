@@ -153,9 +153,11 @@ them into a programming unit called a \emph{block}\footnote{A block
 
 \VerbatimInput[frame=single,label=Example]{src/s2Example9.groovy}
 
-If the exam mark is $>$= 50, the whole of the block is executed and both
+If the exam mark is greater than or equal to 50, 
+the whole of the block is executed and both
 lines ``A satisfactory result!'' and ``You may proceed with your
-project.'' will be printed.  If the mark is $<$~50, the computer skips to
+project.'' will be printed.  If the mark is lower than 50, 
+the computer skips to
 the \verb!else! and executes the ``I'm afraid'' line.
 
 You will find that different programmers, and different textbooks, have
@@ -173,21 +175,24 @@ had done exceptionally well. Our first thought might be as follows:
 
 \VerbatimInput[frame=single,label=Example]{src/s2Example11.groovy}
 
-But this would not work quite right.  It's OK for candidates with marks $<$~70,
-but candidates with marks $>$= 70 would give the following output:
+But this would not work quite right.  It's OK for candidates with
+marks below 70,
+but candidates with marks greater than or equal to 70 
+would give the following output:
 
 \begin{Verbatim}
-An exceptional result
-We expect a first-class project from you.
-A satisfactory result
-You may proceed with your project.
+    An exceptional result
+    We expect a first-class project from you.
+    A satisfactory result
+    You may proceed with your project.
 \end{Verbatim}
 
-The problem is that if a mark is $>$= 70, it is also $>$~50.  The first
+The problem is that if a mark is greater then or equal to~70, it is
+also greater than~50.  The first
 condition is true, so we get the ``exceptional'' part, but then the second
 condition is also true, so we get the ``satisfactory'' part.  We want to
-proceed to the $>$= 50 test only if the mark is $<$~70.  We need another
-\verb!else!:
+proceed to the greater than~50 test only if the mark is below~70.
+We need another \verb!else!:
 
 \VerbatimInput[frame=single,label=Example]{src/s2Example12.groovy}
 

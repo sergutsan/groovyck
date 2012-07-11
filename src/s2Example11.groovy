@@ -2,8 +2,8 @@ if (examMark >= 70) {
     println "An exceptional result!"
     println "We expect a first-class project from you."
 }
-if (examMark >= 40) {
-    println "A satisfactory result" << endl
+if (examMark >= 50) {
+    println "A satisfactory result"
     println "You may proceed with your project."
 }
 else {
