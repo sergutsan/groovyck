@@ -109,9 +109,105 @@ your files in this folder. Moving on\ldots
 \label{sec:keep-track-chang}
 
 Now it is time to write some code. For example, we could create a
-simple \emph{Hello World} application in Groovy.
+simple \emph{Hello World} application in Groovy. In other words, we
+will edit a file called \verb+helloworld.groovy+ and write on it:
 
 \begin{verbatim}
     print "Hello World!"
 \end{verbatim}
+
+If we execute this little program, it will print the words ``Hello
+World!'' on the screen. So far, so good. Time to start filling up our
+version journal! 
+
+The first step is to tell Git that we want to keep track of this
+file. In other words, we \emph{add} it to the list of files under
+Git's responsibility. 
+
+\begin{verbatim}
+    > git add helloworld.groovy
+\end{verbatim}
+
+And now we must perform the most important operation in any version control
+system: \emph{committing} our changes. 
+
+\begin{verbatim}
+    > git commit
+\end{verbatim}
+
+You will be asked to introduce some description of this \emph{commit}
+is about. Git adds automatically information about which files are
+committed and what changes have been performed on them. The programmer
+must provide some additional information, a short message to explain
+to other programmers what the changes are about. Note that ``other
+programmers'' can be yourself in two weeks time, when you have
+forgotten what you committed at this point. Typical messages are
+``First commit'', ``Fixed bug #1304'', ``Added a new feature
+for\ldots''; examples of bad non-informative commit messages are ``new
+commit'', ``More code'', or ``Fixed it AT LAST!''. Write whatever you
+want, but make a (small) effort to think what message will be useful
+for people reading it in the future.
+
+When you finish writing your commit description, save it and close the
+editor. The commit will be performed, and you will be given some
+output from Git. That output will include information about the
+branch, the identifier for this commit, your commit text, and some
+statistics about what the commit did (\emph{see
+  Figure~\ref{fig:git-example-1}}). 
+
+\begin{figure}[htbp!]
+  \centering
+  % TODO
+  \caption{Example of commit message in Git}
+  \label{fig:git-example-1}
+\end{figure}
+
+Now your project has a history! It looks more or less like this:
+
+\begin{figure}[htbp!]
+  \centering
+  % TODO
+  \caption{Initial history of this project}
+  \label{fig:git-example-2}
+\end{figure}
+
+Let's say we are not happy with our program. It does not do much. We
+can modify the program to look like this:
+
+
+\begin{verbatim}
+    println "Hello World!"
+    println "What's your name?"
+    String s = System.console().readline()
+    println "Hello " + s + "!"
+\end{verbatim}
+
+Now we can commit again (\verb+git add helloworld.groovy+,
+\verb+git commit+, plus a commit description). Then we try to run
+it\ldots Groovy will complain. We have messed up! At this point, we
+have two options:
+
+\begin{itemize}
+\item If we know where the problem is (and in this simple example, we
+  do) we can just fix it and commit again. A good commit message would
+  be ``Fixed typo in line 3: readline() should be readLine()''.
+\item If we did not know where the problem is, as it is usually the
+  case in big programs, we can go back until we find the commit in
+  which the problem started. Looking at the changes on that commit we
+  can see how the \emph{bug} was introduced. Thanks to version
+  control, finding bugs is much easier. 
+\end{itemize}
+
+The simplest way to travel in time is by looking at the change log of
+a file, and we are going to see how to do that in the next section. 
+
+\section{Time travel with Git}
+\label{sec:time-travel-with}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
 
