@@ -16,15 +16,14 @@
 %\SetWatermarkFontSize{20cm}
 %\SetWatermarkScale{5.0} 
 
-\title{A Short Introduction to Computer Programming\\
-  Using Groovy}
-\author{Sergio Gutierrez-Santos and Keith Mannock\\
-  (based on an earlier document by Roger Mitton)\\
+\title{An Introduction to Computer Programming\\
+  Using Groovy} % and maybe Java Decaf in the future
+\author{Sergio Gutierrez-Santos\\
   Birkbeck, University of London}
 
 \date{\InputIfFileExists{version.txt}
      {v}
-     {\emph{``version.txt'' not found}}}
+     {version unkown}} % "version.txt" not found
 
 \pagestyle{plain}
 
@@ -47,9 +46,9 @@
 
 \vfill
 
-\noindent This document forms part of the pre-course reading for
-several MSc courses at Birkbeck, and it is required pre-interview
-reading for the MSc Computer Science.
+% \noindent This document forms part of the pre-course reading for
+% several MSc courses at Birkbeck, and it is required pre-interview
+% reading for the MSc Computer Science.
 
 %\vfill 
 
@@ -65,7 +64,14 @@ reading for the MSc Computer Science.
 sort of problem (e.g.,
 downloading or installing Groovy on your computer), please send an
 email to Sergio Gutierrez-Santos (\emph{sergut@dcs.bbk.ac.uk}).
-\newpage
+
+\textbf{Acknowledgements: } I am in great debt with Roger Mitton and
+Keith Mannock for their invaluable help in the initial stages of
+preparing this document. Thanks to all reviewers that have helped to
+find typos, errors, and omisions. Although they are too numerous to
+mention them all, I could not go without mentioning Alexandra
+Poulovassilis. Any errors that you, my dear reader, may still find are
+only my own fault. \newpage
 
 \input{section1-Intro,basicIO,variables}
 \newpage
@@ -129,12 +135,15 @@ email to Sergio Gutierrez-Santos (\emph{sergut@dcs.bbk.ac.uk}).
 % Week 10: Concurrency
 % \item Concurrent programming
 
+\appendix
 
 \section{Summary of the language features mentioned in this introduction}
 \input{cheatsheet}
 \newpage
 
 \input{install}
+
+\input{git}
 
 \end{document}  
 
