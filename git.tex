@@ -66,4 +66,52 @@ etc). And we will use a program for doing so called \emph{Git}.
 \section{Git}
 \label{sec:git}
 
-There are many programs for performing source code ...
+There are many programs for performing source code version control
+nowadays. For this course, we are using Git, a version control system
+created by Linus Torvalds, the same guy that created Linux. It is not
+difficult to use but it is very powerful. 
+
+Other very common version control systems are Subversion (also known
+as svn) and Mercurial. There are many more. There are many sources
+online, starting with Wikipedia, that will tell you the history of
+version control, the differences between different systems, and much
+more. I encourage you to go and read about it if you think the topic
+is fascinating. If you just want to learn to use Git to help you in
+your life as a programmer, this section will help you learn the
+basics. 
+
+As you can imagine, a full book could be written about all the
+possibilities and options that come with Git. Actually, there are
+several of them already. In this section I will only present the most
+important 10\% of Git, which will take you 90\% of the way. 
+
+\section{Starting a new project}
+\label{sec:starting-new-project}
+
+Let's start by creating a new programming project. Create a new folder
+where you will put your programs. Now we want to start keeping track
+of all changes. Assuming Git is installed in your system, and that you
+are on the right folder, you only need to type \verb+git init+. With
+this simple command, you have told Git to \emph{be ready} to keep 
+track of whatever happens in this folder. So the full initialisation
+of a complex complete version control system with Git looks like this: 
+
+\begin{verbatim}
+    > mkdir MyProject
+    > cd MyProject
+    > git init
+\end{verbatim}
+
+That was easy, wasn't it? Now you can keep track of all changes to
+your files in this folder. Moving on\ldots
+
+\section{Keeping track of changes}
+\label{sec:keep-track-chang}
+
+Now it is time to write some code. For example, we could create a
+simple \emph{Hello World} application in Groovy.
+
+\begin{verbatim}
+    print "Hello World!"
+\end{verbatim}
+
