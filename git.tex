@@ -1,0 +1,69 @@
+\section{Source code version control}
+\label{sec:source-code-version}
+
+What is version control? It is something as simple (and as difficult
+to make right) as keeping track of changes in some piece of work. You
+are probably familar with some very rudimentary version of version
+control. Have you ever listed the documents in a folder and seen
+something similar to this?
+
+\begin{itemize}
+\item myDocument
+\item myDocument-2
+\item myDocument-3
+\item myDocument-final
+\item myDocument-final2
+\item myDocument-final-final
+\item myDocument-definitive
+\item myDocument-defitive-USE-THIS-ONE
+\end{itemize}
+
+If so, you already understand the most important idea behind version
+control: our work is never created in one go, it changes over time and
+sometimes we want to make sure we can go back in time to a former
+version of it\ldots just in case. 
+
+Many modern programs have version control embedded into them,
+e.g. word processors like Microsoft Word, OpenOffice Write, or Google
+Docs (also known as Google Drive). Very often they just track the
+changes made to the document, sometimes they allow the user to go back
+and forth in time to review, accept, or discard changes. This is also
+very common in wiki sites like the Wikipedia. 
+
+% TODO: add a screenshot of the version control in wikipedia here. 
+
+Version control systems were initially created to track changes in
+\emph{source code}. They were created by programmers for
+programmers. We have come a long way since those days, and now version
+control is spread over many different applications, but they still aim
+at two main features: 
+
+\begin{description}
+\item[Reversibility: ] the capacity of going back in time if you mess
+  up and introduce bugs in your code; sorry, \emph{when} you introduce
+  bugs in your code.
+\item[Concurrency: ] the capacity of working together with other
+  people on the same project, on the same file. 
+\end{description}
+
+These two capacities are basic for any modern programmer, and that is
+why version control is (or should be) part of every programmer's daily
+life. Modern programs are big and complex, and several programmers
+work on them. Without appropriate version control, they cannot work at
+the same time: they need to take turns, pass the baton\ldots this is
+really unproductive, good programmers do not work like
+that. Additionally, programmers ---even good programmers, as long as
+they are human--- make mistakes all the time, sometimes serious
+mistakes that break their programs completely, and they need to go
+back in time to the point where everything was working fine and start
+again (in large and complicated programs, this can be a long time
+before).
+
+In this chapter we will learn to make version control on your source
+code files \emph{right}, not as shown above (myProgramOLD.groovy,
+etc). And we will use a program for doing so called \emph{Git}.
+
+\section{Git}
+\label{sec:git}
+
+There are many programs for performing source code ...
