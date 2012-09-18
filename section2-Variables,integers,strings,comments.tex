@@ -1,0 +1,311 @@
+\section{Variables, identifiers and expressions}
+
+In this section we will discuss integer variables, arithmetic expressions, 
+identifiers, comments, and string variables.
+
+\subsection{Integer variables}
+
+As well as variables of type \verb!String! we can have variables of
+type \verb!int!. We call them integer variables or just
+\emph{integers}. Integers can contain any\footnote{Actually, a computer's memory
+  is finite and therefore they put limits to the possible values for an
+  integer variable, but they are big enough for most programs.}
+integer value like~0,~-1,~-200, or~1966.
+
+We would declare an \verb!int! variable called \verb!i! as follows:
+
+\begin{Verbatim}
+    int i
+\end{Verbatim}
+
+and also initialise it if we wanted to:
+
+\begin{Verbatim}
+    int i = 0
+\end{Verbatim}
+
+We can change the value of an integer with an assignment:
+
+\begin{Verbatim}
+    i = 1
+\end{Verbatim}
+
+or, if we had two integers \verb!i! and \verb!j!:
+
+\begin{Verbatim}
+    i = j
+\end{Verbatim}
+
+We can even say that \verb.i. takes the result of adding two numbers
+together:
+
+\begin{Verbatim}
+    i = 2 + 2
+\end{Verbatim}
+
+which results in \verb.i. having the value 4. 
+
+\subsection*{Integers and strings}
+\label{sec:intstr}
+
+You have probably noticed that, when dealing with integer
+variables the symbol ``+'' represents addition of numbers, while --- as
+we saw in the last section --- when dealing with strings the same
+symbol represents concatenation. Therefore, the statement
+
+\begin{Verbatim}
+    String str = "My name is " + "Inigo Montoya"
+\end{Verbatim}
+
+results in \verb+str+ having the value ``My name is Inigo Montoya'',
+while the statement
+
+\begin{Verbatim}
+    int n = 10 + 7
+\end{Verbatim}
+
+results in \verb+n+ having the value 17 (not 107). What happens if we
+mix integer and string variables when using ``+'' ? 
+In that case, Groovy converts the integers to strings and performs
+concatenation. For example, the small program
+
+\begin{Verbatim}
+    String str = "My name is " + "Inigo Montoya"
+    int n = 10 + 7
+    String text = str + " and I am " + n
+    println text
+\end{Verbatim}
+
+will print on the screen ``My name is Inigo Montoya and I am 17''. It
+is important to know that the same symbol can be used for different
+things, but we will come to this later again; now let's go back to
+writing programs with a bit of maths in them using integer variables.
+
+\subsection{Reading integers from the keyboard}
+\label{sec:intkeyboard}
+
+In the last section, we saw how we can read a string of characters
+from the keyboard, 
+using \verb+System.console().readLine()+. We can use the same command
+to read a number\ldots but the computer will not know it is a number,
+it will think it is a string of characters. If we want to tell the
+computer that a sequence of characters \emph{is} a number, we need to convert it. 
+We can do this easily by \emph{parsing} it using the command
+\verb+Integer.parseInt()+: 
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example1.groovy}
+
+When we parse a string that contains an integer we obtain an integer
+with the correct value. If we try to parse a string that is not an
+integer (for example, the word ``Tom'') the program will terminate with an error
+message on the screen. If we do not parse the string and use it as if
+it was an integer, the results will be unpredictable. This
+is a common source of errors in programs. You can check for yourself
+what happens if you do not parse the string in the former example e.g.
+what happens with this program:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example1_noParsing.groovy}
+
+Now, assuming that you read your integers and always remember to parse
+them, what maths can you do with them?
+
+\subsection{Operator precedence}
+\label{sec:prec}
+
+Groovy uses the following arithmetic operators (amongst others):
+
+\begin{tabular}{ll}
+\verb!+! & addition\\
+\verb!-! & subtraction\\
+\verb!*! & multiplication\\
+\verb!/! & division\\
+\verb!%! & modulo\\
+\end{tabular}
+
+The last one is perhaps unfamiliar.  The result of \verb!x % y! (``x mod y'')
+is the remainder that you get after dividing the integer x by the integer y.
+For example, \verb!13 % 5! is \verb!3!; \verb!18 % 4! is \verb!2!; 
+\verb!21 % 7! is \verb!0!, and \verb!4 % 6 is 4! (6 into 4 won't go, 
+remainder 4).  \verb!num = 20 % 7! would assign the value 6
+to \verb!num!.
+
+How does the computer evaluate an expression containing more than one
+operator? For example, given \verb!2 + 3 * 4!, does it do the
+addition first, thus getting \verb!5 * 4!, which comes to 20, or does
+it do the multiplication first, thus getting \verb!2 + 12!, which
+comes to 14?  Groovy, in common with other programming languages and
+with mathematical convention in general, gives precedence to *, / and
+\% over + and \verb!-!.  This means that, in the example, it does the
+multiplication first and gets 14.
+
+If the arithmetic operators are at the same level of precedence, it
+takes them left to right.  \verb!10 - 5 - 2! comes to 3, not 7.  You
+can always override the order of precedence by putting brackets into
+the expression; (2 + 3) * 4 comes to 20, and \verb!10 - (5 - 2)! comes
+to 7.
+
+Some words of warning are needed about division. First, remember that
+\verb-int- variables can only store integer values. If you try to
+store the result of a division in an \verb-int- variable, you will
+store only the integer part and lose the decimal part. Try to
+understand what the following program does:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example.groovy}
+
+A computer would get into difficulty if it tried to divide by zero.
+Consequently, the system makes sure that it never does.
+If a program tries to get the computer to divide by zero, the program
+is unceremoniously terminated, usually with an error message on the
+screen.
+
+\subsection*{Exercise A}
+
+Write down the output of the above program without executing it.
+
+% \VerbatimInput[frame=single,label=Example]{src/s2Example.groovy}
+
+Now execute it and check if you got the right values. Did you get them
+all right? If you got some wrong, why was it?
+
+
+\subsection{Identifiers and comments}
+
+I said earlier that you could use more or less any names for your variables.
+I now need to qualify that.
+
+The names that the programmer invents are called \emph{identifiers}.  The
+rules for forming identifiers are that the first character can be a letter
+(upper or lower case, usually the latter) and subsequent characters
+can be letters or digits 
+or underscores.  (Actually the first character can be an underscore but
+identifiers beginning with an underscore are often used by system programs
+and are best avoided.)  Other characters are not allowed.  Groovy is
+case-sensitive, so \verb!Num!, for example, is a different identifier from
+ \verb!num!.
+
+The only other restriction is that you cannot use any of the language's keywords
+as an identifier.  You couldn't use \verb!int! as the name of a variable,
+for example. There are many keywords but most of them are words that you
+are unlikely to choose. 
+Ones that you might accidentally hit upon are \texttt{break},
+\texttt{case}, \texttt{catch}, \texttt{class}, \texttt{const},
+\texttt{continue}, \texttt{double}, \texttt{final}, \texttt{finally},
+\texttt{float}, \texttt{import}, \texttt{long}, \texttt{new},
+\texttt{return}, \texttt{short}, \texttt{switch}, \texttt{this},
+\texttt{throw}  and \texttt{try}. You should also avoid 
+using words which, though not technically keywords, have special significance
+in the language, such as \verb!println! and \verb!String!.
+
+Programmers often use very short names for variables, such as
+\verb!i!, \verb!n!, or 
+\verb!x! for integers.  There is no harm in this if the variable is used to
+do an obvious job, such as counting the number of times the program goes round
+a loop, and its purpose is immediately clear from the context.  If, however, its
+function is not so obvious, it should be given a name that
+gives a clue as to the role it plays in the program.  If a variable is
+holding the total of a series of integers and another is holding the
+largest of a series of integers, for example, then call them \verb!total!
+and \verb!max! rather than \verb!x! and \verb!y!.
+
+The aim in programming is to write programs that are ``self-documenting'',
+meaning that a (human) reader can understand them without having to read
+any supplementary documentation.  A good choice of identifiers helps to
+make a program self-documenting.
+
+Comments provide another way to help the human reader to understand a
+program.  Anything on a line after ``//'' is ignored by the compiler,
+so you can use this to annotate your program.  You might summarise
+what a chunk of program is doing:
+
+\begin{Verbatim}
+    // sorts numbers into ascending order
+\end{Verbatim}
+
+or explain the purpose of an obscure bit:
+
+\begin{Verbatim}
+    x = x * 100 / y   // x as percent of y
+\end{Verbatim}
+
+Comments should be few and helpful.  Do not clutter your programs with
+statements of the obvious such as:
+
+\begin{Verbatim}
+    num = num + 1   // add 1 to num
+\end{Verbatim}
+
+Judicious use of comments can add greatly to a program's readability, but they
+are second-best to self-documentation.  Their weakness is that it is all too
+easy for a programmer to modify the program but forget to make any
+corresponding modification to the comments, so the comments no longer quite
+go with the program.  At worst, the comments can become so out-of-date as
+to be positively misleading.
+
+\subsection*{Exercise B}
+
+Say for each of the following whether it is a valid identifier
+in Groovy and, if not, why not:
+\begin{Verbatim}
+BBC, Groovy, y2k, Y2K, old, new, 3GL, a.out, 
+first-choice, 2nd_choice, third_choice
+\end{Verbatim}
+
+\subsection{A bit more on String variables}
+
+We have done already many things with string variables: we have
+created them, printed them on the screen, even concatenated several of
+them together to get a longer value. But there are many other useful
+things we can so with strings. 
+
+For example, if you want to know how long a string is, you can find
+out with the \verb!length()! 
+{\em method}\footnote{A method is a named sequence of instructions. We 
+{\em call} the method using its name in order to execute its instructions.
+We can call a method without knowing what instructions it consists of, so
+long as we know what it does.}. 
+If  \verb!str! is the string, then \verb!str.length()! gives its 
+length. Do not forget the dot or the brackets: methods are always 
+prefixed with a dot and followed by brackets\footnote{Now you can see that
+  console() and readLine() are also methods.} (sometimes empty,
+sometimes not). You could say, for example:
+
+\begin{Verbatim}
+    print "Please enter some text: "
+    String str = System.console().readLine()
+    int len = str.length()
+    println "The string " + str + " has " + len + " characters."
+\end{Verbatim}
+
+You can obtain a substring of a string with the \verb!substring! method.
+For example if the string \verb!s! has the value ``\verb!Silverdale!'', then
+\verb!s.substring(0,6)! will give you the first six letters, i.e., the string
+``\verb!Silver!''.  The first number in brackets after the \verb!substring!
+says where you want the substring to begin, and the second number says
+where you want it to end. \emph{Note that the initial character of the string
+is treated as being at position~0, not position~1}.  If you leave out the second number,
+you get the rest of the string.  For example, \verb!s.substring(6)! would
+give you ``\verb!dale!'', i.e., the tail end of the string beginning at
+character 6 ('d' is character 6, not 7, because the 'S' character is
+character 0). 
+
+You can output substrings with \verb!print! or assign them to other
+strings or combine them with the ``+'' operator.  For example:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example2.groovy}
+
+will output ``soft ices''.
+
+\subsection*{Exercise C}
+
+Say what the output of the following program fragment would be:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example3.groovy}
+
+Then run the program and see if you were right. 
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
+

@@ -1,0 +1,243 @@
+\section{Conditionals (\texttt{if} statements)}
+
+To write anything more than very straightforward programs we need some way
+of getting the computer to make choices.
+We do this in Groovy with the keyword \verb!if!.
+We can write, for example:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example4.groovy}
+
+When the computer executes this, it first sees whether the variable \verb!num!
+currently has the value 180 or not.  If it does, the computer displays
+its message; if it doesn't, the computer ignores the  \verb!println! line
+and goes on to the next line.
+
+Note that the conditional expression (\verb!num == 180!) has to be
+in brackets, and that we use curly brackets to indicate what to do if
+the conditional expression is true. 
+
+Note also that, to test whether  \verb!num! has the value 180
+or not, we have to write \verb!if (num == 180)! and not \verb!if (num = 180)!.
+We have to remember to hit the ``='' key twice.
+This is a serious nuisance in Groovy, especially for beginners.
+It comes about because the language uses the ``='' operator for a different
+purpose, namely assignment.  \verb!num = 180! does not mean `` \verb!num! is
+equal to 180'', it means ``Give the value 180 to  \verb!num!''.  You may feel
+that it is obvious that assignment is not what is intended in
+\verb!if (num = 180)!, but unfortunately that is
+how the computer will interpret it --- and will complain.
+You have been warned.
+
+The following program takes two numbers and displays a message if they happen
+to be the same:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example5.groovy}
+
+\subsection{Conditional expressions}
+\label{sec:cond-expr}
+
+Conditional expressions --- the kind that follow an \verb!if! ---
+can be formed using the following operators:
+
+\begin{tabular}{ll}
+\verb+==+ &is equal to\\
+\verb+!=+ &is not equal to\\
+\verb+>+ &is greater than\\
+\verb+<+ &is less than\\
+\verb+>=+ & is greater than or equal to\\
+\verb+<=+ &is less than or equal to\\
+\end{tabular}
+
+When these operators are used with integers, their meaning is obvious,
+but they can also be used with strings.  Here their meaning corresponds
+to something like alphabetical order.  For instance, \verb!if (s < t)!,
+where  \verb!s! and \verb!t! are strings, means ``If  \verb!s! comes before \verb!t!
+in alphabetical order''.  So it would be true if  \verb!s! had the value
+``\verb!Birkbeck!'' and \verb!t! had the value ``\verb!College!''.  All the
+upper-case letters come before the lower-case, so \verb!(s < t)! would
+still be true if  \verb!s! had the value ``\verb!Zebra!'' and \verb!t! had the
+value ``\verb!antelope!'' (upper-case 'Z' comes before lower-case 'a').
+
+But what about strings that contain non-alphabetic characters?  Would
+\verb!s!  come before \verb!t! if \verb!s! had the value ``\verb!#+*!''
+and \verb!t! had the value ``\verb+$&!+''?  To find the answer we have
+to consult the \emph{UNICODE table} -- the Universal Character Set.
+UNICODE defines a particular ordering of all the characters on the
+keyboard.  (There are other orderings in use, notably EBCDIC which is
+used on IBM mainframe computers, and ASCII, which was adopted by PCs and
+became the de facto standard for English-based languages.)
+The UNICODE table tells us that the character '\#' comes before the
+character '\verb!$!', for instance.  The latest version of Unicode\footnote{The full list can be downloaded from many
+places, including Wikipedia
+(http://en.wikipedia.org/wiki/List\_of\_Unicode\_characters).}
+consists of a repertoire of more than 109,000 characters covering 93
+different scripts (including Latin, Cyrillic, Arabic, all the Japanese
+ones, and many more). Some points worth remembering are:
+
+\begin{itemize}
+\item
+The space character comes before all the printable characters.
+\item
+Numerals come in the order you'd expect, from '0' to '9'.
+\item
+Letters come in the order you'd expect, from 'A' to 'Z' and from 'a' to 'z'.
+\item
+Numerals come before upper-case letters and upper-case letters come before lower-case.
+\end{itemize}
+
+\subsection*{Exercise A}
+
+Say, for each of the following pairs of strings, whether \verb!s < t! would be
+true or false, assuming that  \verb!s! had the value on the left and \verb!t!
+had the value on the right:
+
+\begin{tabular}{ll}
+\verb!"A"! & \verb!"9"!\\
+\verb!"Zurich"! & \verb!"acapulco"!\\
+\verb!"Abba"! & \verb!"ABBA"!\\
+\verb!"long_thing_with_a_$"! & \verb!"long_thing_with_a_&"!\\
+\verb!"King's College"! & \verb!"King Kong"!\\
+\end{tabular}
+
+\subsection{Two-way branches (\texttt{if ... else})}
+\label{sec:two-way-branches}
+
+The following program fragment tells students whether they have passed
+their exam: 
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example6.groovy}
+
+What happens, in the case of this program, if a student's mark is
+less than 50?  The program does nothing.  This kind of \verb!if! statement is a
+one-way branch.  If the condition is true, we do something; if not, we do
+nothing.  But in this case
+this seems unsatisfactory.  If the exam mark is less than 50, we would like
+it to display ``I'm afraid you have failed.''  We could arrange this by
+including another test --- \verb!if (exammark < 50)!  --- or, better, we could
+do it by using the keyword \verb!else!, thus:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example7.groovy}
+
+The  \verb!else! turns a one-way branch into a two-way branch.  If the
+condition is true, do this; otherwise, do that.
+
+% Let's suppose we want to extend the exam mark program so that candidates who
+% have passed get two lines of output, thus:
+
+% \VerbatimInput[frame=single,label=Example]{src/s2Example8.groovy}
+
+% Unfortunately the compiler will object to this.  It will say that it has
+% encountered an  \verb!else! in an unexpected place.  What is the problem?
+
+% Although the layout of this program suggests that the "satisfactory" line
+% and the "proceed with project" line go together, there is nothing to
+% indicate this to the compiler.  As I pointed out earlier, the compiler
+% pretty much ignores the layout.  So far as the compiler is concerned,
+% we have a one-way  \verb!if! statement (the kind without an  \verb!else!) which ends
+% at the first \verb!endl;!  Then there is another  \verb!cout! line (proceed with
+% project) which is not part of the  \verb!if! statement; it's just the first
+% line of the rest of the program.  And then, unexpectedly,
+% appears an  \verb!else!.
+
+% We need some way of bracketing together
+% the "satisfactory" line and the "proceed with project" line so as to make
+% it clear to the compiler that both of these lines come under the  \verb!if!.
+% This is how we do it in Groovy:
+
+A note about the curly braces. The curly braces have the effect of
+grouping all the statements inside 
+them into a programming unit called a \emph{block}\footnote{A block
+  consisting only of one statement does not need curly
+  brackets. However, I recommend to use them always for
+  clarity.}. Look at this example: 
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example9.groovy}
+
+If the exam mark is greater than or equal to 50, 
+the whole of the block is executed and both
+lines ``A satisfactory result!'' and ``You may proceed with your
+project.'' will be printed.  If the mark is lower than 50, 
+the computer skips to
+the \verb!else! and executes the ``I'm afraid'' line.
+
+You will find that different programmers, and different textbooks, have
+different ideas about the precise placement of the curly braces.  Some would
+set out the above fragment as:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example10.groovy}
+
+and there are other variations. Personally I prefer the first version
+because it is more compact but at the same time the structure of the
+program is very clear. 
+
+Suppose now that we wanted to give a different message to candidates who
+had done exceptionally well. Our first thought might be as follows:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example11.groovy}
+
+But this would not work quite right.  It's OK for candidates with
+marks below 70,
+but candidates with marks greater than or equal to 70 
+would give the following output:
+
+\begin{Verbatim}
+    An exceptional result
+    We expect a first-class project from you.
+    A satisfactory result
+    You may proceed with your project.
+\end{Verbatim}
+
+The problem is that if a mark is greater then or equal to~70, it is
+also greater than~50.  The first
+condition is true, so we get the ``exceptional'' part, but then the second
+condition is also true, so we get the ``satisfactory'' part.  We want to
+proceed to the greater than~50 test only if the mark is below~70.
+We need another \verb!else!:
+
+\VerbatimInput[frame=single,label=Example]{src/s2Example12.groovy}
+
+\subsection*{Exercise B}
+
+Write a program that takes two numbers, one representing a
+husband's salary and the other representing the wife's, and tells them
+whether or not their combined income makes them due for tax at the higher rate
+(i.e. it exceeds \pounds 40,000).
+
+\subsection*{Exercise C}
+
+Extend the program about students' marks so that all the candidates
+get two lines of output, the unsuccessful ones getting ``I'm afraid you
+have failed.'' and ``You may re-enter next year.''
+
+\subsection*{Exercise D}
+
+Write a program which takes two integers as input.
+If the first is exactly divisible
+by the second (such as 10 and 5 or 24 and 8, but not 10 and 3 or 24 and 7)
+it outputs ``Yes'', otherwise ``No'', except when the second
+is zero, in which case it outputs ``Cannot divide by zero''. Remember
+you can use the modulo operator (``\%'') to find out whether one
+number is divisible by another. 
+
+\subsection*{Exercise E}
+
+Write a program which takes an integer as its input, representing the time
+using the 24-hour clock.  For example, 930 is 9.30 am; 2345 is 11.45 pm.  Midnight is
+zero. The program responds with a suitable greeting for the time of day.
+If you want to make this a bit harder, make the program respond with a '?'
+if the time represented by the number is impossible, such as 2400, -5 or
+1163.
+
+% \subsection{The UNICODE character set}
+
+% The portion of the UNICODE table dealing with printable characters is as
+% follows.  The numbers indicate the character's position in the UNICODE
+% character set;  upper-case 'A', for example, is character number 65.
+% Character number 32 is a space.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
+
