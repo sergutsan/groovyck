@@ -201,8 +201,8 @@ Programmers often use very short names for variables, such as
 \verb!x! for integers.  There is no harm in this if the variable is used to
 do an obvious job, such as counting the number of times the program goes round
 a loop, and its purpose is immediately clear from the context.  If, however, its
-function is not so obvious, it should be given a name that
-gives a clue as to the role it plays in the program.  If a variable is
+function is not so obvious, \textbf{it should be given a name that
+gives a clue as to the role it plays in the program}.  If a variable is
 holding the total of a series of integers and another is holding the
 largest of a series of integers, for example, then call them \verb!total!
 and \verb!max! rather than \verb!x! and \verb!y!.
@@ -235,11 +235,22 @@ statements of the obvious such as:
 \end{Verbatim}
 
 Judicious use of comments can add greatly to a program's readability, but they
-are second-best to self-documentation.  Their weakness is that it is all too
+are second-best to self-documentation. Note that comments are all but
+ignores by the computer: their weakness is that it is all too
 easy for a programmer to modify the program but forget to make any
 corresponding modification to the comments, so the comments no longer quite
-go with the program.  At worst, the comments can become so out-of-date as
-to be positively misleading.
+go with the program. At worst, the comments can become so out-of-date as
+to be positively misleading, as illustrated in this case: 
+
+\begin{verbatim}
+    num = num + 1  // decrease num
+\end{verbatim}
+
+What is wrong here? Is the comment out of date? Is there a bug in the
+code and the plus should be a minus? Remember, use comments sparingly
+and make them matter. A good rule of thumb is that comments should
+explain ``why'' and not ``how'': the code already says \emph{how}
+things are done! 
 
 \subsection*{Exercise B}
 
