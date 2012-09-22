@@ -1,5 +1,5 @@
 
-\section{More on branches and loops}
+\section{More on branches}
 \label{sec:more-branches-loops}
 
 You can write a lot of different programs with the little
@@ -95,44 +95,44 @@ that have some special meaning. Defining an \emph{enum} in Groovy is
 really easy: 
 
 \begin{verbatim}
-enum Day {
-  MONDAY,
-  TUESDAY,
-  WEDNESDAY,
-  THURSDAY,
-  FRIDAY,
-  SATURDAY,
-  SUNDAY,
-}
+    enum Day {
+      MONDAY,
+      TUESDAY,
+      WEDNESDAY,
+      THURSDAY,
+      FRIDAY,
+      SATURDAY,
+      SUNDAY,
+    }
 \end{verbatim}
 
 Now, this new enum can be used in \texttt{switch} (or \texttt{if})
 statements. Compare the clarity of this code:
 
 \begin{verbatim}
-  switch (day) {
-    case 1: 
-      // do something here for this day
-      break;
-    case 3: 
-      // do something here for this day
-      break;
-    ...
-  }
+    switch (day) {
+      case 1: 
+        // do something here for this day
+        break;
+      case 3: 
+        // do something here for this day
+        break;
+      ...
+    }
 \end{verbatim}
 
 and this code:
 
 \begin{verbatim}
-  switch (day) {
-    case MONDAY: 
-      // do something here for this day
-      break;
-    case WEDNESDAY: 
-      // do something here for this day
-      break;
-    ...
-  }
+    switch (day) {
+      case MONDAY: 
+        // do something here for this day
+        break;
+      case WEDNESDAY: 
+        // do something here for this day
+        break;
+      ...
+    }
 \end{verbatim}
 
 In the second case, it is clear what each case is for. In the first
@@ -148,11 +148,122 @@ their effect is or why they are what they are (i.e. why a~1~and not
 a~5?). \textbf{Magic number make code harder to read and
   understand. Never use magic numbers in your code.}
 
-\subsection{The \texttt{do\ldots while} loop}
-\label{sec:textttd-while-loop}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% THERE IS NO DO...WHILE IN GROOVY.
+%
+% RECYCLE THIS SECTION WHEN JAVA IS INTRODUCED
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subsection{The \texttt{do\ldots while} loop}
+% \label{sec:textttd-while-loop}
+
+% With a loop you can perform the same operations over and over
+% again. However, if the condition for the loop is never true a
+% \texttt{while} loop will never run; and sometimes you need it to run
+% at least once, like in this case:
+
+% \begin{verbatim}
+%     println "Enter the names of your friends. Finish by typing END."
+%     String name = System.console().readLine()
+%     println s + ": friend"
+%     while (s != "END") {
+%       println s + ": friend"
+%       name = System.console().readLine()
+%     }
+% \end{verbatim}
+
+% In this brief example you need to repeat the same code to read input
+% from the user in two different places. If
+% the only way to do loops was using \texttt{while}, this repetition
+% could not be avoided (and in a less trivial program, with
+% intelligent error-checking and the like, this could be a lot of
+% repetition!). Fortunately, we can use a \texttt{do\ldots while} loop: 
+
+% \begin{verbatim}
+%     println "Enter the names of your friends. Finish by typing END."
+%     do {
+%       String name = System.console().readLine()
+%       println s + ": friend"
+%     } while (s != "END")
+% \end{verbatim}
 
 
+% Remember, repeated code is usually a bad sign: a symptom of poor
+% design and/or poor programming. When you have the same code in two
+% different places, and make a change in one of them, it is very easy to
+% forget to change the other too\ldots a common source of bugs for
+% careless programmers. If you notice you have repeated code in your
+% program, think twice about a better way of doing things, without
+% repetition. There is a general principle in programming usually
+% referred to as DRY: \textbf{Don't Repeat Yourself}. Keep it in mind at
+% all times.
 
+
+% \subsubsection*{Exercise A}
+
+% Make a program that reads a list of marks between 0 and 100 from the
+% user, one per line, and stops when the user introduces a -1. The
+% program should output at the end (and only at the end) how many marks
+% there were in total, how many were distinctions (70--100), how many
+% were passes (50--69), how many failed (0--49), and how many were
+% invalid (e.g. 150 or -3). Use \texttt{readLine()} exactly once.
+
+\subsection{The ternary operator}
+\label{sec:ternary-operator}
+
+There is another form of writing a branch. It is not commonly used,
+but you should know it exists. It is the so-called \emph{ternary
+  operator}. 
+
+Most operators in Groovy are either \emph{unary} (they take one
+argument, like logical not ``!'') or \emph{binary} (they take two
+arguments, like logical and ``\&\&'' or addition ``+''). There is only
+one ternary operator, with three arguments, that is really another
+fancy way of writing an \texttt{if\ldots else} clause. We will
+illustrate how it works with a simple example:
+
+\begin{verbatim}
+    print "Enter a number: "
+    int i = Integer.parseInt(System.console().readLine())
+    String s = (i > 5)? "Greater than 5" : "Not greater than 5"
+    println s
+\end{verbatim}
+
+This code behaves exactly in the same as the following code:
+
+\begin{verbatim}
+    print "Enter a number: "
+    int i = Integer.parseInt(System.console().readLine())
+    String s;
+    if (i > 5) {
+      s = "Greater than 5"
+    } else {
+      s = "Not greater than 5"
+    }
+    println s
+\end{verbatim}
+
+As you see, the ternary operator takes three arguments: a boolean
+expression and two values. If the boolean expression is true, then the
+second argument is returned; if it is false, it returns the third
+argument. 
+
+In some cases the ternary operator can make your code clearer, but
+these cases are few and far between. In general, it is easier to write
+\emph{bona fide} \texttt{if} statements. However, you may find the
+ternary operator in code written by others, and it is thus important
+to understand how it works. 
+
+\subsubsection*{Exercise D}
+
+Write a program that read a series of numbers from the user, until the
+user enters something that is not a number (like ``END''). The program
+should then print how many numbers were positive, negative, or
+zero. Write the program using \texttt{if\ldots else} clauses and using
+the ternary operator. Is there any difference? In which case it is
+easier to write the program? In which case it looks clearer to you? 
 
 
 %%% Local Variables:
