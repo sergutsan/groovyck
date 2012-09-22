@@ -1,0 +1,162 @@
+
+\section{More on branches and loops}
+\label{sec:more-branches-loops}
+
+You can write a lot of different programs with the little
+\texttt{if\ldots else} and \texttt{while} constructs you have already
+learned and practiced, for executing different branches in your
+program and for running loops. There are, however, other constructs
+that you can use to make your programs clearer. In this section we
+will learn about the \texttt{do\ldots while} loops, the
+\texttt{switch\ldots case} multiple branching feature, and the
+so-called ternary operator. In later chapters, we will also see how to
+use the very useful \texttt{for} and \emph{for each} loops. 
+
+\subsection{Multiple branching}
+\label{sec:multiple-branching}
+
+Look at the following code, that loosely resembles an automatic
+phone-answering program:
+
+\VerbatimInput[frame=single,label=Example]{src/s5E1.groovy}
+
+Such a long list of \texttt{if} branches can be a bit confusing for
+future readers. When there are many options, and especially if the
+options are finite and known in advance, it is better to make the
+multiple branching clearer by using a \texttt{switch\ldots case}
+construct, as in the following example:
+
+\VerbatimInput[frame=single,label=Example]{src/s5E2.groovy}
+
+As you can see, the multiple branches are introduced by the keyword
+\texttt{switch} followed by some parameter, \emph{choice} in this
+case. Then several possible cases follow, each of them starting by a
+semicolon. The whole list of cases is inside two curly brackets, but
+the code of each case does not need curly brackets. 
+
+There are two important things to note in this program. First, there
+is a keyword \texttt{break} at the end of each case. This is very
+important. Without it, Groovy will finish the execution of one case
+and continue with the next one. Second, there is a default case that
+is executed if none of the other cases matches \emph{choice}. This is
+also important: always write a default case for your
+\texttt{switch\ldots case} structures. They are good for detecting
+errors in your program. 
+
+\subsubsection*{Exercise A}
+
+Write a program like the one in the last example, but add a little
+code for each case (some \texttt{println} statements will do) and
+remove the \texttt{break} keywords. Execute the program and see what
+happens. 
+
+\subsubsection*{Exercise B}
+
+Write a program similar to the one in the former example, but a bit
+better. Make the computer ask for an option and then execute the
+corresponding code in a \texttt{switch\ldots case} structure. If the
+user introduces an invalid option (e.g. 9 in the example above), make
+the computer say ``That is not a valid option, please try again'', and
+ask again until the user enters a valid numbers. Hint: You will need
+to use a loop and change the default case. 
+
+\subsubsection*{Exercise C}
+
+Write a program that uses Strings instead of integers for the
+\texttt{switch}. What happens?
+
+\subsubsection{What types can go inside a \texttt{switch}}
+\label{sec:what-types-can}
+
+If you have tried all the exercises above, you have noticed that
+Groovy complains when you try to use Strings inside a
+\texttt{switch\ldots case}. The bad news is that we cannot use any
+type of data, but only things like integers, characters (also known as
+\emph{chars} for brevity), and enumerated types (also known as
+\emph{enums}, we will come to them in a second). The good news is that
+this is usually enough.
+
+Characters can be used alone in any Groovy program, can be printed on
+the screen, and can also be
+combined to form our well-known Strings, as in the following code: 
+
+\VerbatimInput[frame=single,label=Example]{src/s5E3.groovy}
+
+Notice that single quotes are used for characters and double quotes
+are used for Strings: \'c\' is the character \emph{c}, but ``c'' is a
+String with only the character \emph{c} in it. 
+
+\subsubsection{What are \emph{enums}}
+\label{sec:what-types-enum}
+
+Enumerated types are just lists of \emph{tags} that can be useful to
+make your program more legible. They can be used to specify constants
+that have some special meaning. Defining an \emph{enum} in Groovy is
+really easy: 
+
+\begin{verbatim}
+enum Day {
+  MONDAY,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAY,
+  SUNDAY,
+}
+\end{verbatim}
+
+Now, this new enum can be used in \texttt{switch} (or \texttt{if})
+statements. Compare the clarity of this code:
+
+\begin{verbatim}
+  switch (day) {
+    case 1: 
+      // do something here for this day
+      break;
+    case 3: 
+      // do something here for this day
+      break;
+    ...
+  }
+\end{verbatim}
+
+and this code:
+
+\begin{verbatim}
+  switch (day) {
+    case MONDAY: 
+      // do something here for this day
+      break;
+    case WEDNESDAY: 
+      // do something here for this day
+      break;
+    ...
+  }
+\end{verbatim}
+
+In the second case, it is clear what each case is for. In the first
+piece of code, you need to guess: look at the code for each case, look
+at the surrounding code\ldots it is harder. Programming is already a
+hard (and fun) activity. It is wise not to make it harder than it is;
+it does not make it any funnier. 
+
+There is a general lesson to learn here. What you see in the code
+above is an example of \emph{magic numbers}: numbers that appear in
+your code and have an effect, but is difficult to understand what
+their effect is or why they are what they are (i.e. why a~1~and not
+a~5?). \textbf{Magic number make code harder to read and
+  understand. Never use magic numbers in your code.}
+
+\subsection{The \texttt{do\ldots while} loop}
+\label{sec:textttd-while-loop}
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
+
