@@ -79,23 +79,6 @@ only my own fault.
 
 \newpage
 
-\chapter{Week 1: Here it all begins\ldots}
-
-\input{section1-Intro,basicIO,variables}
-\newpage
-
-\input{section2-Variables,integers,strings,comments}
-\newpage
-
-\input{section3-If,else}
-\newpage
-
-\input{section4-Booleans,while}
-\newpage
-
-\input{section5-doWhile,switch,ternary}
-\newpage
-
 % Day 0: what do I want from you?
 %   - to be self-sufficient learners
 %   - to be able to read code
@@ -109,27 +92,50 @@ only my own fault.
 %    leave do/while for Java, because there is not in Groovy
 % \item Source code version control
 % and lots of exercises, because there is nothing else to tell...
+\chapter{Week 1: Here it all begins\ldots}
+\input{section1-Intro,basicIO,variables}
+\input{section2-Variables,integers,strings,comments}
+\input{section3-If,else}
+\input{section4-Booleans,while}
+\input{section5-doWhile,switch,ternary}
 
 % Week 2: getting up to speed, but not quite
-% \item Simple and complex data types: primitive types, strings,
-% (multi-dimensional) arrays
+% \item Simple and complex data types: primitive types (introducing
+%    float and double), strings, arrays and multi-dimensional 
+%    arrays, classes without methods... use of "new"
+% 
 %   exercise: enter a matrix and tell if it is simmetrical
+% For loops
+\chapter{Week 2: Moving on\ldots}
+\input{simpleAndComplexDataTypes}
+
 
 % Week 3: From Groovy to Java (only 1 day)
-% \item Introduction to classes and objects: initialization, methods,
-% and constructors
+% \item Introduction to classes and objects: initialization and
+% constructors ("new" explained), methods,parameters (look at week 4
+%   in C++) 
 %   no main method, no real java today: continue working from Groovy
 %   script
 %      - explain some basic classes and their main methods, like String
 %      (equals, substring(*), length (*), intValue, doubleValue),
-%      Integer (parseInt), Math, System, introduce them to JavaDocs
-%      - make them do exercises with their own classes
+%      Integer (parseInt), Math, System
+%      - introduce them to JavaDocs
+%      - make them do exercises with their own classes: create them, 
+%   make objects, use them
 
 % Week 4: Pointers! (three days)
 % \item Data structures: lists, stacks, trees, maps (and iterators)\ldots
 %       including exercises in creating their own structures
 %       themselves -> correct them with JUnit to show them the tests
 %       the week after.
+% \item day 1: Real java: all files are classes, the main method,
+%            System.out.println(); bye, bye, Groovy scripts,
+%            introduce pointers and use it for creating a linked
+%            list (a growing array) 
+% \item day 2: More on data structures: queues and stacks, iterators,
+%            JavaDoc: document inputs, output, and rationale 
+% \item day 3: More on data structures: trees and maps; for-each loops
+% 
 %   at the beginning, introduce real Java: needed for Testing with
 %      Junit4 anyway
 %      a) main method (optional)
@@ -142,19 +148,28 @@ only my own fault.
 % \item Software testing and testing-driven development
 %       Show them the tests that test whether their versions work the
 %       same as the versions of the Java library.
+% IMPORTANT: HOW DO YOU RUN TESTS WITHOUT ECLIPSE (from cmd)!!
 % \item Ultra-brief introduction to annotations in Java
 % \item JavaDoc: document inputs, output, and rationale
 
 % Week 6: Padding week to recover their breath
 % \item Introduction to generics and annotations in Java
 % \item More on object orientation: inheritance, polymorphism,
-%   overloading, "static" (good "real" example: implementation of
+%   overloading, overriding, "static" (good "real" example:
+%   implementation of 
 %   read-only versions of collections), interfaces (like Iterable, 
 %   Runnable, or the ones in the Collections)... and why interfaces
 %   are important. 
+% \item Exercise Make a class that extends String and overwrites
+%     toString() to call super.super.toString(), and then pass it to a
+%     println(). 
+% \item Maybe a sample test, like Roger Mitton does?(remember you
+% have a spare week (it's 11 not 10, count them JIC))
 
 % Week 7: Recursion!
 % \item Recursion
+% \item The execution stack (they will see it next week, if they have
+%     not yet)
 
 % Week 8: Exceptions and (finally) I/O (files, mostly)
 % \item Exception Handling
