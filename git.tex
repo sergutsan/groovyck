@@ -1,8 +1,12 @@
-\section{Source code version control}
+\chapter{Source code version control}
 \label{sec:source-code-version}
 
+\section{Version control}
+\label{sec:version-control}
+
 What is version control? It is something as simple (and as difficult
-to make right) as keeping track of changes in some piece of work. You
+to make right) as keeping track of changes in some piece of work, over
+time. You
 are probably familar with some very rudimentary version of version
 control. Have you ever listed the documents in a folder and seen
 something similar to this?
@@ -85,7 +89,7 @@ possibilities and options that come with Git. Actually, there are
 several of them already. In this section I will only present the most
 important 10\% of Git, which will take you 90\% of the way. 
 
-\section{Starting a new project}
+\subsection{Starting a new project}
 \label{sec:starting-new-project}
 
 Let's start by creating a new programming project. Create a new folder
@@ -105,7 +109,7 @@ of a complex complete version control system with Git looks like this:
 That was easy, wasn't it? Now you can keep track of all changes to
 your files in this folder. Moving on\ldots
 
-\section{Keeping track of changes}
+\subsection{Keeping track of changes}
 \label{sec:keep-track-chang}
 
 Now it is time to write some code. For example, we could create a
@@ -151,14 +155,23 @@ for people reading it in the future.
 When you finish writing your commit description, save it and close the
 editor. The commit will be performed, and you will be given some
 output from Git. That output will include information about the
-branch, the identifier for this commit, your commit text, and some
-statistics about what the commit did (\emph{see
+branch (by default, it is called \emph{master}), the identifier for
+this commit (a unique identifier), your commit text, and some 
+statistics about what the commit did: lines added, edited, or removed,
+files added or removed, etc (\emph{see
   Figure~\ref{fig:git-example-1}}). 
 
 \begin{figure}[htbp!]
   \centering
-  % TODO
-  \caption{Example of commit message in Git}
+  \begin{framed}
+    \begin{verbatim}
+   > git commit
+   [master 12a0006] Added the first line: just says "Hello World!"
+   1 file changed, 7 insertions(+), 1 deletion(-)
+   >
+   \end{verbatim}
+  \end{framed}
+  \caption{Example of Git's output after a commit.}
   \label{fig:git-example-1}
 \end{figure}
 
@@ -173,7 +186,6 @@ Now your project has a history! It looks more or less like this:
 
 Let's say we are not happy with our program. It does not do much. We
 can modify the program to look like this:
-
 
 \begin{verbatim}
     println "Hello World!"
@@ -203,8 +215,40 @@ a file, and we are going to see how to do that in the next section.
 
 % TODO: continue here
 
+\subsection{Looking into the past}
+\label{sec:looking-into-past}
+
+Contrary to most novelists, programmers do not start working on a
+project from a blank editor page. The most common situation is to work
+on a project that has already been going on for some time. Maybe the
+programmer is a new employee in the company, or has been transferred
+to a different project, or has been ``given'' a project that somebody
+else started. It may be that the programmer wants to contribute to
+another project because the project is appealing or famous (like the
+Firefox and Chrome web browsers, the Linux kernel, the LibreOffice
+suite of applications, or any other). Or maybe the programmer starts a
+project from scratch and then realises that somebody else is doing the
+same thing, only they started long ago and have made a lot of
+progress, so it makes sense to join the team instead of reinventing
+the wheel. For any of these reasons ---and many others--- you will
+find yourself in a situation where you want to get a copy of the
+source code that other people have written. This is very easy to do in
+git. You just need to be given a URL\footnote{In computing, a Uniform
+  Resource Locator (URL) is a specific character string that
+  constitutes a reference to an Internet resource. Examples of URLs
+  are \verb+http://www.bbk.ac.uk+ and
+  \verb+ftp://gb.archive.ubuntu.com/ubuntu/+.} to the source code, as
+in the following example:
+
+\begin{verbatim}
+    git clone  https://github.com/bbk-msccs/currency-exchanger.git
+\end{verbatim}
+
+This is called \emph{cloning} the repository, for obvious reasons. A
+repository is just a place (somewhere in the internet) where the
+source code for a project is stored. 
+
 diff
-clone
 log
 push
 config (change name, email)

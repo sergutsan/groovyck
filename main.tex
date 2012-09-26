@@ -1,7 +1,8 @@
-\documentclass[11pt,a4paper]{article} 
+\documentclass[11pt,a4paper]{book} 
 \usepackage[pdftex]{geometry}
 \usepackage{fancyvrb}
 \usepackage[dvips]{graphicx}
+\usepackage{framed}
 %\usepackage{moreverb} % env: comment
 %\usepackage{alltt} 
 %\usepackage{pifont} 
@@ -17,7 +18,7 @@
 %\SetWatermarkScale{5.0} 
 
 \title{An Introduction to Computer Programming\\
-  Using Groovy} % and maybe Java Decaf in the future
+  Using Groovy and Java} % and maybe Java Decaf in the future
 \author{Sergio Gutierrez-Santos\\
   Birkbeck, University of London}
 
@@ -46,12 +47,6 @@
 
 \vfill
 
-% \noindent This document forms part of the pre-course reading for
-% several MSc courses at Birkbeck, and it is required pre-interview
-% reading for the MSc Computer Science.
-
-%\vfill 
-
 \noindent (Last revision: \today.)
 
 %\vfill 
@@ -79,6 +74,9 @@ only my own fault.
 
 \newpage
 
+\tableofcontents
+
+
 % Day 0: what do I want from you?
 %   - to be self-sufficient learners
 %   - to be able to read code
@@ -105,10 +103,10 @@ only my own fault.
 %    arrays, classes without methods... use of "new"
 % 
 %   exercise: enter a matrix and tell if it is simmetrical
-% For loops
+% \item For loops
+% \item Functions/Procedures/Methods
 \chapter{Week 2: Moving on\ldots}
 \input{simpleAndComplexDataTypes}
-
 
 % Week 3: From Groovy to Java (only 1 day)
 % \item Introduction to classes and objects: initialization and
@@ -120,6 +118,7 @@ only my own fault.
 %      (equals, substring(*), length (*), intValue, doubleValue),
 %      Integer (parseInt), Math, System
 %      - introduce them to JavaDocs
+
 %      - make them do exercises with their own classes: create them, 
 %   make objects, use them
 
@@ -174,7 +173,8 @@ only my own fault.
 % Week 8: Exceptions and (finally) I/O (files, mostly)
 % \item Exception Handling
 %   plus checked exceptions, runtime exceptions, and 
-%   never do "catch (Exception e) {}"!
+%        never do "catch (Exception e) {}"!
+%   plus the 3 Abrahams guarantees
 % \item I/O in Java
 
 
@@ -186,10 +186,8 @@ only my own fault.
 
 \appendix
 
-% \section{Summary of the language features mentioned in this introduction}
-% \input{cheatsheet}
-% \newpage
-
+\chapter{Obtaining, installing and running Groovy on a PC}
+\label{sec:obta-inst-runn}
 \input{install}
 
 \input{git}
