@@ -311,6 +311,9 @@ in this commit was the name of two variables on that line.
 \subsection{Sharing is caring}
 \label{sec:sharing-caring}
 
+\subsubsection{Push}
+\label{sec:push}
+
 If you wanted to improve this program, you could edit it yourself, add
 new features, change some code, etc. You would commit regularly to
 make sure you always have the history of your project up to date, so
@@ -325,44 +328,130 @@ work). You can host your public repository anywhere you want, but
 GitHub is a convenient, well-known, and costless possibility. For the
 purposes of this discussion, I will assume that you have an account at
 GitHub, that your account name is ``ilovegit'', and that you have
-created a repository in GitHub called MyCurrencyExchange. 
+created a repository in GitHub called ``my-currency-exchange''. 
 
-push
-pull
+The first thing you have to do (but you only need to do this the first
+time) is telling Git where to push the changes. This is done by adding
+a remote site (with the command\ldots \verb+git remote+, surprise!):
+
+\begin{verbatim}
+    > git remote add origin https://github.com/sergutsan/groovyck.git
+\end{verbatim}
+
+There are many things on that line that need explaining. First,
+``add'' tells git that you want to add a new remote site; you can also
+remove (``rm'') and rename (``rename'') remote sites. By default,
+\verb+git remote+ will just show a list of your remote sites (name,
+url\ldots). The word ``origin'' is just a name for the new remote site
+to be used locally; origin is a common name for the main repository
+where you push your changes. We could have used ``origin'', or
+``myRemoteSite'', or any other name as long as we have not used it
+yet. Finally, the URL is where the remote site
+is. GitHub\footnote{GitHub does give you much more than just hosting
+  your repositories: issue tracker, statistics, graphs, and limited
+  social networking capabilities are some of the features you can use
+  easily from their webpage. Not bad for a free service. Another good
+  option is Google Code.} will give
+you a URL that you can copy and paste (see Figure~\ref{fig:github}).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/gitHubScreenshot.eps}
+  \caption{Screenshot of GitHub. You can see the name of the user
+    (``bbk-msccs''), the name of the repository
+    (``currency-exchanger''), and the URL. You can use the URL both to
+    clone the reposity and to push your changes (as long as this is
+    your repository).}
+  \label{fig:github}
+\end{figure}
+
+Once you have configured your remote repository or repositories,
+pushing your changes very easy: you only need to say where to push. 
+
+\begin{verbatim}
+    > git push origin 
+    Username for 'https://github.com': ilovegit
+    Password for 'https://ilovegit@github.com':
+    To https://github.com/ilovegit/my-currency-exchange.git
+    6457568..55ca3da  master -> master
+\end{verbatim}
+
+The system will ask for your username (``ilovegit'' in this example)
+and your password. Then it will inform you that it has pushed your
+commits. 
+
+\subsubsection{Pull}
+\label{sec:pull}
+
+Once you have pushed your changes, how do other people see them? How
+do they take the code you have \emph{pushed} into your remote
+repository and put in their local copies of the source code? As you
+can imagine, they \emph{pull} it. 
+
+\begin{verbatim}
+    > git pull origin master
+\end{verbatim}
+
+When you pull, you have to specify the remote repository you are
+pulling from (``origin'' in this case) and the branch you are pulling
+from. We will talk later about branches, but for now it suffices to
+say that the default branch in most projects is called ``master'', and
+sometimes it is the only one. If you are not sure which branch you are
+pulling from, ``master'' is usually a good guess.
+
+Once you pull, Git will download the changes made public at that
+public repository and merge them with your local copy. At this point,
+you have the latest copy of the project's source code, including those
+changes that somebody else (maybe you) made in a different computer. 
+
+At this point, you have surely noticed that Git can be used to
+synchronise with other team members, each other pulling whatever
+changes others have pushed so that everybody is up to date; but it can
+also be used to keep up to date with yourself: you can work on
+different computers (at home, at the office, on your laptop on a
+plane) and you can push your changes and then pull them from the other
+computers. There is no need to carry around USB sticks with folders
+called ``currencyExchangev2'', ``currencyExchangev3'', or
+``currencyExchangev4usethisnottheother''. Git will always have the
+latest version as long as you do not forget to commit and push
+timely. 
 
 \subsection{When should I commit?}
 \label{sec:when-should-i}
 
 As a general rule: \emph{commit early, commit often}. It is generally
 a good idea to make small commits so that it is easier to go through
-the history of your code and understand every step. The cost of
+the history of your code and understand every step if you have to. The
+cost of 
 committing is almost zero so you should not be afraid of having too
 many commits. There is no such thing. 
 
 Of course, this does not mean that you commit every single character
-that you write. Committing every single line is probably too much,
-too, unless those lines are really special. Do not spend more time
-writing commit messages than writing code. That said, if you have not
+that you write. Committing every single line is also probably too
+much, unless those lines are really special (e.g.~they fix a bug). 
+\emph{Do not spend more time
+writing commit messages than writing code}. That said, if you have not
 committed for the last half and hour, either you have written a lot of
 code and you should commit early (as in \emph{now}); or you are tired
 or distracted, and not really programming, so maybe you should have a
 break.
 
-If you are not sure whether you have made a lot of changes worth of
-being committed, you can use \verb+git diff+. Another possibility,
-less verbose, is to use \verb+git status+. The latter will tell you
+If you are not sure what you have changed since the last commit, 
+you can use \verb+git diff+. Another ---less verbose--- possibility
+is to use \verb+git status+. The latter will tell you
 which files have changed since the last commit, without details of the
 changes.
 
 Additionally, you should \emph{push} your changes to your public
 repository fairly often. Some people say \emph{push early, push
-  often}, but you do not need to do this every ten minutes. Sometimes
+  often}, but it does not mean that you need to push after every
+commit. Sometimes 
 you cannot even push because you do not have a network connection,
 although this is becoming more and more uncommon these days, where you
 can connect to the internet from planes, submarines, and almost a
 robot wandering around Mars. As a rule of thumb, push every time you
 have finished a coding session (e.g. before turning off the computer
-or standing up to grab some lunch).
+or standing up to grab some lunch), or as soon as possible after that.
 
 \subsection{Additional configuration}
 \label{sec:addit-conf}
@@ -387,7 +476,7 @@ the current repository. Sometimes you want to have different names or
 emails on different repositories, although this is rare. 
 
 Note that the email address does not need to be valid. To avoid spam,
-it is not uncommon for user to use email addresses that are perfectly
+it is not uncommon for users to use email addresses that are perfectly
 understandable for human beings but confusing for spambots
 (e.g. removing the last \verb+.com+ or changing dots for dashes.).
 
@@ -404,7 +493,7 @@ of the repository. This is a common occurrence for temporary files
 like \verb+.o+ files in C/C++, \verb+.class+ files in Java,
 \verb+.dvi+ files in \LaTeX, automatic backup files, etc.
 
-The way to tell Git to ignore these files is by adding them to a file
+The way to tell Git to ignore these files is by listing them in a file
 called \verb+.gitignore+ at the root of the repository. This file can
 contain name files, but can also include wildcards. The typical
 content of a \verb+.gitignore+ file can look like this:
@@ -419,6 +508,9 @@ You can add comments to a \verb+.gitignore+ file (with ``\#''), add
 exception to wildcard rules (with ``!''), and many more useful
 tricks. Remember, \verb+git help gitignore+ is a good place to start
 looking for help. 
+
+The file \verb+.gitignore+ can be added and committed to your
+repository like any other file.
 
 
 % ADD INFO ON BRANCHES
