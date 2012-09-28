@@ -152,9 +152,6 @@ it is not uncommon for users to use email addresses that are perfectly
 understandable for human beings but confusing for spambots
 (e.g. removing the last \verb+.com+ or changing dots for dashes.).
 
-As with any other git command, remember that \verb+git help+ is your
-friend. There is also plenty of online documentation. 
-
 \subsection{Keeping track of changes}
 \label{sec:keep-track-chang}
 
@@ -516,8 +513,8 @@ or standing up to grab some lunch), or as soon as possible after that.
 \subsection{Ignoring files}
 \label{sec:ignoring-files}
 
-Sometimes you want git to ignore some files. You do not want to keep
-them under version control but cannot delete them, and do not want to
+Sometimes you want Git to ignore some files. You do not want to keep
+them under version control, cannot delete them, and do not want to
 have them appearing on the screen every time that you check the status
 of the repository. This is a common occurrence for temporary files
 like \verb+.o+ files in C/C++, \verb+.class+ files in Java,
@@ -535,7 +532,7 @@ content of a \verb+.gitignore+ file can look like this:
 \end{verbatim}
 
 You can add comments to a \verb+.gitignore+ file (with ``\#''), add
-exception to wildcard rules (with ``!''), and many more useful
+exceptions to wildcard rules (with ``!''), and many more useful
 tricks. Remember, \verb+git help gitignore+ is a good place to start
 looking for help. 
 
