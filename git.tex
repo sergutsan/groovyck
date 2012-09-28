@@ -110,6 +110,51 @@ of a complex complete version control system with Git looks like this:
 That was easy, wasn't it? Now you can keep track of all changes to
 your files in this folder. Moving on\ldots
 
+\subsection{Name and email address}
+\label{sec:name-email-address}
+
+Every time somebody makes a change to a program, Git marks the change
+with the name and the email address of the person responsible for it. 
+As you do not want to do is writing your
+name and your email address every time you make a change, this is
+usually set up at the beginning. You can do it with the command 
+\verb+git config+. 
+
+\begin{verbatim}
+    > git config --global user.name "John Smith"
+    > git config --global user.email "john.smith@student-bbk-ac-uk"
+    > git config --global user.email "john.smith@gmail"
+\end{verbatim}
+
+These commands will set your name and email address for every (local)
+repository in your machine because you are using the \verb+--global+
+flag. 
+%
+A repository is just a place (somewhere in the internet) where the
+source code for a project is stored. There are two types of 
+repositories for any project:
+local copies, where you do the work; and a public copy, that other
+people can look at. 
+Any machine on the internet can
+be used to host a public copy of a Git project
+and GitHub (\verb+www.github.com+) 
+is a convenient place that
+many people use. (We will use it too, but I will come to that later.)
+%
+Without the \verb+--global+ flag, 
+the command modifies the configuration of
+the current repository only. 
+Sometimes you want to have different names or
+emails on different repositories, although this is rare. 
+
+Note that the email address does not need to be valid. To avoid spam,
+it is not uncommon for users to use email addresses that are perfectly
+understandable for human beings but confusing for spambots
+(e.g. removing the last \verb+.com+ or changing dots for dashes.).
+
+As with any other git command, remember that \verb+git help+ is your
+friend. There is also plenty of online documentation. 
+
 \subsection{Keeping track of changes}
 \label{sec:keep-track-chang}
 
@@ -249,13 +294,7 @@ in the following example:
     > git clone https://github.com/bbk-msccs/currency-exchanger.git
 \end{verbatim}
 
-This is called \emph{cloning} the repository, for obvious reasons. A
-repository is just a place (somewhere in the internet) where the
-source code for a project is stored. Any machine on the internet can
-be used to host a Git project, but GitHub (\verb+www.github.com+) 
-is a convenient place that
-many people use. (We will use it too, but I will come to that in a
-minute.)
+This is called \emph{cloning} the repository, for obvious reasons. 
 
 Now that we have a copy of the Currency Exchanger project, let's look
 at it. You will see that it has only two files: a ``read me'' file
@@ -473,37 +512,8 @@ As a rule of thumb, push every time you
 have finished a coding session (e.g. before turning off the computer
 or standing up to grab some lunch), or as soon as possible after that.
 
-\subsection{Additional configuration}
-\label{sec:addit-conf}
 
-\subsubsection{Name and email address}
-\label{sec:name-email-address}
-
-One thing you do not want to do  is to writing your
-name and your email address every time you commit. You can set them up
-with \verb+git config+. 
-
-\begin{verbatim}
-    > git config --global user.name "John Smith"
-    > git config --global user.email "john.smith@student-bbk-ac-uk"
-    > git config --global user.email "john.smith@gmail"
-\end{verbatim}
-
-These two commands will set your name and email address for every
-repository in your machine because you are using the \verb+--global+
-flag. Without the flag, the command only modifies the configuration of
-the current repository. Sometimes you want to have different names or
-emails on different repositories, although this is rare. 
-
-Note that the email address does not need to be valid. To avoid spam,
-it is not uncommon for users to use email addresses that are perfectly
-understandable for human beings but confusing for spambots
-(e.g. removing the last \verb+.com+ or changing dots for dashes.).
-
-As with any other git command, remember that \verb+git help+ is your
-friend. There is also plenty of online documentation. 
-
-\subsubsection{Ignoring files}
+\subsection{Ignoring files}
 \label{sec:ignoring-files}
 
 Sometimes you want git to ignore some files. You do not want to keep
