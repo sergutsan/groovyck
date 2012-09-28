@@ -140,10 +140,10 @@ system: \emph{committing} our changes.
     > git commit
 \end{verbatim}
 
-You will be asked to introduce some description of this \emph{commit}
-is about. Git adds automatically information about which files are
+You will be asked to introduce some description of what this \emph{commit}
+is about. Git automatically adds information about which files are
 committed and what changes have been performed on them. The programmer
-must provide some additional information, a short message to explain
+must provide some additional information: a short message to explain
 to other programmers what the changes are about. Note that ``other
 programmers'' can be yourself in two weeks time, when you have
 forgotten what you committed at this point. Typical messages are
@@ -174,13 +174,14 @@ files added or removed, etc (\emph{see
   \end{framed}
   \caption{Example of Git's output after a commit.}
   \label{fig:git-example-1}
+  % TODO: add hand-written tags to screenshot
 \end{figure}
 
-Now your project has a history! It looks more or less like this:
+Now your project has a history! It looks more or less like Figure~\ref{fig:git-example-2}.
 
 \begin{figure}[htbp!]
   \centering
-  % TODO
+  \includegraphics{gfx/no_figure.eps}
   \caption{Initial history of this project}
   \label{fig:git-example-2}
 \end{figure}
@@ -195,7 +196,7 @@ can modify the program to look like this:
     println "Hello " + s + "!"
 \end{verbatim}
 
-Now we can commit again (\verb+git add helloworld.groovy+,
+Now we can commit again (\verb+git add helloworld.groovy+;
 \verb+git commit+, plus a commit description). Then we try to run
 it\ldots Groovy will complain. We have messed up! At this point, we
 have two options:
@@ -205,10 +206,11 @@ have two options:
   do) we can just fix it and commit again. A good commit message would
   be ``Fixed typo in line 3: readline() should be readLine()''.
 \item If we did not know where the problem is, as it is usually the
-  case in big programs, we can go back until we find the commit in
+  case in big programs, we can go back in time
+  until we find the commit in
   which the problem started. Looking at the changes on that commit we
   can see how the \emph{bug} was introduced. Thanks to version
-  control, finding bugs is much easier. 
+  control, finding bugs is much easier (and that is 80\% of the job). 
 \end{itemize}
 
 The simplest way to travel in time is by looking at the change log of
@@ -221,18 +223,21 @@ Contrary to most novelists, programmers do not start working on a
 project from a blank editor page. The most common situation is to work
 on a project that has already been going on for some time. Maybe the
 programmer is a new employee in the company, or has been transferred
-to a different project, or has been ``given'' a project that somebody
+to a different project, or has ``inherited'' a project that somebody
 else started. It may be that the programmer wants to contribute to
-another project because the project is appealing or famous (like the
-Firefox and Chrome web browsers, the Linux kernel, the LibreOffice
-suite of applications, or any other). Or maybe the programmer starts a
+another project because the project is appealing or
+famous\footnote{Examples of interesting free/open-source projects with
+  many contributors include web browsers like Firefox or Chrome, the
+  Linux kernel, the Android operating system (based on Linux), the
+  LibreOffice suite of applications, mail programs 
+  like Thunderbird, and many others.}. Or maybe the programmer starts a
 project from scratch and then realises that somebody else is doing the
 same thing, only they started long ago and have made a lot of
-progress, so it makes sense to join the team instead of reinventing
+progress, so it makes sense to join their team instead of reinventing
 the wheel. For any of these reasons ---and many others--- you will
 find yourself in a situation where you want to get a copy of the
 source code that other people have written. This is very easy to do in
-git. You just need to be given a URL\footnote{In computing, a Uniform
+Git. You just need to be given a URL\footnote{A Uniform
   Resource Locator (URL) is a specific character string that
   constitutes a reference to an Internet resource. Examples of URLs
   are \texttt{http://www.bbk.ac.uk} and
@@ -241,13 +246,14 @@ git. You just need to be given a URL\footnote{In computing, a Uniform
 in the following example:
 
 \begin{verbatim}
-    git clone https://github.com/bbk-msccs/currency-exchanger.git
+    > git clone https://github.com/bbk-msccs/currency-exchanger.git
 \end{verbatim}
 
 This is called \emph{cloning} the repository, for obvious reasons. A
 repository is just a place (somewhere in the internet) where the
 source code for a project is stored. Any machine on the internet can
-be used to host a Git project, but GitHub is a convenient place that
+be used to host a Git project, but GitHub (\verb+www.github.com+) 
+is a convenient place that
 many people use. (We will use it too, but I will come to that in a
 minute.)
 
@@ -258,21 +264,24 @@ a Groovy file called \verb+currencyConverter.groovy+. This is the
 interesting one. 
 
 Look at the code of \verb+currencyConverter.groovy+ and understand
-what it does and how it works. 
+what it does and how it works. Then come back and continue reading. Go
+on, I will wait for you here. 
 
 As you can imagine, this little program was not written in one go. You
 can see a summary of the history of the file by looking at its
 \emph{commit log}: 
 
 \begin{verbatim}
-    git log currencyConverter.groovy
+    > git log currencyConverter.groovy
 \end{verbatim}
 
 This will show the list of commits on your screen, ordered
-chronologically. For every commit you can see the commit ID, the
+chronologically. For every commit, you can see the commit ID, the
 author, and the date and time on which the commit was made. You can
-also read the commit message. You can also pass arguments to show you
-only commits for one author, or between two specific dates, and many
+also read the commit message. 
+
+You can pass arguments to \verb+git log+ so that Git only shows you
+commits for one author, or between two specific dates, and many
 other options. Type \verb+git help log+ for more information. You can
 use \verb+git help <command>+ to get help on any other command. 
 
@@ -281,13 +290,13 @@ changed from one commit to the next. But there is a way to do this:
 \verb+git diff+. Let's have a look at an example: 
 
 \begin{verbatim}
-    git diff ab9d6 9ecf9
+    > git diff ab9d6 9ecf9
 \end{verbatim}
 
 This command shows the changes between those two commits. Note that I
 did not have to write the whole commit ID (40 characters!) but only
 the first five are fine \emph{as long as they are unique}. If the
-shortened IDs you use are not unique, git will complain. In this case,
+shortened IDs you use are not unique, Git will complain. In this case,
 the short IDs are unique and Git tells that only one line was changed: 
 
 \begin{verbatim}
@@ -306,7 +315,8 @@ the short IDs are unique and Git tells that only one line was changed:
 \end{verbatim}
 
 The ``-'' sign on the margin shows a deleted line while the ``+'' sign
-shows an added line. If you take everything into account, what changed
+shows an added line; the other lines were not changed. 
+If you take everything into account, the only thing that changed
 in this commit was the name of two variables on that line. 
 
 \subsection{Sharing is caring}
