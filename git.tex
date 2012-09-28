@@ -355,7 +355,7 @@ remove (``rm'') and rename (``rename'') remote sites. By default,
 \verb+git remote+ will just show a list of your remote sites (name,
 url\ldots). The word ``origin'' is just a name for the new remote site
 to be used locally; origin is a common name for the main repository
-where you push your changes. We could have used ``origin'', or
+where you push your changes. We could have used ``my-projects'', or
 ``myRemoteSite'', or any other name as long as we have not used it
 yet. Finally, the URL is where the remote site
 is. GitHub\footnote{GitHub does give you much more than just hosting
@@ -371,13 +371,13 @@ you a URL that you can copy and paste (see Figure~\ref{fig:github}).
   \caption{Screenshot of GitHub. You can see the name of the user
     (``bbk-msccs''), the name of the repository
     (``currency-exchanger''), and the URL. You can use the URL both to
-    clone the reposity and to push your changes (as long as this is
-    your repository).}
+    clone the reposity and to push your changes (as long as this
+    repository is yours, i.e. you can \emph{write} on it).}
   \label{fig:github}
 \end{figure}
 
 Once you have configured your remote repository or repositories,
-pushing your changes very easy: you only need to say where to push. 
+pushing your changes is very easy: you only need to say where to push. 
 
 \begin{verbatim}
     > git push origin 
@@ -388,8 +388,10 @@ pushing your changes very easy: you only need to say where to push.
 \end{verbatim}
 
 The system will ask for your username (``ilovegit'' in this example)
-and your password. Then it will inform you that it has pushed your
-commits. 
+and your password. Then, if everything goes according to plan, 
+it will inform you that it has pushed your commits. Note that 
+this step could
+fail for several reasons, like your network connection going down. 
 
 \subsubsection{Pull}
 \label{sec:pull}
