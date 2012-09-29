@@ -1,27 +1,42 @@
 #/bin/sh
 VERSION_FILE=version.txt
-TITLE="BBK - DCS - Introduction to Computer Programming.pdf"
+LATEXFILE=main-intro
+PDFFILE="BBK - DCS - Introduction to Computer Programming.pdf"
 if [ -e ${VERSION_FILE} ]; then
   echo "ERROR: There is a spurious ${VERSION_FILE} in this folder."
   echo "       Please delete it and run the script again"
   exit 0
 fi
+if [ $# != 1 -a $# != 3 ]; then
+  echo "USAGE: makeNewPDF <version> [<main file> <filename>]"
+  echo "Example: makeNewPDF 1.32"
+  echo "Example: makeNewPDF 1.1 main-intro \"BBK - DCS - Introduction to Computer Programming.pdf\""
+  exit 0
+fi
 if [ "$1" != "" ]; then
   echo $1 > ${VERSION_FILE}
 fi
-if [ ! -e ${VERSION_FILE} ]; then
-  echo "USAGE: makeNewPDF <version>  (e.g. makeNewPDF 1.0)"
-  exit 0
+if [ "$2" != "" ]; then
+  LATEXFILE="$2"
 fi
-latex main
-latex main
-latex main
-dvips main.dvi -o 
-ps2pdf main.ps
+if [ "$3" != "" ]; then
+  PDFFILE="$3"
+fi
+echo "Compiling ${LATEXFILE}.tex in 3..."
+sleep 1
+echo "2..."
+sleep 1
+echo "1..."
+sleep 1
+latex ${LATEXFILE}
+latex ${LATEXFILE}
+latex ${LATEXFILE}
+dvips ${LATEXFILE}.dvi -o 
+ps2pdf ${LATEXFILE}.ps
 # If we wanted to include the version info in the title of the PDF, 
-# we would update $TITLE here. However, this is a bad idea because 
+# we would update $PDFFILE here. However, this is a bad idea because 
 # several web links beyond our control (and more to come) point to 
 # this file and we do not want to break them. 
-mv main.pdf "$TITLE"
-echo Created $TITLE
+mv ${LATEXFILE}.pdf "$PDFFILE"
+echo Created "$PDFFILE".
 rm ${VERSION_FILE}
