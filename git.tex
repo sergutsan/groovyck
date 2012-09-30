@@ -597,7 +597,8 @@ Your role as programmer gifted with a human intelligence ---Git is
 able to solve most conflicts itself, but not all--- is to decide
 which code should stay: the code between \verb+<<<<+ and \verb+=====+
 or the code between \verb+====+ and \verb+>>>>+. Maybe none is
-correct and you need to write new code to fix the conflict. 
+correct and you need to write new code to fix the conflict (and remove
+the \verb+<+, \verb+=+, and \verb+>+ symbols, of course). 
 
 In any case, once the conflict is resolved, you have to commit the
 changes. 
@@ -613,17 +614,44 @@ one. But a Git repository can have an unlimited number of branches,
 and this is very common for large projects. 
 
 Branches are important in Git, and in any version control
-system. Branches allow programmer to fulfill two needs: 
+system. Branches allow programmers to advance development without
+compromising the stability of the code released to clients, to try
+experimental features that may or may not be worth to add to the
+project, and to collaborate with external programmers that want to
+help in the development. 
 
-\begin{description}
-\item[Experiments: ] Sometimes you want to add a new feature to your
-  program, but you do not want to break your program. You can develop
-  the experimental functionality in a separated branch while you keep
-  the main program in \emph{master}.
-\item[External collaborators: ] When other programmers 
-\end{description}
+There are many interesting things that you can do with branches, and
+this is one of the most important features of Git. However, for the
+moment we are going to see just the basic functionality. 
 
+You create a new branch with the command 
+\verb+git branch <branch_name>+, and change branches with the command
+\verb+git checkout <branch_name>+. Whatever you commit to a branch is
+only visible to that branch, at least until you merge it with another
+branch. 
 
+Let's see what branches are about with a small step-by-step example: 
+
+\begin{enumerate}
+\item Create a new Git repository. Create and a new file called
+  \verb+mainFile+ and make some
+  basic edits. Commit your changes (to \emph{master}). 
+\item Create a new branch: \verb+git branch testing+. Change to the
+  new branch: \verb+git checkout testing+.
+\item You are now in \verb+testing+. Create a new file
+  \verb+experimental+ and add some lines to it. Commit. Add some lines
+  to \verb+mainFile+ too. Commit.
+\item See the history of your files using \verb+git log+.
+\item Go back to the \emph{master} branch: \verb+git checkout
+  master+. 
+\item See the history of your files using \verb+git log+. Do you see
+  any difference?
+\end{enumerate}
+
+As you can see, opening branches allows you to do experimental or
+not-well-tested code without compromising your main line of
+development. Any commits you make in \verb+testing+ are not visible in
+\verb+master+. If at a later point you want to merge both 
 
 % ADD INFO ON BRANCHES
 % branch
