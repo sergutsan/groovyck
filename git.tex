@@ -509,6 +509,128 @@ As a rule of thumb, push every time you
 have finished a coding session (e.g. before turning off the computer
 or standing up to grab some lunch), or as soon as possible after that.
 
+\subsection{Back to the past\ldots}
+\label{sec:branching}
+
+If you have been reading carefully until now, you will have noticed
+that we do not know yet how to \emph{move back in time}. So far we
+have only learnt how to look into the past using \verb+git log+. In
+order to be able to \emph{roll back} when we mess up things, we need
+to do one of two things: either we can \emph{revert} changes or we can
+\emph{branch} the history of our source code
+(Section~\ref{sec:branch-branch-everyw}).
+
+\subsubsection{Time reversal}
+\label{sec:time-reversal}
+
+The simplest form of time reversal is by using the command 
+\verb+git revert+. This command makes a commit 
+that cancels all the commits that
+you specify. Confusing? 
+
+Maybe, but think that the typical use case is cancelling just the last
+commit: you make some changes, you commit them, and then you realise
+that you forgot to do something before committing\ldots maybe you
+forgot to add a file, or something of the sort. At this point, you can
+follow two courses of action. Either you do the things you had
+forgotten and then commit them (using a message like ``this is what I
+forgot to do in commit 25cec5a... 4''), which is not optimal; or you
+revert and then commit again, like in this example.
+
+\begin{verbatim}
+    (modify file1 and file2)
+    > git add file1
+    > git commit 
+    (realise you forgot to add file2)
+    > git revert HEAD
+    > git add file2
+    > git commit
+\end{verbatim}
+
+HEAD is a special tag that means\footnote{Strictly speaking, it means
+  the last commit \emph{for the current branch}, but for now we are
+  assuming we only have one branch, called \emph{master}.} ``the last
+commit''. Git will ask you 
+to introduce a commit message to explain why you are reverting that
+change. You are not limited to revert the last commit. You can revert
+many commits, as in this example that reverts the last four commits
+(you will need to add a message for each reverting commit): 
+
+\begin{verbatim}
+    > git revert HEAD HEAD^ HEAD^^ HEAD^^^
+\end{verbatim}
+
+Git will take care of all the changes to the source code for you. 
+
+\subsubsection{Conflicts}
+\label{sec:conflicts}
+
+You can also revert any combination of commits that you want. 
+
+\begin{verbatim}
+    > git revert a827e5fe 067cac919 938f6821a
+\end{verbatim}
+
+Usually, Git will do all the necessary changes to revert all those
+commits and give the resulting files. 
+However, reverting arbitrary commits
+ may result in a conflict. A conflict happens when Git
+cannot reliably make a change in the code to accommodate your
+wishes. This is uncommon, but may happen if you are not careful when
+reverting changes or merge two very different pieces of code. 
+
+When a conflict happens, Git will tell you which files have conflicts
+so that you can fix the source files yourself. A file with a conflict
+looks like this: 
+
+\begin{verbatim}
+    (some source code here)
+    <<<<<<< comit-ID-1
+    (source code as in ID-1
+    =======
+    (source code as in ID-2
+    >>>>>>> commit-ID-2
+    (more source code here)
+\end{verbatim}
+
+Your role as programmer gifted with a human intelligence ---Git is
+able to solve most conflicts itself, but not all--- is to decide
+which code should stay: the code between \verb+<<<<+ and \verb+=====+
+or the code between \verb+====+ and \verb+>>>>+. Maybe none is
+correct and you need to write new code to fix the conflict. 
+
+In any case, once the conflict is resolved, you have to commit the
+changes. 
+
+
+\subsection{Branches, branches everywhere\ldots}
+\label{sec:branch-branch-everyw}
+
+Last, but definitely not least, we need to learn about branches. You
+have already met the most important one, called \emph{master}. This is
+the default branch in any Git repository, and sometimes it is the only
+one. But a Git repository can have an unlimited number of branches,
+and this is very common for large projects. 
+
+Branches are important in Git, and in any version control
+system. Branches allow programmer to fulfill two needs: 
+
+\begin{description}
+\item[Experiments: ] Sometimes you want to add a new feature to your
+  program, but you do not want to break your program. You can develop
+  the experimental functionality in a separated branch while you keep
+  the main program in \emph{master}.
+\item[External collaborators: ] When other programmers 
+\end{description}
+
+
+
+% ADD INFO ON BRANCHES
+% branch
+% checkout % example: make the same algorithm in two different ways
+%          % example: add a new class "in progress", that appears only
+%          % in one branch and not the other
+% merge
 
 \subsection{Ignoring files}
 \label{sec:ignoring-files}
@@ -540,12 +662,6 @@ The file \verb+.gitignore+ can be added and committed to your
 repository like any other file.
 
 
-% ADD INFO ON BRANCHES
-% branch
-% checkout % example: make the same algorithm in two different ways
-%          % example: add a new class "in progress", that appears only
-%          % in one branch and not the other
-% merge
 
 
 %%% Local Variables:
