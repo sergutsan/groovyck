@@ -1,0 +1,241 @@
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\begin{document}
+
+\section{Ternary operator}
+\label{sec:ternary-operator}
+
+Read the following code and, without executing it first, explain what
+it does. 
+
+\begin{verbatim}
+  int currentYear = 2012
+  print "When were you born (year)?"
+  String str = System.console().readLine();
+  int birthYear = Integer.parseInt(str);
+  int ageAprox = currentYear - birthYear;
+  String result = (ageAprox > 17) ? "" : "not "
+  println "It seems you are " + result + "an adult." 
+\end{verbatim}
+
+Hint: look at section ``The Ternary Operator''. 
+
+\section{Ende homage}
+\label{sec:ende-homage}
+
+Is there anything wrong with the following piece of code (hint: yes)?
+What does it do?  
+
+\begin{verbatim}
+  int i = 10
+  while (i < 5) {
+      i++;
+      println i
+  }
+\end{verbatim}
+
+\section{Yet another loop}
+\label{sec:yet-another-loop}
+
+What does the following piece of code do?
+
+\begin{verbatim}
+  String str = System.console().readLine()
+  int i = Integer.parseInt(str)
+  while (i < 10) {
+    i++;
+    str = System.console().readLine()
+    int j = Integer.parseInt(str)
+    if (j == 0) {
+        break;
+    } else if (j != 1) {
+      println j;
+    }
+  }
+  println "finished"
+\end{verbatim}
+
+Hint: the reserved word \verb+break+ exits the current loop. 
+
+\section{Prime numbers}
+\label{sec:prime-numbers}
+
+Write a program that asks a number from the user, then says whether
+the number is prime or not. Remember that a number that is divisible
+by any number apart from 1 and itself is prime. You can use the modulo
+operator (if \verb+a % b + is zero, then a is divisible by b).
+
+\section{Multiplication}
+\label{sec:multiplication}
+
+Write a program that requests two numbers from the user and then
+outputs its product. You cannot use the ``*'' operator. 
+
+\section{Division}
+\label{sec:division}
+
+Write a program that requests two numbers from the user and then
+outputs the quotient and the remainder, e.g. if the user enters 7 and
+3, your program should ouput something like ``7 divided by 3 is 2,
+remainder 1''. You cannot use the ``/'' or ``\%'' operators. 
+
+\section{Naive sorting}
+\label{sec:naive-sorting}
+
+Write a program that reads three numbers and prints them in order, from
+lowest to highest. 
+
+\section{Maximising}
+\label{sec:maximising}
+
+Write a program that read a (arbitrarily long) sequence of positive
+numbers. The sequence is ended when the users enters ``-1''. At that
+point, the program must output the highest number in the sequence. 
+
+\section{Going up!}
+\label{sec:going-up}
+
+Read an arbitrarily long sequence of positive numbers from the user,
+until -1 is entered. At that point, print "Yes" if the numbers were
+consecutive and increasing and "No" otherwise. Sequences "1,2,3,4,-1"
+and "5,6,7,8,9,10,11,-1" should output "Yes", but "2,3,5,6,7,-1",
+"10,9,8,7,-1", and "1,1,2,3,4,5,-1" should output "No".
+
+\section{You said high, I said low\ldots}
+\label{sec:you-said-high}
+
+Modify your former program so that it outputs "Yes" when the numbers
+are consecutive, regardless of whether they go up or down. For
+example, both "2,3,4,5,6,-1" and "10,9,8,7,-1" should now result in
+"Yes".
+
+\section{Poker hands (*)}
+\label{sec:poker-hands}
+
+Read five cards from the user. For each card, read the rank
+(1,2,3,4,5,6,7,8,9, 10,J,Q,K) and the suit ("spades", "hearts",
+"diamonds", "clubs"). Each of the five cards must be valid before
+accepting the next one.  Once the program has the five cards, it
+should tell the user what is the best hand she has got, as per the
+following list (from best to worst):
+
+\begin{description}
+\item[Straigh flush: ] all cards are of the same suite and
+     their ranks are consecutive. Note that they are probably
+     not ordered as they were entered.
+   \item[Poker: ] four of the five cards have the same
+     rank.
+   \item[Full House: ] three of a kind plus two of a kind.
+   \item[Flush: ] all cards share the same suit, but are not
+     consecutive.
+   \item[Straight: ] all cards are consecutive, but not of the same
+     suit.
+   \item[Three of a kind: ] three of the five cards have the same
+     rank.
+   \item[Two pairs: ] two pairs (see below).
+   \item[Pair:] two of the five cards have the same rank.
+   \item[Nothing: ] any other situation.
+\end{description}
+
+If you ever launch an online poker business, this could be one (very
+small) piece of it.
+
+\section{Number piramids}
+\label{sec:number-piramids}
+
+Write a program that output a number piramid like the one below. 
+
+\begin{verbatim}
+  1
+  22
+  333
+  4444
+  55555
+  666666
+  7777777
+  \ldots
+\end{verbatim}
+
+\section{All the primes up to 1,000 (*)}
+\label{sec:all-primes-up}
+
+Write a program that prints all on screen all prime numbers up
+to~1,000. 
+
+\section{Up to 1,000 primes (*)}
+\label{sec:all-primes-uprr}
+
+Modify the program that you wrote for the former exercise so that it
+writes on screen the first 1,000 primes. 
+
+\section{Guess my number (*)}
+\label{sec:guess-my-number}
+
+Write a program that thinks of a random number between 0 and 1000, and
+then lets the user try to guess it. For every guess, the computer says
+whether the guess is correct, or too low, or too high. When the user
+finds the number, the computer will tell how many guesses were
+needed. The output could be similar to the following example: 
+
+\begin{verbatim}
+  Try to guess my number!
+  Tell me a number: 2
+  No! My number is higher. 
+  Tell me a number: 800
+  No! My number is lower.
+  Tell me a number: 500
+  No! My number is lower.
+  Tell me a number: 350
+  No! My number is higher.
+  Tell me a number: 376
+  CORRECT!
+  You needed 5 guesses. 
+\end{verbatim}
+
+(Hint: to get a random number between 0 and 1000, use the following
+line:)
+
+\begin{verbatim}
+    int numberToGuess = Math.abs(1000 * Math.random())
+\end{verbatim}
+
+\section{Rock, Paper, Scissors (*)}
+\label{sec:rock-paper-scissors}
+
+Write a program that reads 2 characters from either the keyboard or a
+file. The characters are either PP, PR, PS, RP, RR, RS, SP, SR,
+or~SS. They correspond to the selections made by 2 players playing the 
+game of rock-paper-scissors. 
+
+Make the program accept inputs until one player's score is more than 3
+points ahead of the other. 
+
+Hint: remember that you can use \verb+.substring()+ to get the
+elements of a String. 
+
+\section{Optimus Prime (**)}
+\label{sec:optimus-prime}
+
+Write a program that reads an integer number from the user, and then
+outputs the closest prime number. If there are two prime numbers at
+the same distance, it should output both. For instance, if the user
+enters 5116, the output should be 5113 \emph{and} 5119. 
+
+\section{$\pi$ (**)}
+\label{sec:pi-}
+
+Pi, the ratio of a circle's circumference to its diameter. 
+can be computed by adding the following terms: 
+
+$$ \pi = 4 \sum^{\infty}_{k=0} {(-1)^k \over 2k+1} = 
+  {4 \over 1} - {4 \over 3} + {4 \over 5} - {4 \over 7} 
+  + {4 \over 9} - {4 \over 11} + \cdots $$
+
+Create a program that asks the user for a number $n$ and then
+calculates $n$ of this infinite sum. How many terms do you need to get
+the first three digits right (3.14)? How many for the first 10 digits
+(3.14159265358\ldots...)?
+
+
+\end{document}
+
