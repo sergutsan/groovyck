@@ -1,5 +1,3 @@
-\chapter{Source code version control}
-\label{sec:source-code-version}
 
 \section{Version control}
 \label{sec:version-control}
@@ -202,30 +200,31 @@ branch (by default, it is called \emph{master}), the identifier for
 this commit (a unique identifier), your commit text, and some 
 statistics about what the commit did: lines added, edited, or removed,
 files added or removed, etc (\emph{see
-  Figure~\ref{fig:git-example-1}}). 
+  Figure~\ref{fig:git-example-output}}). 
 
 \begin{figure}[htbp!]
   \centering
   \begin{framed}
     \begin{verbatim}
    > git commit
-   [master 12a0006] Added the first line: just says "Hello World!"
+   [master 12a0006] Added first line: just says "Hello World!"
    1 file changed, 7 insertions(+), 1 deletion(-)
    >
    \end{verbatim}
   \end{framed}
   \caption{Example of Git's output after a commit.}
-  \label{fig:git-example-1}
+  \label{fig:git-example-output}
   % TODO: add hand-written tags to screenshot
 \end{figure}
 
-Now your project has a history! It looks more or less like Figure~\ref{fig:git-example-2}.
+Now your project has a history! 
+It looks more or less like Figure~\ref{fig:git-example-1}.
 
 \begin{figure}[htbp!]
   \centering
-  \includegraphics{gfx/no_figure.eps}
+  \includegraphics[width=\textwidth]{gfx/commit_history_1.eps}
   \caption{Initial history of this project}
-  \label{fig:git-example-2}
+  \label{fig:git-example-1}
 \end{figure}
 
 Let's say we are not happy with our program. It does not do much. We
@@ -246,7 +245,9 @@ have two options:
 \begin{itemize}
 \item If we know where the problem is (and in this simple example, we
   do) we can just fix it and commit again. A good commit message would
-  be ``Fixed typo in line 3: readline() should be readLine()''.
+  be ``Fixed typo in line 3: readline() should be readLine()''. The
+  history of the project is represented in
+  Figure~\ref{fig:git-example-2}. 
 \item If we did not know where the problem is, as it is usually the
   case in big programs, we can go back in time
   until we find the commit in
@@ -254,6 +255,13 @@ have two options:
   can see how the \emph{bug} was introduced. Thanks to version
   control, finding bugs is much easier (and that is 80\% of the job). 
 \end{itemize}
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/commit_history_2.eps}
+  \caption{History of this project after second commit}
+  \label{fig:git-example-2}
+\end{figure}
 
 The simplest way to travel in time is by looking at the change log of
 a file, and we are going to see how to do that in the next section. 
@@ -463,7 +471,19 @@ computers. There is no need to carry around USB sticks with folders
 called ``currencyExchangev2'', ``currencyExchangev3'', or
 ``currencyExchangev4usethisnottheother''. Git will always have the
 latest version as long as you do not forget to commit and push
-timely. 
+timely (Figure~\ref{fig:pushpull}). 
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/pushpull}
+  \caption{Pushing and pulling: when Alfred pushes his changes to make
+    them public, Bertha will be able to pull them and work on the last
+    version of the software. If Alfred takes a plane to Paris, he will
+    be able to pull the changes from Paris to get the last
+    version\ldots including any changes that Bertha and other
+    co-workers may have pushed while he was on the plane!}
+  \label{fig:pushpull}
+\end{figure}
 
 \subsection{When should I commit?}
 \label{sec:when-should-i}
@@ -502,7 +522,7 @@ robot wandering around Mars\footnote{Actually, a robot in Mars cannot
   connect to the internet, at least not what we call ``the Internet'' in
   2012. Radio waves travel \emph{only} as fast as light-speed, and it
   takes them so long to reach the Earth that internet hosts would
-  timeout before a connection can be stablished. You could connect to
+  timeout before a connection can be stablished. You \emph{could} connect to
   the Internet from the Moon ---your bandwitdh would be
   very poor compared to your home connection, though.}. 
 As a rule of thumb, push every time you 
@@ -639,26 +659,97 @@ Let's see what branches are about with a small step-by-step example:
 \item Create a new branch: \verb+git branch testing+. Change to the
   new branch: \verb+git checkout testing+.
 \item You are now in \verb+testing+. Create a new file
-  \verb+experimental+ and add some lines to it. Commit. Add some lines
+  \verb+experimentalFile+ and add some lines to it. Commit. 
+  Add some lines
   to \verb+mainFile+ too. Commit.
 \item See the history of your files using \verb+git log+.
-\item Go back to the \emph{master} branch: \verb+git checkout
-  master+. 
+\item Go back to the \emph{master} branch: 
+  \verb+git checkout master+. 
 \item See the history of your files using \verb+git log+. Do you see
   any difference?
+\item Add some lines (different from before) to
+  \verb+mainFile+. Commit.
+\item Change branches again: \verb+git checkout testing+. Read the
+  content of mainFile. Check the history: \verb+git log mainFile+. Is
+  it the same history as in the other branch?
 \end{enumerate}
 
 As you can see, opening branches allows you to do experimental or
 not-well-tested code without compromising your main line of
-development. Any commits you make in \verb+testing+ are not visible in
-\verb+master+. If at a later point you want to merge both 
+development (see Figure~\ref{fig:git-example-3}). 
+After branches diverge, any new commits you make in \verb+testing+ are not
+visible in \verb+master+ and viceversa. 
 
-% ADD INFO ON BRANCHES
-% branch
-% checkout % example: make the same algorithm in two different ways
-%          % example: add a new class "in progress", that appears only
-%          % in one branch and not the other
-% merge
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/commit_history_3.eps}
+  \caption{Project with two branches: master and experimental}
+  \label{fig:git-example-3}
+\end{figure}
+
+If at a later point you become convinced that your work
+in testing is work of being merged into the main branch, you can do so
+with:
+
+\begin{verbatim}
+    > git checkout master
+    > git merge testing
+\end{verbatim}
+
+This will merge both branches and create a new commit in \emph{master}
+that includes all the changes from \emph{testing}. Note that,
+depending on the changes you have made in both branches since they
+separated, a conflict may arise and you will need to 
+fix it (and then commit) manually.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/commit_history_4.eps}
+  \caption{Merging branch ``experimental'' into ``master''}
+  \label{fig:git-example-4}
+\end{figure}
+
+\subsubsection*{Replacing a branch}
+\label{sec:exercise-1ff}
+
+You can also use branches to go back in time and change the way you
+are doing things. For instance, think of a situation where your work
+in \emph{master} was based on one technology and, further down the
+line, you discover another technology that is much better. Another
+possibility is that you messed up but do not realise until several
+commits laters. 
+
+You could of course just delete the code of the old technology and
+start writing your new code for the new technology. But there is a
+better way. You can move back in time, branch, and then continue your
+development in the new branch\ldots and call it \emph{master}. The
+process would be as follows: 
+
+\begin{verbatim}
+    > git checkout 33gfg32    [1]
+    > git branch newMaster    [2]
+    > git branch -m oldTech   [3]
+    > git branch newMaster    
+    > git branch -b master    [4]
+\end{verbatim}
+
+The first command [1] puts you at the right point where you want to
+start a new branch. Note that you can use \verb+git checkout+ to
+change branches or to change to a specific commit\footnote{Actually,
+  branches in Git are implemented as aliases of commits, so it is
+  basically the same thing. In other words, a branch is just a pointer
+  that points to a commit and that gets updated every time there is a
+  commit and that branch is active.}. Then you create a new branch [2]
+as we have seen before. Then you change the name of the current
+branch [3], using \verb+git branch -b+ (look up the help for more
+details). Finally, you change branches and rename the new branch to
+\emph{master} [4]. Then you continue your development in the new
+branch. 
+
+There is much more that can be said about branches and how they make
+it easy to have several levels of development in your projects, and
+how they make it easy for many programmers to work on the same
+project, but we will see all of that at a later point. 
 
 \subsection{Ignoring files}
 \label{sec:ignoring-files}
