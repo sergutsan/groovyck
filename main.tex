@@ -136,7 +136,8 @@ only my own fault.
 % \item day 6: Real java: all files are classes, the main method,
 %            System.out.println(); bye, bye, Groovy scripts,
 %            introduce pointers and use it for creating a linked
-%            list (a growing array) 
+%            list (a growing/decreasing array, using a Node class that
+%            contains data and points to another Node) 
 % \item day 7: More on data structures: queues and stacks, iterators,
 %            JavaDoc: document inputs, output, and rationale 
 % \item day 8: More on data structures: trees and maps; for-each loops
@@ -158,9 +159,21 @@ only my own fault.
 % IMPORTANT: HOW DO YOU RUN TESTS WITHOUT ECLIPSE (from cmd)!!
 % \item Ultra-brief introduction to annotations in Java
 % \item JavaDoc: document inputs, output, and rationale
+% \item Do not confuse annotations with JavaDoc!! @throws, etc
+% \item Annotations to cover:
+%     @Test
+%       timeout = 15000
+%       expected = IllegalStateException.class
+%     @Before, @BeforeClass
+%     @After, @AfterClass
+%     @Override
+%     @SuppressWarnings
+%     @Deprecated
 
 % Day 11,12: Padding week to recover their breath
-% \item Introduction to generics and annotations in Java
+% \item Introduction to generics in Java
+%    Make your own List<T> (and Node<T>), Stack<T> and Queue<T>
+%    (probably extending List<T>), and Map<K,V>
 % \item More on object orientation: inheritance, polymorphism,
 %   overloading, overriding, "static" (good "real" example:
 %   implementation of 
@@ -172,6 +185,7 @@ only my own fault.
 %     println(). 
 % \item Maybe a sample test, like Roger Mitton does?(remember you
 % have a spare week (it's 11 not 10, count them JIC))
+% \item Maybe some project for groups??
 
 % Day 13,14: Recursion!
 % \item Recursion
