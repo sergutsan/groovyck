@@ -220,11 +220,69 @@ Figure~\ref{fig:compledata}.
   \label{fig:compledata}
 \end{figure}
 
+Using complex data types is different from using simple types in
+several ways. For starters, as complex types are not stored in the
+stack but in the heap, you have to \emph{allocate} memory-space in the
+heap to store the data. This is done with the reserved word
+\verb+new+; you also need brackets to pass arguments (as if using a
+method: this is because complex types have something called a
+\emph{constructor method} that we will in more detail later). We are
+going to see now several examples, starting with the pervasive
+Strings. 
+
+Oh, one final note. Complex data types are usually called with capital
+letters. This is not compulsory, but it is what everybody expects:
+simple types with non-capital letters (e.g.~\verb+int+, \verb+double+)
+and complex letters with capital letters (e.g.~\verb+String+,
+\verb+Array+, \verb+List+, \verb+Customer+\ldots). If you do not
+capitalise your complex types other people will get very confused when
+they read your code. This is not only unpolite, it is also
+unprofessional. 
+
+\section{String}
+\label{sec:string}
+
+Strings are everywhere. Every program, except the most trivial, uses
+strings: user names, passwords, addresses, configuration options, data
+input from the keyboard, a webpage read through the Wi-Fi
+connection\ldots~almost anything is a String. They are the most widely
+used complex types. 
+
+At their most basic, strings are sequences of characters. You already
+know how to read a piece of text from the user: 
+
+\begin{verbatim}
+   String str = System.console().readLine()
+\end{verbatim}
+
+If you want to create a string in your program without reading it from
+the user, the basic form of creating a string is like this: 
+
+\begin{verbatim}
+    String str = new String("This is a String")
+\end{verbatim}
+
+but you already know that this can be made in an easier way: 
+
+\begin{verbatim}
+    String str = "This is a String"
+\end{verbatim}
 
 
-% Declaration and assignment... with "new"
-% With capital letters
 
+% Strings
+
+% Arrays
+
+% Your own structures: Classes
+
+% A final note on terminology
+
+% simple and complex = primitive and classes
+
+%%%%%%%%%%%%%%5
+
+% Methods, functions
 
 
 %%% Local Variables:
