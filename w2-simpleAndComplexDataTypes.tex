@@ -7,7 +7,10 @@
 % Variable names
 % Magic numbers, introducing final
 %
+% git commit file
 %
+% Day 2: create account on GitHub like bbk-pij-2012-XX
+%        for loops
 
 \section{Introduction}
 \label{sec:introduction}
@@ -24,8 +27,8 @@ Computers store data in their memory in the form of bits. The word
 either~1~or~0, true or false, high or low, on or off. Bits are
 organised in groups of 8 called \emph{bytes}. These bytes ---groups of
 eight bits--- are used to store any data in the memory of the
-computer. When you have got~1024~bytes, you have got a kilobyte or KB;
-when you have~1024~KB you have got a megabyte or MB, and so on for
+computer. When you have got~1024~bytes, you have got a kilobyte or kB;
+when you have~1024~kB you have got a megabyte or MB, and so on for
 gigabytes~(GB), terabytes~(TB), and petabytes~(PB). Note that in
 computing everything is measured in powers of~2 ($2^3 = 8, 2^{10} =
 1024$) and not in powers of~10 as in normal life. That is because
@@ -190,6 +193,34 @@ because String is a complex type.
 
 \section{Complex types}
 \label{sec:complex-types}
+
+Complex types are types of data that do not fit in a box, not even in
+one of the big 64-bit boxes used for \verb+double+. Because they do
+not fit in the ``boxes'', computers have to store them somewhere
+else. However, they also need to know where they are\ldots~and that is
+what the boxes are used. 
+
+Modern computers have \emph{a lot} of memory. Long forgotten are the
+days when Bill Gates said: ``640kB of memory should be enough for
+everything''. Part of that memory is used for the boxes (in a part of
+memory called ``the stack'') and most of the rest is used for
+everything else, including complex data (that part is called, quite
+unceremoniously, ``the heap''). 
+
+When your Groovy or Java code uses some complex data, the computer
+stores that data in some region of the heap ---identified by a \emph{memory
+  address}; then it stores the address in a box in the stack, much in
+the way it stores integers and booleans. This looks similar to
+Figure~\ref{fig:compledata}. 
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/no_figure}
+  \caption{A String is a type of complex data type. The data itself is stored in the heap and its address is stored in box in the stack ---pointing to it.}
+  \label{fig:compledata}
+\end{figure}
+
+
 
 % Declaration and assignment... with "new"
 % With capital letters
