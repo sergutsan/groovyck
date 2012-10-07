@@ -268,11 +268,34 @@ but you already know that this can be made in an easier way:
     String str = "This is a String"
 \end{verbatim}
 
+The former two statements are equivalent in Groovy\footnote{They are
+  NOT equivalent in Java, but we will learn why when the time
+  comes. }, only the second is more convenient and most people use it
+instead of the other. 
+
+% Simple proof of non-equivalence in Java:
+% 
+% public class StringTest {
+%    public static void main(String args[]) {
+% 	 String s1 = System.console().readLine();
+% 	 String s2 = new String("QWE");
+% 	 String s3 = "QWE";
+% 	 if (s1 == s2) System.out.println( "s1 == s2");
+% 	 if (s2 == s3) System.out.println( "s2 == s3");
+% 	 if (s3 == s1) System.out.println( "s3 == s1");
+%    }
+% }
+
+% more on the methods of String here...
+% subString, length
 
 
-% Strings
+% at the end: method split() -> links with Arrays
 
 % Arrays
+
+% methods: length
+
 
 % Your own structures: Classes
 
