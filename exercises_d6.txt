@@ -1,0 +1,7 @@
+Exercises with structs that point to other structs
+  - Killer: five victims, each of them must kill the next
+  - Git Commits: commit message, branch, parent (with branches), and
+    printing at the end
+  - Growing array on demand
+
+Other lists single- or double-linked

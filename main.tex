@@ -101,21 +101,30 @@ only my own fault.
 % Week 2: getting up to speed, but not quite
 % Day 3: 
 % \item Simple and complex data types: primitive types (introducing
-%    float and double), strings, arrays and multi-dimensional 
-%    arrays, classes without methods... use of "new"
-%
-%   exercise: enter a matrix and tell if it is simmetrical
-%   exercise: hundir la flota
-%             y luego hundir la flota pintando en la pantalla
+%    float and double), strings, 
+%    classes without methods... use of "new" and "null"
+% \item Let them create structs and modify them
+%   - CHANGE: instead of levels of access, basics of regular
+%       expressions!  -> and String.split()
 %
 % Day 4:
-% \item For loops
+% \item For loops? -> already covered... where should this be in the
+%       book? 
+% \item Maybe?? They have seen classes -> levels of access
 % \item Functions/Procedures/Methods, parameters (look at week 4
 %   in C++) 
 %   \item talk about side effects -> procedures
 %   \item including a bit on already know methods like substring()
+%   \item scope: variables inside the methods are copied... but 
+%     beware of what happens with complex types! Many exercises
+%     about this!
+%   \item Information hiding
+%        - Levels of access in Java
+%          - All variables private unless good reason
+%          - Methods public or private depending on target public
 %
 % \item Optional? Basics of regular expressions
+%     Maybe better access levels first, regular expressions later
 \chapter{Week 2: Moving on\ldots}
 \input{w2-simpleAndComplexDataTypes}
 \input{w2-methods}
@@ -131,15 +140,19 @@ only my own fault.
 %      Integer (parseInt), Math, System
 %      - introduce them to JavaDocs: constructors, methods, deprecated
 %      - make them do exercises with their own classes: create them, 
-%   make objects, use them
-%      - Information hiding
-%        - Levels of access in Java
-%          - All variables private unless good reason
-%          - Methods public or private depending on target public
+%        make objects, use them
+%   - do..while
+%   - arrays and multi-dimensional arrays, 
+%   exercise: enter a matrix and tell if it is simmetrical
+%   exercise: hundir la flota
+%             y luego hundir la flota pintando en la pantalla
+%   - casting of simple types
+% 
 % Assignment: class Library (and class Book, and class User): enter
 %    new books, enter new Users, take books (max 3 per user), return
 %    books; only three classes, and only public what needs to be
 %    public (check by reflection)
+
 
 % Day 6,7,8: Pointers!
 % \item Data structures: lists, stacks, trees, maps (and iterators)\ldots
@@ -199,9 +212,9 @@ only my own fault.
 %    Make your own List<T> (and Node<T>), Stack<T> and Queue<T>
 %    (probably extending List<T>), and Map<K,V>
 % \item More on object orientation: inheritance (and type
-%   hierarchies, upcasting/downcasting), polymorphism,
-%   overloading, overriding, "static" (good "real" example:
-%   implementation of 
+%   hierarchies, upcasting/downcasting of complex types),
+%   polymorphism, overloading, overriding, "static" (good "real"
+%   example: implementation of 
 %   read-only versions of collections), interfaces (like Iterable, 
 %   Runnable, or the ones in the Collections)... and why interfaces
 %   are important. 
