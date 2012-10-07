@@ -5,7 +5,6 @@
 %
 % Identation
 % Variable names
-% Magic numbers, introducing final
 %
 % git commit file
 %
@@ -163,10 +162,15 @@ accordingly.
 
 $$ 1.23 \cdot 10^{-3} = 123 \cdot 10^{-5} = 0.00123 \cdot 10^0 $$
 
+We cannot use superindex notation in a plain-text file, so we need a
+special notation. The three version of the number above can be written
+as \verb+1.23E-3+, \verb+123E-5+, and \verb+0.00123+, and the three are
+equivalent. 
+
 In Groovy and in Java, real numbers are usually represented with the
 simple data type \verb+double+, that uses 64~bits. There is also a
 32-bit version called \verb+float+ but, as with \verb+short+, it is
-hardly used today.
+hardly ever used today.
 
 \paragraph{Important note.} 
 
@@ -174,6 +178,15 @@ Floating-point numbers do \emph{not} have infinite precision, and
 operating with them can cause rounding errors. There is a special type
 for representing real values where precision is paramount (like in
 banking): \verb+BigDecimal+. 
+
+\paragraph{Equality. }
+
+Due to rounding errors, it does not make sense to test for equality
+among real numbers as we can do with integers. Two numbers could be
+notionally the same but be different due to rounding errors, so they
+are never compared with equality with ``==''. Instead, what is
+usually done is test whether the difference is less that some
+precision limit appropriate for the application (e.g.~1.0E-6). 
 
 \subsubsection{Boolean (binary) values}
 \label{sec:bool-binary-valu}

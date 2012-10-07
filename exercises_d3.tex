@@ -1,3 +1,7 @@
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\begin{document}
+
 Exercises with doubles
   Implement a calculator
     - Addition
@@ -5,29 +9,200 @@ Exercises with doubles
     - Multiplication
     - Division
 
+\section{Line to column}
+\label{sec:line-column}
 
-Read a string and write each character on a different line. Use while
-loops and for loops. What version looks clearer?
+Write a program that reads some text from the user and then writes the
+same text on screen, but each letter on a different line. 
+Use while loops and for loops. What version looks clearer?
 
-Count e in string from user
+Now modify your program to write each word (as defined by spaces) on a
+different line. 
 
-count e as long as is after s or before n
+\section{Counting letters}
+\label{sec:counting-letters}
 
-is string palindrome
+Write a program that reads some text from the user and then says how
+many letters 'e' are there in that text. 
 
-generate specular reflection to make palindrome
+Then modify the program so that it reads the text from the user and
+then asks for a letter. The program should then say how many times you
+can find the letter in the text. 
+
+\section{Counting pairs of letters (*)}
+\label{sec:count-pairs-lett}
+
+Write a program that reads a short string, then some text (long string), and
+then says how many times you can find the short string in the
+text. You cannot use any method of String apart from \verb+charAt()+
+and \verb+length()+. 
+
+\section{Counting letters redux (*)}
+\label{sec:count-lett-redux}
+
+Write a program that reads a text from the users and then enter a loop
+of requesting letters and counting them. The program stops if the user
+asks for the same letter twice. This is an example of the output of
+such a program (with a rather short and boring text): 
+
+\begin{verbatim}
+    Please write a text: It was a dark and stormy night
+    Which letter would you like to count now? a
+    There are 6 in your text. 
+    Which letter would you like to count now? s
+    There are 3 in your text. 
+    Which letter would you like to count now? u
+    There are 0 in your text. 
+    Which letter would you like to count now? a
+    Repeated character. Exiting the program...
+    Thank you for your cooperation. Good bye!
+\end{verbatim}
+
+\section{Palindrome}
+\label{sec:palindrome}
+
+A palindrome is a word, phrase, number, or other sequence of units
+that may be read the same way in either direction. Examples of strict
+palindromes include ``ABBA'', ``madam'', ``radar'', ``kayak'', and
+``step on no pets''. Write a program
+that reads a text and detects whether the text is a strict palindrome.
+
+\section{Palindrome creator}
+\label{sec:palindrome-creator}
+
+Write a program that reads a text and then writes on the screen a
+palindrome by writing the same text followed by the same text in
+reversed order. For example, if the user enters the text ``It was a
+dark and stormy night'' the program must output ``It was a dark and
+stormy nightthgin ymrots dna krad a saw tI''. 
+
+\section{Palindrome redux (*)}
+\label{sec:palindrome-redux}
+
+A stric palindrome is difficult to see in every day language. A
+relaxed palindrome, a text that is a palindrome if you ignore
+punctuation marks such as commas or spaces, is easier to see. Examples
+include ``A man, a plan, a canal - Panama!'', ``Was it a car or a cat
+I saw?'', and ``Rise to vote, sir''. 
+
+Write a program that read a text from the user and then says whether
+the text is a relaxed palindrome. Note that all strict palindromes are
+relaxed palindromes by definition. 
+
+Hint: There are two methods that will make your life easier. The first
+one is Character.isLetter(), that accepts a character (not a String,
+even of length one) and returns true if the character is a letter
+(e.g.~'a', 'R') and false otherwise (e.g.~'.', '5'). The second one is
+Character.toLowerCase(), that accepts a character (not a String) and
+returns the lower case version of the character. 
+
+\section{Distance point--to--point}
+\label{sec:distance-point-point}
+
+Write a program that reads the X and Y coordinates of three points and
+then outputs which of the three are closer. Use the following class
+to store the data for the points: 
+
+\begin{verbatim}
+    class Point {
+      double x;
+      double y;
+    }
+\end{verbatim}
+
+\section{Rectangle}
+\label{sec:rectangle}
+
+Write a program that reads the X and Y coordinates of two points and
+then outputs the area of a rectangle where both points are opposite
+corners. Use the following class
+to store the data for the points: 
+
+\begin{verbatim}
+    class Rectangle {
+      Point upLeft;
+      Point downRight;
+    }
+\end{verbatim}
+
+\section{Inside or outside}
+\label{sec:inside-or-outside}
+
+Write a program that read the coordinates of the two points defining a
+rectangle and then the coordinates of a third point. The program must
+then determine whether the point falls inside or outside the
+rectangle. 
+
+\section{Overlaps}
+\label{sec:insideinside}
+
+Write a program that read the coordinates of four point points, the
+former two defining one rectangle and the latter two defining
+another. The program must read the coordinates of a fifth point and
+say whether the point is inside both rectangles, inside one of them
+only, or out of both. 
 
 
-Exercises with structs
-   
+\section{Mail server (*)}
+\label{sec:mail-server}
 
-old mail client: 
-  MAIL TO: dfdsasdf@jsjasj
-  RCPT TO: sajdfljksd@jasjdfaj
-  DATA
-   lkasjdflkj as#dfa;sdjf lkasjdlksaj kj haksjdhflkh
-   asdlkjfhsakljdhfksadf slashd fhsa fhsidufhw efnwelufh alihfn
-   aiflnwiufh elrifbaiwhegyiwg f rwreg
-   isjfg elfg d
-   .
-  SENT OK -> show receipt
+Let's implements part of a mail server. A mail server is a program
+that takes your emails and then sends them to the appropriate
+recipient. In this exercise, you will implement a simplified version
+of the SMTP protocol that is used to send emails over the internet. 
+
+When your program starts, it should provide a command prompt to the
+user. Then it must read the return address of the email using a
+command of the form ``MAIL FROM: $<$email-address$>$''. The program
+must check that the command is properly written and that the email
+address is valid (i.e.~contains an at ``@'' sign which is neither the
+first nor the last character). There is no need for the email address
+to actually exist, it only needs to be valid. If there is an error,
+the program must 
+say so and wait for a correct return address.
+
+Once the destination is correct, the program must say ``OK'' and wait
+for the recipient. The recipient must be introduced by the user with a
+command of the form ``RCPT FROM: $<$email-address$>$''. Once again, if
+the user enters an invalid command or email address, the program must
+wait for a correct one. 
+
+Once the return address and recipient are correct, and only then, the
+user can enter the command ``DATA''. The program reads then the body
+of the email, line after line, until the user enters a line that
+consists of only a dot. At that point, the email is ready and the
+program must write on the screen who is sending the email, to whom,
+and what the email says. 
+
+If at any point the users types ``QUIT'' the program must
+terminate. If the user enters any other command, or types one of these
+commands at the wrong time (e.g.~RCPT before MAIL), the program must
+say ``Invalid command'' on screen. See a simple example below: 
+
+\begin{verbatim}
+    Welcome to My Mail Server!
+    >>> DATA
+    Invalid command. 
+    >>> MAIL FROM: me@mypc.com
+    OK
+    >>> RCPT TO: bro
+    Invalid email address
+    >>> RPCT TO: bro@hispc.com
+    OK
+    >>> DATA
+    Hi bro, 
+    Call Mum asap.
+    Take care,
+    .
+    Sending email...
+    from: me@mypc.com
+    to: bro@hispc.com
+    Hi bro, 
+    Call Mum asap.
+    Take care,
+    ...done!
+    >>> QUIT
+    Bye!    
+\end{verbatim}
+
+\end{document}
