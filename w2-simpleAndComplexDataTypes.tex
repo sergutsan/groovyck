@@ -9,6 +9,10 @@
 %
 % git commit file
 %
+% Reciprocal of Integer.parseInt() -> String.valueOf(int)
+%
+%
+% PART-TIMERS
 % Day 2: create account on GitHub like bbk-pij-2012-XX
 %        for loops
 
@@ -211,7 +215,9 @@ When your Groovy or Java code uses some complex data, the computer
 stores that data in some region of the heap ---identified by a \emph{memory
   address}; then it stores the address in a box in the stack, much in
 the way it stores integers and booleans. This looks similar to
-Figure~\ref{fig:compledata}. 
+Figure~\ref{fig:compledata}. The memory address in the box can be seen
+as ``pointing to'' the place in memory where the real data is
+stored. For this reason, we are going to call it a \emph{pointer}. 
 
 \begin{figure}[htbp]
   \centering
@@ -239,7 +245,7 @@ capitalise your complex types other people will get very confused when
 they read your code. This is not only unpolite, it is also
 unprofessional. 
 
-\section{String}
+\subsection{String}
 \label{sec:string}
 
 Strings are everywhere. Every program, except the most trivial, uses
@@ -270,7 +276,7 @@ but you already know that this can be made in an easier way:
 
 The former two statements are equivalent in Groovy\footnote{They are
   NOT equivalent in Java, but we will learn why when the time
-  comes. }, only the second is more convenient and most people use it
+  comes.}, only the second is more convenient and most people use it
 instead of the other. 
 
 % Simple proof of non-equivalence in Java:
@@ -286,8 +292,38 @@ instead of the other.
 %    }
 % }
 
+Like with any other complex type, we can make set the pointer of a
+String not to point to any address in memory. This can be useful in
+some cases that will become clearer as we learn more about
+programming, including error detection, release of used memory, and
+garbage collection. To make a pointer point to nowhere, we use the
+reserved word~\verb+null+ (with non-capital letters).
+
+\begin{verbatim}
+    String str
+    str = null
+\end{verbatim}
+
+A pointer pointing to null is called a \emph{null pointer}. This
+basically means that the address in the box is zero; the computer
+knows there is never anything at address zero, so it knows a null
+pointer is not being used to point to any complex
+data~(Figure~\ref{fig:nullpiounter}).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/no_figure}
+  %TODO
+  \caption{A null pointer is basically a zero address}
+  \label{fig:nullpiounter}
+\end{figure}
+
+You already know that you can do some things with strings using
+\emph{methods}. Although we are going to learn more about methods on
+the next section, we can introduce some of them now. 
+
 % more on the methods of String here...
-% subString, length
+% subString, length, charAt
 
 
 % at the end: method split() -> links with Arrays
@@ -303,6 +339,7 @@ instead of the other.
 
 % simple and complex = primitive and classes
 
+
 %%%%%%%%%%%%%%5
 
 % Methods, functions
@@ -312,3 +349,4 @@ instead of the other.
 %%% mode: latex
 %%% TeX-master: "main"
 %%% End:
+
