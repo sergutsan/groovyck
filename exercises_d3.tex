@@ -2,12 +2,26 @@
 \usepackage[margin=2cm]{geometry}
 \begin{document}
 
-Exercises with doubles
-  Implement a calculator
-    - Addition
-    - Subtraction
-    - Multiplication
-    - Division
+\section{Calculator}
+\label{sec:calculator}
+
+Write a program that reads two numbers from the user and then offers a
+menu with the four basic operations: addition, subtraction,
+multiplication, and division. Once the user has selected an operation
+from the menu, the calculator performs the operation.
+
+Hint: In the same way that there exists an Integer.parseInt() method
+to parse integers, there is a Double.parseDouble() method to parse
+real numbers. 
+
+\section{Command-line calculator (*)}
+\label{sec:comm-line-calc}
+
+Write a program that reads a text representing a mathematical
+operation (one of the four basic ones) with two operands, and then
+execute it. For example, if the user enters~``3/5'' the program
+outputs~``0.6''; if the user enters~``23~*~4'' the program
+outputs~``92''.
 
 \section{Line to column}
 \label{sec:line-column}
@@ -16,8 +30,8 @@ Write a program that reads some text from the user and then writes the
 same text on screen, but each letter on a different line. 
 Use while loops and for loops. What version looks clearer?
 
-Now modify your program to write each word (as defined by spaces) on a
-different line. 
+Now modify your program to write each word (as defined by spaces)
+rather than letter on a different line. 
 
 \section{Counting letters}
 \label{sec:counting-letters}
@@ -32,15 +46,15 @@ can find the letter in the text.
 \section{Counting pairs of letters (*)}
 \label{sec:count-pairs-lett}
 
-Write a program that reads a short string, then some text (long string), and
-then says how many times you can find the short string in the
+Write a program that reads a short string and then some longer
+text. The program must say how many times you can find the short string in the
 text. You cannot use any method of String apart from \verb+charAt()+
 and \verb+length()+. 
 
 \section{Counting letters redux (*)}
 \label{sec:count-lett-redux}
 
-Write a program that reads a text from the users and then enter a loop
+Write a program that reads a text from the user and then enter a loop
 of requesting letters and counting them. The program stops if the user
 asks for the same letter twice. This is an example of the output of
 such a program (with a rather short and boring text): 
@@ -79,13 +93,13 @@ stormy nightthgin ymrots dna krad a saw tI''.
 \section{Palindrome redux (*)}
 \label{sec:palindrome-redux}
 
-A stric palindrome is difficult to see in every day language. A
+A strict palindrome is difficult to see in every day language. A
 relaxed palindrome, a text that is a palindrome if you ignore
 punctuation marks such as commas or spaces, is easier to see. Examples
 include ``A man, a plan, a canal - Panama!'', ``Was it a car or a cat
 I saw?'', and ``Rise to vote, sir''. 
 
-Write a program that read a text from the user and then says whether
+Write a program that reads a text from the user and then says whether
 the text is a relaxed palindrome. Note that all strict palindromes are
 relaxed palindromes by definition. 
 
@@ -128,7 +142,7 @@ to store the data for the points:
 \section{Inside or outside}
 \label{sec:inside-or-outside}
 
-Write a program that read the coordinates of the two points defining a
+Write a program that reads the coordinates of the two points defining a
 rectangle and then the coordinates of a third point. The program must
 then determine whether the point falls inside or outside the
 rectangle. 
@@ -136,9 +150,9 @@ rectangle.
 \section{Overlaps}
 \label{sec:insideinside}
 
-Write a program that read the coordinates of four point points, the
+Write a program that reads the coordinates of four point points, the
 former two defining one rectangle and the latter two defining
-another. The program must read the coordinates of a fifth point and
+another one. The program must read the coordinates of a fifth point and
 say whether the point is inside both rectangles, inside one of them
 only, or out of both. 
 
@@ -149,13 +163,14 @@ only, or out of both.
 Let's implements part of a mail server. A mail server is a program
 that takes your emails and then sends them to the appropriate
 recipient. In this exercise, you will implement a simplified version
-of the SMTP protocol that is used to send emails over the internet. 
+of the SMTP protocol that is used to send emails over the Internet. 
 
 When your program starts, it should provide a command prompt to the
 user. Then it must read the return address of the email using a
 command of the form ``MAIL FROM: $<$email-address$>$''. The program
 must check that the command is properly written and that the email
-address is valid (i.e.~contains an at ``@'' sign which is neither the
+address is valid (i.e.~contains one and only one~``@''~sign 
+which is neither the
 first nor the last character). There is no need for the email address
 to actually exist, it only needs to be valid. If there is an error,
 the program must 

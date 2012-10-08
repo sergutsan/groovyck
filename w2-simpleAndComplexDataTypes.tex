@@ -38,7 +38,8 @@ computer. When you have got~1024~bytes, you have got a kilobyte or kB;
 when you have~1024~kB you have got a megabyte or MB, and so on for
 gigabytes~(GB), terabytes~(TB), and petabytes~(PB). Note that in
 computing everything is measured in powers of~2 ($2^3 = 8, 2^{10} =
-1024$) and not in powers of~10 as in normal life. That is because
+1024$) and not in powers of~10 as in normal life (10, 100,
+1000\ldots). That is because 
 computers count with bits~(2) and human beings\footnote{Not all humans
 used only the ten fingers in their hands to count. Some languages like
 French or Irish have remains of base-20 counting.} count with their
@@ -49,7 +50,7 @@ fingers~(10).
 
 Simple data types can be thought as boxes in the computer's
 memory. Every time you declare a variable in your program, you can
-think\footnote{This is only a metaphore and is not supposed to be an
+think\footnote{This is only a metaphor and is not supposed to be an
   accurate description of how memory is managed on a modern
   computer. Explaining how things like the registers, the stack, and
   the heap work, the differences between actual machines and virtual
@@ -57,10 +58,10 @@ think\footnote{This is only a metaphore and is not supposed to be an
 computer as creating a little box in its memory to store your
 variable. That box has two tags on it: one of them holds the name of
 the variable and the other holds the type
-(Figure~\ref{fig:github}). In the same way, you can think of
-assignment as putting a value inside that box. 
+(Figure~\ref{fig:var1}). In the same way, you can think of
+assignment as putting a value inside that box (Figure~\ref{fig:var2}). 
 
-\begin{figure}
+\begin{figure}[hbtp]
   \centering
   \includegraphics[width=\textwidth]{gfx/variables1}
   \caption{Declaring a variable in Groovy can be seen as creating a
@@ -68,7 +69,7 @@ assignment as putting a value inside that box.
   \label{fig:var1}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[hbtp]
   \centering
   \includegraphics[width=\textwidth]{gfx/variables2}
   \caption{Assigning a value to a variable can be seen as putting a
@@ -85,7 +86,8 @@ restrictions to what you can use as a ``name'' tag for your boxes. You
 know that they have to start with a letter: ``count'' is a valid name
 but ``/me'' or ``5thNumber'' are not. You also know that some words
 cannot be used by the programmer for variables names because it would
-be confusing, e.g. ``while'', ``if'', ``System'', or ``println''.
+be confusing for the computer, e.g. ``while'', ``if'', ``System'', or
+``println''. 
 
 Many programming languages also place one restriction on the ``type''
 tag: once you decide the type of a variable, you cannot change
@@ -140,11 +142,12 @@ There are two versions of integers for some special uses. When a
 program needs very large (positive or negative) values, there is a
 type \verb+long+, for \emph{long integer}. It is called ``long''
 because it uses 64~bits instead of 32, which means a long integer
-variable can hold values between -9,223,372,036,854,775,808 and
-9,223,372,036,854,775,807 (inclusive). There is also a ``short''
+variable can hold values between \mbox{$-9.22 \cdot 10^{18}$} and
+\mbox{$9.22 \cdot 10^{18}$}. There is also a ``short''
 integer that uses only 16~bits of memory (\verb+short+); this was
-sometimes useful when Java was first released in 1995 but is hardly
-ever used with modern computers. 
+sometimes useful to save memory when Java was first released in 1995
+and computers were more limited but is hardly ever used with modern
+computers.
 
 \subsubsection{Floating-point (decimal/rational) numbers}
 \label{sec:float-point-decim}
@@ -157,17 +160,18 @@ you work at home). In maths, these are called real numbers. In
 computing they are usually called floating-point numbers and are
 represented as a list of significant numbers and an exponent. The term
 ``floating-point'' refers to the fact that the decimal point can "float",
-that is, it can be placed anywhere in the number changing the exponent
-accordingly. 
+that is, it can be placed anywhere in the number as long as the the
+exponent is changed accordingly. 
 
 $$ 1.23 \cdot 10^{-3} = 123 \cdot 10^{-5} = 0.00123 \cdot 10^0 $$
 
 We cannot use superindex notation in a plain-text file, so we need a
-special notation. The three version of the number above can be written
+special way of writing these numbers. 
+The three version of the number above can be written
 as \verb+1.23E-3+, \verb+123E-5+, and \verb+0.00123+, and the three are
 equivalent. 
 
-In Groovy and in Java, real numbers are usually represented with the
+In Groovy and Java real numbers are usually represented with the
 simple data type \verb+double+, that uses 64~bits. There is also a
 32-bit version called \verb+float+ but, as with \verb+short+, it is
 hardly ever used today.
@@ -197,7 +201,8 @@ the values \verb+true+ and \verb+false+.
 \subsubsection{Characters}
 \label{sec:characters}
 
-Text is composed of characters: 'a', 'b', 'c'\ldots The \verb+char+ is
+Text is composed of characters: 'a', 'b', 'c'\ldots The \verb+char+
+simple type is
 used to represent characters. It uses 16~bits, meaning it can
 represent any of~65,536~different characters. 
 
@@ -219,7 +224,7 @@ Complex types are types of data that do not fit in a box, not even in
 one of the big 64-bit boxes used for \verb+double+. Because they do
 not fit in the ``boxes'', computers have to store them somewhere
 else. However, they also need to know where they are\ldots~and that is
-what the boxes are used. 
+what the boxes are used for. 
 
 Modern computers have \emph{a lot} of memory. Long forgotten are the
 days when Bill Gates said: ``640kB of memory should be enough for
@@ -234,7 +239,7 @@ stores that data in some region of the heap ---identified by a \emph{memory
 the way it stores integers and booleans. This looks similar to
 Figure~\ref{fig:compledata}. The memory address in the box can be seen
 as ``pointing to'' the place in memory where the real data is
-stored. For this reason, we are going to call it a \emph{pointer}. 
+stored. For this reason, we will call it a \emph{pointer}. 
 
 \begin{figure}[htbp]
   \centering
@@ -251,17 +256,17 @@ stack but in the heap, you have to \emph{allocate} memory-space in the
 heap to store the data. This is done with the reserved word
 \verb+new+; you also need brackets to pass arguments (as if using a
 method: this is because complex types have something called a
-\emph{constructor method} that we will in more detail later). We are
+\emph{constructor method} that we will study in more detail later). We are
 going to see now several examples, starting with the pervasive
 Strings. 
 
-Oh, one final note. Complex data types are usually called with capital
-letters. This is not compulsory, but it is what everybody expects:
+One final note. Complex data types usually have names that start with capital
+letters. This is not compulsory but it is what everybody expects:
 simple types with non-capital letters (e.g.~\verb+int+, \verb+double+)
 and complex letters with capital letters (e.g.~\verb+String+,
 \verb+Array+, \verb+List+, \verb+Customer+\ldots). If you do not
 capitalise your complex types other people will get very confused when
-they read your code. This is not only unpolite, it is also
+they read your code. This is not only impolite, it is also
 unprofessional. 
 
 \subsection{Declaration and initialisation}
@@ -273,7 +278,7 @@ same amount of memory if you type \verb+int i+ and if you type
 \verb+int i = 1+: it always uses 32~bits of your computer's memory. 
 
 This is not true with complex types. When a complex type is declared
-(e.g.~String str) the computer only reserves the box for the pointer,
+(e.g.~\verb+String str+) the computer only reserves the box for the pointer,
 but nothing else. It is only when the variable is \emph{allocated}
 (e.g.~\verb+str = new String()+ 
 or \verb+str = new String("This is a String")+) that the total amount
@@ -282,8 +287,8 @@ or 64-bits long, but there is no limit to the size of a complex type:
 it could be several kB or even MB (types so big are a rarity,
 though). 
 
-For any other complex type, we can make set the pointer 
-not to point to any address in memory. This can be useful in
+Sometimes the pointer will 
+not point to any address in memory. This can be useful in
 some cases that will become clearer as we learn more about
 programming, including error detection and release of memory that is
 no longer needed (remember that complex types can use a lot of
@@ -326,8 +331,8 @@ with a \verb+NullPointerException+, as in the following example:
 Strings are everywhere. Every program, except the most trivial, uses
 strings: user names, passwords, addresses, configuration options, data
 input from the keyboard, a webpage read through the Wi-Fi
-connection\ldots~almost anything is a String. They are the most widely
-used complex types. 
+connection\ldots~almost anything is a String. It is the most widely
+used complex type. 
 
 At their most basic, strings are sequences of characters. You already
 know how to read a piece of text from the user: 
@@ -354,14 +359,16 @@ The former two statements are equivalent in Groovy\footnote{They are
   comes.}, only the second is more convenient and most people use it
 instead of the other. 
 
-It is important to note that a String with only one characters is
-still one string. Strings are enclosed in double quotes, while
-characters are enclosed in simple quotes:
+It is important to note that a String with only one character is
+still a String. 
+% Strings are enclosed in double quotes, while
+% characters are enclosed in simple quotes:
+% FIXME: this is 
 
-\begin{verbatim}
-   char oneChar = 'a'
-   String oneCharString = "a"
-\end{verbatim}
+% \begin{verbatim}
+%    char oneChar = 'a'
+%    String oneCharString = "a"
+% \end{verbatim}
 
 % Simple proof of non-equivalence in Java:
 % 
@@ -399,7 +406,7 @@ Here is a brief example of how they are used. Note that if you want to
 use double quotes inside double quotes, you have to \emph{escape} them
 using the backslash (``\textbackslash'') sign: the backslash will make
 Groovy and Java treat the next double quote as a literal double quote
-and not the end of the string. 
+and not as the end of the string. 
 
 \begin{verbatim}
     String str;
@@ -481,13 +488,13 @@ The result of this little program is:
 \label{sec:you-own-structures}
 
 String is the most common complex type, but it is not the only one. As
-a matter of fact, programmers can create their own type of complex
-type very easily. In order to create a new type of data, we use the
+a matter of fact, programmers can create their own complex
+types very easily. In order to create a new type of complex data, we use the
 keyword \verb+class+. You can think of it as creating new classes of
 data. 
 
 A new class of data must have a name (remember: by convention complex
-data type start with capital letters, classes too) and be defined in
+data types start with capital letters, classes too) and be defined in
 between curly brackets. A complex type is composed of several other
 types, simple of complex. Let's see an example: 
 
@@ -532,8 +539,8 @@ Both examples contain the same information at a logical level, and the
 computer will behave equally well with both. However, human
 programmers reading the code will have a hell of a time trying to
 understand what the second class really represents, while the first
-example is obvious. Remember: source is written once but is read many
-times, so your code should be as clear as possible.
+example is obvious. Remember: \textbf{source is written once but is read many
+times}, so your code should be as clear as possible.
 
 Variables in a class are often called \emph{fields}. Sometimes they
 are called \emph{member fields} because they can be seen as being
@@ -550,12 +557,14 @@ accessed using a dot, as in the following example:
     println "EMPLOYEE:  I am " + employee.age + " years old.";
 \end{verbatim}
 
-In this example we have create one piece of data of class Person, an
-\emph{instance} of the class. Each of these instances of pieces of
-data of a class are called \emph{objects}. Every time you use the
-keyword \verb+new+ you are creating another object, and this involves
-looking for a place in memory to store it and put a pointer pointing
-to it. Note that fields on an object are accessed using a dot to
+In this example we have created one variable of class Person, a
+so-called 
+\emph{instance} of the class. Each of these instances of a class
+are also called \emph{objects}. Every time you use the
+keyword \verb+new+ you are creating another object (this involves
+looking for a place in memory to store it and place the corresponding
+pointer pointing to it). 
+Note that fields on an object are accessed using a dot to
 separate the name of the variable that identifies the object
 (e.g.~employee) and the name of the variable inside the object, the
 field (e.g.~name), as in \verb+employee.name+.
@@ -582,8 +591,8 @@ one variable of the class Person.
 \end{verbatim}
 
 There are two important things to learn from this example. First, we
-can access data inside a complex data that itself inside another
-complex data. Actually, there is no limit to the level of
+can access data inside an object that is inside another object. 
+Actually, there is no limit to the level of
 encapsulation you can achieve with complex data (as long as you do not
 run out of memory). If you want to access a field of a field you only
 need to use two dots, as in \verb+student.mother.name+. 
@@ -602,31 +611,15 @@ like:
     println "The father of my mother is " + student.mother.father.name;
 \end{verbatim}
 
-In the next section we will see how to add methods to your classes,
+Next day we will see how to add methods to your classes,
 like those that you know from String. 
-
-%     int i1 = 1;
-%     Integer i2 = 1;
-%     if (i1 == i2) {
-%       println "Nowadays you can use boxed and simple types together!";
-%     }
-
-% class E {
-%   int age;
-%   String name;
-%   }
-  
-%   E e = new E()
-%   e.age = 13
-%   e.name = "Carlos"
-%   println e.name + " tiene " + e.age + " años."
-    
 
 \subsection{Boxed types: Integer, Double, and Character}
 \label{sec:boxed-types:-integer}
 
 For every simple type in Groovy and Java, there is a ``boxed'' complex
-version. The most important ones are summarised in 
+version. The most important ones are summarised in
+Table~\ref{tab:jajksdfj}. 
 Note that the name of the complex type uses capital letters and is
 sometimes a longer, complete-word version of the simple type's name. 
 
@@ -642,22 +635,32 @@ sometimes a longer, complete-word version of the simple type's name.
     char & Character \\
     \hline
   \end{tabular}
-  \caption{Most importnat simple types and their boxed counterparts}
+  \caption{Most important simple types and their boxed counterparts}
   \label{tab:jajksdfj}
 \end{table}
 
 The complex version of a simple type works mostly like any other
 complex type. The variable itself contains a pointer that points to
-the address in memory where the actual value is stored. Why have
+the address in memory where the actual value is stored
+(Figure~\ref{fig:doubled}). Why have 
 complex versions of simple types? Other data types have a lot of
 information (i.e. many characters in a String) and that is why they
 need to be stored indirectly, but this is not the case with boxed
 types. Why then? Remember that complex types of data
 can have their own methods, and sometimes this is very useful. You
-have come across one of the most used ones: \verb+Integer.parseInt()+,
+have already come across one of the most used ones: 
+\verb+Integer.parseInt()+,
 which is used to convert strings that contain only a number into an
 \verb+int+. Boxed types have several other methods, and we will see
 some of them, but \verb+parseInt()+ is the one more frequently used. 
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/variables-double}
+  \caption{A boxed type, like any complex type, consists of a pointer
+    to a place in memory where the actual data is stored}
+  \label{fig:doubled}
+\end{figure}
 
 Why are these complex types called ``boxed''? This is because they can
 be seen as a box wrapping around a simple type. In the old days, using
@@ -673,7 +676,7 @@ something like:
 You had to explicitly create the boxed type like any other complex
 type by using \verb+new+, and then you needed a method of the boxed
 type to get the simple type from inside. This was a lot of work when
-you had a lot of pieces of data and had to perform conversion from
+you had many variables and had to perform conversion from
 simple type to boxed type very often, for example if you have to make
 comparisons of data between two different sources (one simple type,
 the other boxed type). This why Java (and Groovy) now
@@ -698,6 +701,15 @@ type, its box contains just a pointer to some place in memory where a
 to auto-boxing, you can compare one with the other: the computer will
 automatically extract the ``1'' inside the boxed type to perform the
 comparison with the other ``1''. You do not need to do it yourself. 
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/variables-integer}
+  \caption{Even if i1 and i2 are, strictly speaking, two very
+    different things, auto-boxing makes it easy to work with both types
+  at the same time.}
+  \label{fig:integervars}
+\end{figure}
 
 \subsection{A final note on names}
 \label{sec:final-note-name}
