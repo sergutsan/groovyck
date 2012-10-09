@@ -59,7 +59,11 @@ it, which is the worse thing than can happen to you. There is a very
 important rule in programming that is usually referred to as the DIE
 principle: 
 
-{\large DIE: Duplication Is Evil}
+\begin{center}
+\vspace{1cm}
+\textbf{\large DIE: Duplication Is Evil}
+\vspace{1cm}
+\end{center}
 
 Duplication of information will result in problems sooner or later, so
 we must avoid it. This is what methods are for. They allow the
@@ -84,14 +88,91 @@ method? Let's see it.
 
 \subsection{Defining a method}
 
+A method is defined by its name, its return type, and the parameters
+inside the brackets. We will look at parameters in the next section.
 
+A method's name must be an identifier
+like those used for variables: starting with a letter and consisting
+of letters, digits, and underscores (``\_''). Actually, underscores
+are rarely used when you are programming in Java. Methods
+usually have names consisting of a single word
+(e.g.~\verb+length()+) or several words in so-called \emph{camel case}
+starting with a verb (e.g.~\verb+isLetter()+
+or~\verb+containsOnlyLowerCaseLetters()+). Note that variables usually
+have identifiers that are a noun or an adjective, not a verb.
 
+The return type of a method is a data type, simple or complex, that is
+returned by the method when it finishes. When a method finishes, it
+must return a value of the appropriate data type by using the keyword
+\verb+return+. For example, the method we defined above could look
+like the following code:
 
-% why are methods important: 
-%     prevent repetition
-%     clarity
+\begin{verbatim}
+    boolean containsOnlyLowerCaseLetters(String login) {
+        boolean result = true;
+        for (int i = 0; i < login.length(); i++) {
+            char c = login.charAt(i);
+            if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
+                loginIsValid = false;
+            }
+        }
+        return result;
+    }
+\end{verbatim}
+
+Note that the code is the same that we wrote before. The difference is
+we only need to write it once and can use it from anywhere else in the
+program just by using its name. We are avoiding duplication of
+code. That is good. 
+
+You will notice that this method has a return type ``boolean'', so we
+must create a boolean variable and return it at the end. The return
+statement is the last statement that is executed inside any method:
+once you return the value, there is nothing else to do. This means
+that we can make our method a bit more efficient by returning early: 
+
+\begin{verbatim}
+    boolean containsOnlyLowerCaseLetters(String login) {
+        for (int i = 0; i < login.length(); i++) {
+            char c = login.charAt(i);
+            if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+\end{verbatim}
+
+Instead of traversing the whole string, we return \verb+false+ as soon
+as we find a character in the login that is not a letter or is not
+in lower case. If we arrive at the end of the login, that means that
+all characters are fine and we can return \verb+true+. Note that the
+loop is automatically terminated when the method is finished,
+i.e.~when the return value is given back. It does not matter if the
+loop has run to the end or not, or whether there is more code after
+the \verb+return+ statement. 
+
+You have noticed that there is something inside the round brackets, a
+String called \emph{login}, that is used inside the method. The
+variables inside the round brackets are called the \emph{parameters} of the
+method. 
+
+\subsection{Positional paramenters}
+\label{sec:pospar}
+
 
 % positional parameters
+
+% using methods
+
+% scope and duplication of variables
+  % beware of complex types!
+
+% methods in classes
+
+% side effects
+
+% access levels
 
 
 %%% Local Variables:
