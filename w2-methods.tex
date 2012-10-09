@@ -152,18 +152,142 @@ i.e.~when the return value is given back. It does not matter if the
 loop has run to the end or not, or whether there is more code after
 the \verb+return+ statement. 
 
+This is important.
+It means that you can only return from a method once. Even if you have
+several \verb+return+ statements, your program will only execute the
+first one it encounters. This does not mean that you can only return
+one piece of data from any method; remember that the return value can
+be any simple or complex data (like String or Person). By returning a
+complex type, you can return as much information as you want. 
+
 You have noticed that there is something inside the round brackets, a
 String called \emph{login}, that is used inside the method. The
 variables inside the round brackets are called the \emph{parameters} of the
 method. 
 
-\subsection{Positional paramenters}
+\subsection{Positional parameters}
 \label{sec:pospar}
 
+You can think of methods as small mini-programs: they get some input,
+they produce some output. The output is the return value, the input
+are the so-called \emph{positional parameters}. 
 
-% positional parameters
+Positional parameters are declared in the same way as any other
+variable. The programmer must specify the type and give it a name, an
+identifier. Parameters can have any type, simple or complex, and
+separated by commas. If a method does not return any value, the
+keyword \verb+void+ is used as return data type. 
 
-% using methods
+In the body of the method (what comes inside the curly
+brackets) parameters are used the same as variables declared and
+initialised inside the method. Parameters are initialised when the
+method is called (see below). 
+
+Some methods do not have any parameters. If that is the case, the
+method is defined and called with an empty list of parameters,
+i.e.~empty brackets. The method \verb+length()+ is an example of a
+method without parameters. 
+
+\emph{Positional} parameters get their name because they come in some
+order and they must be called \emph{in the same order}. Let's see how
+this is done. 
+
+\subsection{Calling (i.e.~using) methods}
+\label{sec:using}
+
+You have already seen how to use some methods, like methods
+\verb+length()+ or \verb+substring(int,int)+ of strings\footnote{As
+  you can see, now that you know that methods have parameters I will
+  start referring to them in a proper way, specifying the type of
+  their parameters.}. They are methods of a
+class, so you access them with the name of the variable and a dot: 
+
+\begin{verbatim}
+    int familyName = fullName.substring(6,12);
+\end{verbatim}
+
+This is called \emph{calling}, \emph{executing}, or \emph{running} the
+method (the first term is more common). 
+You call a method by using its name and specifying the value of its
+parameters. 
+It is important to call a
+method with the right parameters in the right order. For example, if
+you have a method like \verb+repeat(String s, int times)+ you 
+cannot call it like \verb+repeat(3, "Some text")+ because you will get
+an error. Note are well that you do not need to say the type of the
+parameters: the computer already know because they are specified in
+the method's definition. 
+
+\subsection{Scope}
+
+In a way, you can see the execution of a method as the execution of a
+small program in which some of the variables (the parameters) are
+initialised in advance (with the values given by the caller). 
+
+A method has access to variables outside of it, but its own variables
+are hidden from the rest of the world. They cannot be read or modified
+from outside the method. In technical terms, the \emph{scope} of
+variables inside the method is the method itself. 
+
+Actually, scope is not just a property of methods. In Java, scope is
+roughly defined by any pair of curly brackets, so loops and classes
+have scope too. That is why you must use the name of a class to access
+variables inside the class, because otherwise they are restricted to
+be used \emph{in their scope}. 
+
+But what happens with the method's parameters? They are like variables
+for the method but they also come from outside the method, don't they?
+Good question. 
+
+When you call a method, the variables used to initialise the
+parameters are \emph{copied}, and the copies are used instead of the
+original variables. This means that any change to the method's
+parameters is forgotten as soon as the method returns. You can check
+for yourself by running the following code: 
+
+\begin{verbatim}
+    void add1000(int number) {
+        println "Starting method, parameter is " + number;
+        number = number + 500;
+        println "In the middle of method, parameter is " + number;
+        number = number + 500;
+        println "Ending method, parameter is " + number;
+    }
+    int myNumber = 0;
+    println "Starting program, my number is " + myNumber;
+    add1000(myNumber);
+    println "After the method is used, my number is " + myNumber;
+\end{verbatim}
+
+The output is: 
+
+\begin{verbatim}
+    Starting program, my number is 0
+    Starting method, parameter is 0
+    In the middle of method, parameter is 500
+    Ending method, parameter is 1000
+    After the method is used, my number is 0
+\end{verbatim}
+
+You can see that the value of \emph{myNumber} never changes. The
+method made a copy of \emph{myNumber}, used it (under the name
+\emph{number}) inside the method, and then forgot it as soon as the
+\verb+return+ statement was reached. 
+
+\subsubsection*{Void methods}
+\label{void}
+
+Note also that the method does not return anything (i.e.~return type
+is \verb+void+). When this is the case, there is no need to have a
+return statement because there is nothing to return, and the method
+ends after the final statement is reached or when the first \verb+return+
+statement is found (with no value). 
+
+
+\subsubsection{Beware of parameters of complex types!}
+\label{beware}
+
+
 
 % scope and duplication of variables
   % beware of complex types!
@@ -171,6 +295,8 @@ method.
 % methods in classes
 
 % side effects
+
+% Flow of execution
 
 % access levels
 
