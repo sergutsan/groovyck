@@ -278,27 +278,215 @@ method made a copy of \emph{myNumber}, used it (under the name
 \label{void}
 
 Note also that the method does not return anything (i.e.~return type
-is \verb+void+). When this is the case, there is no need to have a
-return statement because there is nothing to return, and the method
+is \verb+void+). When this is the case, 
+i.e.~there is nothing to return, the method
 ends after the final statement is reached or when the first \verb+return+
-statement is found (with no value). 
+statement is found (with no value). There is no need to have a return
+statement, but it may be useful in some cases that we will see further
+down the line. 
 
+Methods that return void are sometimes called
+\verb+procedures+. Methods that do return a value are sometimes called
+\verb+functions+ by analogy with mathematical functions.
 
 \subsubsection{Beware of parameters of complex types!}
 \label{beware}
 
+In the former section we have seen that methods make a copy of their
+parameters, and use the copy instead of using the actual variable. In
+other words, \emph{what happens in the method remains in the method}
+with the only exception of the return value. 
 
+Actually, this is not completely true. Methods make copies of the
+``boxes'' that are sent to them, but not of the objects they are
+pointing to (if they are complex types). This means that changes to an
+object survive the method scope. Let's see how this works with a
+detailed example. 
 
-% scope and duplication of variables
-  % beware of complex types!
+\begin{verbatim}
+    class Point {
+        int x;
+        int y;
+    }
+    // This method increments the int by 1 and moves the point to the right
+    void increment(Point point, int n) {
+        n = n + 1;
+        point.x = point.x + 1;
+        point = null;
+        println "  At the end of the method..."
+        println "  The integer is " + n;
+        println "  The point is " + point;
+    }
+    Point myPoint = new Point();
+    point.x = 0;
+    point.y = 0;
+    int myInt = 0;
+    println "The integer is now " + myInt;
+    println "The point is now " + myPoint.x + "," + myPoint.y;
+    println "Calling method increment(Point, int)..."
+    increment(myPoint, myInt);
+    println "The integer is now " + myInt;
+    println "The point is now " + myPoint.x + "," + myPoint.y;
+\end{verbatim}
 
-% methods in classes
+The output is: 
 
-% side effects
+\begin{verbatim}
+    The integer is now 0
+    The point is now 0,0
+    Calling method increment(Point, int)...
+      At the end of the method...
+      The integer is 1
+      The point is null
+    The integer is now 0
+    The point is now 1,0
+\end{verbatim}
 
-% Flow of execution
+As you can see, the integer (a simple type) is changed inside the
+method but this change is forgotten as soon as you leave the
+method. The point is also modified inside the method, in two different
+ways: first, the value of one of its coordinates is changed; then, the
+point itself is set to \verb+null+. When we come out of the method,
+only the second change is forgotten. As you can see, the method copies
+the ``boxes'' of the parameters; but if the boxes are pointers and the
+objects those boxes are pointing to are changed, those changes stay
+even after you leave the method. 
 
-% access levels
+\textbf{Note. } In books, you may find that passing values to a
+methods as parameters is called \emph{pass parameters by value}, while
+passing pointers is called \emph{pass parameters by reference}. The
+bottom line is the same: changes to parameters passed by value do not
+survive the end of the method while changes to parameters passed by
+reference do. This is because the method only copies the ``box'', the
+pointer, not the object it points to. 
+
+\subsubsection{Exercise}
+\label{sec:exerciseff}
+
+Draw a diagram of all the pointers involved in the example above and
+make sure that you understand all the things that are copied at every
+point. 
+
+\subsection{Methods in classes}
+\label{sec:methods-classes}
+
+In the same way that classes can have member fields, they can also have
+member methods. You already know some example like \verb+length()+,
+which is a member method of String. 
+
+Member methods are written like any other method, only they are
+defined inside the class and can only be called on objects of the
+class (e.g.+\verb+str.length()+), in the same way that fields can only
+be called from the object (e.g.~\verb+point.x+). Let's see an example: 
+
+\begin{verbatim}
+    class UnidimensionalPoint() {
+        int x;
+        int getX() {
+            return x;
+        }
+        void setX(int x) {
+            this.x = x;
+        }
+        UnidimensionalPoint clone() {
+            UnidimensionalPoint copy;
+            copy = new UnidimensionalPoint();
+            copy.setX(x);
+            return copy;
+        }
+    }
+\end{verbatim}
+
+The class \verb+UnidimensionalPoint+ has one coordinate and three
+methods: one for getting its only coordinate, one for changing it, and
+one for getting an exact copy of itself. This example introduces a new
+keyword, \verb+this+, which means ``this object we are not in''. It is
+used to solve ambiguities like in the method \verb+setX(int)+. Note
+that the field \verb+x+ of \verb+UnidimensionalPoint+ has the same
+name as the only parameter of method \verb+setX(int)+. If we want to
+assign the value of one to the other we may write something like: 
+
+\begin{verbatim}
+    void setX(int x) {
+        x = x;   // This does not work!
+    }
+\end{verbatim}
+
+This does not really do anything. When a parameter has the same name
+as a field, the computer can only identify one of them. The rule that
+the computer uses is \emph{local is always more important than
+  global}, so the parameter \verb+x+ ``hides'' the field
+\verb+x+. This is sometimes called \emph{shadowing}. 
+
+In order to prevent shadowing, we can use different names, as in: 
+
+\begin{verbatim}
+    void setX(int newX) {
+        x = newX;
+    }
+\end{verbatim}
+
+Or we can use the \verb+this+ keyword as in the original example. The
+original statement \verb+this.x = x;+ can be read as ``take the
+\verb+x+ field of \emph{this} object (\emph{point}) I am in now and
+assign the value of parameter \verb+x+ to it''. 
+
+You can use the \verb+this+ keyword at any time to mean ``this
+object''. For example, we could have said \verb+copy.setX(this.x)+ in
+method \verb+clone()+. Usually, it is only used when necessary,
+e.g.~to prevent ambiguities and shadowing as in the example above. 
+
+\textbf{Note. } A method, like \verb+getX()+ that only returns the
+value of a fields is 
+sometimes called an \emph{accessor method}, and very often a
+\emph{getter}. A method, 
+like \verb+setX(int)+ that only changes the
+value of a fields is 
+sometimes called a \emph{mutator method}, and very often a
+\emph{setter}. 
+
+\subsubsection*{Side effects}
+\label{sec:side-effects}
+
+We have already seen that not all methods return a value, some of them
+return \verb+void+, nothing. They are sometimes called
+procedures. Even if they do not return anything, they can be useful
+because of their \emph{side effects}. For example, we could have a
+Tamagotchi\footnote{A Tamagotchi is a digital pet that was quite
+  popular in the 1990s.} class like this: 
+
+\begin{verbatim}
+    class Tamagotchi {
+        int age = 0;
+        void grow() {
+            age++;
+        }
+    }
+\end{verbatim}
+
+You can see that the method \verb+grow()+ does not take any parameter,
+and does not return any value, but it has an effect: it increases the
+age of the tamagotchi. This is called a side effect because it is not
+returned.
+
+\subsection{Flow of execution}
+\label{sec:flow-execution}
+
+We have already seen that the flow of execution of a program is not
+always linear, from the first line to the last line. Constructs like
+branches (\verb+if...else+) or loops (\verb+while+, \verb+for+) can
+alter the flow and skip some lines and repeat some others. Methods
+also alter the flow of execution. 
+
+When a method is called, the next line being executed is the first
+line in the method, and then the flow continues in the methods as in a
+mini-program. If a method calls another method, the execution flows to
+the first line of the other method. When the execution of a method
+finishes (either a return statement and/or the end of the method is
+reached), the flow continues from the point when the method was
+called. 
+
+% TODO: exercise or example here
 
 
 %%% Local Variables:
