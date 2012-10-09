@@ -2,8 +2,90 @@
 \section{Methods}
 \label{sec:methods}
 
-In Section~\ref{sec:prec} we briefly introduced the concept of
-\emph{methods}. In the last section we have seen 
+We have briefly introduced the concept of
+\emph{methods}. In the last section we have seen that they have an
+\emph{identifier}, like variables, and that they have (round)
+brackets. Sometimes we can put variables or values inside the brackets
+like with methods \verb+charAt()+ or \verb+substring()+ of class
+String. 
+
+Let's look at methods in a bit more detail now, because they are very
+important. 
+
+\subsection{Why are methods important?}
+
+Imagine that you are writing a program in which you need to make some
+checks on user input. For example, your program needs the user to
+introduce several logins/usernames and the program must make sure that
+they do not contain spaces and they are all lower case letters. You
+could have some code like:
+
+\begin{verbatim}
+    String login = System.console().readLine();
+    boolean loginIsValid = true;
+    for (int i = 0; i < login.length(); i++) {
+        char c = login.charAt(i);
+        if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
+            loginIsValid = false;
+        }
+    }
+\end{verbatim}
+
+As you can see, the loop goes through the whole length of the string
+\emph{login} checking that each and every character is a letter in
+lower case. If that is not the case, the boolean flag
+\emph{loginIsValid} is set to \verb+false+ so the program knows that a
+new login must be asked from the user.
+
+Now you can think of this code being necessary at different parts of
+your program. This can be useful (1) when you are adding new users to the
+program, (2) when you are changing the username of a user, and (3) when
+you want to remove a user from the system, to name but a few. If you
+have to write the same code for every single place that you need it,
+you have too problems.
+
+First of all, it is \textbf{boring}. You have to type it several
+times. Even if you copy--and--paste, you have to find the file where
+it is (normal programming projects have tens of hundreds of source
+code files, and sometimes they are quite long). Programmers like to
+make computers work for them and not the other way around.
+
+Second, but most important, if you find an error (a so-called
+\emph{bug}) in those lines of code, you only need to fix in one
+place. If you have to fix it in several places, sooner or later you
+will forget to do it because you are human. That means that your
+program will still be \emph{buggy} even if you are sure you have fixed
+it, which is the worse thing than can happen to you. There is a very
+important rule in programming that is usually referred to as the DIE
+principle: 
+
+{\large DIE: Duplication Is Evil}
+
+Duplication of information will result in problems sooner or later, so
+we must avoid it. This is what methods are for. They allow the
+programmer to put code in just one place that can be used from
+anywhere else in the program. This means that, for example, if you
+need to fix a bug, you fix it in only one place; and if you need to
+improve the code to add a new feature, or to make it faster, or for
+any other reason, you only need to change it in one place. That way
+you are sure that you fix things once and forever. 
+
+Besides, separating code in methods also makes your code
+clearer. Compare the easiness of reading the code above with the
+following statement: 
+
+\begin{verbatim}
+    String login = System.console().readLine();
+    boolean loginIsValid = containsOnlyLowerCaseLetters(login)
+\end{verbatim}
+
+What is under the hood of that \verb+containsOnlyLowerCaseLetters()+
+method? Let's see it. 
+
+\subsection{Defining a method}
+
+
+
 
 % why are methods important: 
 %     prevent repetition
