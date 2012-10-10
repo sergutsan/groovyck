@@ -5,37 +5,31 @@
 \section{Scope}
 \label{sec:scope}
 
-Look at the following code and say where each of the following
-variables is visible: bigDimension, dimension, i, j, newSize, size. 
+Look at the following code  (with line numbers for clarity) and say
+where each of the following  
+variables is visible: i, j, newSize, size. 
 
 \begin{verbatim}
-  class UnitMatrix {
-    int size;
-  
-    void setSize(int newSize) {
-      this.size = newSize;
-    }
-    
-    void print() {
-      for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-          if (i == j) {
-            println("1 ");
-          } else {
-            println("0 ");
-          }
-        }
-        println ""
-      }
-    }
-  }
-  int dimension = 4;
-  int bigDimension = 8;
-  UnitMatrix matrix = new UnitMatrix();
-  matrix.setSize(dimension);
-  matrix.print();
-  matrix.setSize(bigDimension);
-  matrix.print();
+01  class UnitMatrix {
+02    int size;
+03  
+04    void setSize(int newSize) {
+05      this.size = newSize;
+06    }
+07    
+08    void print() {
+09      for (int i = 0; i < size; i++) {
+10        for (int j = 0; j < size; j++) {
+11          if (i == j) {
+12            println("1 ");
+13          } else {
+14            println("0 ");
+15          }
+16        }
+17        println ""
+18      }
+19    }
+20  }
 \end{verbatim}
 
 \section{Pointer, arrows\ldots}
@@ -62,8 +56,8 @@ Take the example code from the notes:
     }
     // Program execution starts here
     Point myPoint = new Point();
-    point.x = 0;
-    point.y = 0;
+    myPoint.x = 0;
+    myPoint.y = 0;
     int myInt = 0;
     println "The integer is now " + myInt;
     println "The point is now " + myPoint.x + "," + myPoint.y;
@@ -83,6 +77,12 @@ complex types).
 Now do the same for this example code from Day 3:
 
 \begin{verbatim}
+    class Person {
+        int age;
+        String name;
+        Person father;
+        Person mother;
+    }
     Person john = new Person();
     john.name = "John Smith";
     john.age = 35;
@@ -103,7 +103,7 @@ Now do the same for this example code from Day 3:
 \subsection{Flow of execution}
 \label{sec:flow-execution}
 
-Look at the following code (with line numbers): 
+Look at the following code (with line numbers for clarity): 
 
 \begin{verbatim}
  1   String requestUser() {
@@ -145,25 +145,36 @@ Look at the following code (with line numbers):
 37       // do things with DB that we will cover in later weeks
 38   }
 39   
-40   boolean running = true;
-41   while (running) { 
-42       println "What would you like to do?";
-43       println "1 - Enter a new user";
-44       println "2 - Delete a user";
-45       println "0 - Exit";
-46       print   "> ";
-47       String str = System.console().readLine();
-48       int option = Integer.parseInt(str);
-49       switch (option) {
-50       case 0: running = false;
-51               break;
-52       case 1: createUser();
-53               break;
-54       case 2: deleteUser();
-55               break;
-56       default: println "Invalid option. Please try again."
-57       }
-58   }
+40   boolean isValidUser(String login) {
+41       String login = System.console().readLine();
+42       boolean loginIsValid = true;
+43       for (int i = 0; i < login.length(); i++) {
+44           char c = login.charAt(i);
+45           if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
+46               loginIsValid = false;
+47           }
+48       }
+49   }
+50   
+51   boolean running = true;
+52   while (running) { 
+53       println "What would you like to do?";
+54       println "1 - Enter a new user";
+55       println "2 - Delete a user";
+56       println "0 - Exit";
+57       print   "> ";
+58       String str = System.console().readLine();
+59       int option = Integer.parseInt(str);
+60       switch (option) {
+61       case 0: running = false;
+62               break;
+63       case 1: createUser();
+64               break;
+65       case 2: deleteUser();
+66               break;
+67       default: println "Invalid option. Please try again."
+68       }
+69   }
 \end{verbatim}
 
 Follow the execution of the code as the user enters the following
