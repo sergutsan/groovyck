@@ -120,12 +120,16 @@ only my own fault.
 %   \item scope: variables inside the methods are copied... but 
 %     beware of what happens with complex types! Many exercises
 %     about this!
+%       Update: 
 % \item Optional? Basics of regular expressions
 %     Maybe better access levels first, regular expressions later
+%     Definitely!
+%     Update: they are having trouble with moving pointers and copying
+%     pointers around. Better leave regular expressions for the
+%     future.
 \chapter{Week 2: Moving on\ldots}
 \input{w2-simpleAndComplexDataTypes}
 \input{w2-methods}
-
 
 % Day 5: From Groovy to Java (only 1 day)
 % \item More on classes and objects: initialization and
@@ -137,7 +141,7 @@ only my own fault.
 %          - Methods public or private depending on target public
 %
 %   NOTE: no main method, no real java today: continue working from Groovy
-%   script
+%   script ---> BUT YOU NEED TO COMPILE THE CLASSES with javac!
 %      - explain some basic classes and their main methods, like String
 %      (equals, substring(*), length (*), intValue, doubleValue),
 %      Integer (parseInt), Math, System
@@ -145,36 +149,41 @@ only my own fault.
 %      - make them do exercises with their own classes: create them, 
 %        make objects, use them
 %   - do..while
-%   - arrays and multi-dimensional arrays, 
-%   exercise: enter a matrix and tell if it is simmetrical
-%   exercise: hundir la flota
-%             y luego hundir la flota pintando en la pantalla
 %   - casting of simple types
 %   - chars with 'c', Strings with "c"
+%   - arrays and multi-dimensional arrays, 
+%   exercise: enter a matrix and say if it is simmetrical
+%   exercise: hundir la flota
+%             y luego hundir la flota pintando en la pantalla
 % 
 % ASSIGNMENT: class Library (and class Book, and class User): enter
 %    new books, enter new Users, take books (max 3 per user), return
 %    books; only three classes, and only public what needs to be
 %    public (check by reflection)
 \input{d5-constructors-access-javadoc}
+%\input{d5-from-groovy-to-java}
 
 % Day 6,7,8: Pointers!
 % \item Data structures: lists, stacks, trees, maps (and iterators)\ldots
 %       including exercises in creating their own structures
 %       themselves -> correct them with JUnit to show them the tests
 %       the week after.
-% \item day 6: Real java: all files are classes, the main method,
-%            System.out.println(); bye, bye, Groovy scripts,
-%            introduce pointers and use it for creating a linked
-%            list (a growing/decreasing array, using a Node class that
-%            contains data and points to another Node) 
+% \item day 6: Real java: 
+%                 all files are classes, 
+%                 the static keyword,
+%                 the main method,
+%                 System.out.println(); bye, bye, Groovy scripts,
+%                 OBSOLETE: introduce pointers...
+%                 use pointers for creating a linked list (a 
+%                     growing/decreasing array, using a Node 
+%                     class that contains data and points to another Node) 
 % \item day 7: More on data structures: queues and stacks, iterators,
 %            (creating) JavaDoc: document inputs, output, and rationale 
 % \item day 8: More on data structures: trees and maps; binary and
 %      non-binary trees, for-each loops
 %         memory allocation, gargage collection, memory leaks (profiling?)
 %    \item ASSIGNMENT: read XML (I provide the class) and re-create the tree
-%    structure up to a point
+%    structure up to a point THIS IS NOT WELL DEFINED!
 %
 %   at the beginning, introduce real Java: needed for Testing with
 %      Junit4 anyway
@@ -234,13 +243,13 @@ only my own fault.
 % \item Maybe a sample test, like Roger Mitton does?(remember you
 % have a spare week (it's 11 not 10, count them JIC))
 % \item Maybe some project for groups??
+% ASSIGNMENT: something that uses recursion and inheritance and polymorphism
 
 % Day 13,14: Recursion!
 % \item Recursion
 % \item The execution stack (they will see it next week, if they have
 %     not yet)
 % 
-% ASSIGNMENT: something
 
 % Day 15,16: Exceptions and (finally) I/O (files, mostly)
 % \item Exception Handling
@@ -256,13 +265,15 @@ only my own fault.
 % \item Concurrent programming
 
 % Day 19,20: Network programming (which means more I/O)
-% \item Network programming
+% \item OBSOLETE: Network programming
+% \item Web services
 % \item ASSIGNMENT: chat program
 % 
 
 % Optional material for Day 20,21
 % - Swing?
 % - Reflection?
+% - Regular expressions?
 % - 
 
 \appendix
