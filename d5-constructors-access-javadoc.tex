@@ -110,7 +110,52 @@ constructor: a constructor method with no parameters that does not
 initialise any field. 
 
 
+\subsection{Levels of access and information hiding}
+\label{sec:levels-access-inform}
 
+A real programming project can have thousands of classes, and millions
+of live objects in memory at any given time (remember that we create a
+new object every time we use \verb+new+). Keeping track of all the
+interactions of these objects becomes very complex very quickly. That
+is why programmers try to keep the complexity as low as possible. One
+strategy to achieve that is to hide as much information as possible
+and leave visible only what is strictly necessary. 
+
+Imagine that you want to find out the total population of the European
+Union and you request data from every country. Governments of each
+country can give you either their population figure or a listing with
+the names of every citizen; it is clear that the former option makes
+your life much easier. This is the principle of \emph{information
+  hiding}. 
+
+Information hiding is achieved in Java by means of two new keywords:
+\verb+public+ and \verb+private+. There is a third keyword but it is
+less important and we will come to it when we talk about class
+hierarchies. 
+
+The keyword \verb+private+ specifies that the field (i.e.~variable) or
+method that comes after it will be visible only inside its own
+class. This should be your default option as a programmer, especially
+for fields. The keyword \verb+public+ specifies that the field or
+methods that comes after it will be visible from outside the class. 
+
+
+\subsubsection*{Rules of thumb for access levels}
+\label{sec:rules-thumb-access}
+
+After many decades, programmers have developed some rules of thumb
+to know what should be public and what should be private. The
+following rules cover 90\% of all cases, but do expect them to be
+valid in absolutely every situation. 
+
+\begin{itemize}
+\item If a class does not have any methods (not counting
+  constructors), its fields must be public.
+\item If a class has methods, its fields must be private.
+\item Methods of a class must be private unless their purpose is to be
+  called from outside the class, in which case they must be public.
+\item Constructor methods must be public. 
+\end{itemize}
 
 
 %%% Local Variables:
