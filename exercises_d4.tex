@@ -281,16 +281,27 @@ methods for conversion as in the former exercise.
 \section{More on points}
 \label{sec:more-points}
 
-Write a program in which you create a class called Point, 
-with two fields of type double (x, y) and the
+Write a program in which you create and use a class called Point, 
+with two fields of type double (e.g.~x, y) and the
 following methods: 
 
 \begin{description}
 \item[distanceTo(Point): ] calculates the distance to another point.
 \item[distanceToOrigin(): ] calculates the distance to the
   origin. Implement it by calling the first method.
-
+\item[moveTo(double x, double y): ] changes the coordinates of this point to
+  be the given parameters x and y. 
+\item[moveTo(Point): ] changes the coordinates of this point to move
+  where the given point is.
+\item[clone(): ] returns a copy of the current point with the same
+  coordinates.
+\item[opposite(): ] returns a copy of the current point with the
+  coordinates multiplied by $-1$. 
 \end{description}
+
+Two methods in a class can have the same name (identifier) as long as
+their parameters are different. This is called \emph{method
+  overloading} and we will see more of that in the future.
 
 \section{Integer}
 \label{sec:integer}
