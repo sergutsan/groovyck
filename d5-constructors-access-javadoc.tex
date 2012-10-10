@@ -1,0 +1,117 @@
+
+\section{More on clases}
+\label{sec:more-clases}
+
+There are two important aspects of classes that we have to learn
+about. I am talking about constructor methods and levels of access. 
+
+\subsection{Constructor methods}
+\label{sec:constructor-methods}
+
+When classes have been used in the preceding sections, they were used
+in two steps: first the memory was reserved for them using \verb+new+
+and then their fields were initialised. 
+
+\begin{verbatim}
+    Point corner = new Point();
+    corner.x = 4;
+    corner.y = 0;
+\end{verbatim}
+
+This is not too cumbersome unless you have a class that has much more
+than two fields that need initialising. For example, if you wanted to
+create a \verb+Person+ with first name, family name, gender, age, job,
+nationality, etc, you would need a lot of code every time you created
+a new \verb+Person+. 
+
+\begin{verbatim}
+    Person john = new Person();
+    john.firstName = "John";
+    john.familyName = "Smith";
+    john.gender = Gender.MAN; // This is an enumerated type
+    john.age = 30;
+    // the rest of the parameters come here...
+    Person mary = new Person();
+    mary.firstName = "Mary";
+    mary.familyName = "Jordan";
+    mary.gender = Gender.WOMAN; // This is an enumerated type
+    mary.age = 33;
+    // the rest of the parameters come here...
+\end{verbatim}
+
+We have written a lot of code and we have just created two
+objects. This is really boring. On top of that, it looks like we are
+repeating code over and over again by having to initialise all fields
+manually. There is a better way of doing this. 
+
+Every class (or complex type) can have one or more \emph{constructor
+  methods}. A constructor method is a special type of method that is
+used to initialise an object of a class when it is first created, and
+it is executed every time a new method is created using \verb+new+. In
+other words, the constructor method is a way of telling Java to use
+\verb+new+ to allocate the memory \emph{and} initialise the object
+using only one line. 
+
+A constructor method looks like a method without a return type (not
+even \verb+void+). Have a look at this example:
+
+\begin{verbatim}
+class Point {
+    double x;
+    double y;
+    
+    Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    double moveTo(Point remote) {
+        this.x = remote.x;
+        this.y = remote.y;
+    }
+    
+    // more methods here...
+}
+Point point = new Point(1,1);
+println "The point is now at " + point.x + "," + point.y
+Point remotePoint = new Point(10,20);
+point.moveTo(remotePoint);
+println "The point is now at " + point.x + "," + point.y
+\end{verbatim}
+
+No need to initialise the points after creating them. The constructor
+method does it for both of them. 
+If a class has more than one constructor method, Java chooses the
+right one according to the positional parameters. For example, we
+could create a class Rectangle that has one or two parameters:
+
+\begin{verbatim}
+class Rectangle {
+    int length;
+    int width;
+    Rectangle(int length, int width) {
+        this.length = length;
+        this.width  = width;
+    }
+    // This method creates a square, all sides equal
+    Rectangle(int length) {
+        this.length = length;
+        this.width  = length;
+    }
+\end{verbatim}
+
+Every class has at
+least one constructor method. If it is not explicit ---as it has been
+the case with all classes in the previous sections---, Java 
+automatically adds an empty
+constructor: a constructor method with no parameters that does not
+initialise any field. 
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
