@@ -144,15 +144,70 @@ referred to as DRY: \textbf{Don't Repeat Yourself}. Keep it in mind at
 all times.
 
 
-\subsubsection*{Exercise A}
+\subsubsection*{Exercise}
 
-Make a program that reads a list of marks between 0 and 100 from the
+Make a class that implements a method 
+that reads a list of marks between 0 and 100 from the
 user, one per line, and stops when the user introduces a -1. The
 program should output at the end (and only at the end) how many marks
 there were in total, how many were distinctions (70--100), how many
 were passes (50--69), how many failed (0--49), and how many were
 invalid (e.g. 150 or -3). Use \texttt{readLine()} exactly once.
 
+\subsection{A new complex type: Arrays}
+\label{sec:arrays}
+
+A String can be seen as a series of characters one after the
+other. The idea can be extended to think of series of other simple
+types, not just chars but also integers and doubles. This is called an
+\emph{array}. 
+
+Arrays are a way of having several elements of data of the same type;
+for example, a company could have a payroll program with an array with
+the IDs of all its employees (an array of integers). In Groovy and
+Java, arrays can be of simple but also complex types; therefore, the
+aforementioned program could also have array of Strings to store the
+names of the employees. 
+
+An array is declared using square brackets. Square brackets are also
+used to access the elements in the array. Let's see an example: 
+
+\begin{verbatim}
+    int[] employeeIdArray;
+    employeeIdArray = new Array[5]();
+    employeeIdArray[0] = 123;
+    employeeIdArray[1] = 55;
+    employeeIdArray[2] = 14;
+    employeeIdArray[3] = 642;
+    employeeIdArray[4] = 243;
+\end{verbatim}
+
+As you can see, sometimes you need a number inside the brackets and
+sometimes you do not. You do need a number to declare the array,
+i.e.~to tell the computer that you want to have an array (of integers,
+in this case). As all declarations, this reserves a box of type
+``array of integers, int[]'' and name \verb+employeeIdArray+. In the
+next line, we reserve a portion of memory to store the actual
+integers, and of course we have to specify the length...
+
+method length
+
+the curly bracket notation for initialisation
+
+You can also have arrays of arrays, in which case they are usually
+called matrices: 2-D matrices, 3-D matrices
+
+\subsubsection{Exercise}
+\label{sec:exercisejfjfj}
+
+Write a small program that asks for the names and IDs of all employees
+in a small company, and store them in an array of integers and an
+array of Strings. The company has 10 employees.
+
+Use a loop to go through both arrays and print the names and IDs of
+those employees whose ID is less than 1000. Use another loop to print
+the names and IDs of those employees whose name starts with ``J''
+or~``S''. 
 
 
 
