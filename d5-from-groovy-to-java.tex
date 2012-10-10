@@ -1,5 +1,55 @@
 
+\section{Introducing Java}
+\label{sec:introducing-java}
 
+The time has come to start using full-flavoured Java. This section
+will introduce the main features that are new with respect to what we
+have seen so far. We will make a gradual transition to the new
+language. 
+
+\subsection{Everything is a class}
+\label{sec:everything-class}
+
+In Java all the code comes inside a class. There is no class-less
+code as in Groovy. 
+
+Usually every class is defined in its own file, e.g.~a \verb+Person+
+class is defined in a file called \verb+Person.java+. When a file
+contains only one class, this class must be public and have the same
+name as the file (without the \verb+.java+ extension). 
+
+Classes in different files must be compiled independently before they
+can be used. This is another important difference with the Groovy
+scripts we have been using until now, where every script was
+self-contained. From now on we will have classes in different files,
+and unless we compile\footnote{If you do not remember clearly what
+  \emph{compiling} means, read again the notes from day 1. } them and
+transform those text files into something that can be understood by
+the machine, the machine will not find the classes you are
+calling. Java classes (i.e.~files) are compiled with the java
+compiler, \verb+javac+. 
+
+\begin{verbatim}
+    > javac Person.java
+\end{verbatim}
+
+This will produce a file \verb+Person.class+ in your folder. Once you
+have it, you can use the Person class from any other file. 
+
+\paragraph{Classpath. }
+\label{sec:classpath.-}
+
+You may be wondering how is it possible to use classes like String
+that are not in your current directory in the form of a \verb+.class+
+file. This is because Java comes with a lot of classes built-in,
+including String. These classes are in your CLASSPATH, which is a list
+of locations in your computer\footnote{A CLASSPATH is something
+  conceptually similar to a PATH, a list of locations in your computer
+  where the operating system looks for executable files when you type
+  them in the command line. Both are environment variables, and can be
+  accessed and modified in the same way.} where Java looks for the
+classes you are using in your program. We will see more about this in
+the future.
 
 %%% Local Variables:
 %%% mode: latex
