@@ -1,44 +1,334 @@
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\begin{document}
 
-An example with scopes 
+\section{Scope}
+\label{sec:scope}
 
-An example with arrows and pointers
+Look at the following code and say where each of the following
+variables is visible: bigDimension, dimension, i, j, newSize, size. 
 
-Interest on an account
-Fixed rate Mortgage: calculate number of years, and how much you pay
-   per month and in total.
-(*) Variable rate mortgage: change rate every year and estimate number
-   of years left, total number of years, and how much you pay per
-   month, and how much you pay in total.
+\begin{verbatim}
+  class UnitMatrix {
+    int size;
+  
+    void setSize(int newSize) {
+      this.size = newSize;
+    }
+    
+    void print() {
+      for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+          if (i == j) {
+            println("1 ");
+          } else {
+            println("0 ");
+          }
+        }
+        println ""
+      }
+    }
+  }
+  int dimension = 4;
+  int bigDimension = 8;
+  UnitMatrix matrix = new UnitMatrix();
+  matrix.setSize(dimension);
+  matrix.print();
+  matrix.setSize(bigDimension);
+  matrix.print();
+\end{verbatim}
+
+\section{Pointer, arrows\ldots}
+\label{sec:pointer-arrowsldots}
+
+\subsection{a)}
+
+Take the example code from the notes:  
+
+\begin{verbatim}
+    class Point {
+        int x;
+        int y;
+    }
+    // This method increments the int by 1 and 
+    // moves the point to the right
+    void increment(Point point, int n) {
+        n = n + 1;
+        point.x = point.x + 1;
+        point = null;
+        println "  At the end of the method..."
+        println "  The integer is " + n;
+        println "  The point is " + point;
+    }
+    // Program execution starts here
+    Point myPoint = new Point();
+    point.x = 0;
+    point.y = 0;
+    int myInt = 0;
+    println "The integer is now " + myInt;
+    println "The point is now " + myPoint.x + "," + myPoint.y;
+    println "Calling method increment(Point, int)..."
+    increment(myPoint, myInt);
+    println "The integer is now " + myInt;
+    println "The point is now " + myPoint.x + "," + myPoint.y;
+\end{verbatim}
+
+Write detailed diagrams that show what variables are there in the
+``stack'' and what objects they point to in the ``heap'' (if they are
+complex types). 
+
+\subsection{b)}
+\label{sec:bff}
+
+Now do the same for this example code from Day 3:
+
+\begin{verbatim}
+    Person john = new Person();
+    john.name = "John Smith";
+    john.age = 35;
+    Person mary = new Person();
+    mary.name = "Mary Smith";
+    mary.age = 32;
+    Person student = new Person();
+    student.name = "John Smith, Jr.";
+    student.age = 5;
+    student.father = john
+    student.mother = mary
+    println "TEACHER: How old are you, " + student.name + "?"
+    println "LITTLE JOHN: I am " + student.age + " years old, sir.";
+    println "TEACHER: Who is your mother?"
+    println "LITTLE JOHN: " + student.mother.name + ", sir.";
+\end{verbatim}
+
+\subsection{Flow of execution}
+\label{sec:flow-execution}
+
+Look at the following code (with line numbers): 
+
+\begin{verbatim}
+ 1   String requestUser() {
+ 2       String result = System.console().readLine();
+ 3       return result;
+ 4   }
+ 5   
+ 6   void createUser() {
+ 7       String user = requestUser();
+ 8       while (!isValid(user)) {
+ 9           println("That name is not valid. Please try again.);
+10           String user = requestUser();
+11       }
+12       insertUserInDB(user);
+13   }
+14   
+15   void deleteUser() {
+16       String user = requestUser();
+17       while (!isValid(user)) {
+18           println("That name is not valid. Please try again.);
+19     String user = requestUser();
+20       }
+21       if (existsInDB(user) {
+22           deleteUserInDB(user);
+23       } else {
+24           println "That user does not exist."
+25       }
+26   }
+27   
+28   void insertUserInDB(String user) {
+29       // do things with DB that we will cover in later weeks
+30   }
+31   
+32   void deleteUserFromDB(String user) {
+33       // do things with DB that we will cover in later weeks
+34   }
+35   
+36   boolean existsInDB(String user) {
+37       // do things with DB that we will cover in later weeks
+38   }
+39   
+40   boolean running = true;
+41   while (running) { 
+42       println "What would you like to do?";
+43       println "1 - Enter a new user";
+44       println "2 - Delete a user";
+45       println "0 - Exit";
+46       print   "> ";
+47       String str = System.console().readLine();
+48       int option = Integer.parseInt(str);
+49       switch (option) {
+50       case 0: running = false;
+51               break;
+52       case 1: createUser();
+53               break;
+54       case 2: deleteUser();
+55               break;
+56       default: println "Invalid option. Please try again."
+57       }
+58   }
+\end{verbatim}
+
+Follow the execution of the code as the user enters the following
+sequences of inputs:
+
+\begin{itemize}
+\item 4, 0
+\item 1, john, 0
+\item 1, john smith, johnsmith, 0
+\item 2, userNotInDB, 0
+\item 1, john, 2, john, 0
+\end{itemize}
+
+Hint: all of them start at 40.
+
+\section{A bit more practice with doubles}
+\label{sec:bit-more-practice}
+
+Write a program that asks the user for the total amount borrowed for a
+mortgage, the number of years to pay it back, and the interest rate
+(in this exercise, we assume it is a fixed 
+rate). The program can then calculate how much must be paid at the end
+
+$$t = c \cdot \left(1+ {r \over 100}\right)$$
+
+where $t$ is the total, $c$ is the cost,
+and $r$ is the rate as a percentage. The program should print: 
+
+\begin{itemize}
+\item The total amount to be paid
+\item The money to be paid every year
+\item The number of years before the interest is paid and only the
+  initial capital remains
+\end{itemize}
+
+Write a method to calculate each piece of data. 
+
+% TODO: think this through
+%
+% \section{A mortgage program with variable rates (*)}
+% \label{sec:bit-more-practice}
+
+% Write a program that asks the user for the total amount borrowed for a
+% mortgage, and the number of years to pay it back. 
+
+% Once this is done, the program must enter a loop in which every
+% iteration is a year. For every year, the program must request the
+% interest rate for that year. 
+%  and the amount payed by the user, and
+% calculate 
+
+% \begin{itemize}
+% \item If the amount if less than the interest to be payed that year,
+%   the program must complain and ask for a higher amount.
+% \item If the amount is exactly the interest to be paid that year,
+%   nothing else happens until next year. 
+% \end{itemize}
+% , and the amount payed every year. The
+% program must 
+
+% Interest on an account
+% Fixed rate Mortgage: calculate number of years, and how much you pay
+%    per month and in total.
+
+
+% (*) Variable rate mortgage: change rate every year and estimate number
+%    of years left, total number of years, and how much you pay per
+%    month, and how much you pay in total.
 
 
 
-get some strings and sort them (Hint: String has a method that will
-help you)
+\section{Binary and decimal}
+\label{sec:from-10011-19}
 
+Create a program in which you define the following methods: 
 
-Write a binary--decimal converter
+\begin{description}
+\item[binary2decimal(String):] takes from the user a binary number
+  (with digits 0 and 1) and returns the corresponding number in
+  decimal (base-10, with digits between 0 and 9).  Hint: in the same
+  way that you know that $35 = 3 \cdot 10^1 + 5 \cdot 10^0$, you can find that
+  $100011 = 1 \cdot 2^5 + 1 \cdot 2^1 + 1 \cdot 2^0$.
+\item[decimal2binary(int):] the opposite of the previous one: takes a
+  decimal number and returns the corresponding binary number.  Hint:
+  instead of multiplying by 2, you will need to divide by two this
+  time.
+\end{description}
 
-Write a decimal-binary converter
+The program must offer a menu to the user with two options. 
+The first one takes a binary number from the
+user and returns the corresponding decimal number. The second one does
+the opposite: takes a decimal number and returns a binary number. The
+program should use the methods defined. 
 
+\section{Binary and hexadecimal (*)}
+\label{sec:c}
 
-\section{Big enough (*)}
-\label{sec:big-enough}
+Binary numbers can be quite long. A 32-bit memory address looks like
+1001 0101 0110 1010 1011 0010 1001 1010, which is difficult to
+handle. That is why memory addresses and other binary numbers are
+usually written as \emph{hexadecimal} numbers. An hexadecimal number
+is a base-16 number, with digits between 0 and f (f is equivalent to
+decimal 15, e is equivalent to decimal 14, and so on). An hexadecimal
+number is equivalent to a four-digit binary number, which makes them
+quite compact. The former address reads 956ab29a, which is easier to
+read and write. To prevent confusion with decimal numbers, hexadecimal
+numbers are usually prefixed by ``0x'', as in 0x95 (which is 149) or
+0xff (which is 255). 
 
-Write a small program that asks for the names and IDs of all employees
-in a small company, and store them in an array of integers and an
-array of Strings. 
+Write a program that takes a String. The string can be a decimal or a
+hexadecimal number (starting by ``0x''). Your program must recognise
+the number as what it is and convert it to the other base. Use two
+methods for conversion as in the former exercise. 
 
-This is similar to the example from the notes, but you do not know the
-number of employees in advance. Read the names and IDs of employees
-until the user enters an empty name (i.e. length 0) or an ID equal to
-0.
+\section{More on points}
+\label{sec:more-points}
 
-Once you have finished reading employee data, go through the employee
-list and print the names and IDs of
-those employees whose ID is even or their names start with ``S''. 
+Write a program in which you create a class called Point, 
+with two fields of type double (x, y) and the
+following methods: 
 
-(Hint: As you do not know how many employees you need in advance, you
-will need a growing array. Create a small array, if it gets full
-create an array twice as big, copy all data to the new array, and
-discard the old array).
+\begin{description}
+\item[distanceTo(Point): ] calculates the distance to another point.
+\item[distanceToOrigin(): ] calculates the distance to the
+  origin. Implement it by calling the first method.
 
+\end{description}
+
+\section{Integer}
+\label{sec:integer}
+
+Create your own version of boxed \verb+int+! Create a class Integer2
+with only one field (\verb+int value+) and the following methods: 
+
+\begin{description}
+\item[getValue(): ] returns the value of this number as an
+  \verb+int+, a getter. 
+\item[getValue(int): ] a setter.
+\item[isEven(): ] returns true if the number is even, false
+  otherwise.
+\item[isOdd(): ] the opposite.
+\item[prettyPrint(): ] prints the value of the integer on the screen.
+\item[toString(): ] returns a String equivalent to the number. 
+\end{description}
+
+Check that it works by using the following program: 
+
+\begin{verbatim}
+    Integer2 i2 = new Integer2();
+    print "Enter a number: ";
+    String str = System.console().readLine();
+    int i = Integer.parseInt(str);
+    i2.setValue(i);
+    print "The number you entered is " 
+    if (i2.isEven()) {
+        println "even.";
+    } else if (i2.isOdd()) {
+        println "odd.";
+    } else {
+        println "undefined!! Your code is buggy!";
+    }
+    int parsedInt = Integer.parseInt(i2.toString());
+    if (parsedInt == i2.getValue()) {
+        println("Your toString() method seems to work fine.");
+    }
+\end{verbatim}
+
+\end{document}
