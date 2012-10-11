@@ -154,6 +154,60 @@ there were in total, how many were distinctions (70--100), how many
 were passes (50--69), how many failed (0--49), and how many were
 invalid (e.g. 150 or -3). Use \texttt{readLine()} exactly once.
 
+\subsubsection{Casting: conversion of simple types}
+\label{sec:cast-conv-simple}
+
+As you already know, Groovy is a dynamically-typed language, which
+means that a variable can change its type during the execution of the
+program (the box can change its \emph{type} tag). 
+
+Java, on the other hand, is a statically-typed language. Once a
+variable is created, Java will not change its type. If you try to
+assign it a value of a different type it will complain.
+
+And yet there are times in which you have an \verb+int+ but want to
+transform it into a \verb+double+ to perform division, or some other
+similar situation. This what \emph{casting} is for. When you cast a
+variable you change its type, as in the following example: 
+
+\begin{verbatim}
+    int i = 1;
+    double d = (int) i;
+\end{verbatim}
+
+This code will take the value of \verb+i+, which is 1, and transform
+it into a double (\verb+1.0+) before assigning it to the
+variable \verb+d+. 
+
+Note that not all castings can be done transparently. If you cast a
+\verb+double+ into an \verb+int+, for example, you will lose the
+decimal part because there is no decimal part in an \verb+int+. 
+
+\paragraph{Casting for complex types?}
+\label{sec:cast-compl-types}
+
+There is also a version of casting for complex types, but it is more
+complicated and is related to type hierarchies. We will see how it
+works when the time is due.
+
+\subsection{Strings and chars}
+\label{sec:strings-chars}
+
+In Groovy, you could use either single quotes or double quotes to mark
+a String. In Java you can only use the latter. Single quotes are used
+to mark values of type \verb+char+. 
+
+\begin{verbatim}
+    // a one-character String in Groovy, 1 char in Java
+    char c     = 'a';               
+
+    // a String in both languages
+    String str = "This is a string";
+
+    // the following is valid in Groovy, but invalid in Java
+    String s2  = 'Another string';  
+\end{verbatim}
+
 \subsection{A new complex type: Arrays}
 \label{sec:arrays}
 
@@ -180,22 +234,48 @@ used to access the elements in the array. Let's see an example:
     employeeIdArray[2] = 14;
     employeeIdArray[3] = 642;
     employeeIdArray[4] = 243;
+    println "Out first employee has ID:" + employeeIdArray[0];
+    println "Our company has " + employeeIdArray.length + " employees";
 \end{verbatim}
 
 As you can see, sometimes you need a number inside the brackets and
-sometimes you do not. You do need a number to declare the array,
+sometimes you do not. You do not need a number to declare the array,
 i.e.~to tell the computer that you want to have an array (of integers,
 in this case). As all declarations, this reserves a box of type
 ``array of integers, int[]'' and name \verb+employeeIdArray+. In the
 next line, we reserve a portion of memory to store the actual
-integers, and of course we have to specify the length...
+integers, and of course we have to specify the length; otherwise
+\verb+new+ will not know how much memory to allocate. Finally, when we
+want to access an element in an array, either for reading or for
+writing/replacing, we also have to specify \emph{which} element we
+want to access. 
 
-method length
+All arrays in Java have a field called \verb+length+ that is equal to
+the size of the array. This value never changes. When an array is
+created (using \verb+new+) its size is determined once and for all. 
 
-the curly bracket notation for initialisation
+\subsubsection*{Curly-bracket initialisation of arrays}
+\label{sec:curly-brack-init}
+
+Initialising an array element-by-element is boring and takes a lot of
+space. There is a special notation using curly brackets that allows
+programmers to initialise an array in one line: 
+
+\begin{verbatim}
+    int[] employeeIdArray = {123, 55, 14, 642, 243};
+\end{verbatim}
+
+If you write something like this, Java will automatically calculate
+the size of the array for you and will allocate memory for it and
+point to it. 
+
+\subsubsection*{2D, 3D, and beyond\ldots}
+\label{sec:2d-3d-beyondldots}
 
 You can also have arrays of arrays, in which case they are usually
-called matrices: 2-D matrices, 3-D matrices
+called matrices: 2-D matrices, 3-D matrices, etc. 
+
+
 
 \subsubsection{Exercise}
 \label{sec:exercisejfjfj}
