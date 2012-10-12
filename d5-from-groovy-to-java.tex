@@ -15,7 +15,7 @@ code as in Groovy.
 
 Usually every class is defined in its own file, e.g.~a \verb+Person+
 class is defined in a file called \verb+Person.java+. When a file
-contains only one class, this class must be public and have the same
+contains only one class, this class must be \verb+public+ and have the same
 name as the file (without the \verb+.java+ extension). 
 
 Classes in different files must be compiled independently before they
@@ -34,7 +34,8 @@ compiler, \verb+javac+.
 \end{verbatim}
 
 This will produce a file \verb+Person.class+ in your folder. Once you
-have it, you can use the Person class from any other file. 
+have it, you can use the Person class from any other file (e.g.~your
+Groovy scripts). 
 
 \paragraph{Classpath. }
 \label{sec:classpath.-}
@@ -44,9 +45,10 @@ that are not in your current directory in the form of a \verb+.class+
 file. This is because Java comes with a lot of classes built-in,
 including String. These classes are in your CLASSPATH, which is a list
 of locations in your computer\footnote{A CLASSPATH is something
-  conceptually similar to a PATH, a list of locations in your computer
+  conceptually similar to a PATH (a list of locations in your computer
   where the operating system looks for executable files when you type
-  them in the command line. Both are environment variables, and can be
+  them in the command line, see exercises from Day 2). 
+  Both are environment variables, and can be
   accessed and modified in the same way.} where Java looks for the
 classes you are using in your program. We will see more about this in
 the future.
@@ -55,14 +57,15 @@ the future.
 \label{sec:java-api}
 
 Java is not just a programming language (a set of keywords and
-syntactic rules). It provides as well a broad library of classes that
-you can use in your program. Some of them you know them already, like
-String, or the boxed types (Integer, Double, etc). 
+syntactic rules). It also provides a broad library of classes that
+you can use in your program. You know some of them already, like
+String or the boxed types (Integer, Double, etc). 
 
 This library is available for any Java programmer for free. There are
 literally thousands of useful classes in the library, and they are
 well documented in one website, coloquially referred to as ``the
-JavaDoc''. You can find it very easily by using your favourite search
+JavaDoc'' or ``the Java API''. You can find it very easily by using
+your favourite search
 engine to look up ``java API'' (Figure~\ref{fig:ajavadoc}). API stands
 for Application Programmer's Interface. 
 
@@ -77,82 +80,63 @@ You can see that there are three frames: top-left, a list of packages
 (we will learn what packages are at a later point); bottom-left, a
 list of classes; right, the main frame. You can find a lot of
 information about all classes in the Java Library on this website. You
-can also get a local copy if you plan to work without an internet
-connection. 
+can also get a local copy on your hard disk if you plan to work
+without an internet connection. 
 
 Look up any class (e.g.~String) in the list of classes at the
 bottom-left. Click on it. Read the documentation on the main
 frame. Every page in Java Doc follows the same structure: 
 
 \begin{description}
-\item[General description: ] at the beginning.
-\item[List of fields: ] all visible fields of the class, if any.
-\item[List of constructor methods: ] each of them with a brief
+\item[General description:] at the beginning.
+\item[List of fields:] all visible fields of the class, if any.
+\item[List of constructor methods:] each of them with a brief
   description, a list of parameters and other useful information, and
   a link to a more detailed description.
-\item[List of methods: ] each of them with a brief
+\item[List of methods:] each of them with a brief
   description, a list of parameters and other useful information, and
   a link to a more detailed description.
-\item[Detailed description of methods. ] 
+\item[Detailed description of methods:] additional details, use cases,
+  etc. 
 \end{description}
 
 You must become familiar with the Java Doc. You will use it very often
 as a Java programmer. 
 
-\subsection{A new type of loop: do\ldots while}
-\label{sec:new-type-loop}
+\subsection{System.out.println()}
+\label{sec:system.out.println}
 
-With a loop you can perform the same operations over and over
-again. However, if the condition for the loop is never true a
-\texttt{while} loop will never run; and sometimes you need it to run
-at least once, like in this case:
-
-\begin{verbatim}
-    println "Enter the names of your friends. Finish by typing END."
-    String name = System.console().readLine()
-    println s + ": friend"
-    while (s != "END") {
-      println s + ": friend"
-      name = System.console().readLine()
-    }
-\end{verbatim}
-
-In this brief example you need to repeat the same code to read input
-from the user in two different places. If
-the only way to do loops was using \texttt{while}, this repetition
-could not be avoided (and in a less trivial program, with
-intelligent error-checking and the like, this could be a lot of
-repetition!). Fortunately, we can use a \texttt{do\ldots while} loop: 
+As we have said, everything is an object in Java. One consequence of
+this is
+that the \verb+println+ command that we have been using in Groovy is no
+longer available. Instead, we can use its full object-oriented
+version: 
 
 \begin{verbatim}
-    println "Enter the names of your friends. Finish by typing END."
-    do {
-      String name = System.console().readLine()
-      println s + ": friend"
-    } while (s != "END")
+    System.out.println("Hello (Java-)World!");
 \end{verbatim}
 
+Note that \verb+println+ is just a normal method, called from an
+object with dot-notation and with a list of parameters.
+Up to now, Groovy was adding all the additional elements to make our
+lifes easier; but we must do it ourselves in the full Java world. 
 
-Remember, repeated code is usually a bad sign: a symptom of poor
-design and/or poor programming. When you have the same code in two
-different places, and make a change in one of them, it is very easy to
-forget to change the other too\ldots a common source of bugs for
-careless programmers. If you notice you have repeated code in your
-program, think twice about a better way of doing things, without
-repetition. There is a general principle in programming usually
-referred to as DRY: \textbf{Don't Repeat Yourself}. Keep it in mind at
-all times.
+\subsection{Semicolons are compulsory}
+\label{sec:semic-are-comp}
 
+In Java, the semicolons at the end of a statement are compulsory, not
+optional, and they mark the end of a statement. 
+The advantage of this is that statements can go over several lines. 
 
-\subsubsection*{Exercise}
+\begin{verbatim}
+    System.out.println("This is a long text that does not fit " + 
+                       "in one line, but that is no problem.");
+\end{verbatim}
 
-Make a class that implements a method 
-that reads a list of marks between 0 and 100 from the
-user, one per line, and stops when the user introduces a -1. The
-program should output at the end (and only at the end) how many marks
-there were in total, how many were distinctions (70--100), how many
-were passes (50--69), how many failed (0--49), and how many were
-invalid (e.g. 150 or -3). Use \texttt{readLine()} exactly once.
+The downside is that if you forget to add a semicolon at the end of
+the line, 
+Java will get confused and complain. 
+
 
 \subsubsection{Casting: conversion of simple types}
 \label{sec:cast-conv-simple}
@@ -165,7 +149,7 @@ Java, on the other hand, is a statically-typed language. Once a
 variable is created, Java will not change its type. If you try to
 assign it a value of a different type it will complain.
 
-And yet there are times in which you have an \verb+int+ but want to
+However, there are times in which you have an \verb+int+ but want to
 transform it into a \verb+double+ to perform division, or some other
 similar situation. This what \emph{casting} is for. When you cast a
 variable you change its type, as in the following example: 
@@ -199,60 +183,91 @@ to mark values of type \verb+char+.
 
 \begin{verbatim}
     // a one-character String in Groovy, 1 char in Java
-    char c     = 'a';               
+    char c = 'a';               
 
     // a String in both languages
     String str = "This is a string";
 
     // the following is valid in Groovy, but invalid in Java
-    String s2  = 'Another string';  
+    String str2 = 'Another string';  
 \end{verbatim}
 
 \subsection{A new complex type: Arrays}
 \label{sec:arrays}
 
 A String can be seen as a series of characters one after the
-other. The idea can be extended to think of series of other simple
-types, not just chars but also integers and doubles. This is called an
-\emph{array}. 
+other. This simple idea can be extended to series of other simple
+types: not just chars, but also integers and doubles. In Java, 
+this is called an \emph{array}. 
 
 Arrays are a way of having several elements of data of the same type;
-for example, a company could have a payroll program with an array with
+for example, a company could have a payroll program that used an array with
 the IDs of all its employees (an array of integers). In Groovy and
 Java, arrays can be of simple but also complex types; therefore, the
 aforementioned program could also have array of Strings to store the
 names of the employees. 
 
 An array is declared using square brackets. Square brackets are also
-used to access the elements in the array. Let's see an example: 
+used to access the elements in the array. Let's see an 
+example\footnote{Remember that this is Java code, not Groovy code, so
+  it must be \emph{in} a method \emph{in} a class; it cannot be in a
+  program or script of its own. We do not show the class and the
+  method here for the sake of space.} using an
+array of Strings: 
 
 \begin{verbatim}
-    int[] employeeIdArray;
-    employeeIdArray = new Array[5]();
-    employeeIdArray[0] = 123;
-    employeeIdArray[1] = 55;
-    employeeIdArray[2] = 14;
-    employeeIdArray[3] = 642;
-    employeeIdArray[4] = 243;
-    println "Out first employee has ID:" + employeeIdArray[0];
-    println "Our company has " + employeeIdArray.length + " employees";
+    String[] employeeArray;
+    employeeArray = new String[5];
+    employeeArray[0] = "Alice";
+    employeeArray[1] = "Bob";
+    employeeArray[2] = "Charlie";
+    employeeArray[3] = "Dave";
+    employeeArray[4] = "Eve";
+    System.out.println("Our first employee is " + employeeArray[0]);
+    System.out.println("Our company has " + employeeArray.length + " employees");
 \end{verbatim}
 
 As you can see, sometimes you need a number inside the brackets and
-sometimes you do not. You do not need a number to declare the array,
-i.e.~to tell the computer that you want to have an array (of integers,
-in this case). As all declarations, this reserves a box of type
-``array of integers, int[]'' and name \verb+employeeIdArray+. In the
-next line, we reserve a portion of memory to store the actual
-integers, and of course we have to specify the length; otherwise
-\verb+new+ will not know how much memory to allocate. Finally, when we
-want to access an element in an array, either for reading or for
-writing/replacing, we also have to specify \emph{which} element we
-want to access. 
+sometimes you do not: 
 
-All arrays in Java have a field called \verb+length+ that is equal to
+\begin{itemize}
+\item You do not need a number to declare the array, i.e.~to tell the
+  computer that you want to have an array (of Strings, in this
+  case). As all declarations, this reserves a box of type ``array of
+  Strings, String[]'' and name \verb+employeeArray+.
+\item In the next line, we reserve a portion of memory to store the
+  actual Strings, and of course we have to specify the length;
+  otherwise \verb+new+ will not know how much memory to allocate. Note
+  that arrays are an exception and do \emph{not} have a normal
+  constructor method, even if they are created with \verb+new+ (in
+  other words, there are no round brackets, but square brackets; this
+  only happens in Java with arrays). 
+\item Finally, when we want to access an element in an array, either
+  for reading or for writing/replacing, we also have to specify
+  \emph{which} element we want to access.
+\end{itemize}
+
+All arrays in Java have an integer field called \verb+length+ that is equal to
 the size of the array. This value never changes. When an array is
 created (using \verb+new+) its size is determined once and for all. 
+
+\subsubsection{At midnight, it is the zeroth hour\ldots}
+\label{sec:at-midnight-it}
+
+It is very important to remember that the first element of an array is
+at position $zero$. The last element, accordingly, is at position 
+$length - 1$. 
+
+You may remember that the first character of a String was also at
+position zero. As a matter of fact, Strings are implemented internally
+as arrays of \verb+char+. 
+
+If you try to access an element of an array (or a String) that is at
+position $length$ or beyond, or on a negative position, you will get
+an \verb+IndexOutOfBounds+. A common error is trying to
+access the last element in the array using
+\verb+myArray[myArray.length]+ instead 
+of \verb+myArray[myArray.length - 1]+.
 
 \subsubsection*{Curly-bracket initialisation of arrays}
 \label{sec:curly-brack-init}
@@ -269,13 +284,47 @@ If you write something like this, Java will automatically calculate
 the size of the array for you and will allocate memory for it and
 point to it. 
 
-\subsubsection*{2D, 3D, and beyond\ldots}
+\subsubsection*{2-D, 3-D, and beyond\ldots}
 \label{sec:2d-3d-beyondldots}
 
 You can also have arrays of arrays, in which case they are usually
-called matrices: 2-D matrices, 3-D matrices, etc. 
+called matrices: 2-D matrices, 3-D matrices, etc. Let's see a 2-D
+example: 
 
+\begin{verbatim}
+    int[][] matrix;
+    matrix = new int[3][3];
+    matrix[0][0] = 1;
+    matrix[0][1] = 2;
+    matrix[0][2] = 3;
+    matrix[1][0] = 4;
+    matrix[1][1] = 5;
+    matrix[1][2] = 6;
+    matrix[2][0] = 7;
+    matrix[2][1] = 8;
+    matrix[2][2] = 9;
+\end{verbatim}
 
+As you can see, a multi-dimensional array is just an array of
+arrays. It is initialised in the samw way as any other array, and its
+elements are accessed in the same way as with a 1-D array, only using
+more indexes. You can also use curly-bracket notation to initialise an
+array in a more compact way: 
+
+\begin{verbatim}
+    int[][] matrix3 =  {{1,2,3},{3,4,5},{6,7,8}};
+\end{verbatim}
+
+And it is not uncommon to write this in different lines to improve
+clarity. Remember that in Java semicolons are compulsory, so
+statements do not really finish at the end of the line; they continue
+from line to line until a semicolon is reached. 
+
+\begin{verbatim}
+    int[][] matrix3 =  { { 1, 2, 3},
+                         { 3, 4, 5},
+                         { 6, 7, 8} };
+\end{verbatim}
 
 \subsubsection{Exercise}
 \label{sec:exercisejfjfj}

@@ -52,7 +52,7 @@ used to initialise an object of a class when it is first created, and
 it is executed every time a new method is created using \verb+new+. In
 other words, the constructor method is a way of telling Java to use
 \verb+new+ to allocate the memory \emph{and} initialise the object
-using only one line. 
+at the same time. Simpler. Clearer. 
 
 A constructor method looks like a method without a return type (not
 even \verb+void+). Have a look at this example:
@@ -85,7 +85,8 @@ No need to initialise the points after creating them. The constructor
 method does it for both of them. 
 If a class has more than one constructor method, Java chooses the
 right one according to the positional parameters. For example, we
-could create a class Rectangle that has one or two parameters:
+could create a class Rectangle that has one or two parameters, and
+then create different instances (i.e.~objects) of it: 
 
 \begin{verbatim}
 class Rectangle {
@@ -100,25 +101,33 @@ class Rectangle {
         this.length = length;
         this.width  = length;
     }
+}
+Rectangle dominoRectangle = new Rectangle(1,2);
+Rectangle pitagoreanRectangle = new Rectangle(3,4);
+Rectangle goldenRectangle = new Rectangle(1618,1000);
+Rectangle square = new Rectangle(5); 
 \end{verbatim}
 
-Every class has at
-least one constructor method. If it is not explicit ---as it has been
+Every class has 
+\textbf{at least one} constructor method. 
+If it is not explicit ---as it has been
 the case with all classes in the previous sections---, Java 
-automatically adds an empty
+implicitly adds an empty
 constructor: a constructor method with no parameters that does not
 initialise any field. 
 
 
-\subsection{Levels of access and information hiding}
+\subsection{Levels of access (public, private) and information hiding}
 \label{sec:levels-access-inform}
 
 A real programming project can have thousands of classes, and millions
 of live objects in memory at any given time (remember that we create a
 new object every time we use \verb+new+). Keeping track of all the
 interactions of these objects becomes very complex very quickly. That
-is why programmers try to keep the complexity as low as possible. One
-strategy to achieve that is to hide as much information as possible
+is why programmers make an effort to keep 
+the complexity as low as possible. One
+strategy to achieve that objective is 
+to hide as much information as possible
 and leave visible only what is strictly necessary. 
 
 Imagine that you want to find out the total population of the European
@@ -128,16 +137,19 @@ the names of every citizen; it is clear that the former option makes
 your life much easier. This is the principle of \emph{information
   hiding}. 
 
-Information hiding is achieved in Java by means of two new keywords:
-\verb+public+ and \verb+private+. There is a third keyword but it is
+Information hiding is achieved in Java by means of two\footnote{There
+  is a third keyword but it is 
 less important and we will come to it when we talk about class
-hierarchies. 
-
+hierarchies.} new keywords:\verb+public+ and \verb+private+. 
 The keyword \verb+private+ specifies that the field (i.e.~variable) or
 method that comes after it will be visible only inside its own
 class. This should be your default option as a programmer, especially
 for fields. The keyword \verb+public+ specifies that the field or
 methods that comes after it will be visible from outside the class. 
+
+Classes can also be \verb+public+ or \verb+private+. In the same way
+that public fields and methods are visible out of their own class, a
+public class is visible out of its file, and viceversa. 
 
 
 \subsubsection*{Rules of thumb for access levels}
@@ -145,7 +157,7 @@ methods that comes after it will be visible from outside the class.
 
 After many decades, programmers have developed some rules of thumb
 to know what should be public and what should be private. The
-following rules cover 90\% of all cases, but do expect them to be
+following rules cover 90\% of all cases, but do not expect them to be
 valid in absolutely every situation. 
 
 \begin{itemize}
@@ -157,6 +169,57 @@ valid in absolutely every situation.
 \item Constructor methods must be public. 
 \end{itemize}
 
+How would class \verb+Point+ be if we were doing things right and
+using \verb+public+ and \verb+private+ to specify the visibility of
+everything? Like this: 
+
+\begin{verbatim}
+    public class Point {
+        private double x;
+        private double y;
+        public Point(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+        public int getX() {
+            return x;
+        }
+        public int getY() {
+            return y;
+        }
+        public double moveTo(Point remote) {
+            this.x = remote.x;
+            this.y = remote.y;
+        }
+        // more methods here...
+    }
+    Point point = new Point(1,1);
+    println "The point is now at " + point.getX() + "," + point.getY();
+    Point remotePoint = new Point(10,20);
+    point.moveTo(remotePoint);
+    println "The point is now at " + point.getX() + "," + point.getY();
+\end{verbatim}
+
+This is a bit more complex at first sight, but now we can understand
+all its components. What can we see?
+
+\begin{itemize}
+\item The class is \verb+public+, because we probably want it to be
+  used from other files. This is the usual case.
+\item The constructor is \verb+public+. If it was not, it would be
+  difficult to create new objects of type \verb+Point+ using
+  \verb+new+. Actually, it would be impossible.
+\item The methods are all \verb+public+ (at least the methods we can
+  see in the example), because all of them are to be used by other
+  code that uses objects of type \verb+Point+.
+\item The fields \verb+x+ and \verb+y+ are \verb+private+. Fields
+  should be private and be accessed through methods in 99\% of all
+  programs.
+\item As fields are private, two \emph{getters} or \emph{accessor
+    methods} have been added. If we want to be able to modify the
+  dimensions of objects of type \verb+Rectangle+ after they are
+  created, we will need to add \emph{setters} too. 
+\end{itemize}
 
 %%% Local Variables:
 %%% mode: latex
