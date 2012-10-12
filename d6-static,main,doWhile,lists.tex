@@ -1,0 +1,142 @@
+% TODO: We need to explain JARS
+
+\section{Static data}
+\label{sec:static-data}
+
+% TODO: mira a ver si se te ocurre un ejemplo mejor que una constante
+%   o un contador de objectos. 
+%       Con los métodos es más fácil: pure functions
+
+% Math
+% System
+
+\section{The main method}
+\label{sec:main-method}
+
+As we leave Groovy behind and move into full-flavour Java, we need a
+way to launch our program: a starting point. It is all too well to
+have a lot of Java classes, each of them in their own \verb+.java+
+file, but this is of little use if we cannot start our program from
+the command like (or clicking on an icon, for that matter). 
+
+In Groovy, we did not need an entry point. The programs or scripts
+were their own entry point. We only needed to 
+write \verb+groovy myScript.groovy+ and Groovy would
+start the execution. The situation is slightly more complex in Java
+because all files are classes, not scripts. We need to have an entry
+point, a place in the code where Java knows the execution of the
+program can start. This entry point is the \verb+main+ method. The
+main method is a normal method of a class, and every class can have
+one. It looks like this: 
+
+\begin{verbatim}
+    public static void main(String[] args) {
+      // Here be the code to launch the program
+    }
+\end{verbatim}
+
+If a class has a main method, it can be run from the operating system
+by typing: 
+
+\begin{verbatim}
+    > java myClass
+\end{verbatim}
+
+assuming that there is a \verb+myClass.class+ file. The 
+signature of the \verb+main+ method is a bit long, but we have
+already learnt what each of its elements means: 
+
+\begin{itemize}
+\item It must be \verb+public+, because otherwise it cannot be
+  accessed from outside the class (and how would the program launch
+  then?).
+\item It must be \verb+static+, because it pertains to the class, not
+  to each of its objects.
+\item It returns \verb+void+. This is a method that is never called by
+  other classes, so a return type is unnecessary.
+\item The only parameter is a 1-D array of Strings, called \verb+args+
+  (short for arguments). Actually the name is not important. The
+  elements in the array are the parameters passed in the command line,
+  if any. For example, if you run a program with a line like
+  \verb+java myClass www.google.com 80 true+, the first element
+  (i.e.~args[0]) of \verb+args+ will be ``www.google.com'', the second
+  element will be ``80'', and the third one will be ``true''. If you
+  want to use these parameters with a different type you need to parse
+  them. 
+\end{itemize}
+
+\subsection{Liberating your main method from static restrictions}
+\label{sec:liber-your-launch}
+
+As static code does not understand anything about instance
+(i.e.~non-static) methods or data, you will not be able to use your
+instance data from your main method. This seems restricting at first,
+as in the following example: imagine that we want to start a program
+from a BitTorrentDownloader class, and we want to give the name of the
+host and the port from the command line
+
+\begin{verbatim}
+    public class BitTorrentDownloader {
+        private String host;
+        private int port;
+    
+        public BitTorrentDownloader(String host, int port) {
+            this.host = host;
+            this.port = port;
+        }
+    
+        public static void main(String[] args) {
+            host = args[0];
+            port = Integer.parseInt(args[1]);
+        }
+    }
+\end{verbatim}
+
+When you try to compile this program, java will complain with the
+following error: 
+
+\begin{verbatim}
+    non-static variables cannot be referenced from a static context
+    host = args[0];
+    ^
+    port = Integer.parseInt(args[1]);
+    ^
+\end{verbatim}
+
+One (bad) solution is to make \verb+host+ and \verb+port+ static, but
+that means that there can only be one of each. This is usually a bad
+idea in the long run. Maybe in a future version you will like several
+BitTorrentDownloaders working in parallel, or maybe you would to
+launch many at the same time and put them in a queue. All of this
+would be impossible if the fields were static. Remember: \verb+static+
+means ``only one per class'', and programmer usually like to have as
+many as possible of everything, just in case. As a rule of thumb,
+\textbf{never use \verb+static+ unless it is absolutely necessary}.
+
+There is another (much better) solution: to instantiate the class
+inside it main method, and then run all the code from a non-static
+launching method. This method is commonly called \verb+run()+. See the
+example: 
+
+\begin{verbatim}
+    public class BitTorrentDownloader {
+        private String host;
+        private int port;
+    
+        public BitTorrentDownloader(String host, int port) {
+            this.host = host;
+            this.port = port;
+        }
+    
+        public static void main(String[] args) {
+            String host = args[0];
+            int port = Integer.parseInt(args[1]);
+            BitTorrentDownloader downloader = new BitTorrentDownloader(host, port);
+        }
+    }
+\end{verbatim}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
