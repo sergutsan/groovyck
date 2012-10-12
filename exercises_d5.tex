@@ -1,44 +1,243 @@
 
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\begin{document}
+
+\section*{Learning goals}
+\label{sec:learning-goals}
+
+Before the next day, you should have achieved the following learning
+goals: 
+
+\begin{itemize}
+\item Become familiarised with the use of \verb+private+ and
+  \verb+public+. All your classes, fields, and methods should specify
+  explicitly wheter they are public or private according to the rules
+  of thumb in the notes. If you make a decision of visibility that
+  deviates from those rules, you should explain why in a comment.
+\item Related to the former point, you should become used to use
+  constructors in all your classes. The constructor method or methods
+  should be used to initialise the fields of any new object of that
+  class.
+\item Be able to create classes in their own \verb+.java+ file, 
+  compile them using
+  \verb+javac+, and use those classes from Groovy scripts.
+\item Be able to cast simple types from one type to another.
+\item Be able to create and use arrays in one or more dimensions. 
+\end{itemize}
+
+You should be able to finish most of non-star exercises in the
+lab. Remember that star exercises are more difficult. Do not try them
+unless the normal ones are clear to you. 
+
+\section{Dividing integers}
+\label{sec:casting}
+
+Create a Java class called \verb+Calculator+. The class should
+implement the following methods, each of them printing the result on
+the screen. 
+
+\begin{itemize}
+\item \verb+add(int, int)+
+\item \verb+subtract(int, int)+
+\item \verb+multiply(int, int)+
+\item \verb+divide(int, int)+
+\item \verb+modulus(int, int)+
+\end{itemize}
+
+Note that you will will need to cast the parameters into \verb+double+
+to perform exact division. 
+
+Write a small Groovy program that uses all the methods of
+\verb+Calculator+.
 
 
 
-make matrix introducing numbers one by one
+\section{Copying arrays}
+\label{sec:copying-arrays}
 
-make matrix introducing rows: 1,2,3,4
-  - known size
-  - unknown size
+Create a new Java class called ArrayCopier with a method called
+\verb+copy+ that takes two arrays of integers as parameters. The
+method should copy the elements of the first array (you can call it
+\verb+src+, from ``source'') to the second one (\verb+dst+, from
+``destination'') as much as possible.
 
-make matrix introducing columns
-  - known size
-  - unknown size
+If the second array is smaller, then only those elements that fit will
+be copied. If the second array is larger, it will be filled with
+zeroes. 
 
-make matrix introducing the whole thing: 1,2,3;4,5,6;7,8,9;
+Write a program that creates an object of this class and uses this
+method to copy some arrays in all three cases: 
+
+\begin{itemize}
+\item Both arrays are of the same size.
+\item The source array is longer.
+\item The source array is shorter. 
+\end{itemize}
+
+\section{Creating matrices}
+\label{sec:creating-matrices}
+
+Create a class Matrix that has a 2-D array of integers as a field. The
+class should have methods for: 
+
+\begin{itemize}
+\item a constructor method \verb+Matrix(int,int)+ setting the size of
+  the array as two 
+  integers (not necessarily the same). All elements in the matrix
+  should be initialised to 1. 
+\item a method \verb+setElement(int,int)+ to modify one element of the
+  array, given its position 
+  as two integers. The method must check that the indeces are valid
+  before modifying the array to avoid an
+  \verb+IndexOutOfBoundsException+. If the indeces are invalid, the
+  method will do nothing. 
+\item a method \verb+setRow(int,String)+ that modifies one whole row
+  of the array, given its position 
+  as an integer and the list of numbers as a String like ``1,2,3''. 
+  The method must check that the index is valid and the numbers are
+  correct (i.e.~if the array has three columns, the String contains
+  three numbers). If the index or the String is invalid, the
+  method will do nothing. 
+\item a method \verb+setColumn(int,String)+ that modifies one whole 
+  column of the array, given its position 
+  as an integer and the list of numbers as a String like ``1,2,3''. 
+  The method must check that the index is valid and the numbers are
+  correct (i.e.~if the array has four rows, the String contains
+  four numbers). If the index or the String is invalid, the
+  method will do nothing.
+\item a method \verb+toString()+ that returns the values in the array
+  as a String using square brackets, commas, and semicolons,
+  e.g. ``[1,2,3;4,5,6;3,2,1]''. 
+\item A method \verb+prettyPrint()+ that prints the values of the
+  matrix on screen in a legible format. Hint: you can use the
+  special character '\t' to mark a tabulator so that all numbers are
+  placed in the same column regardless of their size. You can think of
+  a tabulator character as a move-to-the-next-column command when
+  printing on the screen. 
+\end{itemize}
+
+Create a Groovy program that uses all those methods from the Matrix class:
+creates matrices, modifies its elements (one-by-one, by rows, and by
+columns), and prints the matrix on the screeen. 
+
+\section{One-liners for matrices (*)}
+\label{sec:creat-matr-one}
+
+Extend your \verb+Matrix+ class with a method \verb+setMatrix(String)+
+that takes a String representing the numbers to be put in the elements
+of the array separated by commas, separating rows by semicolons,
+e.g.~1,2,3;4,5,6;7,8,9. 
+
+\section{Symmetry looks pretty}
+\label{sec:symm-looks-pretty}
+
+Make a class \verb+MatrixChecker+ with three methods: 
+
+\begin{itemize}
+\item \verb+\isSymmetrical(int[])+ takes an array of \verb+int+ and
+  returns true if the array is symmetrical and false otherwise. An
+  array is symetrical if the element at [0] is the same as the
+  element at [length-1], the element at [1] is the same as the
+  element at [length-2], etc.
+\item \verb+\isSymmetrical(int[][])+ takes an bidimensional array of
+  \verb+int+ and returns true if the matrix is symmetrical and false
+  otherwise. An matrix is symmetrical if \verb+m[i][j] == m[j][i]+ for
+  any value of \verb+i+ and \verb+j+.
+\item \verb+\isTriangular(int[][])+ takes an bidimensional array of
+  \verb+int+ and returns true if the matrix is triangular\footnote{A
+    matrix can be up-triangular or low--triangular, but just checking
+    one of the two is fine for this exercise.} and false
+  otherwise. An matrix is symmetrical if \verb+m[i][j] == 0+ for
+  any value of \verb+i+ that is greater than \verb+j+.
+\end{itemize}
+
+Add some methods to your \verb+Matrix+ class from the other exercise to
+perform tests on the matrices you create using the methods from
+MatrixChecker. (Hint: these methods will need to create objects of
+type \verb+MatrixChecker+). 
 
 
+\section{Anti-aircraft aim (*)}
+\label{sec:anti-aircraft-aim}
+
+Create an enumerated type \verb+Result+ in its own file. The
+\verb+enum+ must have 8 possible values: HIT, FAIL\_LEFT, FAIL\_RIGHT,
+FAIL\_HIGH, FAIL\_LOW, FAIL\_SHORT, FAIL\_LONG, OUT\_OF\_RANGE. Hint:
+the \verb+enum+ must be \verb+public+.
+
+Then create a Java class \verb+Target+ with the following methods: 
+
+\begin{itemize}
+\item A constructor method \verb+Result(int)+ that creates a 3-D array 
+  of integers of the
+  proposed size in all three dimensions. All elements must be set to
+  zero.
+\item \verb+init()+ that sets one element, selected randomly, to 1 and
+  all the others to zero. Hint: Remember that you can get a random
+  integer between 0 and N (not including N) by
+  using \verb+int numberToGuess = Math.abs(N * Math.random())+.
+\item \verb+fire(int,int,int)+ a method that checks whether the
+  element determined by the indexes is 1 and returns a type
+  \verb+Result+ according to the result: \verb+Result.HIT+ if the
+  element is 1, \verb+Result.FAIL_LEFT+ if the element of value one is
+  ``to the left'' (you must decide what left and right are in your 3-D
+  array), etc. If any of the indeces is too big (or negative), the
+  method must return \verb+Result.OUT\_OF\_RANGE+. Left--right
+  information takes precedence over high--low, and this takes
+  precendence over short--long. If the 1 is to the left and behind,
+  the output should be \verb+Result.FAIL\_LEFT+.
+\end{itemize}
+
+Write a small program that tells the user they must hit a flying
+target, and then let the user try to find it by introducing three
+indeces. The program should use an object of class \verb+Target+ to
+know whether the user hit or not, and provide feedback
+accordingly. Here is a sample out of such a program in a space $10 x
+10 x 10$. 
+
+\begin{verbatim}
+    Here they come! Try to bring the plane down!
+    Enter a coordinate X: 30
+    Enter a coordinate Y: 4
+    Enter a coordinate Z: 5
+    That shot is way out of range. Try harder!
+    Enter a coordinate X: 3
+    Enter a coordinate Y: 4
+    Enter a coordinate Z: 5
+    You missed! The target is to the right!
+    Enter a coordinate X: 5
+    Enter a coordinate Y: 4
+    Enter a coordinate Z: 1
+    You missed! The target is farther!
+    Enter a coordinate X: 5
+    Enter a coordinate Y: 4
+    Enter a coordinate Z: 5
+    You hit it! Well done!
+    Would you like to play again? y
+    Here they come! Try to bring the plane down!
+    Enter a coordinate X: 
+\end{verbatim}
 
 
-get some strings and sort them (Hint: String has a method that will
-help you)
+% Leave for assignment
+% \section{Sinking ships (classic)}
+% \label{sec:sinking-ships}
 
+% Create a class \verb+Board+ with the following methods: 
 
+% \begin{itemize}
+% \item \verb+init(int)+ to create a 2-D array of integers of the
+%   proposed size in both dimensions. All elements must be set to
+%   zero. 
+% \end{itemize}
 
-things with arrays and matrices
-  - is array of numbers simetrical
-  - is matrix simmetrical
-  - is matrix triangular U/D
-
-Create a 3D array and put all zeros but one target (randomly). Then the
-user must guess where the target is. Messages:
-  - No, it's to the left/right
-  - No, it's higher/lower
-  - No, it's nearer/farther
-
-Hundir la flota
-  classical
-    painting the board
-  ships have one location, but different hit points and can move
-     class ship with hit points and position
-     more complicated: ships cannot share the same position
+% Hundir la flota
+%   classical
+%     painting the board
+%   ships have one location, but different hit points and can move
+%      class ship with hit points and position
+%      more complicated: ships cannot share the same position
 
 
 \section{Big enough (*)}
@@ -46,7 +245,8 @@ Hundir la flota
 
 Write a small program that asks for the names and IDs of all employees
 in a small company, and store them in an array of integers and an
-array of Strings. 
+array of Strings. (You will need to create a Java class to hold the
+arrays, and to access them). 
 
 This is similar to the example from the notes, but you do not know the
 number of employees in advance. Read the names and IDs of employees
@@ -60,7 +260,8 @@ those employees whose ID is even or their names start with ``S''.
 (Hint: As you do not know how many employees you need in advance, you
 will need a growing array. Create a small array, if it gets full
 create an array twice as big, copy all data to the new array, and
-discard the old array).
+discard the old array, etc).
 
 
 
+\end{document}
