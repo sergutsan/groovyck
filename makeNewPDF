@@ -22,7 +22,7 @@ fi
 if [ "$3" != "" ]; then
   PDFFILE="$3"
 fi
-echo "Compiling ${LATEXFILE}.tex in 3..."
+echo "Compiling ${LATEXFILE}.tex (v${1}) in 3..."
 sleep 1
 echo "2..."
 sleep 1
