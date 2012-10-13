@@ -88,6 +88,9 @@ host and the port from the command line
         public static void main(String[] args) {
             host = args[0];
             port = Integer.parseInt(args[1]);
+            // with the fields initialised, 
+            // launching code comes here...
+            // ...
         }
     }
 \end{verbatim}
@@ -111,12 +114,12 @@ launch many at the same time and put them in a queue. All of this
 would be impossible if the fields were static. Remember: \verb+static+
 means ``only one per class'', and programmer usually like to have as
 many as possible of everything, just in case. As a rule of thumb,
-\textbf{never use \verb+static+ unless it is absolutely necessary}.
+\textbf{never make anything ``static'' unless it is absolutely necessary}.
 
 There is another (much better) solution: to instantiate the class
 inside it main method, and then run all the code from a non-static
-launching method. This method is commonly called \verb+run()+. See the
-example: 
+launching method. This method is commonly called \verb+run()+ or
+\verb+launch()+. See the example: 
 
 \begin{verbatim}
     public class BitTorrentDownloader {
@@ -132,9 +135,136 @@ example:
             String host = args[0];
             int port = Integer.parseInt(args[1]);
             BitTorrentDownloader downloader = new BitTorrentDownloader(host, port);
+            downloader.launch();
+        }
+
+        private void launch() {
+            // with the fields initialised, 
+            // launching code comes here...
+            // ...
         }
     }
 \end{verbatim}
+
+\section{More differences between Groovy and Java}
+\label{sec:more-diff-betw}
+
+\subsection{String.equals != ==}
+\label{sec:string.equals-=-==}
+
+In Groovy we have become used to comparing String using ``==''. In
+Java we have to be careful and use the method
+\verb+.equals()+. Otherwise we may get funny results like in the
+following simple code: 
+
+\begin{verbatim}
+    System.out.print("Enter a string: ");
+    String str1 = System.console().readLine();
+    System.out.print("Enter another string: ");
+    String str2 = System.console().readLine();
+    System.out.println("Are '" + str1 + "' and '" + str2 + "' the same?");
+    System.out.println("Using ==: " + (str1 == str2));
+    System.out.println("Using .equals(): " + (str1.equals(str2)));
+\end{verbatim}
+
+that produces the following output: 
+
+\begin{verbatim}
+    Enter a string: This is a String
+    Enter another string: This is a String
+    Are 'This is a String' and 'This is a String' the same?
+    Using ==: false
+    Using .equals(): true
+\end{verbatim}
+
+This is because the equality operator ``=='' only works with simple
+types, with little ``boxes''. When it is used to compare objects like
+Strings, it compares the pointers not the contents of the objects (see
+Figure~\ref{fig:equals}). The
+method \verb+.equals()+, on the other hand, can be used to compare the
+content of the objects. 
+
+\begin{figure}[bthp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/variables-string-equals}
+  \caption{The operator ``=='' compares simple types. When used to
+    compare complex types, it compares just the pointers.} 
+  \label{fig:equals}
+\end{figure}
+
+As a rule of thumb, \textbf{always use the method .equals()
+  when comparing Strings} or any other complex types in Java.
+
+\paragraph{Note.}
+\label{sec:notre}
+
+For some classes, the effect of \verb+.equals()+ is the same as
+``=='', i.e.~it compares the pointers and not the content of the
+objects. This depends on the class and its semantics. For instance,
+we usually think that two Strings or two Integers (class, not simple
+type) are the same if they have the same content, but we do not think
+of two \verb+Person+ to be same even if they have the same name. We
+will learn more about this when we learn about class inheritance but,
+for now, it suffices to say that objects should always be compared
+with \verb+equals()+ and not with ``==''. The operator ``=='' should
+only be used for simple types (also known as \emph{primitive} types). 
+
+\subsection{A new type of loop: do\ldots while}
+\label{sec:new-type-loop}
+
+With a loop you can perform the same operations over and over
+again. However, if the condition for the loop is never true a
+\texttt{while} loop will never run; and sometimes you need it to run
+at least once, like in this case:
+
+\begin{verbatim}
+    System.out.println("Enter the names of your friends. Finish by typing END.");
+    String name = System.console().readLine();
+    System.out.println(s + ": friend");
+    while (s != "END") {
+        System.out.println(s + ": friend";
+        name = System.console().readLine();
+    }
+\end{verbatim}
+
+In this brief example you need to repeat the same code to read input
+from the user in two different places. If
+the only way to do loops was using \texttt{while}, this repetition
+could not be avoided (and in a less trivial program, with
+intelligent error-checking and the like, this could be a lot of
+repetition!). Fortunately, in Java we can use 
+the \texttt{do\ldots while} loop: 
+
+\begin{verbatim}
+    System.out.println("Enter the names of your friends. Finish by typing END.");
+    do {
+        String name = System.console().readLine();
+        System.out.println(name + ": friend");
+    } while (!name.equals("END"));
+\end{verbatim}
+
+
+Remember, repeated code is usually a bad sign: a symptom of poor
+design and/or poor programming. When you have the same code in two
+different places, and make a change in one of them, it is very easy to
+forget to change the other too\ldots a common source of bugs for
+careless programmers. If you notice you have repeated code in your
+program, think twice about a better way of doing things, without
+repetition. Remember the DRY principle: \textbf{Don't Repeat
+  Yourself}. Keep it in mind at all times.
+
+
+\subsubsection*{Exercise}
+
+Make a class that implements a method 
+that reads a list of marks between 0 and 100 from the
+user, one per line, and stops when the user introduces a -1. The
+program should output at the end (and only at the end) how many marks
+there were in total, how many were distinctions (70--100), how many
+were passes (50--69), how many failed (0--49), and how many were
+invalid (e.g. 150 or -3). Use \texttt{readLine()} exactly once.
+
+
 
 %%% Local Variables:
 %%% mode: latex
