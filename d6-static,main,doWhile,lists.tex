@@ -221,7 +221,7 @@ at least once, like in this case:
     System.out.println("Enter the names of your friends. Finish by typing END.");
     String name = System.console().readLine();
     System.out.println(s + ": friend");
-    while (s != "END") {
+    while (!s.equals("END")) {
         System.out.println(s + ": friend";
         name = System.console().readLine();
     }
