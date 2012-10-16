@@ -148,7 +148,7 @@ Make a class \verb+MatrixChecker+ with three methods:
   \verb+int+ and returns true if the matrix is triangular\footnote{A
     matrix can be up-triangular or low--triangular, but just checking
     one of the two is fine for this exercise.} and false
-  otherwise. An matrix is symmetrical if \verb+m[i][j] == 0+ for
+  otherwise. An matrix is triangular if \verb+m[i][j] == 0+ for
   any value of \verb+i+ that is greater than \verb+j+.
 \end{itemize}
 
@@ -176,7 +176,7 @@ Then create a Java class \verb+Target+ with the following methods:
 \item \verb+init()+ that sets one element, selected randomly, to 1 and
   all the others to zero. Hint: Remember that you can get a random
   integer between 0 and N (not including N) by
-  using \verb+int numberToGuess = Math.abs(N * Math.random())+.
+  using \verb+int numberToGuess = (int) Math.abs(N * Math.random())+.
 \item \verb+fire(int,int,int)+ a method that checks whether the
   element determined by the indexes is 1 and returns a type
   \verb+Result+ according to the result: \verb+Result.HIT+ if the
