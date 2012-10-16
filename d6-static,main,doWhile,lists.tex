@@ -55,6 +55,47 @@ computer\footnote{Being precise, there is only one per \emph{Java
   physicial computer, although this is not relevant in most cases and
   the ``there is one static X per machine'' is mostly true.}. 
 
+% NOTE: 
+% I introduce here the example of counting objects of a class for two
+% reasons: 
+% 
+%  - It is the example you find EVERYWHERE. For me, this is a good
+%   indication that static fields have little use apart from
+%   constants (the other pervasive example, but I do not want to
+%   introduce "final" yet... one keyword per day)... So if my
+%   students look this up in another book, it will sound familiar. 
+%  - It is a use case with a little actual validity if you think in
+%   terms of n-singletons and factories. 
+% 
+% These two are the only arguments. If they become invalid in the
+% future, then the example should be removed. 
+
+You can use a static variable to keep a counter of how many objects of
+a class have been created, as in the example: 
+
+\begin{verbatim}
+    public class Spy {
+        private static spyCount = 0;
+
+        public Spy(...) {
+            spyCount++;
+            // ...
+        }
+
+        public static int getNumberOfSpies() {
+            return spyCount;
+        }
+        // ...
+    }
+\end{verbatim}
+
+Every time the constructor of \verb+Spy+ is called the counter
+\verb+spyCount+ is
+increased; we could also think of a \verb+die()+ method that reduces
+the counter. In any case, it is rarely necessary to keep a count of
+objects of a class, and therefore static variables are seldom used
+except as constants. 
+
 \paragraph{Static methods}
 \label{sec:static-methods}
 
@@ -89,7 +130,7 @@ In other words, if you had to remember just four things about the keyword
   for ways to get rid of your static state (i.e.~fields/variables).
 \item If you have static fields, they should be constants and they
   should be public. One such example is \verb+Math.PI+.
-\item If you have static methods, they should be pure functions. This
+\item If you have static methods, they should be \emph{pure functions}. This
   means they should not have side effects, and they should return a
   value that depends only on their arguments. One such example is
   \verb+Integer.parseInt(String)+.
