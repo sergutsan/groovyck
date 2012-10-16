@@ -7,12 +7,98 @@
 \section{Static data}
 \label{sec:static-data}
 
-% TODO: mira a ver si se te ocurre un ejemplo mejor que una constante
-%   o un contador de objectos. 
-%       Con los métodos es más fácil: pure functions
+There are few Java keywords that we do not know yet. One of them is
+\verb+static+. This keyword means that the field or method that comes
+after it does not belong to an object of a class but to the class
+itself: it is a class member rather than an object member\footnote{The
+name \emph{static} is a bit confusing at first, because it does not
+mean that static things do not move but rather that they belong to the
+class and not its instances (i.e.~objects). It may have been better to
+use a keyword like \emph{class}, but it is already used to define
+classes themselves.}
 
-% Math
-% System
+Why would we be interested in using \verb+static+? 
+
+\paragraph{Static fields}
+\label{sec:static-fields}
+
+There is little use for static fields. There are few cases in which
+some information of our objects should not be stored in the objects
+themselves but in the class, and it is common that this information is
+constant. For example, we could store the number of chromosomes of an
+animal: this information does not change from animal to animal:
+
+\begin{verbatim}
+    public class Human {
+        private static chromosomeCount;
+        private String name;
+        private int age;
+        // ...
+    }
+\end{verbatim}
+
+Every human has a different name and a different age, but the same
+number of chromosomes. Making it \verb+static+ makes it clear to other
+programmers with little knowledge of biology that the chromosome count
+is the same for all humans\footnote{For the sake of simplicity, we
+  ignore in this example chromosomical conditions such the Down,
+  Patau, Turner, and Klinefelter syndromes.}. 
+
+It also saves a little
+memory because 
+the variable is stored only once (in the class) rather than many times
+(once per object). For every name, there is one and only one static
+variable per class per machine; in other words, there is only one
+\verb+chromosomeCount+ in class \verb+Human+ in the whole
+computer\footnote{Being precise, there is only one per \emph{Java
+    Virtual Machine} (JVM). There may be more than one JVM in a
+  physicial computer, although this is not relevant in most cases and
+  the ``there is one static X per machine'' is mostly true.}. 
+
+\paragraph{Static methods}
+\label{sec:static-methods}
+
+Static methods are class methods. They do not need to be called from
+an object, but can be called directly from the class. You have already
+seen some examples as \verb+Math.random()+ 
+and the widely used \verb+Integer.parseInt(String)+. 
+
+Static methods can only access \verb+static+ fields. Because they are
+run from the class, they can only access data that is in the class and
+not in the objects; you can think of it in the following way: the
+class does not know where the objects are stored in the memory, so
+instance (i.e.~in the object) data cannot be accessed. Class data and
+class methods, however, can be accessed from anywhere, just using the
+name of the class as in \verb+Integer.parseInt(String)+. 
+
+\paragraph{Rules of thumb}
+\label{sec:rules-thumb-use}
+
+It is important to understand what \verb+static+ means in Java,
+because you will find this keyword quite often in your life as a Java
+programmer. On the other hand, it is a keyword that you will not use
+that much; and when you do, it will be almost always in one of three
+situations as explained below. 
+
+In other words, if you had to remember just four things about the keyword
+\verb+static+, remember these four rules: 
+
+\begin{itemize}
+\item Use \emph{static} sparingly. If you use it often, you are
+  probably doing it wrong. Thing again about your program, and look
+  for ways to get rid of your static state (i.e.~fields/variables).
+\item If you have static fields, they should be constants and they
+  should be public. One such example is \verb+Math.PI+.
+\item If you have static methods, they should be pure functions. This
+  means they should not have side effects, and they should return a
+  value that depends only on their arguments. One such example is
+  \verb+Integer.parseInt(String)+.
+\item If you have a \verb+main+ method, it must be static as there is
+  only one per class (at most). 
+\end{itemize}
+
+What is the \verb+main+ method? I am glad you asked. The \verb+main+
+method is the entry point for your Java application. 
 
 \section{The main method}
 \label{sec:main-method}
@@ -31,7 +117,7 @@ because all files are classes, not scripts. We need to have an entry
 point, a place in the code where Java knows the execution of the
 program can start. This entry point is the \verb+main+ method. The
 main method is a normal method of a class, and every class can have
-one. It looks like this: 
+one. It looks like this:
 
 \begin{verbatim}
     public static void main(String[] args) {
@@ -410,6 +496,7 @@ this:
             // We found it! It is the next one!
             // Now link this patient to the one after the next 
             this.nextPatient = nextPatient.nextPatient;
+            return true;
         } else {
             return this.nextPatient.deletePatient(patient);
         }
