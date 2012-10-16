@@ -196,7 +196,7 @@ already learnt what each of its elements means:
   them. 
 \end{itemize}
 
-\subsection{Liberating your main method from static restrictions}
+\subsection*{Liberating your main method from static restrictions}
 \label{sec:liber-your-launch}
 
 As static code does not understand anything about instance
@@ -462,8 +462,14 @@ modified class \verb+Patient+:
         private int age;
         private String illness;
         Patient nextPatient;
-        // methods like constructors, getters 
-        //   and setters come here...
+
+        public Patient(String name, int age, String illness) {
+            this.name = name;
+            this.age = age;
+            this.illness = illness;
+            this.nextPatient = null;
+        }
+        //  other methods come here...
     }
 \end{verbatim}
 
@@ -498,16 +504,26 @@ The list of patients is initialised in the main program with a first
 patient. 
 
 \begin{verbatim}
-    Patient patientListStart = null;
-    // ...
-    Patient firstPatient = new Patient("John", 33, "Tuberculosis");
-    patientListStart = firstPatient;
+    public class HospitalManager {
+        Patient patientListStart = null;
+
+        public static void main(String[] args) {
+            // ...
+            Patient firstPatient = new Patient("John", 33, "Tuberculosis");
+            patientListStart = firstPatient;
+            // ...
+        }
+        // ...
+    }
 \end{verbatim}
 
 \begin{figure}[bthp]
   \centering
-  
-  \caption{After adding the first patient to the list, the initial pointer points to it}
+  \includegraphics[width=\textwidth]{gfx/lists-init}  
+  \caption{In order to initialise the list, we create a Patient and
+    point the initial pointer (patientListStart) to it. At the end of
+    the method, the pointer firstPatient is forgotten but the list
+    remains linked from patientListStart.}
   \label{fig:jkhsdfj}
 \end{figure}
 
@@ -524,7 +540,9 @@ method \verb+addPatient(Patient)+ at any point.
 Patients can also be removed easily from the list. The program must be
 careful not to leave any pointers loose to prevent information
 loss. For example, a method to remove patients by name would look like
-this: 
+this (see also
+Figures~\ref{fig:deletelinklist},~\ref{fig:deletelinklist2},
+and~\ref{fig:deletelinklist3}):
 
 \begin{verbatim}
     // this is a member method of class Patient
@@ -546,13 +564,46 @@ this:
 
 \begin{figure}[bthp]
   \centering
-  
-  \caption{To delete an element from the list of patients, we link the
-    former patient to the following patient. The deleted patient's
-    memory will be collected automatically by Java's garbage
-    collector.}
+  \includegraphics[width=\textwidth]{gfx/lists-remove-1}    
+  \caption{Deletion of elements in a linked list, step one: finding
+    the element we want to delete. Suppose that we want to delete the
+    second elements in the list. In order to delete it from the list
+    of patients, we must link the 
+    former patient to the following patient.(For simplicity, only the
+    nextPatient field is shown in the Patient objects.)}
   \label{fig:deletelinklist}
 \end{figure}
+
+\begin{figure}[bthp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/lists-remove-2}    
+  \caption{Deletion of elements in a linked list, step two: linking
+    the former patient to the following patient. (For simplicity, only
+    the nextPatient field is shown in the Patient objects.)}
+  \label{fig:deletelinklist2}
+\end{figure}
+
+\begin{figure}[bthp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/lists-remove-3}    
+  \caption{Deletion of elements in a linked list, step three: 
+    The deleted patient's memory will be collected automatically by
+    Java's garbage collector. The memory is then free to be used by
+    other objects.}
+  \label{fig:deletelinklist3}
+\end{figure}
+
+When we delete an element from a dynamic linked list, it is left
+``hanging around'' without any pointer that links to it. This will be
+detected automatically by Java and the object will be destroyed in a
+process called \emph{garbage collection}. The memory freed in this
+process can then be used to create other objects in the heap. We will
+learn more about how garbage collection works in the future. % TODO:
+                                % write this. 
+
+
+
+
 
 %%% Local Variables:
 %%% mode: latex
