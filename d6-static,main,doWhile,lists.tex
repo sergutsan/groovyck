@@ -1,4 +1,8 @@
-% TODO: We need to explain JARS
+% TODO FOR NEXT YEAR
+% - TODO: PPT-based videos that show how lists/queues/stacks work
+% (transitions with smoothing effects like dissolve or 
+% venetian blinds so that things) -> probably also needed all along
+% the way since we start talking about simple and complex types. 
 
 \section{Static data}
 \label{sec:static-data}
@@ -188,7 +192,9 @@ content of the objects.
   \centering
   \includegraphics[width=\textwidth]{gfx/variables-string-equals}
   \caption{The operator ``=='' compares simple types. When used to
-    compare complex types, it compares just the pointers.} 
+    compare complex types, it compares just the pointers. Strings str1
+  and str2 have the same content but their pointers are different,
+  i.e.~they point to different memory addresses.} 
   \label{fig:equals}
 \end{figure}
 
@@ -264,7 +270,161 @@ there were in total, how many were distinctions (70--100), how many
 were passes (50--69), how many failed (0--49), and how many were
 invalid (e.g. 150 or -3). Use \texttt{readLine()} exactly once.
 
+\section{Beyond arrays: lists, stacks, queues}
+\label{sec:beyond-arrays:-lists}
 
+We have seen what to do when we want to store a lot of data of the
+same type: we create an array, and then store all elements
+side-by-side in memory. Arrays are convenient because they store a lot
+of information of the same type without 
+the need to use a lot of variables. Their main disadvantage is that we
+need to now the lenght of the array in advance and it cannot be
+changed afterwards. 
+
+Most application in the real world, however, do not know in advance
+how much data they will need: a hospital does not know how many
+patient records it will need every day, a car manufacturer does not
+know in advance how many employees it will have or how many cars it
+will be producing at the same time. Even if they knew, these
+desired characteristics of the program ---called
+\emph{requirements}--- may change over the life of the program, e.g.~:
+maybe the hospital knows it only has ninety beds, but five years later
+they receive funding from the Government to extend to another building
+and duplicate their capacity. A real program needs to be able to
+handle arbitrary amounts of data. 
+
+This is done by means of dynamic data structures. The most basic
+examples are lists. Stacks and queues are special types of lists. 
+
+\subsection{Lists}
+\label{sec:lists}
+
+Dynamic lists are composed of a sequence of complex types in memory,
+linked by their pointers. In other words, every element in a dynamic
+list contains one element of information of a certain type (which may
+be complex) and a pointer to the next element. Let's use the hospital
+above to see an example. For the sake of simplicity, we can assume
+that the hospital only stores three pieces of data about each patient:
+name, age, and illness. The file \verb+Patient.java+ may be similar to:
+
+\begin{verbatim}
+    public class Patient {
+        private String name;
+        private int age;
+        private String illness;
+        // methods like constructors, getters 
+        //   and setters come here...
+    }
+\end{verbatim}
+
+And the hospital program (a different file to \verb+Patient.java+)
+could have an array of patients:  
+
+\begin{verbatim}
+    Patient[] patientArray = new Patient[90];
+\end{verbatim}
+
+But, as we already know, this is limited because the hospital may have
+more than 90 patients. We can overcome this limitation by using a
+linked list. Our list will be composed of objects of a slightly
+modified class \verb+Patient+:
+
+\begin{verbatim}
+    public class Patient {
+        private String name;
+        private int age;
+        private String illness;
+        Patient nextPatient;
+        // methods like constructors, getters 
+        //   and setters come here...
+    }
+\end{verbatim}
+
+The only difference is the pointer to another \verb+Patient+. A linked
+list of patients is nothing more than a sequence of patients in which
+each patient links to the next one, and the last one 
+points to \verb+null+. The beginning of the list will
+appear in your main program and probably be initialised in the
+\verb+launch()+ method, while new patients can be added to the list by
+using the following method: 
+
+\begin{verbatim}
+    // this is a member method of class Patient
+    public void addPatient(Patient newPatient) {
+        if (this.nextPatient == null) {
+            // this means this is the last patient in the list
+            this.nextPatient = newPatient;
+        } else {
+            this.nextPatient.addPatient(newPatient);
+        }
+    }            
+\end{verbatim}
+
+The method \verb+addPatient(Patient)+ is very simple. It goes through
+the whole list of patients checking whether the current patient is the
+last one in the list (\emph{this.nextPatient == null}). 
+If it is, it adds the last patient at the
+end; if it is not, it moves to the next patient and tries 
+again (\emph{this.nextPatient.addPatient(newPatient)}). 
+
+The list of patients is initialised in the main program with a first
+patient. 
+
+\begin{verbatim}
+    Patient patientListStart = null;
+    // ...
+    Patient firstPatient = new Patient("John", 33, "Tuberculosis");
+    patientListStart = firstPatient;
+\end{verbatim}
+
+\begin{figure}[bthp]
+  \centering
+  
+  \caption{After adding the first patient to the list, the initial pointer points to it}
+  \label{fig:jkhsdfj}
+\end{figure}
+
+From then on, new patients can be added by calling the
+method \verb+addPatient(Patient)+ at any point. 
+
+\begin{verbatim}
+    Patient yetAnotherPatient = new Patient("Mary", 66, "Meningitis");
+    patientListStart.addPatient(yetAnotherPatient);
+\end{verbatim}
+
+%% TODO: a ppt video about this? an activity in the class?
+
+Patients can also be removed easily from the list. The program must be
+careful not to leave any pointers loose to prevent information
+loss. For example, a method to remove patients by name would look like
+this: 
+
+\begin{verbatim}
+    // this is a member method of class Patient
+    // returns true if the patient was found and removed, false otherwise
+    public boolean deletePatient(Patient patient) {
+        if (this.nextPatient == null) {
+            // patient to remove was not found
+            return false;
+        } else if (this.nextPatient.name.equals(patient.name)) {
+            // We found it! It is the next one!
+            // Now link this patient to the one after the next 
+            this.nextPatient = nextPatient.nextPatient;
+        } else {
+            return this.nextPatient.deletePatient(patient);
+        }
+    }    
+\end{verbatim}
+
+\begin{figure}[bthp]
+  \centering
+  
+  \caption{To delete an element from the list of patients, we link the
+    former patient to the following patient. The deleted patient's
+    memory will be collected automatically by Java's garbage
+    collector.}
+  \label{fig:deletelinklist}
+\end{figure}
 
 %%% Local Variables:
 %%% mode: latex
