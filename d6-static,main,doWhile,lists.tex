@@ -89,8 +89,8 @@ a class have been created, as in the example:
     }
 \end{verbatim}
 
-Every time the constructor of \verb+Spy+ is called the counter
-\verb+spyCount+ is
+Every time the constructor of \verb+Spy+ is called (using \verb+new+) 
+the counter \verb+spyCount+ is
 increased; we could also think of a \verb+die()+ method that reduces
 the counter. In any case, it is rarely necessary to keep a count of
 objects of a class, and therefore static variables are seldom used
@@ -155,9 +155,9 @@ were their own entry point. We only needed to
 write \verb+groovy myScript.groovy+ and Groovy would
 start the execution. The situation is slightly more complex in Java
 because all files are classes, not scripts. We need to have an entry
-point, a place in the code where Java knows the execution of the
+point, a place in the code where Java knows that the execution of the
 program can start. This entry point is the \verb+main+ method. The
-main method is a normal method of a class, and every class can have
+main method is a method like any other, and every class can have
 one. It looks like this:
 
 \begin{verbatim}
@@ -189,7 +189,8 @@ already learnt what each of its elements means:
   (short for arguments). Actually the name is not important. The
   elements in the array are the parameters passed in the command line,
   if any. For example, if you run a program with a line like
-  \verb+java myClass www.google.com 80 true+, the first element
+  \verb+java myClass+ \verb+www.google.com+ \verb+80+ \verb+true+, 
+  the first element
   (i.e.~args[0]) of \verb+args+ will be ``www.google.com'', the second
   element will be ``80'', and the third one will be ``true''. If you
   want to use these parameters with a different type you need to parse
@@ -201,7 +202,7 @@ already learnt what each of its elements means:
 
 As static code does not understand anything about instance
 (i.e.~non-static) methods or data, you will not be able to use your
-instance data from your main method. This seems restricting at first,
+instance data in your main method. This seems restricting at first,
 as in the following example: imagine that we want to start a program
 from a BitTorrentDownloader class, and we want to give the name of the
 host and the port from the command line
@@ -243,12 +244,12 @@ idea in the long run. Maybe in a future version you will like several
 BitTorrentDownloaders working in parallel, or maybe you would to
 launch many at the same time and put them in a queue. All of this
 would be impossible if the fields were static. Remember: \verb+static+
-means ``only one per class'', and programmer usually like to have as
+means ``only one per class'', and programmers usually like to have as
 many as possible of everything, just in case. As a rule of thumb,
 \textbf{never make anything ``static'' unless it is absolutely necessary}.
 
 There is another (much better) solution: to instantiate the class
-inside it main method, and then run all the code from a non-static
+inside its own main method, and then run all the code from a non-static
 launching method. This method is commonly called \verb+run()+ or
 \verb+launch()+. See the example: 
 
@@ -277,10 +278,18 @@ launching method. This method is commonly called \verb+run()+ or
     }
 \end{verbatim}
 
+As you can see the main method is very simple and has only three
+parts: parameter analysis, creation of the main structures, and
+starting the execution of the program. It is a good idea to follow
+this structure in every main method. This will keep your main methods
+simple and to the point. If you notice that your main methods are
+getting longer than a few lines, make a pause, take a deep breath, and
+think things through again. 
+
 \section{More differences between Groovy and Java}
 \label{sec:more-diff-betw}
 
-\subsection{String.equals != ==}
+\subsection{String.equals() != ==}
 \label{sec:string.equals-=-==}
 
 In Groovy we have become used to comparing String using ``==''. In
@@ -335,7 +344,7 @@ For some classes, the effect of \verb+.equals()+ is the same as
 ``=='', i.e.~it compares the pointers and not the content of the
 objects. This depends on the class and its semantics. For instance,
 we usually think that two Strings or two Integers (class, not simple
-type) are the same if they have the same content, but we do not think
+type) are the same if they have the same value, but we do not think
 of two \verb+Person+ to be same even if they have the same name. We
 will learn more about this when we learn about class inheritance but,
 for now, it suffices to say that objects should always be compared
@@ -353,9 +362,9 @@ at least once, like in this case:
 \begin{verbatim}
     System.out.println("Enter the names of your friends. Finish by typing END.");
     String name = System.console().readLine();
-    System.out.println(s + ": friend");
-    while (!s.equals("END")) {
-        System.out.println(s + ": friend";
+    System.out.println(name + ": friend");
+    while (!name.equals("END")) {
+        System.out.println(name + ": friend";
         name = System.console().readLine();
     }
 \end{verbatim}
@@ -408,7 +417,7 @@ the need to use a lot of variables. Their main disadvantage is that we
 need to now the lenght of the array in advance and it cannot be
 changed afterwards. 
 
-Most application in the real world, however, do not know in advance
+Most applications in the real world, however, do not know in advance
 how much data they will need: a hospital does not know how many
 patient records it will need every day, a car manufacturer does not
 know in advance how many employees it will have or how many cars it
@@ -420,7 +429,7 @@ they receive funding from the Government to extend to another building
 and duplicate their capacity. A real program needs to be able to
 handle arbitrary amounts of data. 
 
-This is done by means of dynamic data structures. The most basic
+This is done by means of \emph{dynamic} data structures. The most basic
 examples are lists. Stacks and queues are special types of lists. 
 
 \subsection{Lists}
@@ -461,7 +470,7 @@ modified class \verb+Patient+:
         private String name;
         private int age;
         private String illness;
-        Patient nextPatient;
+        private Patient nextPatient;
 
         public Patient(String name, int age, String illness) {
             this.name = name;
@@ -501,21 +510,21 @@ end; if it is not, it moves to the next patient and tries
 again (\emph{this.nextPatient.addPatient(newPatient)}). 
 
 The list of patients is initialised in the main program with a first
-patient. 
+patient, as shown in the code below (see also Figure~\ref{fig:jkhsdfj}):
 
 \begin{verbatim}
     public class HospitalManager {
-        Patient patientListStart = null;
+        private Patient patientListStart = null;
 
-        public static void main(String[] args) {
-            // ...
+            // ...inside some method, maybe launch()
             Patient firstPatient = new Patient("John", 33, "Tuberculosis");
             patientListStart = firstPatient;
             // ...
-        }
-        // ...
     }
 \end{verbatim}
+
+% TODO: put the full diagram (with the init of the list in the heap,
+% since it is in an object) as a end-of-book-note. 
 
 \begin{figure}[bthp]
   \centering
@@ -596,7 +605,8 @@ and~\ref{fig:deletelinklist3}):
 When we delete an element from a dynamic linked list, it is left
 ``hanging around'' without any pointer that links to it. This will be
 detected automatically by Java and the object will be destroyed in a
-process called \emph{garbage collection}. The memory freed in this
+process called \emph{garbage collection} 
+(Figure~\ref{fig:deletelinklist3}). The memory freed in this
 process can then be used to create other objects in the heap. We will
 learn more about how garbage collection works in the future. % TODO:
                                 % write this. 
