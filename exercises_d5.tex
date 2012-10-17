@@ -86,12 +86,13 @@ class should have methods for:
   the array as two 
   integers (not necessarily the same). All elements in the matrix
   should be initialised to 1. 
-\item a method \verb+setElement(int,int)+ to modify one element of the
-  array, given its position 
-  as two integers. The method must check that the indeces are valid
+\item a method \verb+setElement(int,int,int)+ to modify one element
+  of the array, given its position 
+  as two integers and the value to be put in that position. 
+  The method must check that the indeces are valid
   before modifying the array to avoid an
   \verb+IndexOutOfBoundsException+. If the indeces are invalid, the
-  method will do nothing. 
+  method will do nothing and the third argument will be ignored.
 \item a method \verb+setRow(int,String)+ that modifies one whole row
   of the array, given its position 
   as an integer and the list of numbers as a String like ``1,2,3''. 
@@ -111,7 +112,8 @@ class should have methods for:
   e.g. ``[1,2,3;4,5,6;3,2,1]''. 
 \item A method \verb+prettyPrint()+ that prints the values of the
   matrix on screen in a legible format. Hint: you can use the
-  special character '\t' to mark a tabulator so that all numbers are
+  special character '\textbackslash t' (backslash-t) 
+  to mark a tabulator so that all numbers are
   placed in the same column regardless of their size. You can think of
   a tabulator character as a move-to-the-next-column command when
   printing on the screen. 
@@ -169,7 +171,7 @@ the \verb+enum+ must be \verb+public+.
 Then create a Java class \verb+Target+ with the following methods: 
 
 \begin{itemize}
-\item A constructor method \verb+Result(int)+ that creates a 3-D array 
+\item A constructor method \verb+Target(int)+ that creates a 3-D array 
   of integers of the
   proposed size in all three dimensions. All elements must be set to
   zero.
