@@ -121,7 +121,7 @@ only my own fault.
 %     beware of what happens with complex types! Many exercises
 %     about this!
 %       Update: 
-% \item Optional? Basics of regular expressions
+% \item Optional? Basics of regular expressions -> Update: no! Too much.
 %     Maybe better access levels first, regular expressions later
 %     Definitely!
 %     Update: they are having trouble with moving pointers and copying
@@ -154,6 +154,7 @@ only my own fault.
 %   exercise: enter a matrix and say if it is simmetrical
 %   exercise: hundir la flota
 %             y luego hundir la flota pintando en la pantalla
+%   - Update: sometimes Groovy cannot use Java classes. Investigate. TODO
 % 
 % ASSIGNMENT: class Library (and class Book, and class User): enter
 %    new books, enter new Users, take books (max 3 per user), return
@@ -182,12 +183,13 @@ only my own fault.
 %                 do..while
 %                 sorting algorithms (for exercises)
 \input{d6-static,main,doWhile,lists}
-% \item day 7: More on data structures: queues and stacks, iterators,
-%              for-each loops
-%            (creating) JavaDoc: document inputs, output, and rationale 
+% \item day 7: More on data structures: queues and stacks, interfaces,
+%              iterators, for-each loops
+%              basics of memory allocation, gargage collection, 
+\input{d7-queue-stack-interface-iterator-for-each}
 % \item day 8: More on data structures: trees and maps; binary and
 %      non-binary trees, sets
-%         memory allocation, gargage collection, 
+%         (creating) JavaDoc: document inputs, output, and rationale 
 %         OPTIONAL/TOO MUCH/NEXT YEAR: memory leaks (profiling?)
 %    \item ASSIGNMENT: read XML (I provide the class) and re-create the tree
 %    structure up to a point THIS IS NOT WELL DEFINED!
@@ -202,13 +204,20 @@ only my own fault.
 
 
 % Day 9,10: Testing (...whether they have learnt anything yet)
-% \item Software testing and testing-driven development
-%       Show them the tests that test whether their versions work the
-%       same as the versions of the Java library.
+% Day 9:
+% \item Introduction to the Java Collections library
+% \item Introduce "final"
+% \item Software testing 
+%       Show them the tests that test 
+%         whether their versions work the
+%         same as the versions of the Java library.
 % \item Introduce final
 % IMPORTANT: HOW DO YOU RUN TESTS WITHOUT ECLIPSE (from cmd)!!
+%    Easy: compile: javac -cp /.../junit.jar TestClass.java
+%          run:     java  -cp
+%          /.../junit.jar:. org.junit.runner.JUnitCore TestClass
+% 
 % \item Ultra-brief introduction to annotations in Java
-% \item JavaDoc: document inputs, output, and rationale
 % \item Do not confuse annotations with JavaDoc!! @throws, etc
 % \item Annotations to cover:
 %     @Test
@@ -220,6 +229,11 @@ only my own fault.
 %     @SuppressWarnings
 %     @Deprecated
 % 
+% Day 10:
+% \item Test-driven development
+%       Show them the tests that test whether their versions work the
+%       same as the versions of the Java library.
+%
 %  Optional (D10):
 %  Notes on optimization (use Kernigahn & Pike): 
 %    - Early optimization: wrong
@@ -276,7 +290,7 @@ only my own fault.
 % \item Concurrent programming
 
 % Day 19,20: Network programming (which means more I/O)
-% \item OBSOLETE: Network programming
+% \item OBSOLETE: Network programming: TCP, UDP
 % \item Web services
 % \item ASSIGNMENT: chat program
 % 
@@ -288,6 +302,7 @@ only my own fault.
 % - Basics of the JVM vs. other compiled languages
 % - Composition over extension
 % - JAR files: how to create one, how to use it from the cmd line
+% - Garbage collection, memory leaks, profiling... is this Tools' material?
 
 \appendix
 
