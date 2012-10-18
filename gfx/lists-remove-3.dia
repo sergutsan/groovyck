@@ -65,112 +65,6 @@
   <dia:layer name="Background" visible="true" active="true">
     <dia:object type="Standard - Box" version="0" id="O0">
       <dia:attribute name="obj_pos">
-        <dia:point val="1,2"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="0.95,1.95;13.05,15.05"/>
-      </dia:attribute>
-      <dia:attribute name="elem_corner">
-        <dia:point val="1,2"/>
-      </dia:attribute>
-      <dia:attribute name="elem_width">
-        <dia:real val="12"/>
-      </dia:attribute>
-      <dia:attribute name="elem_height">
-        <dia:real val="13"/>
-      </dia:attribute>
-      <dia:attribute name="show_background">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Standard - Box" version="0" id="O1">
-      <dia:attribute name="obj_pos">
-        <dia:point val="15,2"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.95,1.95;43.05,15.05"/>
-      </dia:attribute>
-      <dia:attribute name="elem_corner">
-        <dia:point val="15,2"/>
-      </dia:attribute>
-      <dia:attribute name="elem_width">
-        <dia:real val="28"/>
-      </dia:attribute>
-      <dia:attribute name="elem_height">
-        <dia:real val="13"/>
-      </dia:attribute>
-      <dia:attribute name="show_background">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O2">
-      <dia:attribute name="obj_pos">
-        <dia:point val="3,3"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="1.87625,2.58875;4.12375,3.41125"/>
-      </dia:attribute>
-      <dia:attribute name="text">
-        <dia:composite type="text">
-          <dia:attribute name="string">
-            <dia:string>#STACK#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="font">
-            <dia:font family="sans" style="0" name="Helvetica"/>
-          </dia:attribute>
-          <dia:attribute name="height">
-            <dia:real val="0.88194444958442531"/>
-          </dia:attribute>
-          <dia:attribute name="pos">
-            <dia:point val="3,3.24375"/>
-          </dia:attribute>
-          <dia:attribute name="color">
-            <dia:color val="#000000"/>
-          </dia:attribute>
-          <dia:attribute name="alignment">
-            <dia:enum val="1"/>
-          </dia:attribute>
-        </dia:composite>
-      </dia:attribute>
-      <dia:attribute name="valign">
-        <dia:enum val="2"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O3">
-      <dia:attribute name="obj_pos">
-        <dia:point val="17,3"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="16.0587,2.58875;17.9413,3.41125"/>
-      </dia:attribute>
-      <dia:attribute name="text">
-        <dia:composite type="text">
-          <dia:attribute name="string">
-            <dia:string>#HEAP#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="font">
-            <dia:font family="sans" style="0" name="Helvetica"/>
-          </dia:attribute>
-          <dia:attribute name="height">
-            <dia:real val="0.88194444958442531"/>
-          </dia:attribute>
-          <dia:attribute name="pos">
-            <dia:point val="17,3.24375"/>
-          </dia:attribute>
-          <dia:attribute name="color">
-            <dia:color val="#000000"/>
-          </dia:attribute>
-          <dia:attribute name="alignment">
-            <dia:enum val="1"/>
-          </dia:attribute>
-        </dia:composite>
-      </dia:attribute>
-      <dia:attribute name="valign">
-        <dia:enum val="2"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Standard - Box" version="0" id="O4">
-      <dia:attribute name="obj_pos">
         <dia:point val="2,10"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
@@ -189,7 +83,7 @@
         <dia:boolean val="true"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Standard - Box" version="0" id="O5">
+    <dia:object type="Standard - Box" version="0" id="O1">
       <dia:attribute name="obj_pos">
         <dia:point val="2,9"/>
       </dia:attribute>
@@ -209,7 +103,7 @@
         <dia:boolean val="true"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Standard - Box" version="0" id="O6">
+    <dia:object type="Standard - Box" version="0" id="O2">
       <dia:attribute name="obj_pos">
         <dia:point val="6,9"/>
       </dia:attribute>
@@ -229,12 +123,12 @@
         <dia:boolean val="true"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O7">
+    <dia:object type="Standard - Text" version="1" id="O3">
       <dia:attribute name="obj_pos">
         <dia:point val="3.5,9.5"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.27125,9.05791;4.74931,9.94209"/>
+        <dia:rectangle val="2.27125,9.08875;4.72875,9.91125"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -248,7 +142,7 @@
             <dia:real val="0.88194444958442531"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="3.5,9.73347"/>
+            <dia:point val="3.5,9.74375"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -262,10 +156,10 @@
         <dia:enum val="2"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O5" connection="8"/>
+        <dia:connection handle="0" to="O1" connection="8"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O8">
+    <dia:object type="Standard - Text" version="1" id="O4">
       <dia:attribute name="obj_pos">
         <dia:point val="9,9.5"/>
       </dia:attribute>
@@ -298,10 +192,10 @@
         <dia:enum val="2"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O6" connection="8"/>
+        <dia:connection handle="0" to="O2" connection="8"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Standard - Arc" version="0" id="O9">
+    <dia:object type="Standard - Arc" version="0" id="O5">
       <dia:attribute name="obj_pos">
         <dia:point val="6,11"/>
       </dia:attribute>
@@ -337,11 +231,11 @@
         <dia:real val="0.5"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="1" to="O16" connection="3"/>
+        <dia:connection handle="1" to="O12" connection="3"/>
       </dia:connections>
     </dia:object>
     <dia:group>
-      <dia:object type="Standard - Box" version="0" id="O10">
+      <dia:object type="Standard - Box" version="0" id="O6">
         <dia:attribute name="obj_pos">
           <dia:point val="31,3"/>
         </dia:attribute>
@@ -361,7 +255,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O11">
+      <dia:object type="Standard - Box" version="0" id="O7">
         <dia:attribute name="obj_pos">
           <dia:point val="32,5"/>
         </dia:attribute>
@@ -381,7 +275,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O12">
+      <dia:object type="Standard - Box" version="0" id="O8">
         <dia:attribute name="obj_pos">
           <dia:point val="32,4"/>
         </dia:attribute>
@@ -401,7 +295,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O13">
+      <dia:object type="Standard - Box" version="0" id="O9">
         <dia:attribute name="obj_pos">
           <dia:point val="36,4"/>
         </dia:attribute>
@@ -421,7 +315,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Text" version="1" id="O14">
+      <dia:object type="Standard - Text" version="1" id="O10">
         <dia:attribute name="obj_pos">
           <dia:point val="33.5,4.5"/>
         </dia:attribute>
@@ -454,10 +348,10 @@
           <dia:enum val="2"/>
         </dia:attribute>
         <dia:connections>
-          <dia:connection handle="0" to="O12" connection="8"/>
+          <dia:connection handle="0" to="O8" connection="8"/>
         </dia:connections>
       </dia:object>
-      <dia:object type="Standard - Text" version="1" id="O15">
+      <dia:object type="Standard - Text" version="1" id="O11">
         <dia:attribute name="obj_pos">
           <dia:point val="38.5,4.5"/>
         </dia:attribute>
@@ -490,12 +384,12 @@
           <dia:enum val="2"/>
         </dia:attribute>
         <dia:connections>
-          <dia:connection handle="0" to="O13" connection="8"/>
+          <dia:connection handle="0" to="O9" connection="8"/>
         </dia:connections>
       </dia:object>
     </dia:group>
     <dia:group>
-      <dia:object type="Standard - Box" version="0" id="O16">
+      <dia:object type="Standard - Box" version="0" id="O12">
         <dia:attribute name="obj_pos">
           <dia:point val="17,9"/>
         </dia:attribute>
@@ -515,7 +409,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O17">
+      <dia:object type="Standard - Box" version="0" id="O13">
         <dia:attribute name="obj_pos">
           <dia:point val="18,11"/>
         </dia:attribute>
@@ -535,7 +429,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O18">
+      <dia:object type="Standard - Box" version="0" id="O14">
         <dia:attribute name="obj_pos">
           <dia:point val="18,10"/>
         </dia:attribute>
@@ -555,7 +449,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O19">
+      <dia:object type="Standard - Box" version="0" id="O15">
         <dia:attribute name="obj_pos">
           <dia:point val="22,10"/>
         </dia:attribute>
@@ -575,7 +469,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Text" version="1" id="O20">
+      <dia:object type="Standard - Text" version="1" id="O16">
         <dia:attribute name="obj_pos">
           <dia:point val="19.5,10.5"/>
         </dia:attribute>
@@ -608,10 +502,10 @@
           <dia:enum val="2"/>
         </dia:attribute>
         <dia:connections>
-          <dia:connection handle="0" to="O18" connection="8"/>
+          <dia:connection handle="0" to="O14" connection="8"/>
         </dia:connections>
       </dia:object>
-      <dia:object type="Standard - Text" version="1" id="O21">
+      <dia:object type="Standard - Text" version="1" id="O17">
         <dia:attribute name="obj_pos">
           <dia:point val="24.5,10.5"/>
         </dia:attribute>
@@ -644,12 +538,12 @@
           <dia:enum val="2"/>
         </dia:attribute>
         <dia:connections>
-          <dia:connection handle="0" to="O19" connection="8"/>
+          <dia:connection handle="0" to="O15" connection="8"/>
         </dia:connections>
       </dia:object>
     </dia:group>
     <dia:group>
-      <dia:object type="Standard - Box" version="0" id="O22">
+      <dia:object type="Standard - Box" version="0" id="O18">
         <dia:attribute name="obj_pos">
           <dia:point val="31,9"/>
         </dia:attribute>
@@ -669,7 +563,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O23">
+      <dia:object type="Standard - Box" version="0" id="O19">
         <dia:attribute name="obj_pos">
           <dia:point val="32,11"/>
         </dia:attribute>
@@ -689,7 +583,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O24">
+      <dia:object type="Standard - Box" version="0" id="O20">
         <dia:attribute name="obj_pos">
           <dia:point val="32,10"/>
         </dia:attribute>
@@ -709,7 +603,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Box" version="0" id="O25">
+      <dia:object type="Standard - Box" version="0" id="O21">
         <dia:attribute name="obj_pos">
           <dia:point val="36,10"/>
         </dia:attribute>
@@ -729,7 +623,7 @@
           <dia:boolean val="true"/>
         </dia:attribute>
       </dia:object>
-      <dia:object type="Standard - Text" version="1" id="O26">
+      <dia:object type="Standard - Text" version="1" id="O22">
         <dia:attribute name="obj_pos">
           <dia:point val="33.5,10.5"/>
         </dia:attribute>
@@ -762,10 +656,10 @@
           <dia:enum val="2"/>
         </dia:attribute>
         <dia:connections>
-          <dia:connection handle="0" to="O24" connection="8"/>
+          <dia:connection handle="0" to="O20" connection="8"/>
         </dia:connections>
       </dia:object>
-      <dia:object type="Standard - Text" version="1" id="O27">
+      <dia:object type="Standard - Text" version="1" id="O23">
         <dia:attribute name="obj_pos">
           <dia:point val="38.5,10.5"/>
         </dia:attribute>
@@ -798,11 +692,11 @@
           <dia:enum val="2"/>
         </dia:attribute>
         <dia:connections>
-          <dia:connection handle="0" to="O25" connection="8"/>
+          <dia:connection handle="0" to="O21" connection="8"/>
         </dia:connections>
       </dia:object>
     </dia:group>
-    <dia:object type="Standard - Arc" version="0" id="O28">
+    <dia:object type="Standard - Arc" version="0" id="O24">
       <dia:attribute name="obj_pos">
         <dia:point val="21,12"/>
       </dia:attribute>
@@ -838,10 +732,10 @@
         <dia:real val="0.5"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="1" to="O10" connection="3"/>
+        <dia:connection handle="1" to="O6" connection="3"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Standard - Arc" version="0" id="O29">
+    <dia:object type="Standard - Arc" version="0" id="O25">
       <dia:attribute name="obj_pos">
         <dia:point val="39,6"/>
       </dia:attribute>
@@ -877,10 +771,10 @@
         <dia:real val="0.5"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="1" to="O22" connection="4"/>
+        <dia:connection handle="1" to="O18" connection="4"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Standard - Arc" version="0" id="O30">
+    <dia:object type="Standard - Arc" version="0" id="O26">
       <dia:attribute name="obj_pos">
         <dia:point val="37.2207,12.1361"/>
       </dia:attribute>
