@@ -395,6 +395,14 @@ program, think twice about a better way of doing things, without
 repetition. Remember the DRY principle: \textbf{Don't Repeat
   Yourself}. Keep it in mind at all times.
 
+%
+%
+% TODO: provide rules of thumb of when to use do...while and
+%       when to use while and when to use for
+%
+%
+%
+%
 
 \subsubsection*{Exercise}
 
@@ -516,10 +524,16 @@ patient, as shown in the code below (see also Figure~\ref{fig:jkhsdfj}):
     public class HospitalManager {
         private Patient patientListStart = null;
 
-            // ...inside some method, maybe launch()
+        public static void main(String[] args) {
+           // ...
+           HospitalManager hm = new HospitalManager();
+           // ...
+        }
+
+        // ...inside some method, maybe launch()
             Patient firstPatient = new Patient("John", 33, "Tuberculosis");
             patientListStart = firstPatient;
-            // ...
+        // ...
     }
 \end{verbatim}
 
@@ -528,7 +542,7 @@ patient, as shown in the code below (see also Figure~\ref{fig:jkhsdfj}):
 
 \begin{figure}[bthp]
   \centering
-  \includegraphics[width=\textwidth]{gfx/lists-init}  
+  \includegraphics[width=\textwidth]{gfx/lists-init-full}  
   \caption{In order to initialise the list, we create a Patient and
     point the initial pointer (patientListStart) to it. At the end of
     the method, the pointer firstPatient is forgotten but the list
@@ -578,8 +592,8 @@ and~\ref{fig:deletelinklist3}):
     the element we want to delete. Suppose that we want to delete the
     second elements in the list. In order to delete it from the list
     of patients, we must link the 
-    former patient to the following patient.(For simplicity, only the
-    nextPatient field is shown in the Patient objects.)}
+    former patient to the following patient. 
+    (Note: simplified diagram.)}
   \label{fig:deletelinklist}
 \end{figure}
 
@@ -587,8 +601,8 @@ and~\ref{fig:deletelinklist3}):
   \centering
   \includegraphics[width=14cm]{gfx/lists-remove-2}    
   \caption{Deletion of elements in a linked list, step two: linking
-    the former patient to the following patient. (For simplicity, only
-    the nextPatient field is shown in the Patient objects.)}
+    the former patient to the following patient. 
+    (Note: simplified diagram.)}
   \label{fig:deletelinklist2}
 \end{figure}
 
@@ -598,7 +612,8 @@ and~\ref{fig:deletelinklist3}):
   \caption{Deletion of elements in a linked list, step three: 
     The deleted patient's memory will be collected automatically by
     Java's garbage collector. The memory is then free to be used by
-    other objects.}
+    other objects.
+    (Note: simplified diagram.)}
   \label{fig:deletelinklist3}
 \end{figure}
 
