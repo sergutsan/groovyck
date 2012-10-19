@@ -128,8 +128,10 @@ Sokratis Karkalas. Do not forget to put your name in all the pages.
     film1.title = "Prometheus";
     Film film2 = new Film();
     film2.title = "Twilight";
-    println film1.reviewer + " reviewers have given " + film1.title + " an average rating of " + film1.getRating() + " stars.";
-    println film2.reviewer + " reviewers have given " + film2.title + " an average rating of " + film2.getRating() + " stars.";
+    print film1.reviewer + " reviewers have given " + film1.title
+    println  " an average rating of " + film1.getRating() + " stars.";
+    print film2.reviewer + " reviewers have given " + film2.title
+    println  " an average rating of " + film2.getRating() + " stars.";
     // Point 2
     int stars = 5;
     rate(film1,stars);
@@ -144,8 +146,10 @@ Sokratis Karkalas. Do not forget to put your name in all the pages.
     rate(film2,stars);
     println "The value of star here is now: " + stars;
     // Point 3
-    println film1.reviewer + " reviewers have given " + film1.title + " an average rating of " + film1.rating + " stars.";
-    println film2.reviewer + " reviewers have given " + film2.title + " an average rating of " + film2.rating + " stars.";
+    print film1.reviewer + " reviewers have given " + film1.title
+    println " an average rating of " + film1.rating + " stars.";
+    print film2.reviewer + " reviewers have given " + film2.title
+    println " an average rating of " + film2.rating + " stars.";
     Film finalChoice = helpMeChoose(film1,film2);
     println "And we officially recommend: " + finalChoice.title;
     // Point 4

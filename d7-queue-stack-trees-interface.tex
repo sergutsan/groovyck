@@ -1,0 +1,62 @@
+
+\section{Interfaces}
+\label{sec:interfaces}
+
+Classes in Java have member fields and member methods. The fields are
+variables stored inside objects for that class, and contain
+information about the object. For example, they can represent the age
+of a person or the number of patients in a hospital. The set of all
+member fields of an object is usually called the \emph{state} of the
+object: they say how the object \emph{is} at the current moment. 
+
+On the other hand, methods (at least public ones) say what the object
+can do. For example, a person can say something or a hospital can take
+a new patient. The set of (public) methods of a class is usually
+called the \emph{behaviour} of the class. 
+
+The behaviour of a class is more important for a programmer than its
+state. The state is an implementation detail that can change without
+affecting its behaviour, and is usually not important for the task at
+hand: this is why fields should be \verb+private+ in most
+situations. If I want an object of type \verb+Person+ to say
+something, I do not really mind if the person internally uses some
+object of type \verb+VocalCord+, or some \verb+Vocoder+, or something
+else: I just want the method to do what it is supposed to do. I do not
+mind either if a future version of \verb+Person.say(String)+ is
+implemented internally in a different way or with different
+fields. Actually, it is quite common that the implementation changes
+over time (to make it faster, or to use less memory, or to fix bugs)
+so I should not worry about it; I should assume it will happen sooner
+or later. 
+
+This is why the behaviour of a class is more important than its
+state. There are two consequences of this. First, the state should
+always be private. Second, the behaviour must be easy to know and
+understand without the need to read the whole code of my class. This
+where interfaces come in. 
+
+An interface in Java is just a way of showing and explaining the
+behaviour of your class. An interface does not contain any information
+at all about the implementation or the state of your class. It only
+describes some (sometimes all) of the public methods of your
+class. Let's see an example: 
+
+\VerbatimInput[frame=single,label=Example]{src/Person.java}
+
+As you can see, the definition of an interface is very similar to the
+definition of a class, it is even defined in a java file. 
+The difference (and it is a big one!) is that
+there are no implementation details at all in the definition of the
+interface. It only declares the methods: their names, and their
+parameters. Every other detail about the class is left for the class
+to be defined. 
+
+Note that there is no need to say that the methods are public because
+methods defined on an interface are public by definition. 
+
+
+
+%              interfaces
+%              queues and stacks, 
+%              trees, binary and non-binary trees, 
+%              basics of memory allocation, gargage collection, 
