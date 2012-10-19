@@ -51,8 +51,97 @@ interface. It only declares the methods: their names, and their
 parameters. Every other detail about the class is left for the class
 to be defined. 
 
-Note that there is no need to say that the methods are public because
-methods defined on an interface are public by definition. 
+There are two more things you may have noticed: 
+
+\begin{itemize}
+\item There is no need to say that methods are \verb+public+
+  because methods defined on an interface are public by definition.
+\item We have introduce new kind of comments, that start with
+  \verb+/**+ and end with \verb+*/+ and can span several lines. These
+  are called \emph{long comments} and are useful to document your
+  code, especially methods, interfaces, and classes. The comments we
+  already knew about, that start with \verb+//+ and go to the end of
+  the line ---but not to the next line--- are called \emph{short
+    comments}. 
+\end{itemize}
+
+A class that implements all the methods defined on an interface can
+use the reserved keyword \verb+implements+ to mark it. This will tell
+the Java compiler that the class must have the method on the
+interface; if it does not, the compiler will complain with an error:
+\verb+class is+ \verb+not abstract and+ \verb+does not override+
+\verb+abstract method...+ 
+
+Let's see three examples of classes that implement \verb+Person+:
+
+\VerbatimInput[frame=single,label=Example]{src/AdultPerson.java}
+
+\VerbatimInput[frame=single,label=Example]{src/KidPerson.java}
+
+As you can see, both \verb+AdultPerson+ and \verb+KidPerson+ implement
+the interface \verb+Person+, but they do it in different ways: 
+
+\begin{itemize}
+\item \verb+AdultPerson+ uses a member field called \verb+situation+
+  while \verb+KidPerson+ uses a member field called
+  \verb+position+. This is usually a sign that both classes have been
+  coded by different programmers.
+\item \verb+KidPerson+ only prints part of the message when told to
+  say it.
+\item \verb+KidPerson+ moves slower than \verb+AdultPerson+. The
+  latter can move at two different speeds (\verb+run+ and
+  \verb+walk+), one of them using more 
+  energy than the other. \verb+KidPerson+ has unlimited energy. 
+\end{itemize}
+
+From the point of view of a programmer that want to use an object of
+type \verb+Person+, all these differences may be irrelevant and
+confusing. The programmer just wants an object that moves and says
+things. This is possible thanks to interfaces. Look at the following
+code: 
+
+\begin{verbatim}
+    Person son = new AdultPerson();
+    // move in front of mother
+    son.move(10);
+    // give the message
+    son.say("I love you, Mum.");
+\end{verbatim}
+
+This code will work exactly the same regardless of the specific class
+that is used as long as it
+implements the interface \verb+Person+. 
+
+\subsection*{Exercise}
+\label{sec:exercise}
+
+Implement a simple class that executes the former code in its main
+method. Change the class \verb+AdultPerson+ for \verb+KidPerson+ and
+verify that it still compiles and runs. 
+
+\section{Interfaces and data structures}
+\label{sec:interfaces-lists}
+
+Interfaces are very important in Java and in any modern
+object-oriented programming language. Interfaces allow programmers to
+\emph{hide the implementation} of their classes and expose only their
+behaviours. This is good because other programmers can use their
+classes with minimal effort: they only need to understand the
+behaviours, not the full code. This is called \emph{code reuse}, and
+saves a lot of effort to programmers (and money to their
+companies). You do not need to create a new \verb+String+ class every
+time you want to write text in your programs: you just use the
+\verb+String+ that comes with Java. And you do not need to understand
+the code of the class\footnote{The code of all classes in the basic
+  Java library is public. You can find it online. Java is free
+  software under the GPL license.}, you only need to understand its
+behaviour: what \verb+chatAt(int)+ does, what
+\verb+substring(int,int)+ does, etc. This makes your life much easier
+and is good. 
+
+We have seen how dynamic data structures make it possible to store
+unlimited amounts of data in a program (unlike arrays or discrete
+variables). 
 
 
 
@@ -60,3 +149,9 @@ methods defined on an interface are public by definition.
 %              queues and stacks, 
 %              trees, binary and non-binary trees, 
 %              basics of memory allocation, gargage collection, 
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

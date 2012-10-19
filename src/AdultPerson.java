@@ -7,7 +7,7 @@ public class AdultPerson implements Person {
     /**
      * Move a distance in a straight line, given in meters
      */
-    void move(int distance) {
+    public void move(int distance) {
 	  if (rightLeg.isHealthy() && leftLeg.isHealthy()) {
 		run(distance);
 	  } else {
@@ -29,7 +29,7 @@ public class AdultPerson implements Person {
 
     private void walk(int distance) {
         for (int i = 0; i < distance; i++) {
-		position++;
+		situation++;
 	  }		
     }
     
