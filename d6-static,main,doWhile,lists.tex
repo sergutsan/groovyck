@@ -3,6 +3,8 @@
 % (transitions with smoothing effects like dissolve or 
 % venetian blinds so that things) -> probably also needed all along
 % the way since we start talking about simple and complex types. 
+%
+% - TODO: check than in Java7 you can switch/case with Strings
 
 \section{Static data}
 \label{sec:static-data}
@@ -75,7 +77,7 @@ a class have been created, as in the example:
 
 \begin{verbatim}
     public class Spy {
-        private static spyCount = 0;
+        private static int spyCount = 0;
 
         public Spy(...) {
             spyCount++;
@@ -379,12 +381,17 @@ the \texttt{do\ldots while} loop:
 
 \begin{verbatim}
     System.out.println("Enter the names of your friends. Finish by typing END.");
+    String name;
     do {
-        String name = System.console().readLine();
+        name = System.console().readLine();
         System.out.println(name + ": friend");
     } while (!name.equals("END"));
 \end{verbatim}
 
+Note that you must declare the string \verb+name+ before the loop
+starts. Otherwise, you cannot make checks on it at the end of the loop
+because it would have been out of scope and forgotten by the
+computer. 
 
 Remember, repeated code is usually a bad sign: a symptom of poor
 design and/or poor programming. When you have the same code in two
