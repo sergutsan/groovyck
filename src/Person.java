@@ -9,7 +9,8 @@ public interface Person {
     void move(int distance);
 
     /**
-     * Say something. It may or may not be a perfect transcription.
+     * Say something, printing it on screen. 
+     * It may or may not be a perfect transcription.
      */
     void say(String message);
 }

@@ -16,14 +16,15 @@
 \label{sec:interfaces}
 
 Classes in Java have member fields and member methods. The fields are
-variables stored inside objects for that class, and contain
+variables stored inside objects of that class, and contain
 information about the object. For example, they can represent the age
 of a person or the number of patients in a hospital. The set of all
 member fields of an object is usually called the \emph{state} of the
-object: they say how the object \emph{is} at the current moment. 
+object: they describe how the object \emph{is} at the current moment. 
 
-On the other hand, methods (at least public ones) say what the object
-can do. For example, a person can say something or a hospital can take
+On the other hand, methods (at least public ones) describe what the
+object can do, not what it is. 
+For example, a person can say something or a hospital can take
 a new patient. The set of (public) methods of a class is usually
 called the \emph{behaviour} of the class. 
 
@@ -44,8 +45,9 @@ or later.
 
 This is why the behaviour of a class is more important than its
 state. There are two consequences of this. First, the state should
-always be private. Second, the behaviour must be easy to know and
-understand without the need to read the whole code of my class. This
+always be private (we knew that). 
+Second, the behaviour must be easy to know and
+understand without the need to read the whole code of a class. This
 where interfaces come in. 
 
 An interface in Java is just a way of showing and explaining the
@@ -69,8 +71,8 @@ There are two more things you may have noticed:
 \begin{itemize}
 \item There is no need to say that methods are \verb+public+
   because methods defined on an interface are public by definition.
-\item We have introduce new kind of comments, that start with
-  \verb+/**+ and end with \verb+*/+ and can span several lines. These
+\item We have introduce a new kind of comments, that start with
+  \verb+/**+, end with \verb+*/+ and can span several lines. These
   are called \emph{long comments} and are useful to document your
   code, especially methods, interfaces, and classes. The comments we
   already knew about, that start with \verb+//+ and go to the end of
@@ -80,7 +82,7 @@ There are two more things you may have noticed:
 
 A class that implements all the methods defined on an interface can
 use the reserved keyword \verb+implements+ to mark it. This will tell
-the Java compiler that the class must have the method on the
+the Java compiler that the class \textbf{must} have the methods on the
 interface; if it does not, the compiler will complain with an error:
 \verb+class is+ \verb+not abstract and+ \verb+does not override+
 \verb+abstract method...+ 
@@ -99,8 +101,8 @@ the interface \verb+Person+, but they do it in different ways:
   while \verb+KidPerson+ uses a member field called
   \verb+position+. This is usually a sign that both classes have been
   coded by different programmers.
-\item \verb+KidPerson+ only prints part of the message when told to
-  say it.
+\item \verb+KidPerson+ only prints part of the message when the method
+  \verb+say(String)+ is called.
 \item \verb+KidPerson+ moves slower than \verb+AdultPerson+. The
   latter can move at two different speeds (\verb+run+ and
   \verb+walk+), one of them using more 
@@ -110,8 +112,10 @@ the interface \verb+Person+, but they do it in different ways:
 From the point of view of a programmer that want to use an object of
 type \verb+Person+, all these differences may be irrelevant and
 confusing. The programmer just wants an object that moves and says
-things. This is possible thanks to interfaces. Look at the following
-code: 
+things. Thanks to the definition (and implementation) 
+of Java interfaces, it is perfectly possible to use
+objects without knowing their internal details.
+Look at the following code: 
 
 \begin{verbatim}
     Person son = new AdultPerson();
@@ -121,7 +125,8 @@ code:
     son.say("I love you, Mum.");
 \end{verbatim}
 
-This code will work exactly the same regardless of the specific class
+This code will work exactly the same with \verb+AdultPerson+ and
+\verb+KidPerson+. Actually, it will work regardless of the specific class
 that is used as long as it
 implements the interface \verb+Person+. 
 
@@ -150,33 +155,34 @@ time you want to write text in your programs: you just use the
 the code of the class\footnote{The code of all classes in the basic
   Java library is public. You can find it online. Java is free
   software under the GPL license.}, you only need to understand its
-behaviour: what \verb+chatAt(int)+ does, what
+behaviour: what \verb+charAt(int)+ does, what
 \verb+substring(int,int)+ does, etc. This makes your life much easier
 and is good. 
 
 We have seen how dynamic data structures make it possible to store
 unlimited amounts of data in a program (unlike arrays or discrete
 variables). Now we are going to see three more special examples of
-dynamic lists, and we will define them bu using interfaces. 
+dynamic lists, and we will define them by using interfaces. 
 
 \subsection{Stacks}
 \label{sec:stacks}
 
 We are all familiar with the concept of stacks. When we are putting
-books on a box, we usually pile them in stacks: one on top of the
-next one, so we can only see the last one we have put it, i.e.~the one
-on top. When we pile papers on a table we also create a stack. 
+books on a box, we usually pile them in stacks; each book is placed 
+on top of the
+next one, and we can only see the last book we have put, i.e.~the one
+on top. When we pile papers on a table we also create stacks. 
 
 Stacks are very important in computing, and are used in many different
 contexts. The method call stack that stores the variables for each
 method in a program is just one well-known example. Every time you
 call a method, you create a new level on the stack to store your
 variables; while you are in the method, you can only ``see'' the
-variables on your level; when you end the method, those variables are
+variables at the top level; when you end the method, those variables are
 forgotten and you see the variables on the former level (see
 Figure~\ref{fig:stackparameter}).  
 
-\begin{figure}[tbp]
+\begin{figure}[bthp]
   \centering
   \includegraphics[width=\textwidth]{gfx/parameter-stack}
   \caption{The parameter stack is an example of a stack
@@ -186,7 +192,7 @@ Figure~\ref{fig:stackparameter}).
     be accessed: they are on a different level of the stack, and only
     the most recent one is accessible. Note that if those variables
     were of complex types, their ``boxes'' would be pointers pointing
-    to objects in the heap.}
+    to objects in the heap. The arrow marks the current statement.}
   \label{fig:stackparameter}
 \end{figure}
 
@@ -208,7 +214,7 @@ defined by the following methods:
 Now have a 
 look at the accompanying Java files. 
 The first file (\verb+StringStack.java+) is the definition of an
-interface for a stack of string. The next 
+interface for a stack of strings. The next 
 one (\verb+ArrayStringStack.java+) is one possible
 implementation of this interface based on arrays. The other two files 
 (\verb+PointerStringStack.java+, \verb+StringStackNode.java+) are
@@ -217,7 +223,8 @@ implementation would you prefer to use? The answer is usually that you
 do not mind: \emph{as long as the implementation complies with the
   interface, all implementations are equivalent from your point of
   view}. You can check that both behave exactly the same, regardless
-of the number of string that you put on them or their order. You can
+of the number of strings that you \emph{push} on them or 
+the order in which you \emph{push} them. You can
 use the sample \verb+StringStackScript.java+ file provided or make
 your own test.
 
@@ -231,7 +238,7 @@ memory for each element, but sometimes it needs to duplicate the
 array, which is slow and uses a lot of memory. Is it more important to
 be faster or to use less memory? There is no
 general rule that applies to all cases, so a judgement call as a
-programmer is always needed. However, judgement is strenghtened though
+programmer is always needed. However, judgement is acquired though
 practice and experience, and it cannot be expected from a novice
 programmer. Therefore, for 
 now, it will suffice to know that the rule of thumb is: \emph{work
@@ -270,12 +277,13 @@ Queues are defined by the following interface:
 \end{description}
 
 It is common that queues provide a method \verb+getSize()+ that
-returns the current size of the queue. Sometimes a queue may provide a
-method
-\verb+getMaxSize()+ to return the maximum size possible. Queues may a
+returns the current size of the queue. 
+Some queues may have a
 maximum size\footnote{Strictly speaking, all queues are limited: even
   ``unbounded'' queues cannot be larger than the memory available on
-  the machine.} and other classes may want to know to prevent data
+  the machine.} and provide a 
+method \verb+getMaxSize()+ that returns the maximum size possible, so
+that other classes know in order to prevent data
 loss. For example, when you hear in the news that a website has
 suffered a Distributed Denial of Service attack (DDoS) that means that
 a lot of computers are issuing simultanenous requests to the same web
