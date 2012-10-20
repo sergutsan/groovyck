@@ -1,4 +1,4 @@
-% For Monfay: 
+% For Monday: 
 % - explain why pointers are important
 %  - this is the difference between good programmers and mediocre
 %    programmers
@@ -7,7 +7,7 @@
 %    - write code
 %    * self-learn
 %    
-
+% Plus an exercise of "human pointers" to implement a Stack
 
 \section{Interfaces}
 \label{sec:interfaces}
@@ -137,9 +137,11 @@ object-oriented programming language. Interfaces allow programmers to
 \emph{hide the implementation} of their classes and expose only their
 behaviours. This is good because other programmers can use their
 classes with minimal effort: they only need to understand the
-behaviours, not the full code. This is called \emph{code reuse}, and
+behaviours, not the full code. Using other programmers' classes (or
+your own between different projects) is called \emph{code reuse}, and
 saves a lot of effort to programmers (and money to their
-companies). You do not need to create a new \verb+String+ class every
+companies). For example, you do not need to 
+create a new \verb+String+ class every
 time you want to write text in your programs: you just use the
 \verb+String+ that comes with Java. And you do not need to understand
 the code of the class\footnote{The code of all classes in the basic
@@ -151,7 +153,49 @@ and is good.
 
 We have seen how dynamic data structures make it possible to store
 unlimited amounts of data in a program (unlike arrays or discrete
-variables). 
+variables). Now we are going to see three more special examples of
+dynamic lists, and we will define them bu using interfaces. 
+
+\subsection{Stacks}
+\label{sec:stacks}
+
+We are all familiar with the concept of stacks. When we are putting
+books on a box, we usually pile them in stacks: one on top of the
+next one, so we can only see the last one we have put it, i.e.~the one
+on top. When we pile papers on a table we also create a stack. 
+
+Stacks are very important in computing, and are used in many different
+contexts. The method call stack that stores the variables for each
+method in a program is just one well-known example. Every time you
+call a method, you create a new level on the stack to store your
+variables; while you are in the method, you can only ``see'' the
+variables on your level; when you end the method, those variables are
+forgotten and you see the variables on the former level (see
+Figure~\ref{fig:stackparameter}).  
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/parameter-stack}
+  \caption{The parameter stack is an example of a stack
+    structure. When method is called (add), a new level is put on the
+    stack to store the parameters and the local variables. While in
+    the method, the variables of the other method (a, b, sum) cannot
+    be accessed: they are on a different level of the stack, and only
+    the most recent one is accessible.}
+  \label{fig:stackparameter}
+\end{figure}
+
+In a stack, only the last level is accessible: all former levels are
+hidden until the last level is removed. This is why stacks are called
+LIFO structures: Last In, First Out. A Stack is defined by the
+following methods:  
+
+\begin{description}
+\item[push(...)] inserts an element at the beginning of the stack.
+\item[pop(...) ] remove an element from the \emph{beginning} of the stack.
+\item[empty(...) ] returns true if there are no elements on the stack,
+  false otherwise.
+\end{description}
 
 
 
