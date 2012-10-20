@@ -8,6 +8,9 @@
 %    * self-learn
 %    
 % Plus an exercise of "human pointers" to implement a Stack
+% 
+% At the beginning, repeat the stategy re: exercises: all do
+% non-stars, some do stars if you finish the non-stars
 
 \section{Interfaces}
 \label{sec:interfaces}
@@ -220,10 +223,15 @@ Sometimes you do mind: maybe one implementation is faster, or uses
 less memory, or provides additional methods that are useful for your
 program. For instance, the implementation of \verb+PointerStringStack+
 has a public method \verb+size()+ that the other implementation does
-not. Is this a good addition or an unnecessary burden? There is no
+not. Is this a good addition or an unnecessary burden? The array-based
+implementation is usually faster because it does not need to reserve
+memory for each element, but sometimes it needs to duplicate the
+array, which is slow and uses a lot of memory. Is it more important to
+be faster or to use less memory? There is no
 general rule that applies to all cases, so a judgement call as a
-programmer is always needed. Judgement is strenghtened though
-experience, and it cannot be expected from a novice programmer. For
+programmer is always needed. However, judgement is strenghtened though
+practice and experience, and it cannot be expected from a novice
+programmer. Therefore, for 
 now, it will suffice to know that the rule of thumb is: \emph{work
   with interfaces, not implementations; if the class complies with the
   interface, it is good enough}. You have an example in
@@ -240,7 +248,28 @@ same idea as the queues at the airport or at the supermarket.
 
 The same as stacks, queues are very popular data structures that you
 can find everywhere in computing: your wi-fi connection has a queue of
-bytes to send on the air,
+bytes to send on the air, the web server at \verb+www.bbk.ac.uk+ has a
+queue of requests from web browsers, and your hard disk has a queue of
+petitions to read or write on it. 
+
+Queues are defined by the following interface: 
+
+\begin{description}
+\item[insert($<$type$>$)] adds an element to the queue.
+\item[retrieve() ] removes an element from the queue.
+\end{description}
+
+It is common that queues provide a method \verb+getSize()+ that
+returns the current size of the queue. Sometimes a queue may provide a
+method
+\verb+getMaxSize() to return the maximum size possible. Queues may a
+maximum size\footnote{Strictly speaking, all queues are limited: even
+  ``unbounded'' queues cannot be larger than the memory available on
+  the machine.} and other classes may want to know to prevent data
+loss. For example, when you hear in the news that a website has
+suffered a Distributed Denial of Service attack (DDoS) that means that
+a lot of computers are issuing simultanenous requests to the same web
+server until its queue is full and all new requests are ignored.
 
 \subsection{Trees}
 \label{sec:trees}
