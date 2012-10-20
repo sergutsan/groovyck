@@ -54,7 +54,7 @@ at all about the implementation or the state of your class. It only
 describes some (sometimes all) of the public methods of your
 class. Let's see an example: 
 
-\VerbatimInput[frame=single,label=Example]{src/Person.java}
+\VerbatimInput[frame=single,label=Example of interface]{src/Person.java}
 
 As you can see, the definition of an interface is very similar to the
 definition of a class, it is even defined in a java file. 
@@ -87,9 +87,9 @@ interface; if it does not, the compiler will complain with an error:
 
 Let's see three examples of classes that implement \verb+Person+:
 
-\VerbatimInput[frame=single,label=Example]{src/AdultPerson.java}
+\VerbatimInput[frame=single,label=Implementation 1]{src/AdultPerson.java}
 
-\VerbatimInput[frame=single,label=Example]{src/KidPerson.java}
+\VerbatimInput[frame=single,label=Implementation 2]{src/KidPerson.java}
 
 As you can see, both \verb+AdultPerson+ and \verb+KidPerson+ implement
 the interface \verb+Person+, but they do it in different ways: 
@@ -205,11 +205,13 @@ defined by the following methods:
   false otherwise.
 \end{description}
 
-Look at the accompanying Java files: \verb+StringStack.java+,
-\verb+ArrayStringStack.java+, \verb+PointerStringStack.java+,
-\verb+StringStackNode.java+.  The first file is the definition of an
-interface for a stack of string. The next one is one possible
-implementation of this interface based on arrays. The other two are
+Now have a 
+look at the accompanying Java files. 
+The first file (\verb+StringStack.java+) is the definition of an
+interface for a stack of string. The next 
+one (\verb+ArrayStringStack.java+) is one possible
+implementation of this interface based on arrays. The other two files 
+(\verb+PointerStringStack.java+, \verb+StringStackNode.java+) are
 another possible implementation using linked lists. Which
 implementation would you prefer to use? The answer is usually that you
 do not mind: \emph{as long as the implementation complies with the
@@ -327,9 +329,6 @@ A map is defined by the following interface:
 \item[isEmpty() ] returns true if there are no elements on the stack,
   false otherwise.
 \end{description}
-
-\section{Memory allocation and deallocation}
-\label{sec:memory-alloc-deall}
 
 
 
