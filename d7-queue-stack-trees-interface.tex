@@ -191,9 +191,12 @@ LIFO structures: Last In, First Out. A Stack is defined by the
 following methods:  
 
 \begin{description}
-\item[push(...)] inserts an element at the beginning of the stack.
-\item[pop(...) ] remove an element from the \emph{beginning} of the stack.
-\item[empty(...) ] returns true if there are no elements on the stack,
+\item[push(<type>)] puts an element at the top of the stack.
+\item[pop() ] removes the element at the top of the
+  stack and returns it. 
+\item[peek() ] returns the element at the top of the stack, but
+  does not remove it from the stack.
+\item[isEmpty() ] returns true if there are no elements on the stack,
   false otherwise.
 \end{description}
 
