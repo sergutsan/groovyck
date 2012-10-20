@@ -243,8 +243,16 @@ of the interface. We do not need anything else.
 \label{sec:queues}
 
 Queues are, in a way, the opposite of stacks. Stacks are LIFO
-structures, queues are FIFO structures: First In, First Out. It is the
+structures, queues are FIFO structures: First In, First 
+Out (Figure~\ref{fig:fifolifo}). It is the
 same idea as the queues at the airport or at the supermarket. 
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/fifo-lifo}
+  \caption{Stacks are LIFO. Queues are FIFO.}
+  \label{fig:fifolifo}
+\end{figure}
 
 The same as stacks, queues are very popular data structures that you
 can find everywhere in computing: your wi-fi connection has a queue of
@@ -262,7 +270,7 @@ Queues are defined by the following interface:
 It is common that queues provide a method \verb+getSize()+ that
 returns the current size of the queue. Sometimes a queue may provide a
 method
-\verb+getMaxSize() to return the maximum size possible. Queues may a
+\verb+getMaxSize()+ to return the maximum size possible. Queues may a
 maximum size\footnote{Strictly speaking, all queues are limited: even
   ``unbounded'' queues cannot be larger than the memory available on
   the machine.} and other classes may want to know to prevent data
@@ -273,6 +281,8 @@ server until its queue is full and all new requests are ignored.
 
 \subsection{Trees}
 \label{sec:trees}
+
+Trees 
 
 
 %              interfaces
