@@ -173,25 +173,27 @@ variables on your level; when you end the method, those variables are
 forgotten and you see the variables on the former level (see
 Figure~\ref{fig:stackparameter}).  
 
-\begin{figure}[hbtp]
+\begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{gfx/parameter-stack}
   \caption{The parameter stack is an example of a stack
-    structure. When method is called (add), a new level is put on the
+    structure. When a method (add) is called, a new level is put on the
     stack to store the parameters and the local variables. While in
     the method, the variables of the other method (a, b, sum) cannot
     be accessed: they are on a different level of the stack, and only
-    the most recent one is accessible.}
+    the most recent one is accessible. Note that if those variables
+    were of complex types, their ``boxes'' would be pointers pointing
+    to objects in the heap.}
   \label{fig:stackparameter}
 \end{figure}
 
 In a stack, only the last level is accessible: all former levels are
-hidden until the last level is removed. This is why stacks are called
-LIFO structures: Last In, First Out. A Stack is defined by the
-following methods:  
+hidden until the levels on top are removed. This is why stacks are
+sometimes called LIFO structures: Last In, First Out. A Stack is
+defined by the following methods:
 
 \begin{description}
-\item[push(<type>)] puts an element at the top of the stack.
+\item[push($<$type$>$)] puts an element at the top of the stack.
 \item[pop() ] removes the element at the top of the
   stack and returns it. 
 \item[peek() ] returns the element at the top of the stack, but
@@ -200,6 +202,48 @@ following methods:
   false otherwise.
 \end{description}
 
+Look at the accompanying Java files: \verb+StringStack.java+,
+\verb+ArrayStringStack.java+, \verb+PointerStringStack.java+,
+\verb+StringStackNode.java+.  The first file is the definition of an
+interface for a stack of string. The next one is one possible
+implementation of this interface based on arrays. The other two are
+another possible implementation using linked lists. Which
+implementation would you prefer to use? The answer is usually that you
+do not mind: \emph{as long as the implementation complies with the
+  interface, all implementations are equivalent from your point of
+  view}. You can check that both behave exactly the same, regardless
+of the number of string that you put on them or their order. You can
+use the sample \verb+StringStackScript.java+ file provided or make
+your own test.
+
+Sometimes you do mind: maybe one implementation is faster, or uses
+less memory, or provides additional methods that are useful for your
+program. For instance, the implementation of \verb+PointerStringStack+
+has a public method \verb+size()+ that the other implementation does
+not. Is this a good addition or an unnecessary burden? There is no
+general rule that applies to all cases, so a judgement call as a
+programmer is always needed. Judgement is strenghtened though
+experience, and it cannot be expected from a novice programmer. For
+now, it will suffice to know that the rule of thumb is: \emph{work
+  with interfaces, not implementations; if the class complies with the
+  interface, it is good enough}. You have an example in
+\verb+StringStackScript.java+: the name of the class is only used to
+instantiate (i.e.~create the object); after that, we only use the name
+of the interface. We do not need anything else. 
+
+\subsection{Queues}
+\label{sec:queues}
+
+Queues are, in a way, the opposite of stacks. Stacks are LIFO
+structures, queues are FIFO structures: First In, First Out. It is the
+same idea as the queues at the airport or at the supermarket. 
+
+The same as stacks, queues are very popular data structures that you
+can find everywhere in computing: your wi-fi connection has a queue of
+bytes to send on the air,
+
+\subsection{Trees}
+\label{sec:trees}
 
 
 %              interfaces
