@@ -1,0 +1,103 @@
+
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\begin{document}
+
+\section*{Learning goals}
+\label{sec:learning-goals}
+
+Before the next day, you should have achieved the following learning
+goals: 
+
+\begin{itemize}
+\item Understand how to use interfaces in Java, and use them in your
+  programs. 
+\item Understand how stacks, queues, and trees work. 
+\item Strengthen your understanding of pointers, and how they are used
+  in dynamic data structures. 
+\end{itemize}
+
+You should be able to finish most of non-star exercises in the lab. 
+Remember that star exercises are more difficult. 
+\textbf{Do not try star-exercises unless the other ones are clear to
+  you}.  
+
+\section{Supermarket queue}
+\label{sec:queues}
+
+Use the interface \verb+PersonQueue+ that represents a queue of
+people waiting at the supermarket and then implement it. You can use
+the definition and the implementations of \verb+StringStack+ as an
+example. You can reuse any version of class \verb+Person+ from past
+days. For example, depending on your implementation, you may want to
+use a version of \verb+Person+ with or without internal pointers. 
+
+\begin{verbatim}
+    public interface PersonQueue {
+        /**
+         * Adds another person to the queue.
+         */
+        void insert(Person person);
+
+        /**
+         * Removes a person from the queue.
+         */ 
+         Person retrieve();
+    }
+\end{verbatim}
+
+Then create a class \verb+Supermarket+ that has two methods:
+\verb+addPerson(Person)+ and \verb+servePerson()+. These methods must
+call the appropriate methods of \verb+PersonQueue+. 
+
+\section{Supermarket queue revisited (*)}
+\label{sec:superm-queue-revis}
+
+Implement your interface queue in a different way. Then check that it
+works exactly the same without changing either the interface or your
+class \verb+Supermarket+. 
+
+\section{Foreign people, different queues (*)}
+\label{sec:fore-people-diff}
+
+Get a queue implementation from one of your colleagues. Use it and
+check that it works exactly the same without changing either the
+interface or your class \verb+Supermarket+. 
+
+If it does not work, why is this?
+
+\section{Unfair queue (*)}
+\label{sec:unfair-queue-}
+
+\subsection{Simple}
+\label{sec:simple}
+
+Implement the interface queue in a way that the person at the end
+(i.e.~the person that is retrieved next time the method
+\verb+retrieve()+ is called) is always the oldest person. 
+
+\subsection{Clustered}
+\label{sec:clustered}
+
+Implement the interface queue in a way that the next person retrieved
+is always a person over 65, if there is any in the queue; if not, it
+must be a person over 18, if there is any in the queue. Inside each
+age category, the behaviour of the queue is typical FIFO: first in,
+first out. 
+
+These two queues are examples of \emph{priority queues}, and are not
+strictly FIFO: old people will always come out of the queue than
+younger people, even if the youngsters came to the queue
+first. Priority queues are more difficult to implement, but they are
+also important in computing. For example, your hard disk uses a
+priority queue to decide where to move next: if the disk's head is at
+position 555 and the queue of requests is
+
+$$4, 99, 234, 500, 101, 43, 881, 77$$
+
+your disk may decide to move to position
+500 to reduce movement, time, and energy consumption.
+
+
+
+\end{document}
