@@ -12,7 +12,7 @@ goals:
 \begin{itemize}
 \item Understand how to use interfaces in Java, and use them in your
   programs. 
-\item Understand how stacks, queues, and trees work. 
+\item Understand how stacks, queues, and maps work. 
 \item Strengthen your understanding of pointers, and how they are used
   in dynamic data structures. 
 \end{itemize}
@@ -97,6 +97,157 @@ $$4, 99, 234, 500, 101, 43, 881, 77$$
 
 your disk may decide to move to position
 500 to reduce movement, time, and energy consumption.
+
+\section{Maps}
+\label{sec:using-maps}
+
+\subsection{Hash function}
+\label{sec:hash-function}
+
+Create a class \verb+HashUtilities+ that implements a simple hash
+function \verb+shortHash(int)+ that takes any integer and returns an
+integer between 0 and 1000. You can use the modulo operator and the
+static function \verb+Math.abs(int)+ for obtaining the absolute value
+of your integers. 
+
+Note that this function is a pure function (it has no side effects),
+so it should be \verb+static+. Then you can call this method using the
+name of the class like \verb+HashUtilities.shortHash(int)+. 
+
+Every object in Java has the method \verb+hashCode()+, that returns an
+\verb+int+. Test your hash function by passing the hash codes of
+different objects and verifying that it always returns a number
+between 0 and 1000, as in the following example:
+
+\begin{verbatim}
+    println "Give me a string and I will calculate its hash code";
+    String str = System.console().readLine(); 
+    int hash = str.hashCode();
+    int smallHash = HashUtilities.shortHash(hash);
+    System.out.println("0 < " + smallHash + " < 1000");
+\end{verbatim}
+
+\subsection{Simple map}
+\label{sec:simple-map-1}
+
+Create a class that implements the following interface of a simple map
+from integers to strings. 
+
+\begin{verbatim}
+    /**
+     * Map from integer to Strings
+     */
+    public interface SimpleMap {
+        /**
+         * Puts a new String in the map. 
+         * 
+         * If the key is already in the map, nothing is done.
+         */
+        String put(int key, String name);
+    
+         /**
+          * Returns the name associated with that key, 
+          * or null if there is none.
+          */
+         String get(int key);
+    
+         /**
+          * Removes a name from the map. Future calls to get(key) 
+          * will return null for this key unless another 
+          * name is added with the same key.
+          */
+         void remove(int key);
+    
+         /** 
+          * Returns true if there are no workers in the map, 
+          * false otherwise
+          */
+         boolean isEmpty();
+    }
+\end{verbatim}
+
+
+\subsection{Hash table (*)}
+\label{sec:simple-map-1}
+
+Create a class that implements the following interface of a simple map
+from integers to strings: it is a one-to-many mapping. 
+A similar map is used in some countries to
+classify the citizens into groups for tax purposes (so that each
+department has a limited number of citizens to examine and process). 
+
+\begin{verbatim}
+    /**
+     * Map from integer to Strings: one to many
+     */
+    public interface SimpleMap {
+        /**
+         * Puts a new String in the map. 
+         */
+        String put(int key, String name);
+    
+         /**
+          * Returns all the names associated with that key, 
+          * or null if there is none.
+          */
+         String[] get(int key);
+    
+         /**
+          * Removes a name from the map.
+          */
+         void remove(int key, String name);
+    
+         /** 
+          * Returns true if there are no workers in the map, 
+          * false otherwise
+          */
+         boolean isEmpty();
+    }
+\end{verbatim}
+
+Hint: You can implement it with arrays or with linked lists. You do
+\textbf{not} know in advance how many strings you will receive for
+every key.  
+
+
+    
+% \section{National Insurance}
+% \label{sec:simple-map}
+
+% Help your country by using the map and the hash function you have
+% implemented in the following sections to make a program that links
+% National Insurance numbers and names of workers. You must create a
+% class that implements the following interface: 
+
+% \begin{verbatim}
+%     /**
+%      * A simplified program for managing the National Insurance system
+%      */
+%     public interface NationalInsurance {
+%         /**
+%          * Puts a new worker in the system. 
+%          * 
+%          * If the name is already in the system, nothing is done. 
+%          */
+%         String put(String name, );
+
+%          /**
+%           * Returns the code used for this worker
+%           */
+%          String getWorkerCode(String name);
+    
+%          /**
+%           * Removes a worker from the map. Future calls to get(id) 
+%           * will return null for this key (i.e. id) unless another 
+%           * worker is added with the same key.
+%           */
+%          void remove(String name);
+%     }
+% \end{verbatim}
+
+% Test your implementation by adding workers to your map, removing
+% workers, etc. 
+
 
 
 
