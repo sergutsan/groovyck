@@ -279,10 +279,59 @@ suffered a Distributed Denial of Service attack (DDoS) that means that
 a lot of computers are issuing simultanenous requests to the same web
 server until its queue is full and all new requests are ignored.
 
-\subsection{Trees}
-\label{sec:trees}
+\subsection{Maps}
+\label{sec:map}
 
-Trees 
+When a list has many elements, it can take a long time to find the
+element you are looking for. In order to reduce the time needed to
+delete or find an element in long lists we have \emph{maps}.
+
+A map is a special kind of data structure that links some piece of
+data, called the \emph{key}, with one or more pieces of data, called
+the \emph{value} or \emph{values}. The contact agenda in your mobile
+phone is an example of a map: it maps names to phone numbers. Other
+examples of maps are address books that link addresses with people,
+building maps that link floors with companies, and keyboards that link
+physical keys with letters and symbols. 
+
+A map can link each key with one value or more. Depending on the
+application, one behaviour may be more appropriate than the
+other. Maps that link exactly one value to every key are sometimes
+called \emph{dictionaries}. 
+
+Maps are useful in computing because we want programs to run fast but
+lists are usually very long; think of the number of files on your
+computer; the number of past and future patients in a big hospital; or
+the number of citizens in the Goverment's tax computers. If a map can
+link each key (like an ID) to one value, looking for it is very
+fast. Even if a map links a key to many different values (like the
+initial of a family name) it reduces the search time
+considerably. Maps that link one key to many values are sometimes
+called \emph{hash tables}. This is because they use a \emph{hash}
+function that reduces the whole search space (e.g.~every possible
+family name in the world) to a reduced one (e.g.~the letters of the
+alphabet). One simple hash function is the modulo operator: it reduces
+every possible integer in the world to a reduced set of integers. Hash
+functions are important in many fields of computing ---like computer
+security--- and the search of good hash functions is an active field of
+research. 
+
+A map is defined by the following interface: 
+
+\begin{description}
+\item[put($<$keytype$>$, $<$valuetype$>$)] adds a new element to the
+  map, associated with a key; depending on whether the key has already
+  been used, and whether the map allows more than one value per key,
+  this method can return different types. 
+\item[get($<$keytype$>$) ] gets the value associated with that key.
+\item[isEmpty() ] returns true if there are no elements on the stack,
+  false otherwise.
+\end{description}
+
+\section{Memory allocation and deallocation}
+\label{sec:memory-alloc-deall}
+
+
 
 
 %              interfaces
