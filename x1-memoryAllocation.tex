@@ -5,3 +5,112 @@ Although it is not strictly necessary to write Java programs, a basic
 understanding of how memory is managed in Java will help you become a
 better programmer. 
 
+At this point you already know a bit how Java uses the memory of your
+computer to store the data of your program. You know that variables of
+simple types are stored in the stack and that objects are stored in
+the heap. You also know that the stack adds a new level every time a
+new method is called, and that variables on that level are forgotten
+as soon as the method terminates. You know as well that objects 
+contain data in them, sometimes simple types and sometimes complex
+types, i.e.~pointers to data in other objects. 
+
+The memory of a computer is finite. If it was used but never released,
+the computer would run out of memory even with the simplest of
+programs. Using memory is easy: declaring variables, creating new
+objects\ldots all those operation use new memory. How is this memory
+released so that it can be used again by the same or other programs?
+
+\subsection{Using and releasing memory in the stack}
+\label{sec:using-rele-stack}
+
+As you already know, the stack is where the variables of simple types
+are stored. It is also the place where the computer stores the
+pointers for the complex types. 
+
+Every time a new variable is declared, a small ``box'' is used in the
+stack to hold its value; this ``box'' is tagged
+with a name and a value. As you know, in Java the type is set at the
+beginning and cannot change afterwars unless with a special operation
+called \emph{casting}. In other languages, such as Groovy, the type
+can change over time. 
+
+When a new method is called, a new level is added to the stack. The
+variables declared in the new method are stored on the new level of the
+stack, starting with its parameters (see Figure~\ref{fig:stackparameter}). 
+When the method ends, usually because the \verb+return+
+statement is reached, the variables are forgotten and the memory they
+were using is freed. That memory can be used for other variables of
+other methods in the future. 
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/parameter-stack}
+  \caption{When a method (add) is called, a new level is put on the
+    stack to store the parameters and the local variables. While in
+    the method, the variables of the other method (a, b, sum) cannot
+    be accessed: they are on a different level of the stack, and only
+    the most recent one is accessible. Note that if those variables
+    were of complex types, their ``boxes'' would be pointers pointing
+    to objects in the heap.}
+  \label{fig:stackparameter}
+\end{figure}
+
+This is not the whole story, as you know. Some of the variables could
+be of complex types, which means that they use memory in the
+heap. Moreover, this memory used in the heap is not automatically
+forgotten or released when the method ends: objects remain in memory,
+and this is how changes to complex methods can survive the scope of a
+method. How is memory released in the heap?
+
+\subsection{Using and releasing memory in the heap: Garbage collection}
+\label{sec:garbage-collection}
+
+In order to store new data in the heap, we use the keyword
+\verb+new+. This keyword reserves some portion of memory in the heap,
+enough to hold an object of the right type, and then makes the pointer
+in the stack point to the object in the heap. The memory used by the
+object will remain used by the program (and by nobody else) until it
+is released. 
+
+In some languages, like C or C++, the programmer must release the
+memory manually. Although this allows very good programmers to produce
+very efficient programs, it is a big source of bugs and errors because
+programmers are human and have a tendency to forget to release the
+memory they have used, or to release it more than once. This
+is why most modern languages, including Java, assume the
+responsibility of releasing the memory when it is no longer
+used. Computers are better than human at doing this sort of clerical
+work. 
+
+Java includes a little program that operates ``behind the scenes''
+called the \emph{garbage collector}. This program observes the memory
+of the computer\footnote{Strictly speaking, it only observes the
+  memory of the Java Virtual Machine, not the whole physical memory of
+the computer.} looking for objects that no longer necessary in order
+to release the memory they are using. 
+
+How does the garbage collector know when an object is no longer
+necessary? Because it is \emph{unreachable}. 
+
+We know that variables of complex types are just pointers to
+objects. We also know that there can be many pointers pointing to the
+same object. This happens every time you call a method with a complex
+parameter: as the parameters' values are copied when a method is
+called, there are always two pointers to every object that is
+giving as parameter. 
+
+% TODO figure
+
+In the same way, an object may end up with no pointer pointing to
+it. This happens when you delete an object from a linked list, for
+example. An object with no pointer pointing to it is unreachable: it
+can never again be accessed by your program, no matter how hard you
+try. 
+
+The garbage collector is not running all the time, because that would
+use too many resources. It is usually dormant, and wakes up when the
+memory starts to get full. Then it looks around in the memory for
+unreachable objects. When it finds one, it releases the memory used by
+it, and now it can be used by other objects. 
+
+% TODO figure
