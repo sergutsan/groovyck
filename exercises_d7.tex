@@ -27,8 +27,8 @@ Remember that star exercises are more difficult.
 
 Use the interface \verb+PersonQueue+ that represents a queue of
 people waiting at the supermarket and then implement it. You can use
-the definition and the implementations of \verb+StringStack+ as an
-example. You can reuse any version of class \verb+Person+ from past
+the definition and the implementations of \verb+StringStack+ as a
+guide. You can reuse any version of class \verb+Person+ from past
 days. For example, depending on your implementation, you may want to
 use a version of \verb+Person+ with or without internal pointers. 
 
@@ -53,7 +53,7 @@ call the appropriate methods of \verb+PersonQueue+.
 \section{Supermarket queue revisited (*)}
 \label{sec:superm-queue-revis}
 
-Implement your interface queue in a different way. Then check that it
+Implement the interface \verb+PersonQueue+ in a different way. Then check that it
 works exactly the same without changing either the interface or your
 class \verb+Supermarket+. 
 
@@ -86,7 +86,7 @@ age category, the behaviour of the queue is typical FIFO: first in,
 first out. 
 
 These two queues are examples of \emph{priority queues}, and are not
-strictly FIFO: old people will always come out of the queue than
+strictly FIFO: old people will always come out of the queue before
 younger people, even if the youngsters came to the queue
 first. Priority queues are more difficult to implement, but they are
 also important in computing. For example, your hard disk uses a
@@ -108,9 +108,10 @@ Create a class \verb+HashUtilities+ that implements a simple hash
 function \verb+shortHash(int)+ that takes any integer and returns an
 integer between 0 and 1000. You can use the modulo operator and the
 static function \verb+Math.abs(int)+ for obtaining the absolute value
-of your integers. 
+of an integer. 
 
-Note that this function is a pure function (it has no side effects),
+Note that \verb+shortHash(int)+ is a pure function (it 
+does not have any side effects),
 so it should be \verb+static+. Then you can call this method using the
 name of the class like \verb+HashUtilities.shortHash(int)+. 
 
@@ -168,7 +169,7 @@ from integers to strings.
 
 
 \subsection{Hash table (*)}
-\label{sec:simple-map-1}
+\label{sec:simple-map-2}
 
 Create a class that implements the following interface of a simple map
 from integers to strings: it is a one-to-many mapping. 
