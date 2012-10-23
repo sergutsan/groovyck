@@ -48,44 +48,87 @@ of one. See
 \begin{figure}[hbtp]
   \centering
   \includegraphics[width=\textwidth]{gfx/list-tree}
-  \caption{In a singly-linked list, every element is connected to the next one. In a binary tree, every element is connected to two next elements.}
+  \caption{In a singly-linked list, every element is connected to the
+    next one. In a binary tree, every element is connected to two next
+    elements. It is usual to draw trees going down, like when we
+    write in English, rather than going up as real trees do.}
   \label{fig:listree}
 \end{figure}
 
 \begin{verbatim}
-public class IntegerListNode {
-    int value;
-    IntegerListNode next;
-    // ... methods would be here
-}
-(...)
-public class IntegerTreeNode {
-    int value;
-    IntegerTreeNode left;
-    IntegerTreeNode right;
-    // ... methods would be here
-}
+    public class IntegerListNode {
+        int value;
+        IntegerListNode next;
+        // ... methods would be here
+    }
+    (...)
+    public class IntegerTreeNode {
+        int value;
+        IntegerTreeNode left;
+        IntegerTreeNode right;
+        // ... methods would be here
+    }
 \end{verbatim}
 
 Trees where every node links to two other nodes are called
 \emph{binary trees}. Binary trees are the most common types of
-trees. But we can create trees of any cardinality:
+trees. But we can create trees of any cardinality (see the examples
+below). Although we are going to focus on binary
+trees in this section, everything we will learn applies to
+any type of tree. 
 
 \begin{verbatim}
-public class IntegerTernaryTreeNode {
-    int value;
-    IntegerTernaryTreeNode left;
-    IntegerTernaryTreeNode center;
-    IntegerTernaryTreeNode right;
-    // ... methods would be here
-}
-(...)
-public class IntegerArbitraryTreeNode {
-    int value;
-    IntegerArbitraryTreeNode[] children;
-    // ... methods would be here
-}
+   public class IntegerTernaryTreeNode {
+        int value;
+        IntegerTernaryTreeNode left;
+        IntegerTernaryTreeNode center;
+        IntegerTernaryTreeNode right;
+        // ... methods would be here
+    }
+    (...)
+    public class IntegerArbitraryTreeNode {
+        int value;
+        IntegerArbitraryTreeNode[] children;
+        // ... methods would be here
+    }
 \end{verbatim}
+
+\subsection{Adding elements to a tree}
+\label{sec:adding-elements-tree}
+
+Trees have a structure that makes it very easy to have the data
+sorted. This is important because it is faster to find a specific
+piece of data when everything is sorted. 
+
+When we want to add a new element to a tree we start at the root. Then
+we check whether we want to add it to the right or to the left. Then
+we continue the process on that branch. Let's see an example based on 
+the \verb+IntegerTreeNode+ above.
+
+\begin{verbatim}
+    public add(int newNumber) {
+        if (newNumber > this.value) {
+            if (right == null) {
+                right = new IntegerTreeNode(newNumber);
+            } else {
+                right.add(newNumber);
+            }
+        } else {
+            if (left == null) {
+                left = new IntegerTreeNode(newNumber);
+            } else {
+                left.add(newNumber);
+            }
+        }            
+    }
+\end{verbatim}
+
+You can see that the process is symmetrical: we decide to go left or
+right based on the new number to add, and then we continue on that
+side of the tree. This leaves the three automatically sorted: lowers
+on the left, highers on the right; at every level of the tree. 
+Note that the first element of the tree (i.e.~the
+root) may need to be handled as a special case (as with lists).
 
 %%% Local Variables:
 %%% mode: latex
