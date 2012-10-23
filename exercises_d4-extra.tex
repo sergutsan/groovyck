@@ -90,20 +90,20 @@ Sokratis Karkalas. Do not forget to put your name in all the pages.
 \begin{verbatim}
     class Film{
         String title;
-        int reviewer;
-        double totalStar;     
+        int reviewer = 0;
+        double totalStar = 0;     
       
         void review(int stars){
-        reviewer++;
-        totalStar += stars;
+           reviewer++;
+           totalStar += stars;
         }
       
         double getRating(){
-        if (reviewer==0) {
-            return 0;
-        } else {
-            return totalStar / reviewer;
-        }
+           if (reviewer==0) {
+               return 0;
+           } else {
+               return totalStar / reviewer;
+           }
         }
     }
     
@@ -118,9 +118,9 @@ Sokratis Karkalas. Do not forget to put your name in all the pages.
     
     Film helpMeChoose(Film f1, Film f2) {
         if (f1.rating > f2.rating) {
-        return f1;
+           return f1;
         } else {
-        return f2;
+           return f2;
         }
     }
     
@@ -228,8 +228,8 @@ Sokratis Karkalas. Do not forget to put your name in all the pages.
     }
     
     boolean yellowReader(OysterCard card, int zone) {
-        double fare=getFare(zone);
-        double cost=0.0;
+        double fare = getFare(zone);
+        double cost = 0.0;
       
         if(card.travelcardAttached != null) {
            if(card.travelcardAttached.zone >= zone) {
