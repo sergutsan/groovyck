@@ -128,7 +128,58 @@ right based on the new number to add, and then we continue on that
 side of the tree. This leaves the three automatically sorted: lowers
 on the left, highers on the right; at every level of the tree. 
 Note that the first element of the tree (i.e.~the
-root) may need to be handled as a special case (as with lists).
+root) may need to be handled as a special case (as with
+lists). Figure~\ref{fig:treecr} shows how a tree is created by adding
+some new nodes. 
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/tree-creation}
+  \caption{Creation of a tree based on the class IntegerTreeNode and
+    its method add(int). The numbers are added unsorted as 6, 9, 5, 3,
+    11, 12, 8\ldots} 
+  \label{fig:treecr}
+\end{figure}
+
+\subsection{Finding elements in a tree}
+\label{sec:find-elem-tree}
+
+The good thing about trees is that we do not need to go over the whole
+list of elements to find the element we are looking for. We only need
+to check at each node whether the node we are looking for is in our
+current node, or under it to the left, or under it to the right. If
+nodes do not contain data, we just need to check whether the leaf we
+are looking for is on the left or on the right. Look at the method
+below, which checks whether a number has been added to the tree or
+not. 
+
+\begin{verbatim}
+    public contains(int n) {
+        if (n == this.value) {
+            return true;
+        } else if (n > this.value) {
+            return right.contains(n);
+        } else {
+            return left.contains(n);
+        }            
+    }
+\end{verbatim}
+
+There is no need to look at all the elements. After every check, we
+discard half of all remaining elements (assuming that the tree is
+balanced, i.e.~has approximately the same number of elements under left
+branches than under right branches). If the tree contains 1000
+numbers, after the first check we have discarded 500, then we discard
+250, then 125, etc. In other words, the time needed to find an element
+in a tree is proportional to the logarithm (in base 2) of the size of
+the tree\footnote{A number $l$ is the logarithm of $x$ in base $a$ if
+ $a^l = x$.}. Finding an element in a list of 15 elements will take at
+most 15 comparisons, but if the list has 255 elements it will take at
+most 255 comparisons; finding an element in a tree of 15 elements will
+need at most 4 comparisons, but if the tree has 255 elements it will
+take at most 8 comparisons. 
+
+
 
 %%% Local Variables:
 %%% mode: latex
