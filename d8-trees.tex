@@ -40,3 +40,54 @@ Trees are very important in computing. For example, the filesystem on
 your hard disk, where you have stored all your files (including this
 file you are reading now, your personal folders/directories, etc) has
 a tree structure: folders are nodes and files are leaves.
+
+Trees have a similar structure to lists, stacks, and queues; the main
+difference is that each element points to two or more elements instead
+of one. See 
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/list-tree}
+  \caption{In a singly-linked list, every element is connected to the next one. In a binary tree, every element is connected to two next elements.}
+  \label{fig:listree}
+\end{figure}
+
+\begin{verbatim}
+public class IntegerListNode {
+    int value;
+    IntegerListNode next;
+    // ... methods would be here
+}
+(...)
+public class IntegerTreeNode {
+    int value;
+    IntegerTreeNode left;
+    IntegerTreeNode right;
+    // ... methods would be here
+}
+\end{verbatim}
+
+Trees where every node links to two other nodes are called
+\emph{binary trees}. Binary trees are the most common types of
+trees. But we can create trees of any cardinality:
+
+\begin{verbatim}
+public class IntegerTernaryTreeNode {
+    int value;
+    IntegerTernaryTreeNode left;
+    IntegerTernaryTreeNode center;
+    IntegerTernaryTreeNode right;
+    // ... methods would be here
+}
+(...)
+public class IntegerArbitraryTreeNode {
+    int value;
+    IntegerArbitraryTreeNode[] children;
+    // ... methods would be here
+}
+\end{verbatim}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
