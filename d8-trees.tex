@@ -153,13 +153,21 @@ below, which checks whether a number has been added to a tree based on
 class \verb+IntegerTreeNode+. 
 
 \begin{verbatim}
-    public contains(int n) {
+    public boolean contains(int n) {
         if (n == this.value) {
             return true;
         } else if (n > this.value) {
-            return right.contains(n);
+            if (right == null) {
+                return false;
+            } else {
+                return right.contains(n);
+            }
         } else {
-            return left.contains(n);
+            if (left == null) {
+                return false;
+            } else {
+                return left.contains(n);
+            }
         }
         return false;
     }
