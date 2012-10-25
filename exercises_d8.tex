@@ -208,4 +208,78 @@ expression.
   \label{fig:jjgg}
 \end{figure}
 
+\section{Git internals (**)}
+\label{sec:git-internals}
+
+In this exercise you will create a simplified representation of a source
+control tree similar to the way Git does it. 
+
+Nodes (commits) in your tree will have three fields: an integer ID, a String
+description, and a list of parents. This list can be arbitrarily long:
+use an interface List with an only method \verb+add()+ (there can be
+no deletions of parents), then implement it by using pointers or
+arrays as you did in the exercises of Day 7. 
+
+\begin{verbatim}
+    public class CommitNode {
+        private int ID;
+        private String description;
+        private CommitNodeList parentList;
+        // ...methods come here...
+    }
+\end{verbatim}
+
+\begin{verbatim}
+    public interface CommitNodeList {
+        void add(CommitNode newCommit);
+    }
+\end{verbatim}
+
+The code does not show the comments for the sake of space, but your
+code should have proper comments. You will need at least two auxiliary
+pointers to commit nodes, and may 
+have many more (i.e.~you will need a list of pointers to commit nodes
+called something like \verb+branchList+): 
+
+\begin{description}
+\item[HEAD. ] This pointer points to the current commit (not
+  necessarily the most recent one, see ``checkout'' and ``change
+  branch'' below).
+\item[MASTER (and other branches).] Branches are just pointers to
+  commits. 
+\end{description}
+
+Your program should request commands from the user, and act
+accordingly: 
+
+\begin{description}
+\item[Commit. ] Adds a new commit to the current branch if the current
+  branch and HEAD point to the same commit. If not, nothing happens
+  (except maybe an error message on screen). 
+  The ID must be assigned automatically but the message is decided by
+  the user.  
+  The new commit is linked to its parent (the former HEAD). 
+\item[Checkout. ] Moves HEAD to point to another commit, as provided
+  by the ID. If the ID does not exist, nothing happens
+  (except maybe an error message on screen). 
+  The current branch does not change. 
+\item[Create branch. ] Creates a new branch, which means adding a new
+  commit-pointer to the list of pointers (\verb+branchList+) and 
+  make it point to HEAD. 
+  The current branch does not change. 
+\item[Change branch. ] Similar to checkout. Moves HEAD to point to
+  another commit as provided by the branch name. Then changes current
+  branch to that one. 
+\item[Merge. ] Creates a new commit (with a new ID and new
+  description), whose parents are the current branch and all the other
+  branches provided (by their names). Only works if current branch and
+  HEAD point to the same commit, otherwise nothing happens
+  (except maybe an error message on screen). 
+  The current branch does not change. 
+\end{description}
+
+The diagrams at
+http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging
+may be of help. 
+
 \end{document}
