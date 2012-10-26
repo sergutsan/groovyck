@@ -113,18 +113,18 @@ Look at the following code (with line numbers for clarity):
  5   
  6   void createUser() {
  7       String user = requestUser();
- 8       while (!isValid(user)) {
+ 8       while (!isValidUser(user)) {
  9           println("That name is not valid. Please try again.);
-10           String user = requestUser();
+10           user = requestUser();
 11       }
 12       insertUserInDB(user);
 13   }
 14   
 15   void deleteUser() {
 16       String user = requestUser();
-17       while (!isValid(user)) {
+17       while (!isValidUser(user)) {
 18           println("That name is not valid. Please try again.);
-19     String user = requestUser();
+19           user = requestUser();
 20       }
 21       if (existsInDB(user) {
 22           deleteUserInDB(user);
@@ -146,14 +146,14 @@ Look at the following code (with line numbers for clarity):
 38   }
 39   
 40   boolean isValidUser(String login) {
-41       String login = System.console().readLine();
-42       boolean loginIsValid = true;
-43       for (int i = 0; i < login.length(); i++) {
-44           char c = login.charAt(i);
-45           if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
-46               loginIsValid = false;
-47           }
-48       }
+41       boolean loginIsValid = true;
+42       for (int i = 0; i < login.length(); i++) {
+43           char c = login.charAt(i);
+44           if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
+45               loginIsValid = false;
+46           }
+47       }
+48       return true;
 49   }
 50   
 51   boolean running = true;
