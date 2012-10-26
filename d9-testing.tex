@@ -124,15 +124,106 @@ including:
 \end{itemize}
 
 The last reason is particularly important because it is the most
-common and it is quite difficult to fight. 
-
-Regression tests
-Code Viscosity
-
+common and it is quite difficult to fight. Big programs are usually
+written by many programmers, and none of them know everything about
+the code. Sometimes a change in some part of the code breaks something
+else that had been working until then. The problem becomes worse as
+programmers leave the project and other programmers join in with no
+previous knowledge about the program. 
+This results in programs that
+are more and more difficult to modify and adapt as they evolve over
+time. This is know as \emph{code viscosity}, and it is bad. Automated
+testing, by means of regression tests, is a way of fighting code
+viscosity: when the computer tests that everything that has been
+working until then ---even many parts that the programmer is now aware
+of--- is still working, the programmer knows that the last change did
+not brake anything. 
 
 \subsection{Automated testing}
 \label{sec:automated-testing}
 
+How do you write your own tests for your Java programs? You write them
+as Java programs, using a special library called JUnit. There are
+other ways, but JUnit is very simple, powerful, and well-known. JUnit
+does not come with Java by default, but you can easily install it from
+the web as it is free software\footnote{\emph{Free} as in free speech,
+not free beer.}. 
+
+An automated test is just a collection of methods that will be
+executed by JUnit. These methods will test the methods in your
+``main'' classes, and check that they return the right values. If they
+do not, for any reason, JUnit will raise a flag so that you can look
+into your code and find out why it is not behaving as expected. 
+
+Let's see an example. Imagine that we have 
+a method that returns the initials of a name
+in a class called \verb+Person+: 
+
+\begin{verbatim}
+    public String getInitials(String fullName)
+     {
+        String result = "";
+        String[] words = fullName.split(" ");
+        for (int i = 0; i < words.length; i++)
+          {
+             String nextInitial = "" + words[i].charAt(0);
+             result = result + nextInitial.toUpperCase();
+          }
+        return result;
+     }
+\end{verbatim}
+
+A test program would be a Java class that could look like this: 
+
+\begin{verbatim}
+    import org.junit.*;
+    import static org.junit.Assert.*;
+    
+    public class PersonTest {    
+       @Test
+       public void testsNormalName() {
+            Person p = new Person();
+            String input = "Dereck Robert Yssirt";
+            String output = p.getInitials(input);
+            String expectedOutput = "DRY";
+            assertEquals(output, expectedOutput);
+         }
+    }
+\end{verbatim}
+
+As you can see, there are several things that make a test class (using
+JUnit) different from a normal Java class. First of all, there is no
+main method. JUnit tests are not executed directly, they are executed
+by JUnit, so there is no need for a main method. 
+
+A second important difference are those \verb+import+ statements are
+the beginning, before the class definition. These importing statements
+are the way in which a programmer can tell Java to use classes that
+are not in the current folder (they must be in the \emph{classpath},
+though). If you want to import just some static methods from some
+class, you can use \emph{static imports}. In this example, the method
+\verb+assertEquals(String,String)+ is statically imported from class
+\verb+Assert+. This is only a convenience so that you do not need to
+write \verb+Assert.assertEquals(....)+, only the method's name is
+enough. 
+
+The third difference is the most important one. There is a special
+kind of word before the method definition, a word starting with an at
+symbol: \verb+@Test+. These \@-words are called \emph{annotations} in
+Java, and have a special meaning for the compiler. For example, the
+annotation \verb+@Test+ tells JUnit that the method
+\verb+testsNormalName()+ is a test to be run by JUnit. This is the way
+JUnit know which methods to run and which methods to ignore. (We will
+learn more about annotations in the future).
+
+You can also appreciate some conventions in the code. The test class
+for class \verb+Person+ is called \verb+PersonTest+ (some people
+prefer \verb+TestPerson+). And the method's name tells the story of
+the test. It can be read as ``this method'' \verb+testsNormalName()+:
+this method tests a normal name.
+
+
+How to design your tests
 
 
 %%% Local Variables:
