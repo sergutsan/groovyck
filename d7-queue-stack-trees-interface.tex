@@ -96,7 +96,11 @@ Let's see three examples of classes that implement \verb+Person+:
 \VerbatimInput[frame=single,label=Implementation 2]{src/KidPerson.java}
 
 As you can see, both \verb+AdultPerson+ and \verb+KidPerson+ implement
-the interface \verb+Person+, but they do it in different ways: 
+the interface \verb+Person+. You can read the keyword
+\verb+implements+ as ``is a''; therefore, \verb+AdultPerson+ 
+\emph{is a} \verb+Person+, and \verb+KidPerson+ \emph{is a}
+\verb+Person+. However, both class implement the interface in
+different ways:  
 
 \begin{itemize}
 \item \verb+AdultPerson+ uses a member field called \verb+situation+
@@ -131,6 +135,29 @@ This code will work exactly the same with \verb+AdultPerson+ and
 \verb+KidPerson+. Actually, it will work regardless of the specific class
 that is used as long as it
 implements the interface \verb+Person+. 
+
+\paragraph{A note about names}
+\label{sec:note-about-names}
+
+In Java, the convention is to use short names for interfaces and
+longer more-specific names for the classes that implement
+them. Interfaces can have names like \verb+Person+ or \verb+Employee+,
+while classes have names like \verb+AdultPerson+ and
+\verb+PointerManagerEmployee+. 
+
+\paragraph{Conclusion}
+\label{sec:conclusion-1}
+
+Interfaces are the way to say what a class \emph{is} and \emph{does},
+without saying anything about \emph{how} the class does it. Hiding the
+details (i.e.~the actual code) keeps the complexity of the program
+lower, resulting in simpler programs that work better and have less
+bugs. 
+
+In your programs, make an effort to define interfaces for your classes
+(especially the important ones)
+and use always the interface instead of the actual class to declare
+new variables of the type defined by that class. 
 
 \subsection*{Exercise}
 \label{sec:exercise}
