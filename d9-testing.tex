@@ -142,6 +142,9 @@ not brake anything.
 \subsection{Automated testing}
 \label{sec:automated-testing}
 
+\subsubsection{Creating tests}
+\label{sec:creating-tests}
+
 How do you write your own tests for your Java programs? You write them
 as Java programs, using a special library called JUnit. There are
 other ways, but JUnit is very simple, powerful, and well-known. JUnit
@@ -179,14 +182,14 @@ A test program would be a Java class that could look like this:
     import org.junit.*;
     import static org.junit.Assert.*;
     
-    public class PersonTest {    
+    public class PersonTest {
        @Test
        public void testsNormalName() {
             Person p = new Person();
             String input = "Dereck Robert Yssirt";
             String output = p.getInitials(input);
-            String expectedOutput = "DRY";
-            assertEquals(output, expectedOutput);
+            String expected = "DRY";
+            assertEquals(output, expected);
          }
     }
 \end{verbatim}
@@ -220,11 +223,34 @@ You can also appreciate some conventions in the code. The test class
 for class \verb+Person+ is called \verb+PersonTest+ (some people
 prefer \verb+TestPerson+). And the method's name tells the story of
 the test. It can be read as ``this method'' \verb+testsNormalName()+:
-this method tests a normal name.
+this method tests a normal name. You can also appreciate some of the
+variable names: \verb+input+, \verb+output+, \verb+expected+ (for
+expected output). 
+
+The tests ends with the method \verb+assertEquals(String,String)+,
+statically imported from class \verb+Assert+. This method performs an
+\emph{assertion}, a test that the parameters verify some condition
+(equality in this case). If that is not true, the method will throw an
+exception and JUnit will report a failure in your test. 
+
+\subsubsection{Running tests}
+\label{sec:running-tests}
+
+To run your tests, you must run JUnit from the command line. In order
+to do so, you must bear in mind some facts: 
+
+\begin{itemize}
+\item JUnit is not part of core Java, so it must be added to the
+  \emph{classpath} either manually or by modifying the environment
+  variable CLASSPATH. 
+\end{itemize}
+
 
 
 How to design your tests
-
+  - check basic functionality
+  - check border cases
+  - Find bugs once
 
 %%% Local Variables:
 %%% mode: latex
