@@ -1,4 +1,61 @@
 
+\section{Software testing}
+\label{sec:software-testing}
+
+I know your code has bugs. If it is a small project it will have few
+bugs. If it is a big projects it has a lot of bugs. I know.
+
+How do I know? Because I know you are a human being, and human beings
+make mistakes. When a programmer is writing a program, there are too
+many things to keep in the short-term memory at the same time: data
+structures, communication between different parts of the program,
+flows of information\ldots Any program except the most trivial one is
+too complex for the human mind to see in its entirety. This is why we
+need to use methods to isolate operations that are executed often and
+why we use classes to group different functionalities of our program
+around some conceptual ideas that we can grasp (e.g.~a supermarket has
+queues, a queue has people, a person has a name and knows who is
+behind in the queue; a company has products and employees, employees
+have names and take money from the company, products give money to the
+company). 
+
+Structured and object-oriented programming are ways in which
+programmers can reduce the complexity of their programs to levels that
+are more or less manageable, but it is still impossible to write
+programs that do not contain bugs. Humans, even the best programmers,
+have a tendency to forget some details of the program. That is the way
+the human mind works: it concentrates on the bug fundamental aspect
+and forgets the details until needed\ldots which in computing means
+when the program is already executing and nothing can be done about
+it. 
+
+Long story short, as long as programming is performed by humans,
+programs will have bugs. The compiler can make sure that a program is
+syntactically correct but it cannot tell if  it makes sense or
+even whether it will do what the programmer expects. 
+
+That is why software testing is important. Testing a program is a way
+to ensure that the program does what it should. There are two types of
+testing: manual and automatic (Table~\ref{tab:test}). You are already
+familiar with the former type, you have been doing it for weeks with
+the programs you have been writing until now. Now we will learn how to
+do things properly in an automated way. 
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{l|c|c}
+    & Manual & Automatic \\
+    \hline
+    Thouroughness & Tests more bugs & Tests all bugs known \\
+    Speed & Slow & Fast \\
+    Experience & Very boring & The computer does the hard work \\
+  \end{tabular}
+  \caption{Manual testing vs automated testing}
+  \label{tab:test}
+\end{table}
+
+
+
 You are human. Your code is buggy.
 
 Table hand-testing vs automated-testing
@@ -16,3 +73,9 @@ Caso real:
   ocurrir!
     No es culpa mía! Alguien debe haber cambiado el código!
 
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
