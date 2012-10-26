@@ -242,15 +242,53 @@ to do so, you must bear in mind some facts:
 \begin{itemize}
 \item JUnit is not part of core Java, so it must be added to the
   \emph{classpath} either manually or by modifying the environment
-  variable CLASSPATH. 
+  variable CLASSPATH.
+\item When you modify the CLASSPATH, you must remember to add the
+  current folder (or Java will not find your class!).
+\item The core class in JUnit is called, perhaps unsurprisingly,
+  \verb+JUnitCore+. 
 \end{itemize}
 
+With this in mind, you are now able to run the following
+command\footnote{On Linux and Mac, elements in the classpath are
+  separated by colons. On Windows, elements in the classpath are
+  separated by semicolons.}: 
+
+\begin{verbatim}
+    > javac -cp .:junit-4.10.jar PersonTest.java
+\end{verbatim}
+
+This will compile your test class(es). To run the tests, you must
+execute: 
+
+\begin{verbatim}
+    > java -cp .:junit-4.10.jar org.junit.runner.JUnitCore PersonTest
+\end{verbatim}
+
+If all tests run successfully, JUnit will congratulate you. If one or
+more of the tests fail, JUnit will inform you of which tests failed
+and why. 
+
+
+\subsubsection{Designing tests}
+\label{sec:designing-tests}
 
 
 How to design your tests
   - check basic functionality
   - check border cases
   - Find bugs once
+    - the second test
+ @Test
+   public void trySG_S()
+     {
+        T t = new T();
+        String input = "Dereck Robert  Yssirt";
+        String output = t.getInitials(input);
+        String expectedOutput = "DRY";
+        assertEquals(output, expectedOutput);
+     }
+
 
 %%% Local Variables:
 %%% mode: latex
