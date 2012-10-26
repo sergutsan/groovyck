@@ -43,35 +43,95 @@ do things properly in an automated way.
 
 \begin{table}[htbp]
   \centering
-  \begin{tabular}{l|c|c}
+  \begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
+    \hline
     & Manual & Automatic \\
     \hline
-    Thouroughness & Tests more bugs & Tests all bugs known \\
-    Speed & Slow & Fast \\
-    Experience & Very boring & The computer does the hard work \\
+    Speed & Very slow & Very fast \\
+    Focus & Most important bugs known & All bugs known \\
+    Experience & Very repetitive and boring & The computer does the work \\
+    Thouroughness & Sometimes forgets to test some things & Tests everything always \\
+    \hline
   \end{tabular}
   \caption{Manual testing vs automated testing}
   \label{tab:test}
 \end{table}
 
 
+The idea behind automated testing is very simple: make a program that
+tests that your ``main'' program behaves as expected. You can execute
+this ``testing'' program every day as you original program grows to
+make sure that everything works as it
+should. Figures~\ref{fig:sdfsdsers} and~\ref{fig:sdfsdsers} provide
+two examples from real life when program did not behave as expected. 
 
-You are human. Your code is buggy.
+\begin{figure}[tbp]
+\begin{verbatim}
+    Programmer 1: The program has messed-up and not we have lost data
+        from our clients!
+    Programmer 2: How is that possible?
+    Programmer 1: The function returnPastPurchases() returned null,
+        the system got a NullPointerException and crashed. 
+    Programmer 2: Oh! It returned null because there were no past
+        purchases. 
+    Programmer 1: But it has always returned an empty array! 
+    Programmer 2: But I thought that null was more elegant than an
+        empty array. If there is nothing to return, why not return
+        null? 
+    Programmer 1: What about... because the rest of the program
+        expects an empty array! Now we face our clients sueing us!
+    Programmer 2: I am sorry...
+\end{verbatim}  
+  \caption{Scenario 1: unmet expectations}
+  \label{fig:sdfsdsers}
+\end{figure}
 
-Table hand-testing vs automated-testing
+\begin{figure}[tbp]
+\begin{verbatim}
+    Programmer 1: Good, now we have found the bug. Method 
+        getTaxReturns() had problems when it received a null
+        TaxPayer. We have fixed the method that was returning 
+        a null TaxPayer. Let's create a test for it to make sure it
+        does not happen again. 
+    Programmer 2: No need to. It will never happen again. I will never
+        forget this week working 20h a day! I promise you no method
+        will return a null TaxPayer ever again. 
+    (...one year later...)
+    Programmer 1: There is a serious bug in the system!
+    Programmer 2: I have found it! Someone returned a null TaxPayer. 
+    Programmer 1: What? A year ago, you promised me that it was not
+        going to happen again!
+    Programmer 2: It is not my fault! Someone else must have made
+        changes to the core classes!
+\end{verbatim}  
+  \caption{Scenario 2: Star Bugs: Return of the Bug}
+  \label{fig:sdfsdsers}
+\end{figure}
+
+Programs can behave badly for an infinite number of reasons,
+including: 
+
+\begin{itemize}
+\item bad programmers writing bad code.
+\item lack of communication between programmers in a big project.
+\item programs without documentation that have to be modified, usually
+  by a programmer that has nothing to do with the original
+  programmers.
+\item version changes in external libraries (or even the programming
+  language) that not backwards-compatible.
+\item changes in some part of the program affecting some other part of
+  the program, apparently unrelated. 
+\end{itemize}
+
+The last reason is particularly important because it is the most
+common and it is quite difficult to fight. 
+
+Regression tests
+Code Viscosity
 
 
-
-
-
-Caso real: 
-
-  - me dijiste que me dabas empty[] y me has dado un null!
-
-
-  - es el mismo buig que hace un año! Me prometiste que no volvería a
-  ocurrir!
-    No es culpa mía! Alguien debe haber cambiado el código!
+\subsection{Automated testing}
+\label{sec:automated-testing}
 
 
 
