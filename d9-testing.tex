@@ -200,30 +200,31 @@ JUnit) different from a normal Java class. First of all, there is no
 main method. JUnit tests are not executed directly, they are executed
 by JUnit, so there is no need for a main method. 
 
-A second important difference are those \verb+import+ statements are
-the beginning, before the class definition. These importing statements
+A second important difference are those \verb+import+ statements at
+the beginning, before the class definition. These  statements
 are the way in which a programmer can tell Java to use classes that
 are not in the current folder (they must be in the \emph{classpath},
 though). If you want to import just some static methods from some
 class, you can use \emph{static imports}. In this example, the method
 \verb+assertEquals(String,String)+ is statically imported from class
 \verb+Assert+. This is only a convenience so that you do not need to
-write \verb+Assert.assertEquals(....)+, only the method's name is
-enough. 
+write \verb+Assert.assertEquals(....)+ every time you need it, 
+only the method's name is enough. 
 
 The third difference is the most important one. There is a special
 kind of word before the method definition, a word starting with an at
-symbol: \verb+@Test+. These \@-words are called \emph{annotations} in
-Java, and have a special meaning for the compiler. For example, the
+symbol: \verb+@Test+. These at-words are called \emph{annotations} in
+Java, and have a special meaning for the compiler. In this case, the
 annotation \verb+@Test+ tells JUnit that the method
 \verb+testsNormalName()+ is a test to be run by JUnit. This is the way
-JUnit know which methods to run and which methods to ignore. (We will
-learn more about annotations in the future).
+JUnit knows which methods to run and which methods to ignore. (We will
+learn more about annotations in the future). In conclusion, you must
+write \verb+@Test+ before each of your test methods. 
 
 You can also appreciate some conventions in the code. The test class
 for class \verb+Person+ is called \verb+PersonTest+ (some people
-prefer \verb+TestPerson+). And the method's name tells the story of
-the test. It can be read as ``this method'' \verb+testsNormalName()+:
+prefer \verb+TestPerson+). The method's name tells the story of
+the test: it can be read as ``this method''\ldots \verb+testsNormalName()+:
 this method tests a normal name. You can also appreciate some of the
 variable names: \verb+input+, \verb+output+, \verb+expected+ (for
 expected output). 
@@ -232,7 +233,12 @@ The tests ends with the method \verb+assertEquals(String,String)+,
 statically imported from class \verb+Assert+. This method performs an
 \emph{assertion}, a test that the parameters verify some condition
 (equality in this case). If that is not true, the method will throw an
-exception and JUnit will report a failure in your test. 
+exception and JUnit will report a failure in your test. Assertion can
+be made on equality, difference, nullity, and truth value. The most
+common methods are \verb+assertEquals()+, \verb+assertTrue()+, and
+\verb+assertFalse()+. The full list
+of methods of \verb+Assert+ can be found in the documentation of the
+class\footnote{http://junit.sourceforge.net/javadoc/org/junit/Assert.html}. 
 
 \subsection{Running tests}
 \label{sec:running-tests}
@@ -251,16 +257,17 @@ to do so, you must bear in mind some facts:
 \end{itemize}
 
 With this in mind, you are now able to run the following
-command\footnote{On Linux and Mac, elements in the classpath are
-  separated by colons. On Windows, elements in the classpath are
-  separated by semicolons.}: 
+command: 
 
 \begin{verbatim}
     > javac -cp .:junit-4.10.jar PersonTest.java
 \end{verbatim}
 
-This will compile your test class(es). To run the tests, you must
-execute: 
+This will compile your test class(es). The \verb+-cp+ parameter is the
+way you can modify the classpath when executing \verb+javac+ or
+\verb+java+. Remember that elements in the classpath are separated by
+colons on Linux and Mac, but they are separated by semicolons on
+Windows. To run the tests, you must execute:
 
 \begin{verbatim}
     > java -cp .:junit-4.10.jar org.junit.runner.JUnitCore PersonTest
@@ -274,7 +281,7 @@ and why.
 \label{sec:designing-tests}
 
 So far we have seen how to create automated tests, and how to execute
-it in order to find bugs in our \emph{production code} (i.e.~our
+them in order to find bugs in our \emph{production code} (i.e.~our
 ``main code'', the program that we are creating to solve a
 problem). Programmers usually create a lot of tests to verify the
 behaviour of their classes (i.e.~as defined by its public methods, its
@@ -285,18 +292,19 @@ times: tests do \textbf{not} prove that your code does not contain
 bugs. No matter how many tests you have written, no matter how many
 cases you cover with them, there is no way to prove that a code does
 not contain bugs. We can only try to push the chance of bugs as low as
-possible. 
+possible, but it is never zero.
 
-You can think of tests as torches in the cavern of your code. The more
-torches you place in the cavern, the more light there will be and the
-fewer shadows where bugs can hide. But you must place your
+You can think of tests as torches in a cavern, where the cavern
+represents your code. The more
+torches you place in the cavern, the more light there will be, so there
+will be fewer shadows where bugs can hide. But you must place your
 torches carefully. If you just put a lot of torches in one place, most
-of the cavern will be in shadows, and your bugs will lurk there until
+of the cavern will be in shadows, and your bugs will lurk in there until
 the time is right to appear (usually to make your company look bad or
 lose money or both). If you place your torches carefully and
 illuminate as many corners as possible, your bugs will find it more
-difficult to hide undetected. How can we ensure that we make this
-happen? There are three basic strategies.
+difficult to hide undetected. How can we ensure that we keep our
+cavern as illuminated as possible? There are three basic strategies.
 
 \subsubsection{Testing basic functionality}
 \label{sec:test-basic-funct}
@@ -321,12 +329,13 @@ Good code is simple, clear, and general. Programmers create programs
 that repeat the same operations most of the time: checking the
 salaries of all employees in a company, verifying the medicine doses
 of all patients in a hospital, calculating all stress tensors for
-every point on the wing of a plane, etc. This is usually correctly
-performed in most programs. If it is not, the error is usually quite
-evident and is detected even at compile time or with the simple
-``basic'' tests. 
+every point on the wing of a plane, etc. Usually, this is performed
+correctly in most programs. If it is not, the error tends to be quite
+evident and is detected with the simple
+``basic'' tests (or even at compile time).
 
-Programs have a tendency to break around the corners. Using the
+Basic functionality is not the main source of bugs. 
+Programs have a tendency to break around the \emph{borders}. Using the
 metaphor of the cave, you can think that corners are usually darker
 than the rest of a cave room, so they are good hiding places for
 bugs. Border cases (the first, the last, etc) are usually slightly
@@ -339,8 +348,8 @@ parameter (or null).
 Border cases must always be checked in your tests. This is very
 important. Leaving corners and borders in the shadows is just a
 disaster waiting to happen. Many programmers forget to test border
-cases and are later surprised by bugs in a code that ``seemed'' to be
-working fine.
+cases and are later surprised by bugs in a code that seemed to be
+``working fine''.
 
 \subsubsection{Find bugs once}
 \label{sec:find-bugs-once}
@@ -348,30 +357,31 @@ working fine.
 This is the most important rule in software testing, yet it is usually
 forgotten by many programmers (especially lazy programmers). Whenever
 you find a bug in a code, and you will find many in your life as a
-programmer, you have to follow the following simple recipe: 
+programmer, you have to follow this simple algorithm: 
 
 \begin{enumerate}
 \item Find the bug again. Repeat the same steps until you know exactly
   how and when the bug appears. This is called
-  \emph{reproducing the bug} and it is not always easy in large
-  complicated projects.
+  \emph{reproducing the bug} and it is not always easy in large,
+  complicated programs.
 \item Once you have been able to reliably reproduce the bug manually,
   write a test that reproduces the bug programmatically. Check that
   the bug is always fired when you run your test with JUnit. Make the
   test as simple as possible.
-\item Once you have written the simplest test that reproduces the bug,
-  \textbf{and only then}, fix the bug. Verify that the tests passes. 
+\item Once you have written the simplest test that reproduces the bug
+  ---\textbf{and only then}--- fix the bug. Verify that the tests passes. 
 \end{enumerate}
 
-Following this simple recipe will ensure that the same bug does not
+Following this simple algorithm will ensure that the same bug does not
 appear again and you never find yourself in the situation described in
-Figure~\ref{fig:sdfsdsers}. You are a human big and make mistakes. No
+Figure~\ref{fig:sdfsdsers}. You are a human being and you make mistakes. No
 matter how careful you are, your code will have some bugs. Most of the
 time you will find bugs in code that was written by other programmers
 that were not as careful as you. Following the ``find bugs once''
-recipe will at least ensure that you do not have to track the same bug
-twice and repeat work you have already done. This is a recipe to make
-sure your projects only move forward, never backwards. 
+algorithm will at least ensure that you do not have to track the same bug
+twice and repeat work you have already done. This is a algorithm to make
+sure your projects only move forward, never backwards, and you do not
+waste your precious time. 
 
 \subsection*{Final note: Running tests overnight}
 \label{sec:runn-tests-overn}
@@ -384,14 +394,14 @@ projects have thousands or millions of tests: no human being can do
 all of that without dying of boredom. That is why automated testing is
 important. 
 
-Testing everything frequently ensures that the code that does not go
+Testing everything frequently ensures that the code does not go
 backwards, e.g.~that introducing new features does not break other
 features that were already working. This why it is sometimes called
 \emph{regression testing}: it makes sure that the code does not
-regress, it does not go backwards. 
+regress, i.e.~it does not go backwards. 
 
 It is common for most professional projects to run \emph{all tests}
-once a day, usually overnight when the programmers involved are
+on a daily basis, usually overnight when the programmers involved are
 sleeping\footnote{Well, most of them at least.}. This is done by means
 of an automatic script that retrieves the sources from a public
 repository (e.g.~on GitHub), compiles everything, and then runs all
