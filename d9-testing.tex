@@ -2,17 +2,17 @@
 \section{Software testing}
 \label{sec:software-testing}
 
-I know your code has bugs. If it is a small project it will have few
+I know your code has bugs. If it is a small project it will have a few
 bugs. If it is a big projects it has a lot of bugs. I know.
 
 How do I know? Because I know you are a human being, and human beings
-make mistakes. When a programmer is writing a program, there are too
+make mistakes. When a programmer is writing code there are too
 many things to keep in the short-term memory at the same time: data
 structures, communication between different parts of the program,
-flows of information\ldots Any program except the most trivial one is
+flows of information\ldots ~ Every program except the most trivial ones is
 too complex for the human mind to see in its entirety. This is why we
-need to use methods to isolate operations that are executed often and
-why we use classes to group different functionalities of our program
+use methods to isolate operations, and
+why we use classes to group different behaviours and states in our program
 around some conceptual ideas that we can grasp (e.g.~a supermarket has
 queues, a queue has people, a person has a name and knows who is
 behind in the queue; a company has products and employees, employees
@@ -21,10 +21,11 @@ company).
 
 Structured and object-oriented programming are ways in which
 programmers can reduce the complexity of their programs to levels that
-are more or less manageable, but it is still impossible to write
+are (more or less) manageable for their human minds, 
+but it is still impossible to write
 programs that do not contain bugs. Humans, even the best programmers,
 have a tendency to forget some details of the program. That is the way
-the human mind works: it concentrates on the bug fundamental aspect
+the human mind works: it concentrates on the most fundamental aspect
 and forgets the details until needed\ldots which in computing means
 when the program is already executing and nothing can be done about
 it. 
@@ -37,20 +38,20 @@ even whether it will do what the programmer expects.
 That is why software testing is important. Testing a program is a way
 to ensure that the program does what it should. There are two types of
 testing: manual and automatic (Table~\ref{tab:test}). You are already
-familiar with the former type, you have been doing it for weeks with
-the programs you have been writing until now. Now we will learn how to
+familiar with the former type: you have been doing it for weeks, for
+those programs you have been writing until now. Now we will learn how to
 do things properly in an automated way. 
 
 \begin{table}[htbp]
   \centering
-  \begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
+  \begin{tabular}{|p{2.5cm}|p{5.8cm}|p{5.5cm}|}
     \hline
-    & Manual & Automatic \\
+    & Manual & Automated \\
     \hline
     Speed & Very slow & Very fast \\
-    Focus & Most important bugs known & All bugs known \\
-    Experience & Very repetitive and boring & The computer does the work \\
+    Focus & Most important bugs known & Every single bug known \\
     Thoroughness & Sometimes forgets to test some things & Tests everything always \\
+    It feels\ldots & Very repetitive and boring & Nothing: work is done by computer \\
     \hline
   \end{tabular}
   \caption{Manual testing vs automated testing}
@@ -60,16 +61,16 @@ do things properly in an automated way.
 \subsection{Automated testing}
 \label{sec:automated-testing}
 
-The idea behind automated testing is very simple: make a program that
-tests that your ``main'' program behaves as expected. You can execute
-this ``testing'' program every day as you original program grows to
+The idea behind automated testing is very simple: make a ``testing'' program that
+verifies whether your ``main'' program behaves as expected. You can execute
+this ``testing'' program every day as your original program grows to
 make sure that everything works as it
-should. Figures~\ref{fig:sdfsdsers} and~\ref{fig:sdfsdsers} provide
-two examples from real life when program did not behave as expected. 
+should. Figures~\ref{fig:sdddfsdsrrers} and~\ref{fig:sdfsdsers} provide
+two examples from real life when programs did not behave as expected. 
 
 \begin{figure}[tbp]
 \begin{verbatim}
-    Programmer 1: The program has messed-up and not we have lost data
+    Programmer 1: The program has messed-up and now we have lost data
         from our clients!
     Programmer 2: How is that possible?
     Programmer 1: The function returnPastPurchases() returned null,
@@ -85,7 +86,7 @@ two examples from real life when program did not behave as expected.
     Programmer 2: I am sorry...
 \end{verbatim}  
   \caption{Scenario 1: unmet expectations}
-  \label{fig:sdfsdsers}
+  \label{fig:sdddfsdsrrers}
 \end{figure}
 
 \begin{figure}[tbp]
@@ -119,26 +120,29 @@ including:
 \item programs without documentation that have to be modified, usually
   by a programmer that has nothing to do with the original
   programmers.
+\item programs with \emph{obsolete} documentation that have to be modified, usually
+  by a programmer that has nothing to do with the original
+  programmers.
 \item version changes in external libraries (or even the programming
-  language) that not backwards-compatible.
-\item changes in some part of the program affecting some other part of
+  language) that are not backwards-compatible.
+\item changes in one part of the program affect some other part of
   the program, apparently unrelated. 
 \end{itemize}
 
 The last reason is particularly important because it is the most
 common and it is quite difficult to fight. Big programs are usually
-written by many programmers, and none of them know everything about
-the code. Sometimes a change in some part of the code breaks something
-else that had been working until then. The problem becomes worse as
+written by many programmers, and none of them knows everything about
+the code. Sometimes a change in one region of the code breaks something
+else that had been working seamlessly until then. The problem becomes worse as
 programmers leave the project and other programmers join in with no
 previous knowledge about the program. 
 This results in programs that
 are more and more difficult to modify and adapt as they evolve over
 time. This is know as \emph{code viscosity}, and it is bad. Automated
 testing, by means of regression tests, is a way of fighting code
-viscosity: when the computer tests that everything that has been
-working until then ---even many parts that the programmer is now aware
-of--- is still working, the programmer knows that the last change did
+viscosity: when the automated tests verify that everything 
+is still working ---even those parts of the program unknown to the
+programmer---, one can be confident that the last change did
 not brake anything. 
 
 \subsection{Creating tests}
@@ -162,17 +166,15 @@ a method that returns the initials of a name
 in a class called \verb+Person+: 
 
 \begin{verbatim}
-    public String getInitials(String fullName)
-     {
+    public String getInitials(String fullName) {
         String result = "";
         String[] words = fullName.split(" ");
-        for (int i = 0; i < words.length; i++)
-          {
+        for (int i = 0; i < words.length; i++) {
              String nextInitial = "" + words[i].charAt(0);
              result = result + nextInitial.toUpperCase();
-          }
+        }
         return result;
-     }
+    }
 \end{verbatim}
 
 A test program would be a Java class that could look like this: 
