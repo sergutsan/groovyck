@@ -24,6 +24,21 @@ Remember that star exercises are more difficult.
 \section{Install JUnit 4}
 \label{sec:install-junit-4}
 
+Use your favourite search engine to find JUnit (``JUnit download''
+will do, and probably just ``JUnit'' will do too). 
+
+\begin{itemize}
+\item Download the last stable version of JUnit 4.
+\item Unzip it in your drive. You will find a JAR file, with a name
+  similar to \verb+junit-4.10.1.jar+.
+\item Place the JAR file in a place where you can find it. It is
+  probably a good idea to create a folder ``lib'' where you place all
+  the external libraries that you use (e.g.~\verb+h:\lib+ on windows
+  or \verb+/opt/lib+ on Unix systems).
+\item Now you can add the JAR file to your classpath at the command
+  line (as in the notes) or by modifying the environment variable
+  CLASSPATH. 
+\end{itemize}
 
 \section{Practice "Find bugs once"}
 \label{sec:practice-find-bugs}
@@ -38,5 +53,7 @@ notes.
 Then follow the ``find bugs once'' algorithm: reproduce the bug manually,
 reproduce the bug programmatically by adding a new test to the testing
 class, then fix the bug and check that all tests pass. 
+
+
 
 \end{document}
