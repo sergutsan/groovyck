@@ -55,5 +55,111 @@ reproduce the bug programmatically by adding a new test to the testing
 class, then fix the bug and check that all tests pass. 
 
 
+  % - test methods in hospital
+
+  % - test methods in circular list
+
+  % - test methods in doubly linked list
+
+\section{Test implementations of a given interface}
+\label{sec:test-impl-given}
+
+You already know that an interface is a way of describing the
+behaviour of the class without knowing the details. Sometimes, one
+party provides the interface of a component and the other party
+implements the interface. This is very common in big projects, where
+small teams of programmers make parts of a bigger program (e.g.~web
+browsers, word processors, multiplayer games), and the different
+modules need to communicate with each other. 
+
+The first party does not only define the interface, it also implements
+the tests that the implementation (i.e.~the class that implements the
+interface) must pass. (When this approach is taken to its logical
+conclusion, we are talking about Test-Driven Development as we will
+see very soon). 
+
+Take the role of a project leader and implement the tests for two of
+the interfaces you have implemented in past weeks. 
+
+\subsection{Stack}
+\label{sec:stack3}
+
+The notes from Day~7 implemented a Stack interface in two different
+ways. Create a battery of tests that verify that the classes
+implementing the interface is working as expected. Use it to test both
+implementations.
+
+\subsection{Queue}
+\label{sec:stack2}
+
+You implemented a Queue interface ---maybe in two different ways--- on
+Day~7. Create a battery of tests that verify that the class(es)
+implementing the interface work/s as expected. 
+
+\subsection{Set (*)}
+\label{sec:stack5}
+
+You implemented a Set interface ---possibly in two different ways--- on
+Day~8. Create a battery of tests that verify that the class(es)
+implementing the interface work as expected. 
+
+
+
+\section{Testing mathematical functions}
+\label{sec:test-math-funct}
+
+On Day~7 you implemented a simple hash. Write a battery of tests to
+verify its behaviour, paying special attention to border cases. 
+
+Hint: Implement a loop that tries a fair amount of random numbers
+(around two thousand, for the purposes of this exercise) and verify
+that the output is within the range. 
+
+
+\section{Testing dynamic structures}
+\label{sec:testing-maps}
+
+Write batteries of tests to verify the functionality of the dynamic
+structures you have created in past weeks: 
+
+\begin{itemize}
+\item doubly-linked list (day 6)
+\item circular list (day 6)
+\item simple map (day 7)
+\item sorted list (day 6)
+\end{itemize}
+
+Make sure that you test border cases, including situations like: 
+
+\begin{itemize}
+\item Adding the first element.
+\item Removing the last element.
+\item Adding the first element and then removing it\ldots and then
+  adding another one.
+\end{itemize}
+
+  % - a list leave a pointer loose
+
+  % - a list adds -1 so length() returns the wrong size
+
+\section{More tests (*)}
+\label{sec:more-tests-}
+
+If you have finished with the other exercises, write additional
+batteries of tests for other programs (in particular, the exercises
+marked with a star)  that you have written in past
+weeks. Some exercises that provide a harder challenge to test properly
+are: 
+
+\begin{itemize}
+\item the anti-aircraft game from day 5
+\item any of the sort algorithms from day 6
+\item any of the unfair queues from day 7
+\item the hash-table (day 7)
+\item deletion of elements in a tree (day 8)
+\item re-balancing of a tree (day 8)
+\item the abstract syntax tree (day 8)
+\item the pseudo-git tree (day 8) (**)
+\end{itemize}
 
 \end{document}
