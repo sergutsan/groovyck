@@ -28,7 +28,7 @@ Use your favourite search engine to find JUnit (``JUnit download''
 will do, and probably just ``JUnit'' will do too). 
 
 \begin{itemize}
-\item Download the last stable version of JUnit 4.
+\item Download the latest stable version of JUnit 4.
 \item Unzip it in your drive. You will find a JAR file, with a name
   similar to \verb+junit-4.10.1.jar+.
 \item Place the JAR file in a place where you can find it. It is
@@ -43,8 +43,10 @@ will do, and probably just ``JUnit'' will do too).
 \section{Practice "Find bugs once"}
 \label{sec:practice-find-bugs}
 
+\subsection*{a)}
+
 The method \verb+getInitials(String)+ has a bug! If you introduce a
-name with more than space between words, it throws an exception.
+name with more than one space between words, it throws an exception.
 
 Create a class that contains the method \verb+getInitials(String)+ as
 described in the notes. Create also the test class as described in the
@@ -54,29 +56,158 @@ Then follow the ``find bugs once'' algorithm: reproduce the bug manually,
 reproduce the bug programmatically by adding a new test to the testing
 class, then fix the bug and check that all tests pass. 
 
+\subsection*{b)}
+\label{sec:b}
 
-  % - test methods in hospital
+Another programmer has created a simple program for personal
+accounting. This program asks the user for the number of bills that have not
+been paid yet and calculates the total debt. Look at the Accounting
+and Bill classes below. 
 
-  % - test methods in circular list
+\begin{figure}[hbtp]
+  \centering
+\begin{verbatim}
+/**
+ * A program for simple personal accounting. 
+ *
+ * Asks the users about their bills, and then 
+ * says how many bills there are, and what is the
+ * total debt.
+ */
+public class Accounting {
+    /**
+     * The first element of the list of bills
+     */
+    private Bill firstBill = null;
 
-  % - test methods in doubly linked list
+    public static void main(String[] args) {
+        Accounting acc = new Accounting();
+        acc.launch(args);
+    }
+
+    private void launch(String[] args) {
+        String concept = "";
+        int amount = 0;
+        do {
+            System.out.println("What's your next bill (type \"END\" to finish)?");
+            System.out.print("  Concept: "); 
+            concept = System.console().readLine();
+            if (!concept.equals("END")) {
+                System.out.print("  Amount: "); 
+                String strAmount = System.console().readLine();
+                amount = Integer.parseInt(strAmount);
+            }
+            Bill newBill = new Bill(concept, amount);
+            addBillToList(newBill);
+        } while (!concept.equals("END"));
+        int count = 0;
+        int totalDebt = 0;
+        for (Bill current = firstBill; current != null; current = current.getNextBill()) {
+            count++;
+            totalDebt += current.getAmount();
+        }
+        System.out.println("You have " + count + " bills unpaid (total debt: " + totalDebt + ")");
+    }
+\end{verbatim}
+  \caption{Class Accounting (1 of 2)}
+  \label{fig:accountingggggt}
+\end{figure}
+
+\begin{figure}[hbtp]
+  \centering
+\begin{verbatim}
+    private void addBillToList(Bill bill) {
+        if (firstBill == null) {
+            firstBill = bill;
+            return;
+        } 
+        Bill current = firstBill;
+        while (current != null) {
+            if (current.getNextBill() == null) {
+                current.setNextBill(bill);
+                return;
+            }
+            current = current.getNextBill();
+        }
+        return;
+    }
+}
+\end{verbatim}
+  \caption{Class Accounting (2 of 2)}
+  \label{fig:accountinggggg}
+\end{figure}
+
+\begin{figure}[hbtp]
+  \centering
+\begin{verbatim}
+public class Bill {
+    private String concept;
+    private int amount;
+    private Bill next;
+
+    public Bill(String concept, int amount) {
+        this.concept = concept;
+        this.amount  = amount;
+        this.next    = null;
+    }
+    public String getConcept() {
+        return concept;
+    }
+    public int getAmount() {
+        return amount;
+    }
+    public void setNextBill(Bill bill) {
+        next = bill;
+    }
+    public Bill getNextBill() {
+        return next;
+    }
+}
+\end{verbatim}
+  \caption{Class Bill}
+  \label{fig:accountingggggtr}
+\end{figure}
+
+The programmer comes to see you because the program does not work as
+expected: it says that there is one bill too many, and the calculated
+total debt is wrong too. The programmer asks for
+your help. You decide to use the ``find bugs once'' algorithm to find
+the bug, create a test that reproduces the bug,
+and then fix the bug once and for all. 
+
+
+\section{Testing mathematical functions}
+\label{sec:test-math-funct}
+
+On Day~7 you implemented a simple hash. Write a battery of tests to
+verify its behaviour, paying special attention to border cases. 
+
+Hint: Implement a loop that tries a fair amount of random numbers
+(around two thousand, for the purposes of this exercise) and verify
+that the output is within the range. 
+
 
 \section{Test implementations of a given interface}
 \label{sec:test-impl-given}
 
 You already know that an interface is a way of describing the
-behaviour of the class without knowing the details. Sometimes, one
+behaviour of a class without any knowledge about the implementation 
+details. Sometimes, one
 party provides the interface of a component and the other party
 implements the interface. This is very common in big projects, where
 small teams of programmers make parts of a bigger program (e.g.~web
 browsers, word processors, multiplayer games), and the different
-modules need to communicate with each other. 
+modules need to communicate with each other. Defining clear and simple
+interfaces is usually the first step in the design, as it allows
+different teams to work in parallel and then bring their code
+together. 
 
-The first party does not only define the interface, it also implements
-the tests that the implementation (i.e.~the class that implements the
-interface) must pass. (When this approach is taken to its logical
-conclusion, we are talking about Test-Driven Development as we will
-see very soon). 
+Sometimes, the first party does not only define the interface, it also
+implements the tests that the implementation (i.e.~the class that
+implements the interface) must pass\footnote{When this approach is taken to
+its logical conclusion, we are talking about Test-Driven Development
+as we will see very soon.}. This is a good idea when the development is
+sub-hired to an external company. 
 
 Take the role of a project leader and implement the tests for two of
 the interfaces you have implemented in past weeks. 
@@ -104,18 +235,6 @@ Day~8. Create a battery of tests that verify that the class(es)
 implementing the interface work as expected. 
 
 
-
-\section{Testing mathematical functions}
-\label{sec:test-math-funct}
-
-On Day~7 you implemented a simple hash. Write a battery of tests to
-verify its behaviour, paying special attention to border cases. 
-
-Hint: Implement a loop that tries a fair amount of random numbers
-(around two thousand, for the purposes of this exercise) and verify
-that the output is within the range. 
-
-
 \section{Testing dynamic structures}
 \label{sec:testing-maps}
 
@@ -138,11 +257,9 @@ Make sure that you test border cases, including situations like:
   adding another one.
 \end{itemize}
 
-  % - a list leave a pointer loose
+You should have time to do at least one the four cases in the lab.
 
-  % - a list adds -1 so length() returns the wrong size
-
-\section{More tests (*)}
+\section{More tests (**)}
 \label{sec:more-tests-}
 
 If you have finished with the other exercises, write additional
