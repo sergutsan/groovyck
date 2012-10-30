@@ -3,17 +3,18 @@
 \label{sec:constants}
 
 Programs use data, lots of data. Data is stored in variables of simple
-and complex types, the latter being pointer that point to objects in
-the memory. We have used a lot of variables up to now. 
+and complex types (the latter being pointers that point to objects in
+the memory, in the heap). We have used a lot of variables since we
+started our journey into programming. 
 
-Sometimes, we know that a piece of data is not going to change over
-the course of the program. Maybe it is a physical constant like the
-speed of light, maybe it is a mathematical constant like $\pi$, maybe
-it is another element of your program that you know will never
-change. 
+Sometimes, we know that a piece of data is not going to change. 
+Maybe it is a physical constant like the
+speed of light, maybe it is a mathematical constant like $\pi$, or
+maybe it something else. Any such piece of data in your program, that
+is known to not change, is called a \emph{constant}. 
 
-Moreover, you want your program not to allow any part
-of the code (possibly \emph{buggy}) to modify it. This is achieved by
+You do not want your program to allow any section
+of the code to modify your constants, even by mistake. This is achieved by
 using the keyword \verb+final+. This keyword tells Java that the value
 of a variable must never change from the moment it is initialised
 until the program ends. See an example: 
@@ -26,14 +27,26 @@ until the program ends. See an example:
 You remember that we said that static \emph{fields} should be used
 sparingly, and mostly (or only) for constants. The keyword
 \verb+final+ is used to declare an identifier as constant, and
-therefore both keywords are frequently found together when applied to
-fields. 
+therefore both keywords (\verb+static+ and \verb+final+)
+are frequently found together when applied to constants: final ensures
+the value cannot be changed while static ensures there is only one
+field (a ``box'') for the whole class rather than one duplication in
+every object of the class.
 
-You may also remember that we mentioned that constants fields can be
-made public, as there is no risk of someone modifying their values and
-having undesirable side effects. If you ever make a field public in a
+You may also remember that we mentioned that constant fields can be
+made public, as there is no risk of anyone modifying their values
+producing some undesirable side effect. If you ever make a field public in a
 class that has methods, make sure you make it static and (especially)
-final too.
+final.
+
+\begin{center}
+{\large \textbf{If a field is public, it must be static and final.}}  
+\end{center}
+
+The only exception to this rule is for classes without
+methods. Remember that such a class can be used as a way of
+interchanging several pieces of data bundled together (as a return
+value, for example). 
 
 \section{Documenting your code with JavaDoc}
 \label{sec:docum-your-code}
@@ -41,9 +54,10 @@ final too.
 % TODO: write this better
 
 We have already seen how the Java library is completely documented
-online. All classes explain what they are and what they do (i.e.~their
+online. All classes are described on a web page that explains
+what they are and what they do (i.e.~their
 methods, explaining the parameters), and this information is online on
-the Java API documenation of JavaDoc. You can find the JavaDoc easily
+the Java API documenation or JavaDoc. You can find the JavaDoc easily
 by typing ``Java API'' on your favourite search engine. 
 
 The good news is that it is easy to document your own classes in the
@@ -69,7 +83,7 @@ parameters or return values, as shown in the following example:
      * the stack can be removed at any given time; to access a specific 
      * element, all elements on top of it must be removed (popped) first. 
      * 
-     * This interface allows the user to look at the elements of the list
+     * This interface allows the user to replace some elements of the list
      * even if they are not accessible. 
      */
     public interface StringStack {
@@ -112,7 +126,9 @@ in a short and clear way. Comments should not explain the internal
 implementation details unless it really makes a difference to other
 programmers using those classes or methods. In other words, comments
 should be as clear as possible, and as short as possible, in that
-order of importance. 
+order of importance\footnote{The Java documentation itself is a good
+  inspiration of what good comments should look like. Use it as an
+  inspiration as well as a source of information.}. 
 
 \subsection{How to create the online documentation}
 \label{sec:how-create-online}
@@ -128,7 +144,8 @@ just need to run the following command:
 \end{verbatim}
 
 This will generate all the web pages, HTML files, CSS style sheets,
-links, etc, for you. 
+links, etc, for you on the \verb+www+ folder. The folder will contain
+a file called \verb+index.html+ as a starting point. 
 
 \section{More on testing}
 \label{sec:more-testing}
@@ -139,9 +156,10 @@ links, etc, for you.
 In the former section we have seen how basic testing is performed. A
 testing method is marked with the annotation \verb+@Test+, and this
 indicates to JUnit that the method will be run as a test. The testing
-method contains one (sometimes more) \emph{assertion}, which is
+method contains one (sometimes more) \emph{assertions}, which is
 nothing more than a call to one of the methods of class
-\verb+or.junit.Assert+, maybe \verb+assertTrue(boolean)+. 
+\verb+org.junit.Assert+, like \verb+assertTrue(...)+ 
+and \verb+assertEquals(...,...)+. 
 
 In this section we are going to learn how to create slightly more
 complicated tests. 
@@ -149,10 +167,10 @@ complicated tests.
 \subsubsection*{Constraints: timeout and expected}
 \label{sec:timeout}
 
-Sometimes a bug does not result in a bad result being returned,
+Sometimes a bug does not result in an incorrect return value,
 sometimes it results in an infinite loop or an extremely long response
 time. If we want to specify a maximum time for our testing methods to
-run we can do it by passing a ``timeout'' parameter to annotation
+run, we can do it by passing a ``timeout'' parameter to annotation
 \verb+@Test+, as in the following example: 
 
 \begin{verbatim}
@@ -179,7 +197,7 @@ If the method does not throw an \verb+IndexOutOfBoundsException+ in
 this test, the test will fail. Note that this is quite the contrary of
 the usual behaviour: when a testing method throws an exception, it is
 usually a symptom of something not working as expected; but this not
-always the case. Situation in which we may want to expect an exception
+always the case. Situations in which we may want to expect an exception
 include requests to lists beyond their size, parsing strings that
 are not in the right format, and passing negative parameters to
 methods that only accept positive integers. 
@@ -192,7 +210,7 @@ quite common that this is needed for all testing method in a testing
 class. 
 
 Instead of repeating the same code in each and every method, which
-each boring and error-prone, we can create a method to that before
+is boring and error-prone, we can create a method to do that before
 every testing method is called. This method must be annotated with
 \verb+@Before+. In the same way, if some cleanup must be performed
 after each testing method ends and before the next testing method
@@ -225,8 +243,8 @@ inside each testing method, then it is better to just do some
 initialisation at the beginning of all tests and some clean-up at the
 end of all test. 
 
-This is done by using the annotations \verb+BeforeClass+ and
-\verb+AfterClass+. Examples of resources that are acquired and
+This is done by using the annotations \verb+@BeforeClass+ and
+\verb+@AfterClass+. Examples of resources that are typically acquired and
 released once per class include network connections and database
 connections. 
 
@@ -243,7 +261,7 @@ The TDD methodology consists of three steps that are repeated in a
 loop: 
 
 \begin{enumerate}
-\item Write the tests for the next functionality of the program. Make
+\item Write the tests for the next functionality/feature of the program. Make
   sure they fail. If they do not fail, that means they are not testing
   anything that was not tested before (and are redundant) or they are
   incorrect (and should be fixed). 
@@ -252,7 +270,7 @@ loop:
   at the end to make sure the final functionality is right. 
 \end{enumerate}
 
-There are several benefits for programming in this fashion: 
+There are four main benefits for this style of programming:
 
 \begin{itemize}
 \item As the tests are written in advance, the \emph{production} code
@@ -269,7 +287,14 @@ There are several benefits for programming in this fashion:
   development, when it can be more costly to fix them.
 \end{itemize}
 
-This methodology can be combined with the ``find bugs once'' strategy
+The mains shortcoming is that it is difficult to see any progress at
+the beginning of the project. Time is spent writing tests and nothing
+``tangible'' can be shown to managers or clients. But the effort pays
+in the long run, when the code evolves in a controlled way, with a
+strong battery of tests that ensures that bugs do not re-appear and
+that the functionality is always moving forward. 
+
+The TDD methodology can be combined with the ``find bugs once'' strategy
 we already know. A program can be developed using TDD, finding most
 bugs in the process, but some bugs may appear later in the development
 cycle; if that happens, the ``find bugs once'' strategy results in
