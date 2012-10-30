@@ -210,6 +210,7 @@ only my own fault.
 %        or an example about it
 \input{d8-trees}
 
+\chapter{Testing}
 % Day 9,10: Testing (...whether they have learnt anything yet)
 % Day 9:
 % \item Software testing 
@@ -222,19 +223,10 @@ only my own fault.
 %          /.../junit.jar:. org.junit.runner.JUnitCore TestClass
 % 
 % \item Ultra-brief introduction to annotations in Java
-% \item Do not confuse annotations with JavaDoc!! @throws, etc
-% \item Annotations to cover:
-%     @Test
-%       timeout = 15000
-%       expected = IllegalStateException.class
-%     @Before, @BeforeClass
-%     @After, @AfterClass
-%     @Override
-%     @SuppressWarnings
-%     @Deprecated
 \input{d9-testing}
 % 
 % Day 10:
+% \item final
 % \item Test-driven development
 %       Show them the tests that test whether their versions work the
 %       same as the versions of the Java library.
@@ -255,7 +247,10 @@ only my own fault.
 % \item Introduction to the Java Collections library
 %
 % ASSIGNMENT: produce a test specification for some program, and then
-% create the program
+% create the program... maybe better give them the interface and then
+% they must implement the battery of tests... mmm... difficult to
+% test, isn't it? How do you test tests? On the other hand, this is
+% important stuff so they should be examined on it...
 % 
 % FOR NEXT YEAR: refactor TDD into D9, and leave D10 with little extra
 %     material (or no extra material whatsoever, apart from the
@@ -266,6 +261,7 @@ only my own fault.
 % \item Introduction to generics in Java
 %    Make your own List<T> (and Node<T>), Stack<T> and Queue<T>
 %    (probably extending List<T>), and Map<K,V>
+% \item Introduction to the Java Collections library
 % \item More on object orientation: inheritance (and type
 %   hierarchies, upcasting/downcasting of complex types),
 %   polymorphism, overloading, overriding, "static" (good "real"
@@ -280,9 +276,13 @@ only my own fault.
 %     toString() to call super.super.toString(), and then pass it to a
 %     println(). 
 % \item Maybe a sample test, like Roger Mitton does?(remember you
-% have a spare week (it's 11 not 10, count them JIC))
-% \item Maybe some project for groups??
-% ASSIGNMENT: something that uses recursion and inheritance and polymorphism
+%   have a spare week (it's 11 not 10, count them JIC))... better next
+%   week, so I can test up to here; plus recursion week seems a bit
+%   empty.
+% \item Maybe some project for groups?? -> leave for OODP
+%
+% ASSIGNMENT: something that uses inheritance and
+%   polymorphism... great idea, now what?
 
 % Day 13,14: Recursion!
 % TODO: next year, introduce recursion before pointers? or better to
