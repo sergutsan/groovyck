@@ -1,4 +1,40 @@
 
+\section{Constants}
+\label{sec:constants}
+
+Programs use data, lots of data. Data is stored in variables of simple
+and complex types, the latter being pointer that point to objects in
+the memory. We have used a lot of variables up to now. 
+
+Sometimes, we know that a piece of data is not going to change over
+the course of the program. Maybe it is a physical constant like the
+speed of light, maybe it is a mathematical constant like $\pi$, maybe
+it is another element of your program that you know will never
+change. 
+
+Moreover, you want your program not to allow any part
+of the code (possibly \emph{buggy}) to modify it. This is achieved by
+using the keyword \verb+final+. This keyword tells Java that the value
+of a variable must never change from the moment it is initialised
+until the program ends. See an example: 
+
+\begin{verbatim}
+    public static final double PI = 3.14159265359; 
+\end{verbatim}
+
+% Cross-refs
+You remember that we said that static \emph{fields} should be used
+sparingly, and mostly (or only) for constants. The keyword
+\verb+final+ is used to declare an identifier as constant, and
+therefore both keywords are frequently found together when applied to
+fields. 
+
+You may also remember that we mentioned that constants fields can be
+made public, as there is no risk of someone modifying their values and
+having undesirable side effects. If you ever make a field public in a
+class that has methods, make sure you make it static and (especially)
+final too.
+
 
 
 TDD
