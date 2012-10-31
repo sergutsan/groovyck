@@ -22,7 +22,14 @@ Remember that star exercises are more difficult.
 \textbf{Do not try star-exercises unless the other ones are clear to
   you}.  
 
-\section{}
+\section{Final is final}
+\label{sec:final-final}
+
+Look at the following code. Is everything OK?
+
+
+
+\section{Practicing TDD: }
 \label{sec:jj}
 
 At every stage, you must follow the following steps: 
@@ -37,6 +44,36 @@ At every stage, you must follow the following steps:
   (on a separate \verb+www+ folder). 
 \end{enumerate}
 
+Bank
+  makeDeposit
+  takeMoney
+  (has map: name -> amount)
 
+Client
+  getMoney
+
+----
+  
+Library(String name)
+  takeBook(String title)
+  returnBook(Book book)
+  addBook(String title, String author)
+  getBookCount()
+  getBookBorrowedCount()
+  addReader(Person p)
+  getReaderCount()
+  getName()
+
+Person(String name)
+  getBooks() 
+  getName()
+  getLibrary()
+  register(Library)
+
+Book(String title, String author)
+  isTaken()
+  setTaken(boolean)
+  getTitle()
+  getAuthor()
 
 \end{document}
