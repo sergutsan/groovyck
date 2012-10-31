@@ -17,10 +17,8 @@ goals:
 \item Understand how JavaDoc is used.
 \end{itemize}
 
-You should be able to finish most of non-star exercises in the lab. 
-Remember that star exercises are more difficult. 
-\textbf{Do not try star-exercises unless the other ones are clear to
-  you}.  
+You should be able to finish the first exercise and most of the second
+one in the lab.
 
 \section{Final is final}
 \label{sec:final-final}
@@ -51,48 +49,162 @@ and see if your intuition was right.
 \section{Practicing TDD: }
 \label{sec:jj}
 
-At every stage, you must follow the following steps: 
+Write a simple application for keeping track of the books in a
+library. The functionality will be described incrementally by
+stages. At every stage, you must follow the following steps:
 
 \begin{enumerate}
 \item Generate the tests for the functionality required for that
-  stage. Check that the new tests fail while the old ones pass.
-\item Generate the minimum code that passes all the new tests.
-\item Refactor the code to make it clearer, if needed.
+  stage. Check that the new tests fail while the old ones pass. It is
+  a good idea to define the interface of the class before writing the
+  tests (but not the code of the class yet!). 
+\item Generate the minimum code that passes all the new tests. If you
+  wrote an interface, make the class implement the interface
+  (i.e.~public class MyClass \emph{implements} MyInterface, etc). 
+\item Refactor the code to make it clearer, if needed. Your first
+  implementation may not be as clear as possible. Think of the next
+  programmer that will come after you: will they understand the code
+  easily? Are variable names clear and descriptive? Can you simplify
+  those \verb+for+ loops and/or those \verb+if...else+ branches?
 \item Document the
   code if it has not been done yet. Update the JacaDoc documentation
-  (on a separate \verb+www+ folder). 
+  (on a separate \verb+www+ folder) using the command
+  \verb+javadoc+. Use your browser to check that it works and is easy
+  to read. 
 \end{enumerate}
 
-Bank
-  makeDeposit
-  takeMoney
-  (has map: name -> amount)
+\subsection{}
 
-Client
-  getMoney
+Create a class for books. Books have authors and titles. The class
+should implement getters for both author name and title, but these
+must be set at construction time and never be modified
+afterwards\footnote{An object whose fields cannot be changed after
+  construction is called an \emph{immutable} object.}.
 
-----
-  
-Library(String name)
-  takeBook(String title)
-  returnBook(Book book)
-  addBook(String title, String author)
-  getBookCount()
-  getBookBorrowedCount()
-  addReader(Person p)
-  getReaderCount()
-  getName()
+\subsection{}
 
-Person(String name)
-  getBooks() 
-  getName()
-  getLibrary()
-  register(Library)
+Create a class for the users of the library. Users have a name and a
+library-ID (an \verb+int+), 
+both of which must be unique in a library. The name is
+set at construction time, but the library-ID is not. 
+The class must implement methods to get the
+name of the person and their ID, and to set the latter. 
 
-Book(String title, String author)
-  isTaken()
-  setTaken(boolean)
-  getTitle()
-  getAuthor()
+\subsection{}
+
+Extend the class you have just created to allow users to register with
+a library. You will need two methods \verb+register(Library)+
+and \verb+getLibrary()+. The former method is the way to obtain the
+user-ID. 
+
+\textbf{Important.} As you do not have a Library class yet, you will need a fake
+Library object to test your method \verb+register(Library)+. This is called a
+\emph{mock} object, and it is a common practice when writing testing
+code because it allows the programmer to test one class at a time
+---instead of testing several classes at the same time, which is more
+complex and thus error-prone---. 
+The mock library object does not need to do anything apart from
+providing a name (so that your class can return it when you call
+\verb+getLibrary()+ and an ID when you call \verb+getID()+. Because it
+is a mock object and not the real one, it can return trivial values
+(i.e.~the name can be always ``Library name'' and the ID can be
+always~13).  
+
+\subsection{}
+
+Create a class Library for the library. Libraries have a name, set at
+construction time. They also have a ``maximum number of books borrowed
+by the same person'' policy (e.g.~max three books per user), 
+which can be updated at any time. Of
+course, they also have a method to get the maximum number of books to
+be borrowed at any time (e.g.~\verb+getMaxBooksPerUser()+). 
+
+\subsection{}
+
+Add a method \verb+getId(String)+ that returns the ID of a person for
+a given name in this library. If the person does not have an ID yet,
+a new unique ID is created and returned. 
+
+Any subsequent calls to this
+method with the same name argument should return the same ID. 
+
+\subsection{}
+
+Extend your library class a bit further. Add three new methods: 
+
+\begin{description}
+\item[addBook(String title, String author)] Adds a new book to the
+  list of books in this library.
+\item[takeBook(String title)] If the book is not taken, marks the book
+  as taken and returns it. If the book is taken, null is returned.
+\item[returnBook(Book book)] Marks the book as not taken. 
+\end{description}
+
+\textbf{Important}. At this point you have to make a \emph{design
+  decision}: should the information about the books ``being taken'' be
+stored in the book class or in the library class? 
+If this information is part of the book, you must
+add some functionality to the Book class: maybe methods like
+\verb+isTaken()+ and \verb+setTaken(boolean)+, and some private
+boolean field; if the responsibility lies on the library's camp, then you must
+add the adequate memory structures.
+
+\subsection{}
+
+Extend your library once more to include the following methods: 
+
+\begin{description}
+\item[getReaderCount()] returns the number of users registered in this
+  library. 
+\item[getBookCount()] returns the number of books in this library.
+\item[getBookBorrowedCount()] returns the number of borrowed books in
+  this library. 
+\end{description}
+
+\subsection{}
+
+Add a method to your users that returns a list (or an array) with the
+titles of all the books they are borrowing at the moment. 
+
+\subsection{}
+
+Extend your library class one more time with two methods that return: 
+
+\begin{itemize}
+\item a list (or an array) with all the users that are borrowing books
+  at the moment.
+\item a list (or an array) with all the users, borrowing or not.
+\item the name of the person that is borrowing a specific given title
+  at the moment; if nobody is borrowing the book, or the book does not
+  exist in the library, you must return null (not an empty String). 
+\end{itemize}
+
+\subsection{}
+
+Modify your method \verb+setMaxBookPolicy(int)+ in your library class,
+so that it does not return \verb+void+ anymore. Instead, it should
+return an array of users that have more books than the new policy
+allows. The array may be empty. 
+
+For example, if the maximum policy is three books per user, Marge,
+Lisa, and Maggie may have borrowed one, two, and three books. If the
+policy is then set to a maximum of one book, the method must return
+the names of Lisa and Maggie (so that the library can track them down
+and ask them to return the excess books).
+
+\subsection{}
+
+Once you have finished implementing all this functionality, write a
+small script that illustrates these situations: 
+
+\begin{itemize}
+\item A user borrowing one book and then returning it.
+\item A user trying to borrow more books than allowed. And then
+  returning one of the books they already have to borrow a new one.
+\item Several users borrow books. The library is then asked who has
+  some specific title, if anyone. 
+\item The ``maximum books'' is reduced to one, then to zero, then it
+  is increased to the original value.  
+\end{itemize}
 
 \end{document}
