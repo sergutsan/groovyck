@@ -40,6 +40,17 @@ will do, and probably just ``JUnit'' will do too).
   CLASSPATH. 
 \end{itemize}
 
+\section{Testing mathematical functions}
+\label{sec:test-math-funct}
+
+On Day~7 you implemented a simple hash. Write a battery of tests to
+verify its behaviour, paying special attention to border cases. 
+
+Hint: Implement a loop that tries a fair amount of random numbers
+(around two thousand, for the purposes of this exercise) and verify
+that the output is within the range. 
+
+
 \section{Practice "Find bugs once"}
 \label{sec:practice-find-bugs}
 
@@ -175,16 +186,20 @@ your help. You decide to use the ``find bugs once'' algorithm to find
 the bug, create a test that reproduces the bug,
 and then fix the bug once and for all. 
 
+This is a common situation in companies. There is some software that
+has been developed in the past (maybe by programmers that have left
+the company since) and it needs fixing. The programmers responsible of
+fixing the program have never seen the code before, they are just told
+what it should do. 
 
-\section{Testing mathematical functions}
-\label{sec:test-math-funct}
-
-On Day~7 you implemented a simple hash. Write a battery of tests to
-verify its behaviour, paying special attention to border cases. 
-
-Hint: Implement a loop that tries a fair amount of random numbers
-(around two thousand, for the purposes of this exercise) and verify
-that the output is within the range. 
+Usually the first step is to \emph{refactor} the code to make it
+easier to test; this may involve breaking up methods and classes into
+smaller, simpler methods and classes. For example, you may want to
+separate the ``getting user input'' and the ``create new bill''
+functionalities in method \verb+launch()+ above, so that you can
+test the latter with JUnit; you can never test user input in an
+automated way, but you can test what you do with that input by
+creating fake user data and passing it to your methods. 
 
 
 \section{Test implementations of a given interface}
