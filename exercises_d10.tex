@@ -25,9 +25,28 @@ Remember that star exercises are more difficult.
 \section{Final is final}
 \label{sec:final-final}
 
-Look at the following code. Is everything OK?
+Look at the following code. Is everything OK? How many errors can you spot?
 
+\begin{verbatim}
+    public class Person {
+        private final String name;
 
+        public Person(String name) {
+            this.name = name;
+        }
+
+        public String getName()
+            return this.name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+\end{verbatim}
+
+Once you think you have found all the errors, try to compile the code
+and see if your intuition was right. 
 
 \section{Practicing TDD: }
 \label{sec:jj}
