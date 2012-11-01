@@ -2,15 +2,15 @@
 \section{Testing and Mock Objects}
 \label{sec:testing-mock-objects}
 
-In a real project, especially if you are following the Test-Driven
-Development (TDD) methodology, sometimes you have to test your class
-as it interacts with classes that do not exist yet. Maybe you have a
+In a real project, especially if we are following the Test-Driven
+Development (TDD) methodology, sometimes we need to test our classes
+interacting with other classes that do not exist yet. Maybe there is a
 \verb+Wheel+ class that needs to talk to 
 an \verb+AntiblockBrakingSystem+ class, but
-you have not implemented the latter yet. In a real scenario
+the latter has not been implemented yet. In a real scenario
 (e.g.~initial stages of a new project), a class may interact with tens
 of other classes which have not been implemented yet. How can you test
-it?
+this?
 
 % TODO: this example sucks; replace it with something from real life,
 %   or at least a good example that does not rely of ugly methods like
@@ -18,7 +18,7 @@ it?
 
 \begin{verbatim}
     @Test
-    public void 
+    public void testsRotationIsComplete() {
         Wheel wheel = new Wheel();
         AntiblockBrakingSystem abs = new FpgaAntiblockBrakingSystem();
         double input = abs.getRotation(wheel);
@@ -28,29 +28,30 @@ it?
 \end{verbatim}
 
 If Wheel must communicate with AntiblockBrakingSystem and the latter
-(or its implementations if it is an interface) does not exist, how can
+(or its implementations if it is an interface) does not exist yet, how can
 it work?.
 
-The answer is to use \emph{mock objects} (sometimes called dummy
+The solution to this problem 
+is to use \emph{mock objects} (sometimes called dummy
 objects or dummies). A mock object is a trivially simple object that
 implements an interface to allow other objects to be tested. In other
 words, it fakes the real functionality that is needed to test another
-class. By using mock objects, as they say, you can fake until you make
-it. 
+class. By using mock objects, as they say, you can 
+``fake it until you make it''. 
 
-In the former testing method we can see that
-objects of type \verb+Wheel+ needs to talk to an object of type
-\verb+AntiblockBrakingSystem+ that implement one methods:
+By looking at the former testing method we can see that
+objects of type \verb+Wheel+ need to talk to objects of type
+\verb+AntiblockBrakingSystem+ that implement one method:
 \verb+getRotation(Wheel)+. 
 We can
-easily create a trivial class that implements that in five lines: 
+easily create a trivial class that implements that in only five lines: 
 
 \begin{verbatim}
-public class MockAbs implements AntiblockBrakingSystem {
-    public double getRotation(Wheel wheel) {
-        return 0.12345;
+    public class MockAbs implements AntiblockBrakingSystem {
+        public double getRotation(Wheel wheel) {
+            return 0.12345;
+        }
     }
-}
 \end{verbatim}
 
 As you can see, a mock class (and the mock objects that you obtain
@@ -75,7 +76,7 @@ Using mock objects, our original test would look like:
 
 \begin{verbatim}
     @Test
-    public void 
+    public void testsRotationIsComplete() {
         Wheel wheel = new Wheel();
         AntiblockBrakingSystem abs = new MockAbs();
         double input = abs.getRotation(wheel);
