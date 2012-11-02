@@ -113,7 +113,7 @@ now, we will look at just one way of doing it by means of
 interfaces. Look at this example:
 
 \begin{verbatim}
-    public interface List<P implements Person> {
+    public interface PersonList<P implements Person> {
         void push(P object);
         P pop();
     }
@@ -123,31 +123,33 @@ In this case, we are using P instead of T for the type variable to
 make it clearer that it must be a Person, not just any type. The
 compiler knows that any type that we combine this list with must be a
 class that extends the interface \verb+Person+. Therefore, we will be
-able to create a \verb+List<KidPerson>+ but not a
-\verb+List<Integer>+. If we try to do the latter, the compiler will
+able to create a \verb+PersonList<KidPerson>+ but not a
+\verb+PersonList<Integer>+. If we try to do the latter, the compiler will
 complain. 
 
 \subsection{Conclusion}
 \label{sec:conclusion-2}
 
-Benefits of generic classes: 
+Generic classes are one the main types of polymorphism present in
+Java. They enable programmers to combine one class with several other
+classes, by using type variables. 
 
-\begin{itemize}
-\item compilation detects errors
-\item less repetition of code
-\end{itemize}
-
-Drawbacks
-
-\begin{itemize}
-\item Code very verbose
-\item If they are abused, they make the code unreadable
-\end{itemize}
+Generic classes are, therefore, a way of reusing code and/or avoiding
+code repetition (remember the DRY principle: Don't Repeat Yourself). 
+There is no need to create a list of integers, a list of
+strings, and a list of books. It is better to create a generic list
+that can be combined with any type, and then combine it with integers,
+string, books, or any other type as needed. The drawbacks of generic
+classes is that they are slightly more verbose (i.e.~the programmer
+needs to write more) and that they can become very confusing if
+abused, e.g. when generic classes of generic classes of generic
+classes are employed. As a rule of thumb, use generics sparingly in
+Java and do not use generics of generics. Your brain will thank you. 
 
 \section{Method overloading}
 \label{sec:method-overloading}
 
-...
+
 
 \section{Introduction to upcasting}
 \label{sec:upcasting}
@@ -186,6 +188,26 @@ always up: the root of a tree, the interface of a class, etc).
   \label{fig:updown}
 \end{figure}
 
+Another useful form of upcasting is when a programmer uses an
+interface as a type for a generic class: 
+
+\begin{verbatim}
+    Stack<Person> myPersonStack = new ArrayStack<Person>();
+\end{verbatim}
+
+On the left-hand side, we have a generic interface (\verb+Stack<T>+) that is made
+specific by using another interface (\verb+Person+). The variable
+\verb+myPersonStack+ will point to a stack that will only store
+objects of classes that implement the \verb+Person+ interface
+(e.g. \verb+KidPerson+, \verb+AdultPerson+, etc). 
+
+Upcasting is a way of ``moving up to know less'', to forget more
+details about the implementation to work with a simpler, more generic
+data type. Bear in mind that a real program is really complex, so
+reducing complexity is usually in the programmer's benefit, and that
+is why it is so common in Java programs. In some rare occasions,
+programmers need to do the opposite: move down from the general to the
+specific: this is called downcasting. 
 We will see more about upcasting (and downcasting) in the following
 sections. 
 
