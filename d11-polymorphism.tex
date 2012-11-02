@@ -113,19 +113,103 @@ now, we will look at just one way of doing it by means of
 interfaces. Look at this example:
 
 \begin{verbatim}
-    public interface PersonList<P implements Person> {
+    public interface PersonList<P extends Person> {
         void push(P object);
         P pop();
     }
 \end{verbatim}
 
 In this case, we are using P instead of T for the type variable to
-make it clearer that it must be a Person, not just any type. The
+make it clearer that it must be a Person, not just any type. Note that
+the keyword to retrict the type variable is \verb+extends+, not
+\verb+implements+. The
 compiler knows that any type that we combine this list with must be a
 class that extends the interface \verb+Person+. Therefore, we will be
 able to create a \verb+PersonList<KidPerson>+ but not a
 \verb+PersonList<Integer>+. If we try to do the latter, the compiler will
 complain. 
+
+\subsection{Type wildcards}
+\label{sec:type-wildcards}
+
+Generic classes can also be used in a generic way (no pun
+intended). For example, we may want to write a method that takes a
+generic class inside a non-generic class, as in this example, where a
+\verb+School+ class has a method that always returns the first element
+of a list, regardles of it being a list of students, of teacher, or of
+homework assignments: 
+
+\begin{verbatim}
+    public class School {
+        // ...
+        public T returnFirstElement(List<T> stack) {
+            return stack.get(0); 
+        }
+        public void returnElementCount(List<T> stack) {
+            return stack.size();
+        }
+        // ... more methods here
+    }
+\end{verbatim}
+
+If you try to compile this method, the compiler will complain because
+it does not know what the type variable T is. There are three ways of
+solving this problem. First, we could make School a generic class: 
+
+\begin{verbatim}
+    public class School<T> {
+        // ...
+\end{verbatim}
+
+This is a bad idea. Classes should not be made generic unless there is
+a reason for it. Generics add an additional level of complexity in the
+code that must be balanced with some clear benefit, as in the case of
+container classes (lists, stacks, trees, maps, etc). Another
+possibility is to generify only the method
+\verb+returnFirstElement()+: 
+
+\begin{verbatim}
+    public class School {
+        // ...
+        public <T> T returnFirstElement(List<T> stack) {
+            return stack.get(0); 
+        }
+        // ... more methods here
+    }
+\end{verbatim}
+
+This is slightly better because it keeps the generics more
+contained. If the method returns a generified type, this is the best
+we can do. If it does not, we can use an even simpler notation using
+type wildcards: 
+
+\begin{verbatim}
+    public class School {
+        // ...
+        public void returnElementCount(List<?> stack) {
+            return stack.size();
+        }
+        // ... more methods here
+    }
+\end{verbatim}
+
+A type wildcard (i.e.~a question mark) means that the generic
+type can be specified with any other type. Wildcards can be restricted
+if necessary: 
+
+\begin{verbatim}
+    public class School {
+        // ...
+        public void returnElementCount(List<? extends Person> stack) {
+            return stack.size();
+        }
+        // ... more methods here
+    }
+\end{verbatim}
+
+In this case, the method will accept a list of any type as long as the
+type is a \verb+Person+. 
+
 
 \subsection{Conclusion}
 \label{sec:conclusion-2}
@@ -143,8 +227,13 @@ string, books, or any other type as needed. The drawbacks of generic
 classes is that they are slightly more verbose (i.e.~the programmer
 needs to write more) and that they can become very confusing if
 abused, e.g. when generic classes of generic classes of generic
-classes are employed. As a rule of thumb, use generics sparingly in
+classes are employed. 
+
+A full description of generics in Java, how they are implemented
+internally, and the full list of possibilities and caveats, is beyond
+the scope of this course. As a rule of thumb, use generics sparingly in
 Java and do not use generics of generics. Your brain will thank you. 
+
 
 \section{Method overloading}
 \label{sec:method-overloading}
