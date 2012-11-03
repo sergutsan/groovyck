@@ -15,7 +15,7 @@ different values for the parameters). In this section, we will move
 one step further to avoid code repetition by using \emph{inheritance} to
 prevent code repetitions \emph{among} classes. 
 
-\section{Extending already-existing classes}
+\subsection{Extending already-existing classes}
 \label{sec:extend-alre-exist}
 
 From all the forms of inheritance, the easiest to understand is the
@@ -59,7 +59,12 @@ again. In other words, you can call \verb+nextPage()+ on a
 \verb+LightEbook+ object exactly in the same way as you would do it
 on a \verb+Ebook+ object. 
 
-The base class that is extended is called the \emph{parent class},
+The base class that is extended is called the \emph{parent class} or
+\emph{superclass}\footnote{In this context, ``super'' is as in Latin
+  ``up'', without connotations of big, extra, or more
+  powerful. Remember that the convention in computing is that general
+  classes or interfaces are ``up'' and more specific or extended classes
+  are ``down''.), 
 while the extending class is called a \emph{subclass}. When there are
 many levels of hierarchy (a class extends a class that extends another
 class, etc), those classes up in the hierarchy are called
@@ -75,6 +80,11 @@ core Java library that provides a few methods that every other class
 can use. The most commonly used is \verb+equals()+, which compares two
 objects and returns \verb+true+ if they are the same (according to
 some class-specific rules) and \verb+false+ otherwise. 
+
+As everything is an \verb+Object+ by default, you do not need to write
+explicitly (\verb+...extends Object {+). Java will do it for
+you. Programmer must only explicitly say which class they are
+extending when they are extending a class that is not \verb+Object+.
 
 \paragraph{Final classes}
 \label{sec:final-classes}
@@ -322,7 +332,114 @@ returning two values from the new method.
 \subsection{Visibility revisited}
 \label{sec:protected-keyword}
 
+As it evolves and grows, a program can become really complex, usually
+beyond of what its programmer(s) can cope with. We know that one of
+the basic strategies to keep complexity under control is by hiding
+information. 
 
+Information is hidden by making it not-visible: visible fields can be
+read and written, but non-visible fields cannot; visible methods can
+be called, but non-visible fields cannot.  We have used two keywords
+to control the visibility of our classes' fields and methods:
+\verb+public+ and \verb+private+. Although these two keywords will
+cover most of your needs as a programmer, it is good to know that
+there are four levels of visibility in Java: public, protected,
+default (package), and private.
+
+\subsubsection*{Public}
+\label{sec:public}
+
+Public fields are visible to any other class, and can be read and
+written accordingly. Letting other classes (even your classes) modify
+the fields of your classes can have unpredictable effect in a
+normal-size program, and that is why you should make all your fields
+private as a rule of thumb. The only exception are the fields of
+method-less just-used-as-intermediate-data classes. 
+
+Public methods are visible to other classes and define the public
+interface of your class. This is usually made explicit by implementing
+one of more Java interfaces. Note that there is an ambiguity in
+natural language here: the public methods of a class are its ``interface''
+in the sense that they define how other classes can interact with it,
+but that does not necessarily mean that the class \verb+implements+
+(in the Java sense) a explicit Java \verb+interface+ defined in a
+\verb+.java+ file. You should keep this distinction clear when you
+read the documentation of software projects as both meanings of the
+words are sometimes used without much care. 
+
+\subsubsection{Protected}
+\label{sec:protected}
+
+Protected fields and methods are visible for classes in your package
+(i.e.~the same folder/directory as the class) and for descendant
+classes. There are a few cases in which the distinction
+\verb+protected+ vs. \verb+public+ makes sense (i.e.~in event-oriented
+architectures) but in most cases this nuance is not worth it, and that
+is why many of the most recent programming languages do not include a
+\verb+protected+ visibility and just use \verb+public+. 
+
+As a rule of thumb, use always public if you want other classes to
+call the methods in your class. However, it is important to understand
+what \verb+protected+ means because you will find it often when you
+read Java code, especially if it is old legacy code. 
+
+\subsubsection{Default (i.e.~package)}
+\label{sec:default-i.e.-package}
+
+When the visibility of a field or method is not specified, its default
+visibility is ``package-wide'', i.e.~it is visible to other classes in
+the same package. There is not a keyword for declaring ``package''
+visibility: fields and methods of unspecified visibility become
+visible for other classes in the same package. 
+
+Up to now, you have not noticed any difference
+between \verb+public+ visibility and default visibility because all
+your interacting classes have been part of the same package or were
+part of the standard Java library (e.g.~String) and you used only
+their public methods. 
+
+When Java was originally created, making things visible to the same
+package seemed like a good idea for several reasons. However, things
+have changed over the years and it is very rare today to find a
+situation where ``package'' visibility makes sense but \verb+public+
+visibility does not, with the additional complexity of keeping track
+and what is visible at which level. Therefore, you will very rarely
+find default visibility in Java code for a good reason; it is almost
+always a symptom of sloppy programming, a sign of a programming not
+thinking properly about the design of their program or --even worse---
+not understanding the difference between \verb+private+ and default
+visibility.   
+
+\subsubsection{Private}
+\label{sec:private}
+
+Private fields and methods are only seen inside their own class. This
+is the most complete form of ``hiding'', and should be the default
+option for all the fields and most of the methods (unless they are
+defined in an interface, i.e.~they are useful for other classes). 
+
+Note that \verb+private+ only determines visibility between classes,
+not between objects. Objects of the same class are able to see each
+other fields and methods. This is very evident in most implementations
+of the \verb+.equals()+ method. 
+
+\begin{verbatim}
+    public class Integer {
+        private int value;
+        // ...
+        public boolean equals(Integer other) {
+            if (this.value == other.value) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+\end{verbatim}
+
+Although the field \verb+value+ is private and cannot be seen from any
+other class, any object of class \verb+Integer+ can see the
+\verb+value+ method of other objects of the same class. 
 
 \subsection{Changing (overriding) behaviour}
 \label{sec:chang-overr-behav}
@@ -333,6 +450,48 @@ returning two values from the new method.
 
 \subsection{The keyword super}
 \label{sec:keyword-super}
+
+There are few keywords in Java that we have not seen yet, but one that
+is extremely relevant when we talk about inheritance is
+\verb+super+. This keyword designates the \emph{superclass} or
+\emph{parent class}, and can be used to use methods defined in it, as
+in this trivial example: 
+
+\begin{verbatim}
+    /**
+     * This method does exactly the same as the method of the same
+     * name of the parent class, plus printing a message on screen. 
+     * /
+    @Override
+    public void someMethod() {
+        super.someMethod();
+        System.out.println("Calling someMethod() at subclass.");
+    }
+\end{verbatim}
+
+Calling methods from the superclass is not very useful in practical
+terms, there are few situations in which this is needed or
+adequate. There is another use of super that is extremely important to
+understand, and that is calling the constructor of the parent class
+at the constructor of the subclass. This is so important it must be
+done at the first line of the constructor: 
+
+\begin{verbatim}
+    public MyClass() {     public MyClass(arguments) {
+        super();               super(arguments);
+        // rest here...        // rest here...    
+    }                      }
+\end{verbatim}
+
+If you try to do anything ---like initialising your fields--- before
+the \verb+super(...)+ constructor is called, you will get an error
+from the Java compiler. 
+
+\paragraph{Hidden super()}
+\label{sec:hidden-super}
+
+You may be wondering how was it possible to create classes that did
+not call the constructor lll
 
 %    - super
 %      - "hidden" super()
@@ -346,3 +505,9 @@ returning two values from the new method.
 \label{sec:final-note:-comp}
 
 %    \item composition better than extension
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
