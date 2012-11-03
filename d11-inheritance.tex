@@ -487,17 +487,53 @@ If you try to do anything ---like initialising your fields--- before
 the \verb+super(...)+ constructor is called, you will get an error
 from the Java compiler. 
 
-\paragraph{Hidden super()}
+\subsubsection*{Java magic constructors and the hidden super()}
 \label{sec:hidden-super}
 
-You may be wondering how was it possible to create classes that did
-not call the constructor lll
+As this point, you may be wondering how was it possible that you have
+created all your classes until now without calling \verb+super()+. The
+answer is that Java makes a little bit of magic behind the scenes. 
 
-%    - super
-%      - "hidden" super()
+\paragraph{Default constructor}
+\label{sec:default-constructor}
+
+Every Java class must have at least one constuctor method. If your
+class does not have an explicit constructor, Java will add one like
+this: 
+
+\begin{verbatim}
+    public NameOfMyClassHere() {
+        super();
+    }
+\end{verbatim}
+
+This constructor does not do much (just calls the superclass'
+constructor) and has no parameters. If you do not add your own
+constructor to your classes, they will at least have this one. On the
+other hand, as soon as you add a constructor to a class Java will see
+it and not add the default constructor at compilation time. 
+
+\paragraph{Default call to the parent class' constructor}
+\label{sec:default-call-parent}
+
+The first thing that every constructor must do is calling the parent
+class' constructor. The parent class constructor must always be
+executed before the current class constructor starts to do
+anything. In other words, a \verb+Dog+ is an \verb+Animal+, but it
+becomes an \verb+Animal+ first (e.g.~initialises legs and eyes) and a
+\verb+Dog+ later (e.g.~sets sound as barking and smell sensititivy to
+a high value).
+
+If the first line in one of your constructor methods is not a call to
+one of the superclass' constructors, Java will automatically add a
+call to the default parameter-less constructor: \verb+super()+. If
+your parent class does not have a parameter-less constructor (either
+explicit of magicaly added), the Java compiler will complain. 
 
 \subsection{The limits of inheritance}
 \label{sec:limits-inheritance}
+
+
 
 % diamond problems and all
 
