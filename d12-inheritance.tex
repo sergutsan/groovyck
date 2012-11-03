@@ -20,7 +20,8 @@ prevent code repetitions \emph{among} classes.
 
 From all the forms of inheritance, the easiest to understand is the
 extension of already existing classes. This is done by means of the
-keyword \verb+extends+. 
+keyword \verb+extends+. You can think of this keyword as stating a
+``is a'' relationship. 
 
 Let's assume that we had a class \verb+Ebook+,
 part of a program to run an electronic book reader. The class would
@@ -58,6 +59,22 @@ again. In other words, you can call \verb+nextPage()+ on a
 \verb+LightEbook+ object exactly in the same way as you would do it
 on a \verb+Ebook+ object. 
 
+The base class that is extended is called the \emph{parent class},
+while the extending class is called a \emph{subclass}. When there are
+many levels of hierarchy (a class extends a class that extends another
+class, etc), those classes up in the hierarchy are called
+\emph{ancestor classes}, while those down in the hiearchy are called
+\emph{descendant classes}. 
+
+\paragraph{Everything is an object!}
+\label{sec:everything-an-object}
+
+In Java, every class extends class \verb+Object+ or descends from a
+class that extends \verb+Object+. \verb+Object+ is a class from the
+core Java library that provides a few methods that every other class
+can use. The most commonly used is \verb+equals()+, which compares two
+objects and returns \verb+true+ if they are the same (according to
+some class-specific rules) and \verb+false+ otherwise. 
 
 \paragraph{Final classes}
 \label{sec:final-classes}
@@ -152,17 +169,160 @@ There are also some similarities:
 \subsection{Bottom-up inheritance}
 \label{sec:boot-up-inher}
 
-%      - bottom-up inheritance: abstract/non-abstract classes
+Sometimes, inheritance is a consequence of the design of your
+program: you have an interface that is implemented by several classes
+and then decide to add a little code into it and convert it into an
+abstract class. 
+
+Sometimes it happens the other way around. Sometimes you have two or
+more classes that are apparently unrelated, and then realise that they
+have the same code. 
+
+\begin{verbatim}
+    public class ManorHouse {
+       private Gate gate;
+       // ...
+       public void closeForTheNight() {
+           gate.moveInwards(90);
+           gate.getLock().setLocked(true);
+       }
+       // ...
+    }
+    (...)
+    public class Castle {
+       private Gate gate;
+       // ...
+       public void closeForTheNight() {
+           gate.moveInwards(90);
+           gate.getLock().setLocked(true);
+       }
+       // ...
+    }       
+\end{verbatim}
+
+Code repetition is bad. The method should be put in a parent class: 
+
+\begin{verbatim}
+    public abstract class GateGuardedBuilding {
+       private Gate gate;
+       // ...
+       public void closeForTheNight() {
+           gate.moveInwards(90);
+           gate.getLock().setLocked(true);
+       }
+    }
+    (...)
+    public class ManorHouse extends GateGuardedBuilding {
+       // ...
+    }
+    (...)
+    public class Castle extends GateGuardedBuilding {
+       // ...
+    }       
+\end{verbatim}
+
+The method \verb+closeForTheNight()+ is available to both
+\verb+ManorHouse+ and \verb+Castle+ because they are extending
+\verb+GateGuardedBilding+. 
+
+There are situations, though, in which this ``repetition of code'' is not so clear-cut. Look at the
+following simplified example:  
+
+\begin{verbatim}
+    public class DrinkRefrigerator {
+        // ...
+        public int buyCan(int money) {
+           if (money < price) {
+               return money;
+           } 
+           int change = money - price;
+           releaseCan();
+           return change;
+        }
+        // ...
+    }
+    (...)
+    public class ChocBarVendingMachine {
+        // ...
+        public int getBar(int moneyGiven) {
+           if (moneyGiven < price) {
+               return moneyGiven;
+           } 
+           giveChocolateBar();
+           int change = moneyGiven - price;
+           return change;
+        }
+        // ...
+    }
+\end{verbatim}
+
+Although it may not seem at first that a \verb+DrinkRefrigerator+ and
+a \verb+ChocBarVendingMachine+ have much in common, an analysis of the
+code of methods \verb+buyCan()+ and \verb+getBar()+ shows a strong
+similarity, suggesting that the code should be abstracted away to a
+parent class. How would it look like? Maybe something similar to this: 
+
+\begin{verbatim}
+    public Sale {
+        public boolean sold; // public fields because it does not
+        public int change;   //    have methods
+    }
+    (...)
+    public abstract class VendingMachine {
+        // ...
+        public Sale buy(int money, int price) {
+           Sale result = new Sale();
+           if (money < price) {
+               result.sold = false;
+               result.change = money;
+               return result;
+           } else {
+               result.sold = true;
+               result.change = price - money;
+               return result;
+           }
+        }
+        // ...
+    }
+    (...)
+    public class DrinkRefrigerator extends VendingMachine {
+        // ...
+        public int buyCan(int money) {
+           Sale sale = buy(money, price);
+           if (sale.sold) {
+               releaseCan();
+           } 
+           return sale.change;
+        }
+        // ...
+    }
+    (...)
+    public class ChocBarVendingMachine extends VendingMachine {
+        // ...
+        public int getBar(int money) {
+           Sale sale = buy(money, price);
+           if (sale.sold) {
+               giveChocolateBar();
+           }
+           return sale.change;
+        }
+        // ...
+    }
+\end{verbatim}
+
+The code in the subclasses is shorter and clearer because all the work
+is done in the code that was abstracted and put in the parent
+class. If this code was more complicated and involved several
+comparisons or long intrincated calculations, the benefits would be
+even greater. The ``repeated'' methods had two effects: a return value
+(change) and a side effect (release can or chocolate bar). Because of
+this, we needed to create a new class in order to be able to sort-of
+returning two values from the new method. 
 
 \subsection{Visibility revisited}
 \label{sec:protected-keyword}
 
 
-\subsection{Everything is an object!}
-\label{sec:everything-an-object}
-
-%    - everything is Object
-%      - equals(), hashcode()
 
 \subsection{Changing (overriding) behaviour}
 \label{sec:chang-overr-behav}
@@ -176,6 +336,11 @@ There are also some similarities:
 
 %    - super
 %      - "hidden" super()
+
+\subsection{The limits of inheritance}
+\label{sec:limits-inheritance}
+
+% diamond problems and all
 
 \section{Final note: composition vs. inheritance}
 \label{sec:final-note:-comp}
