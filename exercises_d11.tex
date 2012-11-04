@@ -18,11 +18,192 @@ goals:
 \item Understand the meaning \verb+private+, \verb+public+, and \verb+protected+.
 \end{itemize}
 
-You should be able to finish the first exercise and most of the second
-one in the lab.
+\textbf{Note:} Many exercises below instruct you to create methods. Unless the
+exercise description says otherwise, a very simple implementation
+(e.g.~just printing something on screen) will be enough. The point
+today is on practicing inheritance, not over-complicated algorithms
+for smartphones, musical instruments, etc. 
 
-% Try to extend more than one class
+\section{Extension, extension\ldots}
+\label{sec:extens-extens}
 
-% Extend a class with no copy constructor, but not call the right one at first
+Create class \verb+OldPhone+ that implements the following interface. 
+
+\begin{verbatim}
+    /**
+     * A phone makes calls
+     */
+    public interface Phone {
+        /**
+         * Just print on the screen: "Calling <number>...".
+         */
+        void call(String number);
+    }
+\end{verbatim}
+
+Now create a class \verb+MobilePhone+ that extends \verb+OldPhone+ and
+adds methods for \verb+ringAlarm(String)+ and
+\verb+playGame(String)+. This class keep a list of the last
+ten numbers that have been called, which can be printed with the
+method \verb+printLastNumbers()+.
+
+Then create a class \verb+SmartPhone+ that extends \verb+MobilePhone+
+and adds methods for \verb+browseWeb(String)+ and
+\verb+findPosition()+, the latter returning a (fictitious) GPS-found
+position. 
+
+Create a small script called \verb+PhoneLauncher+ 
+in which you create a \verb+SmartPhone+ and use
+all its methods, including those inherited from its ancestor classes. 
+
+\begin{verbatim}
+    public class PhoneLauncher {
+        public static void main(String[] args) {
+            PhoneLauncher launcher = new PhoneLauncher();
+            launcher.launch();
+        }
+        public void launch() {
+            // your code creating and using SmartPhone here...
+        }
+    }
+\end{verbatim}
+
+\section{Overriding}
+\label{sec:overriding}
+
+Save money by routing your international calls through the internet!
+Modify your class \verb+SmartPhone+ so that it overrides the method
+\verb+call(String)+ inherited from \verb+OldPhone+. If the string
+parameter starts with ``00'', the method should output ``Calling
+<number> through the internet to save money''; otherwise, the method
+should do the same as the original method (hint: use \verb+super+). 
+
+\section{Passing information to ancestor classes}
+\label{sec:pass-inform-ancest}
+
+Add the following field, constructor, and method to \verb+OldPhone+: 
+
+\begin{verbatim}
+    private String brand = null;
+    public OldPhone(String brand) {
+        this.brand = brand;
+    }
+    public String getBrand() {
+        return brand;
+    }
+\end{verbatim}
+
+Add the appropriate constructors to \verb+MobilePhone+ and
+\verb+SmartPhone+ in order to be able to call the method
+\verb+getBrand()+ from an objects of class \verb+SmartPhone+ and
+obtain the right answer, i.e.~the brand provided in the constructor. 
+
+\section{Visibility}
+\label{sec:visibility}
+
+\subsection{Increasing visibility}
+\label{sec:incr-visib}
+
+Change the visibility of \verb+playGame(String)+ to
+\verb+protected+ and check whether the script you wrote in the former
+exercise still works. Why does it happen? What changes can you do on
+class \verb+SmartPhone+ so that the script still works? 
+
+\subsection{Reducing visibility}
+\label{sec:reducing-visibility}
+
+Some parents are concerned that their children spend too much time
+playing with their smartphones. Create a class
+\verb+RestrictedSmartPhone+ that overrides \verb+playGame(String)+ to
+make it \verb+private+ and thus non-visible to external classes and
+scripts. Is this possible? Why?
+
+\section{Multiple inheritance}
+\label{sec:multiple-inheritance}
+
+Create a class \verb+MusicalInstrument+ with a method
+\verb+play()+. Now create another class \verb+WoodenObject+ with a
+method \verb+burn()+.
+
+Create a class \verb+Guitar+ that is at the same time a musical
+instrument and a wooden object. How would you do it?
+
+\section{Java magic}
+\label{sec:java-magic}
+
+Can you see what is wrong in the following code (most JavaDoc comments
+ommited for the sake of space)? 
+
+\begin{verbatim}
+    // Teacher.java
+    public class Teacher {
+        private String name; 
+        public Teacher(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+        public void teach(String lessonName) {
+            System.out.println("Teaching lesson: " + lessonName);
+        }
+    }
+    (...) 
+    // Lecturer.java
+    /**
+     * A lecturer has both teaching and research responsibilities
+     */
+    public class Lecturer extends Teacher {
+        public void doResearch(String topic) {
+            System.out.println("Doing research on: " + topic);
+        }
+    }
+\end{verbatim}
+
+If it is not evident, try to compile the code. 
+
+If it compiles without problems, write a script that creates an object
+of class \verb+Lecturer+ and uses its two methods. 
+
+
+\section{Final means no change}
+\label{sec:final-means-no}
+
+Create a class that extends \verb+String+ and adds a method
+\verb+printEven()+ that prints on screen the even-numbered characters
+of the string. Try to compile it and see what happens. 
+
+\section{Noah's Ark (*)}
+\label{sec:noahs-ark}
+
+Design and implement an application that represents the day that
+Noah's Ark was open, just before the rain started. In your script,
+create an animal of each species and then call them all. Every animal
+must implement a method \verb+call()+ that prints on screen the
+appropriate message. You should keep in mind the following
+requirements: 
+
+\begin{itemize}
+\item The application should contain at least: bears, beetles, cats,
+  crocodiles, dogs, dolphins, eagles, flies, frogs, lizards, monkeys,
+  pigeons, salmon, sharks, snakes, whales.
+\item All animals have at least a method \verb+call()+ and a method
+  \verb+reproduce()+ (for after the rain). 
+\item Insects, fish, amphibians, reptiles, and birds lay eggs. Mammals
+  cannot lay eggs but give birth\footnote{There were no platipus in
+    Noah's Ark.}. The method \verb+reproduce()+ should call the
+  appropriate method in each case. 
+\item When called, all animals answer (i.e.~print on screen) ``<name of
+  the animal> coming...''. The exception are aquatic animals,
+  which are not affected by the rain and answer ``<name of the animal>
+  will not come...''. Method \verb+call()+ must not be implemented in
+  every class: use inheritance to reuse methods and constructors to
+  pass information to parent classes.
+\item All animals make a sound. If Animal is an interface in your
+  design, \verb+makeSound()+ must be a method in there; if
+  \verb+Animal+ is an abstract class, it must be an abstract
+  method. The method can then be implemented by descendant classes.
+\end{itemize}
+
 
 \end{document}
