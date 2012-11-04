@@ -27,7 +27,7 @@ for smartphones, musical instruments, etc.
 \section{Extension, extension\ldots}
 \label{sec:extens-extens}
 
-Create class \verb+OldPhone+ that implements the following interface. 
+Create a class \verb+OldPhone+ that implements the following interface. 
 
 \begin{verbatim}
     /**
@@ -42,8 +42,8 @@ Create class \verb+OldPhone+ that implements the following interface.
 \end{verbatim}
 
 Now create a class \verb+MobilePhone+ that extends \verb+OldPhone+ and
-adds methods for \verb+ringAlarm(String)+ and
-\verb+playGame(String)+. This class keep a list of the last
+adds methods for things like \verb+ringAlarm(String)+ and
+\verb+playGame(String)+. This class keeps a list of the last
 ten numbers that have been called, which can be printed with the
 method \verb+printLastNumbers()+.
 
@@ -75,7 +75,7 @@ Save money by routing your international calls through the internet!
 Modify your class \verb+SmartPhone+ so that it overrides the method
 \verb+call(String)+ inherited from \verb+OldPhone+. If the string
 parameter starts with ``00'', the method should output ``Calling
-<number> through the internet to save money''; otherwise, the method
+$<$number$>$ through the internet to save money''; otherwise, the method
 should do the same as the original method (hint: use \verb+super+). 
 
 \section{Passing information to ancestor classes}
@@ -91,11 +91,12 @@ Add the following field, constructor, and method to \verb+OldPhone+:
     public String getBrand() {
         return brand;
     }
+    // ... there is no setter for brand
 \end{verbatim}
 
 Add the appropriate constructors to \verb+MobilePhone+ and
 \verb+SmartPhone+ in order to be able to call the method
-\verb+getBrand()+ from an objects of class \verb+SmartPhone+ and
+\verb+getBrand()+ from an object of class \verb+SmartPhone+ and
 obtain the right answer, i.e.~the brand provided in the constructor. 
 
 \section{Visibility}
@@ -106,7 +107,8 @@ obtain the right answer, i.e.~the brand provided in the constructor.
 
 Change the visibility of \verb+playGame(String)+ to
 \verb+protected+ and check whether the script you wrote in the former
-exercise still works. Why does it happen? What changes can you do on
+exercise still works. Why does this happen? What are the minimal
+changes that you need to make on
 class \verb+SmartPhone+ so that the script still works? 
 
 \subsection{Reducing visibility}
@@ -126,7 +128,7 @@ Create a class \verb+MusicalInstrument+ with a method
 method \verb+burn()+.
 
 Create a class \verb+Guitar+ that is at the same time a musical
-instrument and a wooden object. How would you do it?
+instrument and a wooden object. How would you do it in Java?
 
 \section{Java magic}
 \label{sec:java-magic}
@@ -163,7 +165,9 @@ ommited for the sake of space)?
 If it is not evident, try to compile the code. 
 
 If it compiles without problems, write a script that creates an object
-of class \verb+Lecturer+ and uses its two methods. 
+of class \verb+Lecturer+ and uses its two methods. If it does not,
+modify class \verb+Lecturer+ so that the program compiles, and then
+write the script to use its two methods. 
 
 
 \section{Final means no change}
@@ -178,7 +182,7 @@ of the string. Try to compile it and see what happens.
 
 Design and implement an application that represents the day that
 Noah's Ark was open, just before the rain started. In your script,
-create an animal of each species and then call them all. Every animal
+create an animal of each species and then call them all in. Every animal
 must implement a method \verb+call()+ that prints on screen the
 appropriate message. You should keep in mind the following
 requirements: 
@@ -189,14 +193,15 @@ requirements:
   pigeons, salmon, sharks, snakes, whales.
 \item All animals have at least a method \verb+call()+ and a method
   \verb+reproduce()+ (for after the rain). 
-\item Insects, fish, amphibians, reptiles, and birds lay eggs. Mammals
-  cannot lay eggs but give birth\footnote{There were no platipus in
-    Noah's Ark.}. The method \verb+reproduce()+ should call the
-  appropriate method in each case. 
-\item When called, all animals answer (i.e.~print on screen) ``<name of
-  the animal> coming...''. The exception are aquatic animals,
-  which are not affected by the rain and answer ``<name of the animal>
-  will not come...''. Method \verb+call()+ must not be implemented in
+\item Insects, fish, amphibians, reptiles, and birds lay eggs
+  (\verb+layEggs()+). Mammals cannot lay eggs but give
+  birth\footnote{There were no platipus in Noah's Ark.}
+  (\verb+giveBirth()+). The method \verb+reproduce()+ 
+  should call the appropriate method in each case.
+\item When called, all animals answer (i.e.~print on screen) ``$<$name of
+  the animal$>$ coming...''. The exception are aquatic animals,
+  which are not affected by the rain and answer ``$<$name of the animal$>$
+  will not come...''. Method \verb+call()+ \textbf{must not} be implemented in
   every class: use inheritance to reuse methods and constructors to
   pass information to parent classes.
 \item All animals make a sound. If Animal is an interface in your
