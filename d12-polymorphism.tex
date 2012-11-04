@@ -246,7 +246,77 @@ Java and do not use generics of generics. Your brain will thank you.
 \section{Method overloading}
 \label{sec:method-overloading}
 
+Another very common form of polymorphism is \emph{method
+  overloading}. This is just a fancy name to say that a method can
+receive different parameters. We have seen several examples already,
+such as the method \verb+substring+ of class \verb+String+. This
+method can take either one or two \verb+int+ parameters; depending on
+the number of arguments, the behaviour is different. 
 
+A method in Java is defined by its name and the types and positions of
+its parameters; therefore, strictly speaking, \verb+substring(int)+ is
+a different method from \verb+substring(int,int)+ and it is not a
+problem if both are present in class \verb+String+. The following
+methods, however, do have the same \emph{signature} and there can be
+only one version in each class: 
+
+\begin{verbatim}
+    // Same method! Illegal!
+    String myMethod(int first, int second, String message);
+    String myMethod(int start, int end, String txt);
+\end{verbatim}
+
+The names of the parameter are not important: only their types and
+positions. Note that the return type is not part of the signature
+either, so we cannot have two methods with the same name and
+parameters but different return types. 
+
+\begin{verbatim}
+    // Same method! Illegal!
+    int myMethod(int first, int second, String message);
+    void myMethod(int first, int second, String message);
+\end{verbatim}
+
+\paragraph{Method overloading without repeating code}
+\label{sec:meth-overl-with}
+
+One thing that a programmer must bear in mind when method overloading
+is used is not to repeat code. For example, the following overloaded
+method repeats code unnecesarily: 
+
+\begin{verbatim}
+    public double printAverage(double d1, double d2) {
+         double result = 0.5 * (d1 + d2);
+         System.out.println("The average is: " + result);
+    }
+    public double printAverage(double d1, double d2, String msg) {
+         double result = 0.5 * (d1 + d2);
+         System.out.println(msg + result);
+    }
+\end{verbatim}
+
+There is repeated code among both versions of the method. In this
+trivial example this is just one line, but in a more serious program
+this could be some non-trivial algorithm that is repeated, and we know
+that code repetition must be avoided. 
+
+Avoiding this kind of code repetition is easy by making the more
+specific version of the method call the more general version, as in
+the code below: 
+
+\begin{verbatim}
+    public double printAverage(double d1, double d2) {
+         printAverage(d1, d2, "The average is: ");
+    }
+    public double printAverage(double d1, double d2, String msg) {
+         double result = 0.5 * (d1 + d2);
+         System.out.println(msg + result);
+    }
+\end{verbatim}
+
+This is how we can have multiple polymorphic versions of the same
+method without any repetition of code. Remember: Don't Repeat
+Yourself. 
 
 \section{Introduction to upcasting}
 \label{sec:upcasting}
