@@ -1,19 +1,19 @@
 \section{Inheritance}
 \label{sec:inheritance-1}
 
-Repeating code is a bad thing. When the same code is used in more than
-one place in a program, it is a disaster waiting to happen. Sooner or
+Repeating code is a bad thing. If the same code is used in more than
+one place in a program, that is a disaster waiting to happen. Sooner or
 later, one of the copies of the code will be changed (probably to fix
 a bug), but not all copies will be changed\ldots and unpredictable things
 will happen (never good). 
 
-We already know how to use methods in a class to avoid repetition of
-code inside the class. When the code is inside a method, the
-programmer can just call the method from different areas of the code
-and the same instructions will be always executed (probably with
+We already know one strategy to prevent code repetition: using methods 
+inside a class. By enclosing code inside a method, the
+programmer can just call the method from any other section of the code
+and the same instructions will always be executed (probably with
 different values for the parameters). In this section, we will move
 one step further to avoid code repetition by using \emph{inheritance} to
-prevent code repetitions \emph{among} classes. 
+prevent code repetition \emph{among} classes. 
 
 \subsection{Extending already-existing classes}
 \label{sec:extend-alre-exist}
@@ -21,26 +21,29 @@ prevent code repetitions \emph{among} classes.
 From all the forms of inheritance, the easiest to understand is the
 extension of already existing classes. This is done by means of the
 keyword \verb+extends+. You can think of this keyword as stating a
-``is a'' relationship. 
+``is a'' relationship: you use it to say that objects of your class
+are also objects from another class\ldots with something on top.
 
 Let's assume that we had a class \verb+Ebook+,
 part of a program to run an electronic book reader. The class would
+have
 several methods, including some like \verb+nextPage()+,
-\verb+prevPage()+, and \verb+readAloud(int page)+. When the next
+\verb+prevPage()+, and maybe even \verb+readAloud(int page)+. When the next
 version of our electronic book reader comes out, it includes a new
 feature to regulate the background light of the screen. At this point
-we have two options. First, we can add a new method
+we have at least two options. First, we can add a new method
 \verb+setLight(int)+ to the \verb+Ebook+ class to regulate the
-background light; however, this method would also be part of the
-software running in all the non-regulable e-books that we sell from
-then on. A second possibility, is to create two different classes,
-\verb+Ebook+ and \verb+LightEbook+, each of them used for a different
-hardware; but this leads to a lot of methods being repeated, which is
+background light; however, this method would also be included as part of the
+software running in all the ``plain with no light'' e-books.
+A second possibility, is to create two different classes,
+\verb+Ebook+ and \verb+LightEbook+, each of them being used for a different
+hardware; but this would lead to having lot of methods repeated in
+both classes (e.g.~\verb+nextPage()+), which is
 bad. 
 
 There is a third, much better possibility. We can make
-\verb+LightBook+ extend \verb+Ebook+ (comments ommited for the sake of
-brevity): 
+\verb+LightBook+ extend \verb+Ebook+, as in the following example code 
+(JavaDoc comments ommited for the sake of brevity): 
 
 \begin{verbatim}
     public class LighEbook extends Ebook {
@@ -52,7 +55,8 @@ brevity):
 \end{verbatim}
 
 You can see that extending a class is very easy: just say that you are
-extending it! Then you will be able to use all the public methods (and
+extending it (in this example, ~\verb+extends Ebook+).
+From that point on, your class will be able to use all the public methods (and
 some more, see below on Section~\ref{sec:protected-keyword}) from
 the class that you are extending without the need to implement them
 again. In other words, you can call \verb+nextPage()+ on a
@@ -60,10 +64,10 @@ again. In other words, you can call \verb+nextPage()+ on a
 on a \verb+Ebook+ object. 
 
 The base class that is extended is called the \emph{parent class} or
-\emph{superclass}\footnote{In this context, ``super'' is as in Latin
-  ``up'', without connotations of big, extra, or more
+\emph{superclass}\footnote{In this context, ``super'' is as in Latin,
+  meaning ``up''; there are no connotations of big, extra, or more
   powerful. Remember that the convention in computing is that general
-  classes or interfaces are ``up'' and more specific or extended classes
+  classes or interfaces are ``up'' and more specific or extending classes
   are ``down''.}, 
 while the extending class is called a \emph{subclass}. When there are
 many levels of hierarchy (a class extends a class that extends another
@@ -82,16 +86,22 @@ objects and returns \verb+true+ if they are the same (according to
 some class-specific rules) and \verb+false+ otherwise. 
 
 As everything is an \verb+Object+ by default, you do not need to write
-explicitly (\verb+...extends Object {+). Java will do it for
-you. Programmer must only explicitly say which class they are
-extending when they are extending a class that is not \verb+Object+.
+it explicitly (\verb+...extends Object+): Java will do it for
+you. Programmers must only explicitly say which class they are
+extending if they are extending a class that is \emph{not} \verb+Object+.
+
+\begin{verbatim}
+    public class MyClass {  // no need to say "extends Object" here
+        // ...              
+    }
+\end{verbatim}
 
 \paragraph{Final classes}
 \label{sec:final-classes}
 
 You remember that we could use the keyword \verb+final+ to indicate
-that a variable hold a constant value, i.e.~that the variable could
-not be changed. In a similar way, we can use it to tell the compiler
+that a variable holds a constant value, i.e.~that the variable could
+not be changed. In a similar way, we can use \verb+final+ to tell the compiler
 that a class cannot be changed either. A class defined as \verb+final+
 cannot be extended; trying to do so will result in an error at compile
 time. 
@@ -100,17 +110,17 @@ time.
 \subsection{Top-down inheritance}
 \label{sec:top-down-inheritance}
 
-We have already seen that we can use interfaces to specify what a
-class is like or, in other words, what is its behaviour: the methods
+We have already seen that we can use \emph{interfaces} to specify what a
+class is like or, in other words, what is its behaviour, i.e.~the methods
 that are public and can be used by other classes. For example, we may
 have an interface \verb+Animal+ that was implemented by classes
 \verb+Dog+, \verb+Human+, and \verb+Horse+. The interface may define
 methods like \verb+move()+, \verb+makeSound()+, and
 \verb+breath()+. The three classes would each implement each method. 
 
-Now, it is quite possible that the implementations of movement and
-sounds are quite different, but it is quite possible that methods like
-\verb+breath()+ are very similar or the same between the three
+It is quite possible that the implementations of movement and
+sounds are quite different, but on the other hand it seems likely that
+\verb+breath()+ is very similar (or exactly the same) in the three
 classes. As we know, repetition of code is bad: if we have a bug
 in the \verb+breath()+ method, we will be in trouble if we forget to
 fix it in all classes. It would be much better if we could have the
@@ -118,10 +128,11 @@ same method in just one place so that each class could use it, in the
 same way that the code in a method can be used from anywhere in the
 class. 
 
-It turns out it is quite possible to do this in Java: we can put the
-code into the interface\ldots almost. Actually, what we need to do is
-to transform the interface into an \emph{abstract class}, and then
-make the other classes \emph{extend} it. Assuming
+It would be great if we could put the code in the interface; then, all
+classes would have it. It turns out we can do something like
+that in Java. Although we cannot write any code in an interface, 
+we can transform the interface into an \emph{abstract class}, and then
+make the other classes \emph{extend} it. Let's see an example: assuming
 that the original interface looked like this (JavaDoc comments ommited
 for the sake of space):
 
@@ -153,15 +164,15 @@ abstract class:
 
 \begin{itemize}
 \item First and foremost, an interface never contains any actual code,
-  while an abstract ---like any other class--- can contain statements
-  that perform some action.
+  while an abstract class ---like any other class--- can contain real
+  implementation, i.e.~statements that perform some actions.
 \item Interfaces are \emph{implemented}, while abstract classes are
   \emph{extended}.
 \item All methods in an interface are by definition public and
   abstract (i.e.~without actual code), so there is no need to write it
   down (but it can be done). On the other hand, methods in an abstract
   class can be private or public, abstract or not, and it must be said
-  explicitly for each of them.
+  explicitly for each of them (see \verb+move(int)+, for example).
 \item Abstract classes can contain mutable fields. All fields on an
   interface are by definition static and final (i.e.~constant).
 \end{itemize}
@@ -170,23 +181,28 @@ There are also some similarities:
 
 \begin{itemize}
 \item Both abstract classes and interfaces can be used as data
-  types to declare a variable of a complex type.
+  types to declare a variable of a complex type 
+  (e.g.~\verb+Animal indiana = new Dog()+).
 \item Neither can be used to instantiate an object using \verb+new+
   (because neither contains a full ``blueprint'' of what the new
-  object would look like). 
+  object would look like, e.g.~\verb+new Animal()+ is not valid). 
 \end{itemize}
 
 \subsection{Bottom-up inheritance}
 \label{sec:boot-up-inher}
 
 Sometimes, inheritance is a consequence of the design of your
-program: you have an interface that is implemented by several classes
-and then decide to add a little code into it and convert it into an
+program: you have an interface (e.g.~\verb+Animal+) 
+that is implemented by several classes (e.g.~\verb+Horse+, \verb+Dog+)
+and then decide to add a little code into it and turn it into an
 abstract class. 
 
-Sometimes it happens the other way around. Sometimes you have two or
+Sometimes it happens the other way around: you have two or
 more classes that are apparently unrelated, and then realise that they
-have the same code. 
+have the same code. At this point you want to move the code ``up'' to
+an abstract class. For example, imagine that we had a class
+\verb+ManorHouse+ and another class \verb+Castle+, initially unrelated
+in the design of our program: 
 
 \begin{verbatim}
     public class ManorHouse {
@@ -210,7 +226,8 @@ have the same code.
     }       
 \end{verbatim}
 
-Code repetition is bad. The method should be put in a parent class: 
+Code repetition is bad. As soon as we realise that both classes have
+the same method, such method should be put in a parent class: 
 
 \begin{verbatim}
     public abstract class GateGuardedBuilding {
@@ -231,11 +248,12 @@ Code repetition is bad. The method should be put in a parent class:
     }       
 \end{verbatim}
 
-The method \verb+closeForTheNight()+ is available to both
+Now the method \verb+closeForTheNight()+ is available to both
 \verb+ManorHouse+ and \verb+Castle+ because they are extending
 \verb+GateGuardedBilding+. 
 
-There are situations, though, in which this ``repetition of code'' is not so clear-cut. Look at the
+Clear? Not so easy\ldots There are situations in which 
+this ``repetition of code'' is not straighforward. Look at the
 following simplified example:  
 
 \begin{verbatim}
@@ -257,10 +275,11 @@ following simplified example:
         public int getBar(int moneyGiven) {
            if (moneyGiven < price) {
                return moneyGiven;
-           } 
-           giveChocolateBar();
-           int change = moneyGiven - price;
-           return change;
+           } else {
+               giveChocolateBar();
+               int change = moneyGiven - price;
+               return change;
+           }
         }
         // ...
     }
@@ -273,9 +292,9 @@ similarity, suggesting that the code should be abstracted away to a
 parent class. How would it look like? Maybe something similar to this: 
 
 \begin{verbatim}
-    public Sale {
+    public class Sale {
         public boolean sold; // public fields because it does not
-        public int change;   //    have methods
+        public int change;   // have methods
     }
     (...)
     public abstract class VendingMachine {
@@ -285,12 +304,11 @@ parent class. How would it look like? Maybe something similar to this:
            if (money < price) {
                result.sold = false;
                result.change = money;
-               return result;
            } else {
                result.sold = true;
                result.change = price - money;
-               return result;
            }
+           return result;
         }
         // ...
     }
@@ -320,14 +338,18 @@ parent class. How would it look like? Maybe something similar to this:
     }
 \end{verbatim}
 
-The code in the subclasses is shorter and clearer because all the work
-is done in the code that was abstracted and put in the parent
+The code in the subclasses is shorter and clearer because all the hard work
+is done in the code that has been abstracted and put in the parent
 class. If this code was more complicated and involved several
 comparisons or long intrincated calculations, the benefits would be
-even greater. The ``repeated'' methods had two effects: a return value
-(change) and a side effect (release can or chocolate bar). Because of
-this, we needed to create a new class in order to be able to sort-of
-returning two values from the new method. 
+even greater. 
+
+In this second example, it is important to note
+that the ``repeated'' methods had two effects: a return value
+(to give change) and a side effect (release can or chocolate bar). Because of
+this, we needed to create a new intermediate class \verb+Sale+ ---with
+no methods--- in order to be able to return two values from the new
+method \verb+buy()+.
 
 \subsection{Visibility revisited}
 \label{sec:protected-keyword}
@@ -337,7 +359,7 @@ beyond of what its programmer(s) can cope with. We know that one of
 the basic strategies to keep complexity under control is by hiding
 information. 
 
-Information is hidden by making it not-visible: visible fields can be
+Information is hidden by making it not visible: visible fields can be
 read and written, but non-visible fields cannot; visible methods can
 be called, but non-visible fields cannot.  We have used two keywords
 to control the visibility of our classes' fields and methods:
@@ -346,19 +368,21 @@ cover most of your needs as a programmer, it is good to know that
 there are four levels of visibility in Java: public, protected,
 default (package), and private.
 
-\subsubsection*{Public}
+\subsubsection{Public}
 \label{sec:public}
 
-Public fields are visible to any other class, and can be read and
-written accordingly. Letting other classes (even your classes) modify
-the fields of your classes can have unpredictable effect in a
+Public fields are visible for any other class, and can be read and
+written accordingly. Letting other classes (even classes that you have
+written yourself) to modify
+the fields of your classes can have unpredictable effects in a
 normal-size program, and that is why you should make all your fields
 private as a rule of thumb. The only exception are the fields of
-method-less just-used-as-intermediate-data classes. 
+method-less just-used-as-intermediate-data classes (like \verb+Sale+
+in the former section). 
 
 Public methods are visible to other classes and define the public
 interface of your class. This is usually made explicit by implementing
-one of more Java interfaces. Note that there is an ambiguity in
+one or more Java interfaces. Note that there is an ambiguity in
 natural language here: the public methods of a class are its ``interface''
 in the sense that they define how other classes can interact with it,
 but that does not necessarily mean that the class \verb+implements+
@@ -374,12 +398,13 @@ Protected fields and methods are visible for classes in your package
 (i.e.~the same folder/directory as the class) and for descendant
 classes. There are a few cases in which the distinction
 \verb+protected+ vs. \verb+public+ makes sense (i.e.~in event-oriented
-architectures) but in most cases this nuance is not worth it, and that
+architectures) but in most cases this nuance is not worth the
+additional complexity, and that
 is why many of the most recent programming languages do not include a
-\verb+protected+ visibility and just use \verb+public+. 
+\verb+protected+ visibility, only \verb+public+. 
 
 As a rule of thumb, use always public if you want other classes to
-call the methods in your class. However, it is important to understand
+call the methods in your class. On the other hand, it is important to understand
 what \verb+protected+ means because you will find it often when you
 read Java code, especially if it is old legacy code. 
 
@@ -404,8 +429,9 @@ have changed over the years and it is very rare today to find a
 situation where ``package'' visibility makes sense but \verb+public+
 visibility does not, with the additional complexity of keeping track
 and what is visible at which level. Therefore, you will very rarely
-find default visibility in Java code for a good reason; it is almost
-always a symptom of sloppy programming, a sign of a programming not
+find default visibility in Java code for a good reason; on the
+contrary, it is almost
+always a symptom of sloppy programming, a sign of a programmers not
 thinking properly about the design of their program or --even worse---
 not understanding the difference between \verb+private+ and default
 visibility.   
@@ -413,13 +439,13 @@ visibility.
 \subsubsection{Private}
 \label{sec:private}
 
-Private fields and methods are only seen inside their own class. This
+Private fields and methods are only visible inside their own class. This
 is the most complete form of ``hiding'', and should be the default
 option for all the fields and most of the methods (unless they are
 defined in an interface, i.e.~they are useful for other classes). 
 
-Note that \verb+private+ only determines visibility between classes,
-not between objects. Objects of the same class are able to see each
+Note that \verb+private+ only determines visibility between \emph{classes},
+not between \emph{objects}. Objects of the same class are able to see each
 other fields and methods. This is very evident in most implementations
 of the \verb+.equals()+ method. 
 
@@ -441,7 +467,7 @@ Although the field \verb+value+ is private and cannot be seen from any
 other class, any object of class \verb+Integer+ can see the
 \verb+value+ method of other objects of the same class. 
 
-\subsection{Changing (overriding) behaviour}
+\subsection{Changing behaviour, overriding methods}
 \label{sec:chang-overr-behav}
 
 Extending a class is a way of reusing part of its code in the form of
@@ -468,8 +494,22 @@ methods that are overriden by many classes.
 \end{verbatim}
 
 The \verb+@Override+ annotation is optional, but it is a good idea to
-always use it. This will make it clear that the method is overriding a
+always use it. This will make it evident to other programmers 
+that the method is overriding a
 method from an ancestor class. 
+
+\paragraph{Final methods}
+\label{sec:final-methods}
+
+In the same way that we can declate a class to be \verb+final+ so that
+it cannot be extended, we can declare a method as \verb+final+; this
+will prevent the method being overriden. 
+
+If a class is final, then all its methods are final too. 
+The opposite is not true: a class with all its method
+marked as final can still be extended (even if the existing ones
+cannot be overriden, it is always possible to add new methods as long
+as the class is non-final).
 
 \subsection{The keyword super}
 \label{sec:keyword-super}
@@ -494,9 +534,9 @@ in this trivial example:
 
 Calling methods from the superclass is not very useful in practical
 terms, there are few situations in which this is needed or
-adequate. There is another use of super that is extremely important to
-understand, and that is calling the constructor of the parent class
-at the constructor of the subclass. This is so important it must be
+adequate. However, there is another use of \verb+super+ that is extremely important to
+understand: it is used to call the constructor of the parent class
+inside the constructor of the subclass. This is so important that it must be
 done at the first line of the constructor: 
 
 \begin{verbatim}
@@ -515,12 +555,14 @@ from the Java compiler.
 
 As this point, you may be wondering how was it possible that you have
 created all your classes until now without calling \verb+super()+. The
-answer is that Java makes a little bit of magic behind the scenes. 
+answer is that Java makes a little bit of magic behind the scenes:
+Java can add a default constructor to your classes and/or it can call
+the \verb+super()+ constructor even if you forget to use it. 
 
 \paragraph{Default constructor}
 \label{sec:default-constructor}
 
-Every Java class must have at least one constuctor method. If your
+Every Java class must have \emph{at least one} constructor method. If your
 class does not have an explicit constructor, Java will add one like
 this: 
 
@@ -534,7 +576,7 @@ This constructor does not do much (just calls the superclass'
 constructor) and has no parameters. If you do not add your own
 constructor to your classes, they will at least have this one. On the
 other hand, as soon as you add a constructor to a class Java will see
-it and not add the default constructor at compilation time. 
+it, not adding the default constructor in that case.
 
 \paragraph{Default call to the parent class' constructor}
 \label{sec:default-call-parent}
@@ -553,7 +595,7 @@ call to the default parameter-less constructor: \verb+super()+. If
 your parent class does not have a parameter-less constructor (either
 explicit of magicaly added), the Java compiler will complain. 
 
-\subsection{Only one mother (class)}
+\subsection{Only one mother(-class)}
 \label{sec:limits-inheritance}
 
 A class can only extend another one class. In other words, every Java
@@ -575,7 +617,7 @@ inheritance did not overcome its shortcomings, and Java is thus a
 \emph{single inheritance} language, where every class extends one and
 only one class. 
 
-On the other hand, a class can implement an arbitrary of
+On the other hand, a class can implement an arbitrary number of
 interfaces. As interfaces do not contain any implementation, it is not
 a problem to implement two interfaces that define the same method: any
 implementation of that method will satisfy both
@@ -590,14 +632,14 @@ interfaces\footnote{Some people use the argument of implementing
 \label{sec:final-note:-comp}
 
 Inheritance is a form of code reuse, but it is not the only one, nor
-is it the most adequate in most situations. There are many more. In
+is it the most adequate in any situation; there are many more. In
 Java, the most common forms of code reuse are \emph{inheritance} and
 \emph{composition}. Although we will learn more about these topics in
 the next module (Object-Oriented Design and Programming), it is good
-to have an understanding of the basics. 
+to have a fair understanding of the basics. 
 
-Inheritance establishes an ``is-a'' relationship (e.g.~a dog is 
-an animal), and is implemented by
+Inheritance establishes an ``is-a'' relationship (e.g.~a dog is-an 
+animal), and is implemented by
 using the keyword \verb+extends+. When a class extends another class,
 it gets access to all its public and protected fields and methods. 
 
@@ -608,22 +650,31 @@ contains another class(es) it gets access to all its public methods
 and fields. 
 
 Both compositition and inheritance give access to the functionality of
-another class. Which is the right approach in each situation? A first
+another class. Which is the right approach in each situation? 
+
+A first
 question that a programmer should ask is whether there is an ``is-a''
 or a ``has-a'' relationship between the classes. For example, both
 \verb+Animal+ and \verb+Cell+ potentially have a method
 \verb+breath()+ that a class \verb+Dog+ may reuse, but it is clear
-that a dog is an animal but it is not a cell. However, this is not
+that a dog is an animal but it is not a cell. However, the answer to
+this question is not
 always clear-cut. If you have a class \verb+Pound+, a class
 \verb+Currency+, and a class \verb+Coin+, which one extends which one?
-Or is there any \verb+extends+ relationship at all? The final answer
+Is there any \verb+extends+ relationship at all? The final answer
 depends on many factors that depend on the specifics of the source
 code involved, but it is important to understand that inheritance and
 composition are very different approaches. 
 
+\paragraph{Only one extension}
+\label{sec:only-one-extension}
+
 The first difference is very obvious. In Java you can only extend one
 class, but can include as many classes as you want as fields, even
 having many fields of the same class. 
+
+\paragraph{Flexibility }
+\label{sec:flexibility-}
 
 Another difference that is not obvious at first sight is that 
 inheritance relationships are difficult to change, which can 
@@ -643,12 +694,15 @@ the other hand, provides more flexibility. Changes to the classes
 inside a class are typically invisible to all other classes (they are
 \verb+private+ fields) so the disruption of the code is contained. 
 
+\paragraph{Additional baggage}
+\label{sec:additional-baggage}
+
 An additional difference is that inheritance brings more baggage than
 composition. Take the example of a class \verb+DancePairMaker+, that
 takes names of people in pairs and then prints them. Pairs of names
 is something similar to a \verb+Map+, and adding pairs sounds like
 \verb+Map.put(String,String)+\ldots so we would like to reuse that
-code in \verb+Map+ without needed to write it all again. 
+code in \verb+Map+ without the need to write it all again. 
 If \verb+DancePairMaker+ \emph{includes} a
 \verb+Map+, it will use the method \verb+put()+ and nothing
 else (there is no need to remove dance pairs: just adding and
@@ -656,11 +710,13 @@ printing).
 However, if \verb+DancePairMaker+ extends a \verb+Map+, other
 classes may be able to \verb+remove()+ pairs because this method is
 inherited from the \verb+Map+. 
+Maybe this is not what the programmer wanted at the time of extending
+\verb+Map+, but that is a consequence of extension. 
 
 For these two reasons, and some other minor ones, the rule of thumb is
 ``composition works better than inheritance''. If you find yourself
-thinking about extending a class, think twice in case including an
-object of that class into your class would work better. (Of course,
+thinking about extending a class, think twice in case it is better to
+include the class instead. (Of course,
 you should still abstract repeated code to parent classes, as
 explained in Section~\ref{sec:boot-up-inher}).
 
