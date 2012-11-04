@@ -64,7 +64,7 @@ The base class that is extended is called the \emph{parent class} or
   ``up'', without connotations of big, extra, or more
   powerful. Remember that the convention in computing is that general
   classes or interfaces are ``up'' and more specific or extended classes
-  are ``down''.), 
+  are ``down''.}, 
 while the extending class is called a \emph{subclass}. When there are
 many levels of hierarchy (a class extends a class that extends another
 class, etc), those classes up in the hierarchy are called
@@ -444,9 +444,32 @@ other class, any object of class \verb+Integer+ can see the
 \subsection{Changing (overriding) behaviour}
 \label{sec:chang-overr-behav}
 
-%    - overriding / overwriting
-%      - annotation @Override
-%      - equals(), hashcode()
+Extending a class is a way of reusing part of its code in the form of
+its public methods. However, there are cases in which by extending a
+class you are inheriting a method you do not want. For example, your
+class \verb+Employee+ may inherit from class \verb+Person+ a method
+\verb+equals()+ that says that two objects are the same person if they
+have the same passport number; however, you want your employee-objects
+to represent the same employee if they have the same national
+insurance number. When this happens, you have to \emph{override} the
+method. 
+
+Overriding a method is trivially easy: just write the method
+again. Java will automatically use the most specific version of the
+method when the method is called. Methods \verb+equals()+ and
+\verb+hashcode()+, from class \verb+Object+, are typical examples of
+methods that are overriden by many classes. 
+
+\begin{verbatim}
+   @Override
+   public boolean equals(Object other) {
+        // ... different code here to establish equality
+   }
+\end{verbatim}
+
+The \verb+@Override+ annotation is optional, but it is a good idea to
+always use it. This will make it clear that the method is overriding a
+method from an ancestor class. 
 
 \subsection{The keyword super}
 \label{sec:keyword-super}
@@ -530,20 +553,123 @@ call to the default parameter-less constructor: \verb+super()+. If
 your parent class does not have a parameter-less constructor (either
 explicit of magicaly added), the Java compiler will complain. 
 
-\subsection{The limits of inheritance}
+\subsection{Only one mother (class)}
 \label{sec:limits-inheritance}
 
+A class can only extend another one class. In other words, every Java
+class has one and only one parent class (usually \verb+Object+). 
 
+If a class could extend two different classes, it may potentially
+inherit two methods with the same signature. For example, both parents
+may implement a \verb+getName()+ or \verb+equals()+ method in
+different ways. Which implementation should be inherited by the
+subclass\footnote{This is known in computing as the \emph{diamond
+    problem}.}?
 
-% diamond problems and all
+Some programming languages allow \emph{multiple inheritance},
+(extending several classes), and have rules that determine what to do
+in the case of method clashes. These rules are not always clear or
+intuitive, and can be source of confusion and bugs. The Java creators
+considered (probably correctly) that the benefits of multiple
+inheritance did not overcome its shortcomings, and Java is thus a
+\emph{single inheritance} language, where every class extends one and
+only one class. 
+
+On the other hand, a class can implement an arbitrary of
+interfaces. As interfaces do not contain any implementation, it is not
+a problem to implement two interfaces that define the same method: any
+implementation of that method will satisfy both
+interfaces\footnote{Some people use the argument of implementing
+  several interfaces in Java to say that Java allows for a ``special''
+  or ``limited'' form of multiple inheritance. I think it is clearer
+  to use the term inheritance exclusively for those cases 
+  in which actual code is
+  actually \emph{inherited} from another class. }. 
 
 \section{Final note: composition vs. inheritance}
 \label{sec:final-note:-comp}
+
+Inheritance is a form of code reuse, but it is not the only one, nor
+is it the most adequate in most situations. There are many more. In
+Java, the most common forms of code reuse are \emph{inheritance} and
+\emph{composition}. Although we will learn more about these topics in
+the next module (Object-Oriented Design and Programming), it is good
+to have an understanding of the basics. 
+
+Inheritance establishes an ``is-a'' relationship (e.g.~a dog is 
+an animal), and is implemented by
+using the keyword \verb+extends+. When a class extends another class,
+it gets access to all its public and protected fields and methods. 
+
+Composition establishes a ``has-a'' relationship (e.g.~a dog has a leg
+and has cells), and is implemented by including the ``contained''
+classes as types of fields of the ``container'' class.  When a class
+contains another class(es) it gets access to all its public methods
+and fields. 
+
+Both compositition and inheritance give access to the functionality of
+another class. Which is the right approach in each situation? A first
+question that a programmer should ask is whether there is an ``is-a''
+or a ``has-a'' relationship between the classes. For example, both
+\verb+Animal+ and \verb+Cell+ potentially have a method
+\verb+breath()+ that a class \verb+Dog+ may reuse, but it is clear
+that a dog is an animal but it is not a cell. However, this is not
+always clear-cut. If you have a class \verb+Pound+, a class
+\verb+Currency+, and a class \verb+Coin+, which one extends which one?
+Or is there any \verb+extends+ relationship at all? The final answer
+depends on many factors that depend on the specifics of the source
+code involved, but it is important to understand that inheritance and
+composition are very different approaches. 
+
+The first difference is very obvious. In Java you can only extend one
+class, but can include as many classes as you want as fields, even
+having many fields of the same class. 
+
+Another difference that is not obvious at first sight is that 
+inheritance relationships are difficult to change, which can 
+become problematic when the requirements
+of the project change in the future\footnote{And you can bet the farm
+  that they will. I still have to find a project in which the
+  requirements were not only clear at the beginning (and there are
+  \emph{very few} of those) but that they remained constant until the end.}; 
+on the other hand, composition is
+easier to modify. Type hierarchies defined by \verb+extends+ become
+very rigid over time: changing one of the classes in the hierarchy
+tree usually involves changes in many other classes in different parts
+of the source code. In other words, type hierarchies provide structure
+to the code, but increse its \emph{coupling} (dependance between classes) 
+which also increments its viscosity. Composition, on
+the other hand, provides more flexibility. Changes to the classes
+inside a class are typically invisible to all other classes (they are
+\verb+private+ fields) so the disruption of the code is contained. 
+
+An additional difference is that inheritance brings more baggage than
+composition. Take the example of a class \verb+DancePairMaker+, that
+takes names of people in pairs and then prints them. Pairs of names
+is something similar to a \verb+Map+, and adding pairs sounds like
+\verb+Map.put(String,String)+\ldots so we would like to reuse that
+code in \verb+Map+ without needed to write it all again. 
+If \verb+DancePairMaker+ \emph{includes} a
+\verb+Map+, it will use the method \verb+put()+ and nothing
+else (there is no need to remove dance pairs: just adding and
+printing). 
+However, if \verb+DancePairMaker+ extends a \verb+Map+, other
+classes may be able to \verb+remove()+ pairs because this method is
+inherited from the \verb+Map+. 
+
+For these two reasons, and some other minor ones, the rule of thumb is
+``composition works better than inheritance''. If you find yourself
+thinking about extending a class, think twice in case including an
+object of that class into your class would work better. (Of course,
+you should still abstract repeated code to parent classes, as
+explained in Section~\ref{sec:boot-up-inher}).
+
+
 
 %    \item composition better than extension
 
 
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "main"
+%%% TeX-master: "d11"
 %%% End:
