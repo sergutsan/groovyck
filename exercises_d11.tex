@@ -195,13 +195,15 @@ requirements:
   \verb+reproduce()+ (for after the rain). 
 \item Insects, fish, amphibians, reptiles, and birds lay eggs
   (\verb+layEggs()+). Mammals cannot lay eggs but give
-  birth\footnote{There were no platipus in Noah's Ark.}
+  birth\footnote{There were no platypus in Noah's Ark.}
   (\verb+giveBirth()+). The method \verb+reproduce()+ 
   should call the appropriate method in each case.
 \item When called, all animals answer (i.e.~print on screen) ``$<$name of
-  the animal$>$ coming...''. The exception are aquatic animals,
+  the animal$>$ coming...''. The exceptions are aquatic animals,
   which are not affected by the rain and answer ``$<$name of the animal$>$
-  will not come...''. Method \verb+call()+ \textbf{must not} be implemented in
+  will not come...''; and flying animals, that answer ``$<$name of
+  the animal$>$ now flying, will come later when tired...''. 
+  Method \verb+call()+ \textbf{must not} be implemented in
   every class: use inheritance to reuse methods and constructors to
   pass information to parent classes.
 \item All animals make a sound. If Animal is an interface in your
