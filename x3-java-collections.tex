@@ -1,0 +1,152 @@
+
+\section{The Java Collections Library}
+\label{sec:java-coll-libr}
+
+In real day-to-day Java programming, programmer do not usually create
+their own dynamic structures. The Java core library provides several
+structures that are fit for most purposes. Now that you understand
+pointers, inheritance, and generics, it is the right time to introduce
+them.
+
+The so-called Java Collections Library is a series of interfaces and
+classes in package \verb+java.util+. In order to use them, you will
+need to import them, e.g.:
+
+\begin{verbatim}
+    import java.util.ArrayList;
+    import java.util.List;
+\end{verbatim}
+
+Using the dynamic structures from the Java Collections Library will
+save effort on your part, and also make it easier for your code to
+communicate with other people's because you will be using the same
+interfaces and classes. 
+
+The Java Collections Library is well documented on the main
+JavaDoc. You can find it by looking up ``java collections'' in your
+favourite search engine. You can also look up specific classes or
+interfaces easily, e.g.~''java list'' will lead you to the
+documentation on the \verb+List+ interface. 
+
+\subsection{Collection}
+\label{sec:collection}
+
+A \verb+Collection<E>+ is just a group of elements. This is the most
+general interface. This interface is extended by \verb+List<E>+,
+\verb+Set<E>+, and \verb+Queue<E>+. 
+
+\subsection{Set}
+\label{sec:set}
+
+A \verb+Set<E>+ is a collection that cannot contain duplicate
+elements. If an element is added to a set that already contains it,
+nothing happens. The most commonly used implementation is
+\verb+HashSet<E>+. A typical idiom to create a new set is:
+
+\begin{verbatim}
+    Set<MyClass> classSet = new HashSet<MyClass>();
+\end{verbatim}
+
+When the order of the elements is important (e.g.~for iterating
+through the interface, see below), a useful implementing class may be
+\verb+TreeSet<E>+. 
+
+\subsection{List}
+\label{sec:lists}
+
+A \verb+List<E>+ is a collection of elements, maybe with duplicate
+elements, probably unsorted.
+
+A list does not need to be sorted, but it is a sequence with an
+order. This means that elements that were added earlier come before
+elements that were added later. A list provides methods to access
+elements at specific indeces (\verb+.get(int)+) and to search for
+the index of an element (e.g.~\verb+indexOf(Object)+). 
+
+The most commonly-used implementation is \verb+ArrayList<E>+, although
+\verb+LinkedList<E>+ may be useful in some situations. A typical idiom to
+create a new list is:
+
+\begin{verbatim}
+     List<MyClass> classList = new ArrayList<MyClass>();
+\end{verbatim}
+
+There is also a
+class \verb+Vector<E>+ that is an old, synchronised, more complicated
+implementation of interface \verb+List<E>+. It should not be
+used (except maybe in multi-threaded applications). \verb+Vector<E>+ was
+part of Java 1.0; since the Collections Library was introduced in
+Java~2, \verb+ArrayList<E>+ (and \verb+LinkedList<E>+)
+is a better fit for most situations. 
+
+\subsection{Queue}
+\label{sec:queue}
+
+A \verb+Queue<E>+ is a FIFO structure in which the first elements coming
+in are the first elements coming out. The exception to this rule may
+be the use of priorities, which allows some elements to come out
+before other elements that have been longer in the queue. The most
+common implementations of queues are \verb+LinkedList<E>+ and
+\verb+PriorityQueue<E>+. A typical idiom to
+create a new queue is:
+
+\begin{verbatim}
+     Queue<MyClass> classQueue = new LinkedList<MyClass>();
+\end{verbatim}
+
+\subsection{Stack}
+\label{sec:stack}
+
+A \verb+Stack<E>+ is a LIFO structure in which the last element coming in
+is the first element coming out. 
+
+\verb+Stack<E>+ is a special case in Java because they existed before the
+Collections Library was introduced in Java 2 (like \verb+Vector<E>+, its
+parent class) and it is a specific class, instead of being an
+interface that is implemented by one or more classes. A typical idiom to
+create a new stack is:
+
+\begin{verbatim}
+     Stack<MyClass> classStack = new Stack<MyClass>();
+\end{verbatim}
+
+\subsection{Map}
+\label{sec:maps}
+
+A \verb+Map<K,V>+ is an object that links pairs of keys and values. In
+the Java Collections Library, a map cannot link the same key to two
+different values, i.e.~it cannot contain duplicate keys. The most
+typical implementation is \verb+HashMap<K,V>+ (in some cases, a
+\verb+TreeMap+ may be useful, e.g.~if the order of keys is
+important). A typical idiom to
+create a new stack is:
+
+\begin{verbatim}
+     Map<KeyClass,ValueClass> classMap = new HashMap<KeyClass,ValueClass>();
+\end{verbatim}
+
+
+
+\subsection{Operations with collections}
+\label{sec:oper-with-coll}
+
+All operations with collections are documented in their respective
+JavaDocs, most typical ones being those operations that add or remove
+elements from the collection. We are going to comment here on some
+special cases only. 
+
+\subsubsection{Iterators}
+\label{sec:iterators}
+
+
+
+\subsubsection{for-each}
+\label{sec:each}
+
+\subsubsection{Bulk operations}
+\label{sec:bulk-operations}
+
+\subsubsection{Conversion to array}
+\label{sec:conversion-array}
+
+
