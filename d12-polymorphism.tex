@@ -2,14 +2,14 @@
 \label{sec:polymorphyism}
 
 Polymorphism is the ability of an entity to show diferent shapes or
-forms. In biology, polymorphic animals can exist isa variety of
+forms. In biology, polymorphic animals can exist in a variety of
 different forms, e.g.~male and female animals, or different blood
-types. In materials science, polymorphic material can exist in a
+types. In materials science, polymorphic materials can exist in a
 variety of different crystaline configurations (e.g.~calcite and
 aragonite). 
 
 In computer science, polymorphism appears at many levels. In
-Programming in Java, we interested in two types of polymorphism:
+Programming in Java, we are mainly interested in two types of polymorphism:
 polymorphic classes and polymorphic methods. The former is usually
 referred to as \emph{generic types}, while the latter is usually
 called \emph{method overloading}. 
@@ -18,14 +18,27 @@ called \emph{method overloading}.
 \label{sec:generic-types}
 
 A generic type or generic class
-is a complex type that can be combined with many other
-different types. The most common application of generic types is for
+is a complex type that can be combined with other
+different types to produce a new type. 
+The most common application of generic types is for
 ``container'' classes like lists, stacks, and queues. 
 
 When we were creating our own dynamic classes in previous weeks, they
 were usually attached to a type: lists of strings, stacks of integers,
-etc. A generic class, on the other hand, could work the same for many
-types, saving programmers from the hassle of having different but very
+etc. 
+
+\begin{verbatim}
+    // Part of a String List              // Part of an IntegerList
+    public class StringNode {             public class IntegerNode {
+        private String value;                 private Integer value;
+        private StringNode next;              private IntegerNode next;
+        // ...                                // ...
+    }                                     }
+\end{verbatim}
+
+This seems a bit like code repetition. A \emph{generic class}, on the 
+other hand, could work in the same with more than one
+type, saving the programmer from the hassle of having different but very
 similar types (e.g. stacks) for each different type of data they want
 to use (i.e.~string stacks, integer stacks, patient stacks, etc). 
 
@@ -33,10 +46,11 @@ to use (i.e.~string stacks, integer stacks, patient stacks, etc).
 \label{sec:using-gener-class}
 
 A generic class is very similar to a normal class. The only
-difference ---and it is a crucial one--- is that it uses one or more
-type variable to specify the types used in its code. Type variables
+difference ---but it is a crucial one--- is that it uses one or more
+\emph{type parameter} to indicate that it needs another type to be
+fully declared. Type parameters
 are specified in low quotes (``$<$'', ``$>$''). Let's see an
-example of a generic interface, a stack (comments are removed for
+example of a generic interface, a stack (JavaDoc comments removed for
 brevity): 
 
 \begin{verbatim}
@@ -46,6 +60,10 @@ brevity):
     }
 \end{verbatim}
 
+The type parameter \verb+T+ represents a type to be determined when the
+interface \verb+Stack<T>+ is used. For example, we could declare a
+\verb+Stack<String>+ or a \verb+Stack<Integer>+ (see below). 
+
 If we wanted to implement this interface using arrays, it could look
 like this (comments removed for brevity): 
 
@@ -54,6 +72,10 @@ like this (comments removed for brevity):
         private T[] contents;
         private int headIndex; 
 
+        public void push(T newElement) {
+            contents[headIndex] = newElement;
+            headIndex++;
+        }
         public T pop() {
             if (headIndex == 0) {
                 return null;
@@ -72,9 +94,10 @@ and a generic class (and their methods):
 
 \begin{itemize}
 \item The name of the class is extended to include the type, by using
-  a variable type in low quotes. Capital T (for ``type'') is a common
-  name for variable types, and by convention variable types are
-  usually capital single letters, but any valid identifier can be
+  a type parameter in low quotes. Capital \verb+T+ (for ``type'') is a common
+  name for type parameters. By convention type parameters are
+  usually capital single letters (T for ``type'', K for ``key'', 
+  V for ``value'', etc), but any valid identifier can be
   used.
 \item The variable type can be used in every place where a type
   (simple or complex) should be: parameter types, return types, and
@@ -92,20 +115,23 @@ How are generic interface and classes used? Look at this code:
     // ...
 \end{verbatim}
 
-As you can see, the same interface and class can be used to handle
-different types, i.e.~Integers and Strings in this case. Generic types
+As you can see, the same generic interface and generic class can be used to handle
+different specific interfaces/classes, i.e.~stacks 
+of integers and strings in this case. Generic types
 must be based on complex types (classes), not simple types. Boxed
 types are useful if you need a generic type based on one of the
-primitives. This is why the example uses a \verb+Stack<Integer>+; if you try
-to create a \verb+Stack<int>+, the compiler will complain. 
+primitive (i.e.~simple types). 
+This is why the example uses a \verb+Stack<Integer>+; if you try
+to create a \verb+Stack<int>+, Java will complain. 
 
 \subsection{Restricting generic types}
 \label{sec:restr-gener-types}
 
-There are situations in which you want to create a generic type based
-on some types, but not every single type out there. For example, you
-may want to use in your program a list of \verb+Person+, but you do
-not want lists of string or hospital appearing in your code from other
+There are situations in which you want to create a generic type that
+can only be combined with some specific types.
+For example, you
+may want to use a list of \verb+Person+ in your program, but you do
+not want lists of string or hospitals appearing in your code from other
 modules. 
 
 Restricting the type is easy and can be done in more than one way. For
@@ -119,14 +145,14 @@ interfaces. Look at this example:
     }
 \end{verbatim}
 
-In this case, we are using P instead of T for the type variable to
+In this case, we are using P instead of T for the type parameter to
 make it clearer that it must be a Person, not just any type. Note that
-the keyword to retrict the type variable is \verb+extends+, not
+the keyword to retrict the type parameter is \verb+extends+, not
 \verb+implements+. The
-compiler knows that any type that we combine this list with must be a
-class that extends the interface \verb+Person+. Therefore, we will be
+compiler knows that any type that we specify for \verb+PersonList<P>+
+must be a class that extends/implements the interface \verb+Person+. Therefore, we will be
 able to create a \verb+PersonList<KidPerson>+ but not a
-\verb+PersonList<Integer>+. If we try to do the latter, the compiler will
+\verb+PersonList<Integer>+. If we try to do the latter, Java will
 complain. 
 
 \subsection{Type wildcards}
@@ -136,7 +162,7 @@ Generic classes can also be used in a generic way (no pun
 intended). For example, we may want to write a method that takes a
 generic class inside a non-generic class, as in this example, where a
 \verb+School+ class has a method that always returns the first element
-of a list, regardles of it being a list of students, of teacher, or of
+of a list, regardless of it being a list of students, of teachers, or of
 homework assignments: 
 
 \begin{verbatim}
@@ -153,7 +179,7 @@ homework assignments:
 \end{verbatim}
 
 If you try to compile this method, the compiler will complain because
-it does not know what the type variable T is. There are three ways of
+it does not know what the type parameter T is. There are three ways of
 solving this problem. First, we could make School a generic class: 
 
 \begin{verbatim}
@@ -179,9 +205,12 @@ possibility is to generify only the method
 \end{verbatim}
 
 This is slightly better because it keeps the generics more
-contained. If the method returns a generified type, this is the best
-we can do. If it does not, we can use an even simpler notation using
-type wildcards: 
+contained, i.e.~restricted to the method. 
+
+If the method returns a generified type, restricting generics to the
+methods is the best
+we can do. However, if the return type is not generic, 
+we can use an even simpler notation using type wildcards: 
 
 \begin{verbatim}
     public class School {
@@ -210,7 +239,7 @@ if necessary:
 In this case, the method will accept a list of any type as long as the
 type is a \verb+Person+. 
 
-% Maybe add something here about PECS?
+% Maybe add something here about PECS? Next year!
 %
 % http://www.ibm.com/developerworks/java/library/j-jtp07018/index.html#3.0
 % 
@@ -222,9 +251,9 @@ type is a \verb+Person+.
 \subsection{Conclusion}
 \label{sec:conclusion-2}
 
-Generic classes are one the main types of polymorphism present in
+Generic classes are one of the main types of polymorphism present in
 Java. They enable programmers to combine one class with several other
-classes, by using type variables. 
+classes, by using type parameters. 
 
 Generic classes are, therefore, a way of reusing code and/or avoiding
 code repetition (remember the DRY principle: Don't Repeat Yourself). 
@@ -253,6 +282,14 @@ such as the method \verb+substring+ of class \verb+String+. This
 method can take either one or two \verb+int+ parameters; depending on
 the number of arguments, the behaviour is different. 
 
+\begin{verbatim}
+    // ...
+    String str = "This is some text";
+    System.out.println(str.subString(8));    // prints "some text"
+    System.out.println(str.subString(8,12)); // prints "some"
+    // ...
+\end{verbatim}
+
 A method in Java is defined by its name and the types and positions of
 its parameters; therefore, strictly speaking, \verb+substring(int)+ is
 a different method from \verb+substring(int,int)+ and it is not a
@@ -261,18 +298,18 @@ methods, however, do have the same \emph{signature} and there can be
 only one version in each class: 
 
 \begin{verbatim}
-    // Same method! Illegal!
+    // Same method! Cannot be in same class.
     String myMethod(int first, int second, String message);
     String myMethod(int start, int end, String txt);
 \end{verbatim}
 
-The names of the parameter are not important: only their types and
+Remember that the names of the parameters are not important: only their types and
 positions. Note that the return type is not part of the signature
 either, so we cannot have two methods with the same name and
 parameters but different return types. 
 
 \begin{verbatim}
-    // Same method! Illegal!
+    // Same method! Cannot be in same class.
     int myMethod(int first, int second, String message);
     void myMethod(int first, int second, String message);
 \end{verbatim}
@@ -318,17 +355,19 @@ This is how we can have multiple polymorphic versions of the same
 method without any repetition of code. Remember: Don't Repeat
 Yourself. 
 
-\section{Introduction to upcasting}
+\section{Upcasting and downcasting}
 \label{sec:upcasting}
 
 There is a third type of
-polymorphism in Java that is simpler but very important. We have
+polymorphism (of sorts) in Java that is simpler but also very
+important. 
+We have
 already seen how it works, although we have not used its proper name
 until now.
 %We are already familiar with \emph{upcasting}, although we have not
 %called it like that. 
 We have been using it every time we have declared
-a variable by using an interface: 
+a variable by using an interface or a superclass: 
 
 \begin{verbatim}
     List patientList;
@@ -336,14 +375,14 @@ a variable by using an interface:
 \end{verbatim}
 
 We know that it is good practice to work with interface names for our
-data types, rather than to use the class names directly. The interface
-allows the programmer to abstract from all the implementation details
+data types, rather than to use the class names directly. Using interfaces
+allows programmers to abstract themselves from all the implementation details
 of the class and work with just its public behaviour, i.e.~the methods
-defined on the interface. This is upcasting, and it is similar to the
+defined on the interface. This is called \emph{upcasting}, and it is similar to the
 casting of simple types we have already seen; you just need to know
 that, by convention, interfaces are imagined to be ``up'' and specific
-classes are imagined to be ``down'', so casting from class to
-interface is up-casting. (The origin in computer science is almost
+classes are imagined to be ``down'' (see Figure~\ref{fig:updown}), so casting from class to
+interface is up-casting. (The ``origin'' in computer science is almost
 always up: the root of a tree, the interface of a class, etc). 
 
 \begin{figure}[hbtp]
@@ -368,15 +407,17 @@ specific by using another interface (\verb+Person+). The variable
 objects of classes that implement the \verb+Person+ interface
 (e.g. \verb+KidPerson+, \verb+AdultPerson+, etc). 
 
-Upcasting is a way of ``moving up to know less'', to forget more
-details about the implementation to work with a simpler, more generic
-data type. Bear in mind that a real program is really complex, so
-reducing complexity is usually in the programmer's benefit, and that
-is why it is so common in Java programs. In some rare occasions,
-programmers need to do the opposite: move down from the general to the
-specific: this is called downcasting. 
-We will see more about upcasting (and downcasting) in the following
-sections. 
+Upcasting is a way of ``moving up to know less'', i.e.~to
+intentionally forget details about the implementation so that we can
+work with a simpler, more generic data type. 
+Bear in mind that a real program is really complex, and therefore
+reducing complexity is usually in the programmer's benefit; that
+is why upcasting is so common in Java programs. 
+
+In some rare occasions,
+programmers need to do the opposite, i.e.~move down from the general
+to the specific: this is called \emph{downcasting}. 
+
 
 
 
