@@ -416,9 +416,35 @@ is why upcasting is so common in Java programs.
 
 In some rare occasions,
 programmers need to do the opposite, i.e.~move down from the general
-to the specific: this is called \emph{downcasting}. 
+to the specific: this is called \emph{downcasting}. The syntax in this
+case is very similar to the casting of simple types. Imagine that we
+have a list of animals, but we knew (somehow) that all those animals
+were dogs, and we wanted to make them bark. As \verb+bark()+ is a
+method of \verb+Dog+ but not of \verb+Animal+ we would need to
+downcast them: 
 
+\begin{verbatim}
+    public void makeThemBark(List<Animal> animals) {
+        for (int i = 0; i < animals.size(); i++) {
+            Animal nextAnimal = animals.get(i);
+            Dog dog = (Dog) nextAnimal;
+            dog.bark();
+        }
+    }
+\end{verbatim}
 
+Upcasting is an operation that detects errors at compile time: if the
+code compiles, it will always run. This is not true of downcasting, which can
+fail at \emph{runtime}, even if it compiled successfully. In the
+example above, the method \verb+makeThemBark(...)+ may receive a list
+of \verb+Animal+ where not all the elements are really objects of
+class \verb+Dog+ (maybe there is a \verb+Cat+). When the code tries to
+downcast a class into something that it is not, Java will throw a
+\verb+ClassCastException+: 
+
+\begin{verbatim}
+    java.lang.ClassCastException: Cat cannot be cast to Dog
+\end{verbatim}
 
 
 %%% Local Variables:
