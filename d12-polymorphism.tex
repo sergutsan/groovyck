@@ -68,7 +68,7 @@ If we wanted to implement this interface using arrays, it could look
 like this (comments removed for brevity): 
 
 \begin{verbatim}
-    public class ArrayStack<T> {
+    public class ArrayStack<T> implements Stack<T> {
         private T[] contents;
         private int headIndex; 
 
@@ -171,7 +171,7 @@ homework assignments:
         public T returnFirstElement(List<T> stack) {
             return stack.get(0); 
         }
-        public void returnElementCount(List<T> stack) {
+        public int returnElementCount(List<T> stack) {
             return stack.size();
         }
         // ... more methods here
@@ -322,11 +322,11 @@ is used is not to repeat code. For example, the following overloaded
 method repeats code unnecesarily: 
 
 \begin{verbatim}
-    public double printAverage(double d1, double d2) {
+    public void printAverage(double d1, double d2) {
          double result = 0.5 * (d1 + d2);
          System.out.println("The average is: " + result);
     }
-    public double printAverage(double d1, double d2, String msg) {
+    public void printAverage(double d1, double d2, String msg) {
          double result = 0.5 * (d1 + d2);
          System.out.println(msg + result);
     }
@@ -342,10 +342,10 @@ specific version of the method call the more general version, as in
 the code below: 
 
 \begin{verbatim}
-    public double printAverage(double d1, double d2) {
+    public void printAverage(double d1, double d2) {
          printAverage(d1, d2, "The average is: ");
     }
-    public double printAverage(double d1, double d2, String msg) {
+    public void printAverage(double d1, double d2, String msg) {
          double result = 0.5 * (d1 + d2);
          System.out.println(msg + result);
     }
