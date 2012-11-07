@@ -21,17 +21,110 @@ goals:
 \section{Don't Repeat Yourself}
 \label{sec:dont-repeat-yourself}
 
-Improve the following code avoiding code repetition. 
+Look at the following code. Is there anything you can do to make this
+code better? Hint: you may need to convert between types
+(e.g.~casting). 
 
+\begin{verbatim}
+    public class Comparator {
+        public int getMax(int n, int m) {
+            if (n > m) {
+                return n;
+            } else {
+                return m;
+            }
+        }
+        public double getMax(double d1, double d2) {
+            if (d1 > d2) {
+                return d1;
+            } else {
+                return d2;
+            }
+        }
+        public String getMax(String number1, String number2) {
+            int n1 = Integer.parseInt(number1);
+            int n2 = Integer.parseInt(number2);
+            if (n1 > n2) {
+                return number1;
+            } else {
+                return number2;
+            }
+        }
+    }
+\end{verbatim}
 
 % Prevent code repetition in method overloading: specific methods call
 % general method
 
-% Get phones upcasting and downcasting
+\section{Upcasting, downcasting}
+\label{sec:upcast-downc}
 
-% Create a generic doubly-linked list
+For this exercise, you will need to use again some classes and
+interfaces you created last day: \verb+Phone+, \verb+OldPhone+,
+\verb+MobilePhone+, \verb+SmartPhone+. 
 
-% Create a generic stack 
+
+\subsection{Start}
+
+Create a script that builds a new \verb+SmartPhone+ with the line: 
+
+\begin{verbatim}
+    Smartphone myPhone = new Smartphone();
+\end{verbatim}
+
+and then uses all its methods. 
+
+\subsection{Direct upcasting}
+\label{sec:b}
+
+Change the script so that the \verb+SmartPhone+ is created with the
+line: 
+
+\begin{verbatim}
+    Mobilephone myPhone = new Smartphone();
+\end{verbatim}
+
+Compile your code again. Are there any problems? Why do this problems
+happen? What are the possible solutions?
+
+\subsection{Indirect upcasting when calling a method}
+\label{sec:c}
+
+Pass this object to a method \verb+testPhone(Phone)+ 
+that has only one parameter of type
+\verb+Phone+. What methods can you call on the object?
+
+\subsection{Downcasting}
+\label{sec:downcasting}
+
+Inside the former method, downcast the object to \verb+Smartphone+ so
+that you can use all the public methods of \verb+Smartphone+. 
+
+\subsection{Casting exception}
+\label{sec:casting-exception}
+
+Create a \verb+MobilePhone+ object and then pass it to method
+\verb+testPhone(Phone)+. What happens?
+
+\section{Generic list}
+\label{sec:generic-list}
+
+Modify the doubly-linked list that you have created to make it
+generic, i.e.~to allow it to have values of its elements of any
+type. Use the TDD methodology (interface, test, production code,
+repeat\ldots).
+
+Once you have it ready, create a class Company that keeps two linked
+lists, one with the names of the employees and one with their National
+Insurance Number. 
+
+\section{Generic stack}
+\label{sec:generic-stack}
+
+Create a generic stack (with methods for pushing, poping, and checking
+emptiness) that only works with classes that extend \verb+Number+
+(e.g.~Integer and Double, but not String). Use the TDD methodology
+(interface, test, production code, repeat\ldots).
 
 
 
