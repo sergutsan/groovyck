@@ -132,21 +132,63 @@ create a new stack is:
 
 All operations with collections are documented in their respective
 JavaDocs, most typical ones being those operations that add or remove
-elements from the collection. We are going to comment here on some
-special cases only. 
+elements from the collection. There are also methods to add or remove
+many elements in bulk (e.g.~add all the element in a set to a list),
+and to convert from collections to arrays and viceversa.  We are going
+to comment here on two special cases only, but very important ones. 
 
 \subsubsection{Iterators}
 \label{sec:iterators}
 
+Every collection implements the method \verb+iterator()+. This method
+returns an \verb+Iterator<T>+ for the collection. 
 
+An iterator can be used to move through the collection. Iterators
+implement two (sometimes three) simple methods: 
+
+\begin{description}
+\item[hasNext()] Returns true if there are more elements to go
+  through.
+\item[next()] Moves to the next element.
+\end{description}
+
+A typical idiom to use iterator is as follows: 
+
+\begin{verbatim}
+    // Assuming there is a collection (list, set, etc) of MyClass called "elements"
+    for (Iterator itr = elements.iterator(); itr.hasNext(); ) {
+        MyClass next = itr.next();
+        next.doSomething();
+    }
+\end{verbatim}
+
+First, you get an iterator for your collection. Then,
+while there are more elements to look at,
+you repeat the loop: take next element, do something with it, then go
+for the next\ldots
 
 \subsubsection{for-each}
 \label{sec:each}
 
-\subsubsection{Bulk operations}
-\label{sec:bulk-operations}
+Since Java 5, the above loop can be written more succintly as: 
 
-\subsubsection{Conversion to array}
-\label{sec:conversion-array}
+\begin{verbatim}
+    // Assuming there is a collection (list, set, etc) of MyClass called "elements"
+    for (MyClass next : elements) {
+        next.doSomething();
+    }    
+\end{verbatim}
+
+This is read ``for each object of class MyClass in elements,
+do\ldots''. Much shorter and clearer, isn't it? 
+
+It is important to bear in mind, though,
+that there is a bit of magic happening behind the scenes when you use
+a for-each loop. The objects on the right-hand side of the
+colon~(``:'') must implement the \verb+Iterable+ interface or be an
+array. If it is an \verb+Iterable+ (any class, as long as it
+implements that interface), then Java will convert this construct into
+the idiom above; if it is an array, Java will convert it into a loop
+that uses an integer index to traverse it. 
 
 
