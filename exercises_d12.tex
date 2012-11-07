@@ -109,7 +109,7 @@ Create a \verb+MobilePhone+ object and then pass it to method
 \section{Generic list}
 \label{sec:generic-list}
 
-Modify the doubly-linked list that you have created to make it
+Modify the doubly-linked list that you have created in past weeks to make it
 generic, i.e.~to allow it to have values of its elements of any
 type. Use the TDD methodology (interface, test, production code,
 repeat\ldots).
@@ -125,6 +125,37 @@ Create a generic stack (with methods for pushing, poping, and checking
 emptiness) that only works with classes that extend \verb+Number+
 (e.g.~Integer and Double, but not String). Use the TDD methodology
 (interface, test, production code, repeat\ldots).
+
+\section{Generic maps}
+\label{sec:generic-map}
+
+\subsection{Simple map (*)}
+\label{sec:array-based-impl}
+
+Create a generic simple map (with methods for putting a key--value pair,
+getting the value for a key, and removing a key). The key and the
+value may be any type, and they may be different. Each key can only be
+linked to one value. 
+Use the TDD methodology
+(interface, test, production code, repeat\ldots).
+
+For simplicity, assume that your map can hold a maximum of 1000
+pairs. This way, you can use the hashing method you developed in past
+weeks and base your map on an array. 
+
+\subsection{Hash table (*)}
+\label{sec:array-based-impl}
+
+Create a generic map (with methods for putting a key--value pair,
+getting the value for a key, and removing a key). The key and the
+value may be any type, and they may be different. Under each key, the
+hash table can store any number of values associated to that key. 
+Use the TDD methodology
+(interface, test, production code, repeat\ldots).
+
+For simplicity, assume that your map can hold a maximum of 1000
+pairs. This way, you can use the hashing method you developed in past
+weeks and base your map on an array. 
 
 
 
