@@ -2,7 +2,7 @@
 \section{The Java Collections Library}
 \label{sec:java-coll-libr}
 
-In real day-to-day Java programming, programmer do not usually create
+In real day-to-day Java programming, programmers do not usually create
 their own dynamic structures. The Java core library provides several
 structures that are fit for most purposes. Now that you understand
 pointers, inheritance, and generics, it is the right time to introduce
@@ -10,17 +10,25 @@ them.
 
 The so-called Java Collections Library is a series of interfaces and
 classes in package \verb+java.util+. In order to use them, you will
-need to import them, e.g.:
+need to import them. For example, to use interface \verb+List+ and
+class \verb+ArrayList+ you will need to add to the beginning of your
+class file the following lines:
 
 \begin{verbatim}
     import java.util.ArrayList;
     import java.util.List;
 \end{verbatim}
 
-Using the dynamic structures from the Java Collections Library will
-save effort on your part, and also make it easier for your code to
-communicate with other people's because you will be using the same
+The benefits of using the dynamic structures from the Java Collections
+Library are twofold. First, it will
+save effort on your part because you do not have to create these
+structures again and again. Second, and more important, it will make
+it easier for your code to 
+communicate with other people's code because you will be using the same
 interfaces and classes. 
+
+\subsection*{Important: where to get more information?}
+\label{sec:important:-where-get}
 
 The Java Collections Library is well documented on the main
 JavaDoc. You can find it by looking up ``java collections'' in your
@@ -55,13 +63,18 @@ through the interface, see below), a useful implementing class may be
 \label{sec:lists}
 
 A \verb+List<E>+ is a collection of elements, maybe with duplicate
-elements, probably unsorted.
-
-A list does not need to be sorted, but it is a sequence with an
-order. This means that elements that were added earlier come before
-elements that were added later. A list provides methods to access
+elements. 
+%
+A list provides methods to access
 elements at specific indeces (\verb+.get(int)+) and to search for
 the index of an element (e.g.~\verb+indexOf(Object)+). 
+%
+A list usually keeps the order in which elements are added to it; 
+% A list does not need to be sorted, but it keeps the order in which
+% elements were added to it. 
+This means that elements that were added earlier come before
+elements that were added later. 
+%
 
 The most commonly-used implementation is \verb+ArrayList<E>+, although
 \verb+LinkedList<E>+ may be useful in some situations. A typical idiom to
@@ -75,7 +88,9 @@ There is also a
 class \verb+Vector<E>+ that is an old, synchronised, more complicated
 implementation of interface \verb+List<E>+. It should not be
 used (except maybe in multi-threaded applications). \verb+Vector<E>+ was
-part of Java 1.0; since the Collections Library was introduced in
+part of Java 1.0\footnote{Strictly speaking, it was Vector because
+  Java 1.0 did not have generics.}; 
+since the Collections Library was introduced in
 Java~2, \verb+ArrayList<E>+ (and \verb+LinkedList<E>+)
 is a better fit for most situations. 
 
@@ -131,11 +146,13 @@ create a new stack is:
 \label{sec:oper-with-coll}
 
 All operations with collections are documented in their respective
-JavaDocs, most typical ones being those operations that add or remove
-elements from the collection. There are also methods to add or remove
-many elements in bulk (e.g.~add all the element in a set to a list),
-and to convert from collections to arrays and viceversa.  We are going
-to comment here on two special cases only, but very important ones. 
+JavaDocs. The operations that add or remove
+elements from the collection are those most commonly used. 
+There are also methods to add or remove
+a lot of elements in bulk (e.g.~add all the element in a set to a list),
+and to convert from collections to arrays and viceversa. You should
+look a the JavaDoc and get familiarised with them.  We are going
+to comment here only on two special cases, but very important to know. 
 
 \subsubsection{Iterators}
 \label{sec:iterators}
@@ -152,7 +169,7 @@ implement two (sometimes three) simple methods:
 \item[next()] Moves to the next element.
 \end{description}
 
-A typical idiom to use iterator is as follows: 
+A typical idiom to use iterators is as follows: 
 
 \begin{verbatim}
     // Assuming there is a collection (list, set, etc) of MyClass called "elements"
@@ -179,7 +196,7 @@ Since Java 5, the above loop can be written more succintly as:
     }    
 \end{verbatim}
 
-This is read ``for each object of class MyClass in elements,
+This is read ``for each object of class MyClass in 'elements',
 do\ldots''. Much shorter and clearer, isn't it? 
 
 It is important to bear in mind, though,
@@ -188,7 +205,8 @@ a for-each loop. The objects on the right-hand side of the
 colon~(``:'') must implement the \verb+Iterable+ interface or be an
 array. If it is an \verb+Iterable+ (any class, as long as it
 implements that interface), then Java will convert this construct into
-the idiom above; if it is an array, Java will convert it into a loop
+the idiom in Section~\ref{sec:iterators}; 
+if it is an array, Java will convert it into a loop
 that uses an integer index to traverse it. 
 
 
