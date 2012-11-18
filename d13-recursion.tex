@@ -1,27 +1,50 @@
-Recursion
-  - def
-  - factorial
-  - fibonacci
-  - hanoi towers
-  - need for a base case, where recursion ends (or infinite recursion)
-    - if infinite recursion -> stack overflow
-  - takes more stack space, but usually improves legibility
-  - search for something that can only be done recursively
-    - there is no such thing, this is a consequence of the
-      Turing-Church conjecture.  
-  - cpu vs memory: dynamic programming
-    - memoizing
-    - fibonacci example
-  - divide and conquer
-    - example in real life: sorting postal mail (thanks to Knuth)
-    - binary search
-    - quick sort
-    - Advantages: easier to parallelise -> will come to it again
+\section{Recursion}
+\label{sec:recursion}
 
-Exercises
-  - Greatest common divisor
-  - Length of a queue
-  - merge sort
-  - Finding longest common subsequence
-  - Root finding for a polynomial (one between -1000 and 1000 if
-      sign(f(min)) != sign(f(max)) , as many as possible for **)
+
+
+% Recursion
+%   - def
+%   - factorial
+%   - fibonacci
+%   - Stack diagrams
+%     - Stack overflow, see below
+%       - Symptom of a recursive call, usually (maybe hidden)
+%   - hanoi towers
+%   - Pitfalls: 
+%     - no base case, where recursion ends (or infinite recursion)
+%       - if infinite recursion -> stack overflow
+%     - no convergence -
+%       - another stack overflow
+%   - takes more stack space, but usually improves legibility
+%   - search for something that can only be done recursively
+%     - there is no such thing, this is a consequence of the
+%       Turing-Church conjecture.  
+%   - cpu vs memory: dynamic programming
+%     - memoizing
+%     - fibonacci example
+%   - divide and conquer
+%     - example in real life: sorting postal mail (thanks to Knuth)
+%     - binary search
+%     - quick sort
+%     - Advantages: easier to parallelise -> will come to it again
+
+% Exercises
+%   - write numbers...  then check
+%   - What is wrong with this exercise? (check for 0 is too late!)
+%   - Greatest common divisor ( p > q => gcd(p,q) = gcd(q, p % q) )
+%   - Anagrams of n letters
+%   - Length of a queue
+%   - Power of a number
+%   - Koch star?
+%   - Din-A4, etc
+%   - merge sort
+%   - Finding longest common subsequence
+%   - Root finding for a polynomial (one between -1000 and 1000 if
+%       sign(f(min)) != sign(f(max)) , as many as possible for **)
+%   - Memoization: Collatz problem
+%   - Memoization: McCarthy
+%   - 8 dames on a chess board
+%   - Towers of Hanoi variant: odd vs even
+%   - Dominoes
+%   - How big is your stack? 
