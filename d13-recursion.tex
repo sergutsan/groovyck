@@ -88,9 +88,12 @@ sequence of Fibonacci number starts as 1, 1, 2, 3, 5, 8, 13, 21, 34,
 thanks to him we can write 2989 instead of MMCMLXXXVIII.}.
 Fibonacci numbers are defined recursively as:
 
-$$ F(1) = F(2) = 1 $$
-
-$$ F(n) = F(n-1) + F(n-2) $$
+$$ F(n) = 
+  \begin{cases} 
+    1,               & \mbox{if } n < 2 \\ 
+    F(n-1) + F(n-2), & \mbox{if } n \ge 3
+  \end{cases}
+$$
 
 and have many applications in computer science and biology, among
 other fields. As they are defined recursively, a recursive method to
@@ -111,9 +114,8 @@ write:
 \subsection{How does recursion work?}
 \label{sec:how-does-recursion}
 
-Recursion works as any other method call. There is no magic. 
-
-When a statement in Java calls a method, the same process is always
+Recursion works as any other method call. There is no magic. When a
+statement in Java calls a method, the same process is always 
 followed: 
 
 \begin{enumerate}
@@ -168,7 +170,10 @@ variables are new and independent.
 \begin{figure}[hbtp]
   \centering
   \includegraphics[width=\textwidth]{gfx/recursive-factorial}
-  \caption{Evolution of the computer stack when factorial(4) is called.}
+  \caption{Evolution of the computer stack when factorial(4) is
+    called. Every subsequent call of the method adds a new level to
+    the stack, and the variable where the return value will be stored
+    is left with an undecided value until the method call returns.}
   \label{fig:fact}
 \end{figure}
 
@@ -197,7 +202,7 @@ If a recursive method does not have a base case, the method will call
 itself continuously until the stack is overflown, i.e.~until the
 computer tries to add a new level to the stack (to execute the next
 method) and find there is no more space to do it. At that point, the
-Java Virtual Machine will throw a \verb+StackOverflow+ exception. 
+Java Virtual Machine will throw a \verb+StackOverflowError+. 
 
 \paragraph{No convergence}
 \label{sec:no-convergence}
@@ -233,22 +238,178 @@ may be quite complex to see whether they converge in all cases or not.
 
 If your recursive method does not converge towards a base case, you
 will overflow the stack and the Java Virtual Machine will throw a
-\verb+StackOverflow+ exception. 
+\verb+StackOverflowError+. 
 
+\subsection{When to use recursion?}
+\label{sec:when-use-recursion}
+
+Recursive methods are a way of performing a computation more than
+once. In that respect, they are similar to loops. When a problem is
+solved by using loops, it is said to be solved \emph{iteratively};
+when recursive methods are used, it is solved \emph{recursively}. 
+
+Every problem that can be solved iteratively can be solved
+recursively, and viceversa\footnote{This is one of the results of the
+ Turing--Church thesis.}. Some programming languages do not have
+loops, and some do not have recursion. Most modern languages,
+including Java, have both. 
+
+There is no clear set of rules of when to use one or the other. In
+general, recursive code tends to be shorter, simpler, and clearer (but
+not always). On the other hand, recursive calls make heavy use of the
+stack, which can be an issue in limited devices. 
+
+As a general rule, you should use whatever you feel is more natural
+for the problem at hand. You should keep in mind that recursive
+solutions are harder to think, especially when you are not familiar
+with the idea, but easier to read. Code is written once and read many
+times (for maintenance, extension, etc); therefore, it is usually a good
+idea to be a bit biased towards recursive approaches unless the amount
+of memory is really limited (and even in that case, remember that
+memory and computing power grow every year). 
+
+\subsection{Memoization and dynamic programming}
+\label{sec:memo-dynam-progr}
+
+Recursive code tends to be simple and clear, but sometimes it is
+highly inefficient. Think of the method that we wrote before to
+calculate the n$^{th}$ Fibonacci number: 
+
+\begin{verbatim}
+    public static int fib(int n) {
+        if ((n == 1) || (n == 2)) {
+          return 1; 
+        } else {
+            int result = fib(n-1) + fib(n-2);
+            return result;
+        }
+    }
+\end{verbatim}
+
+This methods works fine for small numbers (up to 30), but then it
+becomes extremely expensive to compute and takes a very long to
+provide an answer, as shown in Figure~\ref{fig:fibotime}. Why is this? 
+
+\begin{figure}[hbtp]
+  \centering
+  \input{gfx/fact.tex}
+  \caption{Time used by the method fib(int) depending on the input parameter}
+  \label{fig:fibotime}
+\end{figure}
+
+To understand what is happening here, let's see what the method is
+doing for $n = 4$. As $n$ is not 1, 
+we have to calculate \verb+fib(3)+ and \verb+fib(2)+
+and then add them up. First we calculate the former, \verb+fib(3)+, so
+we calculate \verb+fib(2)+ and \verb+fib(1)+ and add them up; they are both 1, so
+\verb+fib(3)+ is 2. Then we move on to calculate \verb+fib(2)+\ldots
+but wait a second\ldots we are calculating \verb+fib(2)+ twice! 
+
+The higher the number, the more calculations we are repeating
+unnecessarily (see Figure~\ref{fig:fibotree}). For every new number of
+Fibonacci, we are roughly duplicating the number of calculations
+needed with respect to the preceding number. This leads to exponential
+growth, which is exactly the behaviour observed in
+Figure~\ref{fig:fibotime}. 
+
+\begin{figure}[hbtp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/factorial-tree}
+  \caption{Tree of recursive computations for the Fibonacci numbers. It can be observed that there are many repetitions. }
+  \label{fig:fibotree}
+\end{figure}
+
+Not all is lost for recursive computation, however, because we can
+very easily keep track of the values we have already calculated. If we
+store these value in memory for later use we do not need to calculate
+them again. We can use an array for this purpose, created the first
+time the method is called. So the method above could look like this: 
+
+\begin{verbatim}
+    // arrays are 0-based, so F(1) is stored at position 0, etc
+    private int[] precalculated = null;
+
+    public int fib(int n) {
+        if (precalculated == null) {
+           precalculated = new int[n];
+           for (int i = 0; i < precalculated.length; i++) {
+                precalculated[i] = -1; // to indicate "not calculated yet"
+           }
+        }
+        if ((n == 1) || (n == 2)) {
+          return 1; 
+        } else {
+            if (precalculated[n-1] != -1) {
+                return precalculated[n-1];
+            } else {
+                int result = fib(n-1) + fib(n-2);
+                precalculated[n-1] = result;
+                return result;
+            }
+        }
+    }
+    // ...additional code would go here...
+\end{verbatim}
+
+This is kind of OK, but the clarity of this code could be greatly
+improved with just two small tricks: first, move the initialisation
+of the array to another method; second, remove the first \verb+if+ by
+including the base cases (1 and 2) in the array at initialisation. The
+new code would look like this: 
+
+\begin{verbatim}
+    // arrays are 0-based, so F(1) is stored at position 0, etc
+    private int[] precalculated = null;
+
+    public int fib(int n) {
+        if (precalculated == null) {
+            initPrecalculatedArray(n);
+        }
+        if (precalculated[n-1] != -1) {
+            return precalculated[n-1];
+        } else {
+            int result = fib(n-1) + fib(n-2);
+            precalculated[n-1] = result;
+            return result;
+        }
+    }
+
+    private void initPrecalculatedArray(int size) {
+       precalculated = new int[size];
+       for (int i = 0; i < precalculated.length; i++) {
+            precalculated[i] = -1; // to indicate "not calculated yet"
+       }
+       precalculated[0] = 1; // F(1)
+       precalculated[1] = 1; // F(2)
+    }
+    // ...additional code would go here...
+\end{verbatim}
+
+Now the method \verb+fib(int)+ is much clearer. If the array of
+precalculated values is not initialised (i.e.~it is \verb+null+), we
+initialise it. Then we start calculating smaller Fibonacci numbers and
+storing them in the array. Before we do any calculation, we check the
+array; if it contains the precalculated value, we just use that
+number. There are no repeated calculations in this case. 
+
+Storing intermediate variables for reusing them is a simple technique
+called \emph{memoization} (not to be confused with memorization),
+sometimes written memo-ization. 
+
+The approach of solving a problem by dividing it into smaller
+sub-problems, and combining the results of the smaller instances to
+find the solution of the bigger one (memoizing intermediate results to
+prevent redundant re-computation), is called \emph{dynamic
+  programming}\footnote{It is important to note that (somewhat
+  confusingly) the term ``dynamic programming'' has nothing to do with
+  writing software, and actually predates the appearance of
+  computers. Originally, the term programming in 'dynamic programming'
+  referred to ``program'' in the sense of a military schedule for
+  training not in the sense of a list of instructions to be processed
+  by a computer.}.
 
 
 % Recursion
-%   - takes more stack space, but usually improves legibility
-%   - search for something that can only be done recursively
-%     - there is no such thing, this is a consequence of the
-%       Turing-Church conjecture.  
-%   - when to go iterative and when to go recursive
-%     - simplicity and clarity vs resources, the former win every day
-%       (if they do not, they will soon)
-%     - counter-example: fibonacci
-%   - cpu vs memory: dynamic programming
-%     - memoizing
-%     - fibonacci example
 %   - divide and conquer
 %     - example in real life: sorting postal mail (thanks to Knuth)
 %     - binary search
