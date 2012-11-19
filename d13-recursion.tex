@@ -5,33 +5,37 @@ Recursion is the process of repeating items in a self-similar way. It
 is a concept that appears often in computer science and other branches
 of mathematics (e.g.~number theory, fractals), but it has also
 attracted some interest from fields like the arts in recent times
-(look up ``recursive images'' on your favourite search engine). 
+(look up ``recursive images'' on your favourite search engine!). 
 
 In programming, the most basic form of recursion happens when a method
-calls itself. This can be done in any modern programming language, and
-definitely in Java. We have already seen some examples of recursive
-calls, e.g.~when we tried to calculate the depth of a tree: 
+calls itself. This is something that can be done in any modern 
+programming language, including
+Java. We have already seen some examples of recursive
+calls, e.g.~when we tried to calculate the depth of a tree in one of
+the exercises: 
 
 \begin{verbatim}
-    // Method of class Node/Tree
-    public int depth() {
-        int leftDepth = 0;
-        if (left != null) {
-            leftDepth = left.depth();
-        }
-        int rightDepth = 0;
-        if (right != null) {
-            rightDepth = right.depth();
-        }
-        int depthBelow = Math.max(leftDepth, rightDepth);
-        return 1 + depthBelow;
-    }
+01    // Method of class Node/Tree
+02    public int depth() {
+03        int leftDepth = 0;
+04        if (left != null) {
+05            leftDepth = left.depth();
+06        }
+07        int rightDepth = 0;
+08        if (right != null) {
+09            rightDepth = right.depth();
+10        }
+11        int depthBelow = Math.max(leftDepth, rightDepth);
+12        return 1 + depthBelow;
+13    }
 \end{verbatim}
 
-This method calls itself twice before it can return a value to the
-caller. In order to return the depth under a node in a binary tree,
+This method calls itself twice (lines 05 and 09) before it can return
+a value to the caller (line~12). 
+In order to return the depth under a node in a binary tree,
 the depth under the left branch is calculated (if it exists, otherwise
-it is zero), then the depth under the right branch, and then the
+it is zero), then the depth under the right 
+branch (if it exists), and then the
 result is the maximum of both depths plus one. The method
 \verb+depth()+ is \emph{recursive}. 
 
@@ -39,33 +43,34 @@ In this section we are going to
 learn more about how recursion works, when it is a good idea to use
 it, and what are the possible pitfalls and how to avoid them. 
 
-\paragraph{Classical examples: factorials and Fibonacci numbers}
+\subsection{Classical examples: factorials and Fibonacci numbers}
 \label{sec:class-exampl-fact}
+
+\subsubsection{Factorials}
 
 The factorial of a natural number is represented with an exclamation
 mark (!) and defined\footnote{If you like maths and would like to see
   how the factorial of a \emph{real} number is defined, search for the
   $\Gamma$ (gamma) function.} as:  
 
-$$ n! = n \cdot (n - 1) \cdot (n - 2) \cdot \ldots 2 \cdot 1 $$
+$$ n! = n \times (n - 1) \times (n - 2) \times \ldots \times 2 \times 1 $$
 
 This definition makes it very easy to write a function that calculates
 the factorial of a number recursively: 
 
 \begin{verbatim}
-    public static int factorial(int n) {
-        if (n == 1) {
-          return 1; 
-        } else {
-            int result = n * factorial(n-1);
-            return result;
-        }
-    }
+01    public static int factorial(int n) {
+02        if (n == 1) {
+03          return 1; 
+04        } else {
+05            int result = n * factorial(n-1);
+06            return result;
+07        }
+08    }
 \end{verbatim}
 
-(Note that the method is static because it has no side effects,
-i.e.~it is a pure function). 
-
+Note that the method is static because it has no side effects,
+i.e.~it is a \emph{pure function}. 
 If the argument is 1, the function returns 1 (because 1! =
 1). Otherwise, the function returns the argument multiplied by the
 factorial of the argument minus one; that function call will in turn
@@ -73,20 +78,30 @@ return its argument (n-1) multiplied by the factorial of its argument
 minus one (n-2); and so on. If we want to calculate the factorial
 of~4, the resulting calculations look like this: 
 
-$$ factorial(4) = 4 \cdot factorial(3) = 
-   4 \cdot (3 \cdot factorial(2)) = 
-   4 \cdot (3 \cdot (2 \cdot factorial(1))) = $$ 
+\begin{equation*}
+ \begin{aligned}
+  \textrm{factorial(4)} & ~~~~~~~~~~~ \verb++\\
+  \textrm{4 } \times \textrm{ factorial(3)} & ~~~~~~~~~~~ \textrm{(line 05)} \\
+  \textrm{4 } \times \textrm{ (3 } \times \textrm{ factorial(2))} &  ~~~~~~~~~~~ \textrm{(line 05)} \\
+  \textrm{4 } \times \textrm{ (3 } \times \textrm{ (2 } \times  \textrm{ factorial(1)))} & ~~~~~~~~~~~ \textrm{(line 05)}\\
+  \textrm{4 } \times \textrm{ (3 } \times \textrm{ (2 } \times  \textrm{ 1))} & ~~~~~~~~~~~ \textrm{(line 03)}\\
+  \textrm{4 } \times \textrm{ (3 } \times \textrm{ 2)} & ~~~~~~~~~~~ \textrm{(line 06)} \\
+  \textrm{4 } \times \textrm{ 6} & ~~~~~~~~~~~ \textrm{(line 06)}\\
+  \textrm{24} & ~~~~~~~~~~~ \textrm{(line 06)}\\
+ \end{aligned}
+\end{equation*}
 
-$$ = 4 \cdot (3 \cdot (2 \cdot 1)) = 4 \cdot (3 \cdot 2) = 4 \cdot 6 = 24 $$
+\subsubsection{Fibonacci numbers}
 
-Another classical example of recursivity are Fibonacci
+Another classical example of recursivity are the sequence of Fibonacci
 numbers\footnote{Fibonacci numbers were discovered by Italian mathematician
 Leonardo di Pisa (known as Fibonacci) in the early 13$^{th}$ century
 as an ideal solution to the growth of the population of rabbits. The
-sequence of Fibonacci number starts as 1, 1, 2, 3, 5, 8, 13, 21, 34,
-55, 89\ldots Fibonacci introduced arabic numerals to the West, and
-thanks to him we can write 2989 instead of MMCMLXXXVIII.}.
-Fibonacci numbers are defined recursively as:
+sequence of Fibonacci numbers starts as 1, 1, 2, 3, 5, 8, 13, 21, 34,
+55, 89\ldots Fibonacci introduced arabic numerals to the West, so
+thanks to him we can write 2989 instead of MMCMLXXXVIII.}, where every
+number is the addition of the preceding two. 
+In other words, Fibonacci numbers are defined recursively as:
 
 $$ F(n) = 
   \begin{cases} 
@@ -95,7 +110,7 @@ $$ F(n) =
   \end{cases}
 $$
 
-and have many applications in computer science and biology, among
+They have many applications in computer science and biology, among
 other fields. As they are defined recursively, a recursive method to
 calculate the n$^{th}$ Fibonacci number is quite straightforward to
 write: 
@@ -123,7 +138,8 @@ followed:
 \item The values given by the caller code are copied into the
   parameters in the new level.
 \item A hidden parameter ``this'' is also copied into the stack,
-  pointing to the object where the method is called.
+  pointing to the object where the method is called. It is accessed
+  with the reserved keyword \verb+this+ (e.g.~\verb+this.name = name+).
 \item The code of the method is executed as usual. Any new local
   variable is created on the new level in the stack. 
 \item When a \verb+return+ statement is reached, the corresponding
@@ -135,26 +151,35 @@ followed:
 \end{enumerate}
 
 This does not change in the case of a recursive call. If we take the
-calculation of 4! before as an example, the computer stack changes are
+calculation of 4! that we used before as an example, 
+the computer stack changes are
 represented if Figure~\ref{fig:fact}. First, a level is added to the
 stack and the parameters are copied (only \verb+n+ in this case, with
 value~4). The code of the method is executed line by line: as \verb+n+
-is not 
-equal to~1, a new local variable \verb+result+ is created; its value
-is~1 plus the result of calling a method. A new level is added to the
+is not equal to~1 (line~2), 
+a new local variable \verb+result+ is created (line~5); its value
+is~1 plus the result of calling a method (line~5). 
+A new level is added to the
 stack, and the parameter values are copied (only \verb+n+ again, but
 this time with value~3). A local variable \verb+result+ is created and
-then the method is called again so we need to add a new level in the
+then the method is called again (line~5) 
+so we need to add a new level in the
 stack. The process is repeated once more, and we call the method with
-a value of 1 for \verb+n+. At this point, the method returns 1. Then
+a value of 1 for \verb+n+. At this point, 
+the method returns~1 (line~3). Then
 the calling method can finally calculate the value of \verb+result+,
-which is $2 \cdot 1 = 2$, and returns it. Then the calling method can
-calculate \verb+result+ itself, which in this case is $3 \cdot 2 = 6$,
-and return it. The calling method can then find the value of
-\verb+result+ (24) and return it. 
+which is $2 \times 1 = 2$, and returns it (line~6). 
+Then the calling method can
+calculate \verb+result+ itself, which in this case is $3 \times 2 = 6$,
+and return it (line~6). The calling method can then find the value of
+\verb+result+ (24) and return it (line~6). 
 
 As you can see, a method recursively calling itself is no different
-from a method calling another method. For every method call, recursive
+from a method calling another method. It is a bit convoluted to write
+it in English, but it is easy to follow the code if we are careful and
+remember that every method call \emph{is independent} from the previous one
+even if they execute the \emph{same} lines of code. 
+For every method call, recursive
 or not, the calling code remains \emph{on pause} while the new level
 in the stack is created and the code of the called method is
 executed (in the example, the value is result is not defined until a
@@ -254,10 +279,10 @@ recursively, and viceversa\footnote{This is one of the results of the
 loops, and some do not have recursion. Most modern languages,
 including Java, have both. 
 
-There is no clear set of rules of when to use one or the other. In
+There is no clear set of rules about when to use one or the other. In
 general, recursive code tends to be shorter, simpler, and clearer (but
 not always). On the other hand, recursive calls make heavy use of the
-stack, which can be an issue in limited devices. 
+stack, which can be an issue in small devices with limited memory. 
 
 As a general rule, you should use whatever you feel is more natural
 for the problem at hand. You should keep in mind that recursive
@@ -303,7 +328,7 @@ we have to calculate \verb+fib(3)+ and \verb+fib(2)+
 and then add them up. First we calculate the former, \verb+fib(3)+, so
 we calculate \verb+fib(2)+ and \verb+fib(1)+ and add them up; they are both 1, so
 \verb+fib(3)+ is 2. Then we move on to calculate \verb+fib(2)+\ldots
-but wait a second\ldots we are calculating \verb+fib(2)+ twice! 
+but wait a second\ldots we are calculating \verb+fib(2)+ again! 
 
 The higher the number, the more calculations we are repeating
 unnecessarily (see Figure~\ref{fig:fibotree}). For every new number of
@@ -323,7 +348,7 @@ Not all is lost for recursive computation, however, because we can
 very easily keep track of the values we have already calculated. If we
 store these value in memory for later use we do not need to calculate
 them again. We can use an array for this purpose, created the first
-time the method is called. So the method above could look like this: 
+time the method is called. The resulting method could look like this: 
 
 \begin{verbatim}
     // arrays are 0-based, so F(1) is stored at position 0, etc
@@ -390,7 +415,9 @@ precalculated values is not initialised (i.e.~it is \verb+null+), we
 initialise it. Then we start calculating smaller Fibonacci numbers and
 storing them in the array. Before we do any calculation, we check the
 array; if it contains the precalculated value, we just use that
-number. There are no repeated calculations in this case. 
+number. There are no repeated calculations in this case. This version of the
+method uses a couple of milliseconds for finding a Fibonacci number,
+even for larger numbers. 
 
 Storing intermediate variables for reusing them is a simple technique
 called \emph{memoization} (not to be confused with memorization),
@@ -402,8 +429,9 @@ find the solution of the bigger one (memoizing intermediate results to
 prevent redundant re-computation), is called \emph{dynamic
   programming}\footnote{It is important to note that (somewhat
   confusingly) the term ``dynamic programming'' has nothing to do with
-  writing software, and actually predates the appearance of
-  computers. Originally, the term programming in 'dynamic programming'
+  writing software, and actually \emph{predates} the appearance of
+  computers and software by many years. 
+  Originally, the term programming in 'dynamic programming'
   referred to ``program'' in the sense of a military schedule for
   training not in the sense of a list of instructions to be processed
   by a computer.}.
@@ -432,6 +460,7 @@ prevent redundant re-computation), is called \emph{dynamic
 %   - Finding longest common subsequence
 %   - Root finding for a polynomial (one between -1000 and 1000 if
 %       sign(f(min)) != sign(f(max)) , as many as possible for **)
+%   - Memoization: Fibonacci numbers
 %   - Memoization: Collatz problem
 %   - Memoization: McCarthy
 %   - 8 dames on a chess board
