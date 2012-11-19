@@ -1,0 +1,245 @@
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[dvips]{graphicx}
+\begin{document}
+
+\section*{Learning goals}
+\label{sec:learning-goals}
+
+Before the next day, you should have achieved the following learning
+goals: 
+
+\begin{itemize}
+\item Be able to write recursive for simple problems
+\item Understand what a recursive method looks like, and how it
+  differs from an iterative method. 
+\item Understand that storing intermediate values for reuse
+  (memoization) can largely speed up some computations. 
+\end{itemize}
+
+\section{Recursive code, line by line}
+\label{sec:read-recurs-code}
+
+\subsection*{a)}
+
+What number would the following method print on screen if you called
+\verb+printNumbers(6)+?
+
+\begin{verbatim}
+    public static void printNumbers(int n) {
+        if (n <= 0) {
+            return;
+        }
+        System.out.println(n);
+        printNumbers(n-2);
+        printNumbers(n-3);
+        System.out.println(n);
+    }
+\end{verbatim}
+
+Do this exercise on paper. Then add this static method to a Java class
+and check your answer. 
+
+\subsection*{b)}
+\label{sec:b-1}
+
+Do you see anything wrong with the following code?
+
+\begin{verbatim}
+    public String doggyMethod(int n) {
+        String result = doggyMethod(n-3) + n + doggyMethod(n-2);
+        if (n <= 0) {
+            return "";
+        }
+        return result;
+    }
+\end{verbatim}
+
+\subsection*{c) McCarthy's 91 function}
+\label{sec:c}
+
+Calculate the result of calling this method with arguments 50, 73, 
+and~95. Note that the recursion on line 5 is double. 
+
+\begin{verbatim}
+    public String mcCarthy91(int n) {
+        if (n > 100) {
+            return n - 10;
+        } else {
+           return mcCarthy91(mcCarthy91(n+11));
+        }
+    }
+\end{verbatim}
+
+
+\section{Classics}
+
+\subsection{a) Factorial }
+
+Write a class with a static method that calculates the factorial of an
+integer number as seen in the notes. 
+
+Is it easy to do this both iteratively and recursively? Try both ways
+and see which is more natural for you. If one takes too long, try the
+other way. 
+
+\subsection{b) Fibonacci }
+
+Write a class with a static method that calculates the n$^{th}$ element
+of the Fibonacci sequence as seen in the notes. 
+
+Is it easy to do this both iteratively and recursively? Try both ways
+and see which is more natural for you. If one takes too long, try the
+other way. 
+
+When doing it recursively, do it with and without memoization. Compare
+the time that is needed in each case to find F(40) or F(45). 
+
+\subsection{c) Hanoi towers}
+
+A legend says that, somewhere in the East, near Hanoi, there is a
+temple. In the temple, there are three posts. In the posts, there are
+64 discs of 64 different sizes. When the world was created, all the
+discs were in the first post; when all the discs are moved to the
+last post, the world will end. 
+
+The monks in the temple move the discs between posts, but they must
+obey two simple rules. First, only one disc can be moved at a time,
+from one post to another post (it cannot be left anywhere else). Last,
+but not least, a disc can only be placed on top of a bigger disc, never
+on top of a smaller disc. The smallest disc can be placed
+on any post (all other discs are bigger); the biggest disc can only be
+placed on an empty post.
+
+Create a method that calculates the number of moves necessary to move
+a set of $n$ Hanoi disks from the initial post to the last post. Hint:
+if you want to play monk yourself in order to better understand the
+problem, ask the lecturer for a ``Hanoi envelope''. 
+
+\section{Paper sizes}
+\label{sec:paper-sizes}
+
+A Din-A0 sheet of paper is 841mm $\times$ 1189mm (its surface is one
+square meter). Successive measurements of paper are defined
+recursively as ``half'' or ``double'' the preceding size. Therefore,
+a Din-A1 sheet of paper is half of Din-A0, or 594mm $\times$ 841mm;
+while a Din-A00 is double of Din-A0, or 1189mm$\times$ 1682mm. 
+
+Create a method that takes a String parameter representing a size
+(e.g.~''A4'', ``A00000'') and prints on screen the size of the
+corresponding sheet of paper. For simplicity, you can ignore rounding
+errors with calculating smaller sizes. 
+
+\section{Queue length}
+\label{sec:queue-length}
+
+Reuse the code of one of your dynamic lists from former weeks, and add
+a method that calculates the length of the list (maybe you have done
+this already). 
+
+Is it easy to do this both iteratively and recursively? Try both ways
+and see which is more natural for you. If one takes too long, try the
+other way. 
+
+\section{Anagrams}
+\label{sec:anagrams}
+
+An anagram is a word created by recombination of the letters in
+another words. Some anagrams make sense (``silent'', ``listen'') and
+some do not (``nietsl''). Some people only accepts ``real'' anagrams,
+but in this exercise we will accept them all, even if they do not
+exist as real words. 
+
+Write a class with a static method that takes a String as a parameter
+and returns a list (hint: you can use \verb+List<String>+ and
+\verb+ArrayList<String>+) of strings with all the anagrams that can be
+made with it. 
+
+Is it easy to do this both iteratively and recursively? Is this
+similar to a former exercise?
+
+\section{Palindrome}
+\label{sec:palindrome}
+
+Create a class with a (recursive) static method that takes a String
+paremeters and
+returns true if the String is a palindrome and false
+otherwise. Compare this recursive version with the iterative version
+you wrote in past weeks. Which one seems clearer to you?
+
+\section{Power}
+\label{sec:power}
+
+Create a class with a static method \verb+pow+ that takes to integers
+(\verb+base+ and \verb+exponent+) and calculates the power, 
+e.g.~\verb+pow(2,3)+ calculates $2^3$. 
+
+Is it easy to do this both iteratively and recursively? 
+
+% \section{Hailstone numbers}
+% \label{sec:hailstone-numbers}
+
+% The sequence hailstone numbers is defined as follows:
+
+% \begin{itemize}
+% \item If the number $n$ is even, the next number is $n \over 2$
+% \item If the number is odd, the next number is $3n + 1$
+% \end{itemize}
+
+% This sequence always converges to 1 (this is the Collatz conjecture,
+% not demonstrated yet). Write a method that returns a list of integers
+% (hint: you can use \verb+List<Integer>+ and verb+ArrayList<Integer>+) 
+% with the hailstone sequence of hailstone numbers that starts at some
+% given natural number provided by the user. 
+
+% The method should be recursive and use memoization to store...
+
+\section{Eight Dames (**)}
+\label{sec:eight-dames}
+
+Create a method that calculates the solution to the problem of the
+eight Dames: ``given a chess board, and knowing that the Dame can reach
+any tile horizontally, vertically, or diagonally, place 8 Dames on the
+board so that none of them can reach the others by doing only one
+move''. You can return the solution as an array of 8x8 booleans where
+eight tiles are true and the others are false. 
+
+For extra complexity, make your method return all the possibilities in
+which the problem can be solved (this may take a long time). 
+
+\section{Hanoi Redux (**)}
+\label{sec:hanoi-redux}
+
+The legend of the Towers of Hanoi has inspired countless variations as
+mind games. Here is one of them: if we have three posts and 64 discs,
+where all the even-numbered discs are on the leftmost post while the
+odd-numbered discs are on the rightmost post, how many moves do we
+need to exchange the discs following the Hanoi rules for disc
+movement? 
+
+Write a method that calculates the number of moves necessary to
+exchange $n$ discs. 
+
+\section{How big is your stack (*)?}
+\label{sec:how-big-your}
+
+Write a method that calculates the maximum size of the stack (measured
+in method calls) by forcing a \verb+StackOverflowError+. Use different
+methods, which different number and types of local variables, and see
+how the number of maximum function calls changes.
+
+% Exercises
+%   - Greatest common divisor ( p > q => gcd(p,q) = gcd(q, p % q) )
+%   - Koch star?
+%   - merge sort
+%   - Finding longest common subsequence
+%   - Root finding for a polynomial (one between -1000 and 1000 if
+%       sign(f(min)) != sign(f(max)) , as many as possible for **)
+%   - Memoization: Fibonacci numbers
+%   - 8 dames on a chess board
+%   - Increments and unfolding
+%   - Dominoes
+%   - How big is your stack? 
+
+
+\end{document}
