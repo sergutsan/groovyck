@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[dvips]{graphicx}
+\begin{document}
+
+\section*{Learning goals}
+\label{sec:learning-goals}
+
+Before the next day, you should have achieved the following learning
+goals: 
+
+\begin{itemize}
+\item Implement divide-and-conquer solutions to problems. 
+\end{itemize}
+
+\section{Binary search}
+\label{sec:binary-search}
+
+The most basic example of divide-and-conquer strategies is the binary
+search. This is used to look for an element in a sorted list. 
+
+We can find an element in a list by traversing through the whole list
+and checking whether each element is the one we are looking for. The
+number of comparisons that we need by using this algorithm is
+proportional to the length of the list. 
+
+If we know that the list is sorted, we can do better by divide and
+conquer, by repeating these steps: 
+
+\begin{description}
+\item[: ] If the list is empty, it does not contain the
+  element. If it is not empty, check the middle element, i.e.~the
+  element at \verb+list.size()/2+. If it is the element we are looking
+  for, we have finished. 
+\item[Subproblem: ] If the element we are looking for is before the
+  middle element, the next list to search into is the first half of
+  the original list; otherwise, it is the second half.
+\item[Integration: ] No need for integration in this case.  
+\end{description}
+
+Implement a binary search algorithm for a list of integer numbers. You
+can use the classes in the Java Collection Library. 
+
+% Exercises
+%   - Greatest common divisor ( p > q => gcd(p,q) = gcd(q, p % q) )
+%   - Koch star?
+%   - Memoization: Fibonacci numbers
+%   - Increments and unfolding
+%   - Dominoes
+%   - Finding longest common subsequence
+%
+%
+%   - Finding a number
+%   - Quicksort
+%   - Merge sort
+%   - Root finding for a polynomial (one between -1000 and 1000 if
+%       sign(f(min)) != sign(f(max)) , as many as possible for **)
+
+
+\end{document}

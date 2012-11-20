@@ -1,0 +1,80 @@
+
+\section{Divide-and-conquer}
+\label{sec:divide-conquer}
+
+Some years ago, a guy called Julius Caesar conquered the Gaul in just
+eight years; a remarkable feat at the time. He did not conquer the
+whole Gaul in one go, but rather divided the problem (conquering the
+Gaul) into smaller subproblems (conquering each small tribe) and then
+solved the smaller problems to get to the final solution. 
+
+We can use the same strategy in our programs. We can divide a problem
+into smaller subproblems that we can attack more easily; once we have
+the solution for the smaller subproblems, we can integrate those
+solutions to get a general solution. This is called a
+divide-and-conquer strategy and fits nicely with recursive
+approaches. 
+
+\subsection{More examples from the real world}
+\label{sec:an-example-from}
+
+Another example of divide-and-conquer in the real world (that, like
+the Julius Caesar's example, seemed more interesting in the days before email
+and twitter) is the postal mail system. The postal mail does not
+deliver each letter individually, because that would be too
+costly. Instead, the letter are roughly organised into zones, and then
+send to the zone offices to be delivered. Zone offices do not deliver
+letters individually either, but assign them to areas or postal codes,
+and send them in big batches to the right local post office. The local
+post office is then able to deliver all letter to their destinations. 
+
+In the days of the internet, the Domain Name System is another example
+of recursive divide-and-conquer. When you look for the server at
+``www.bbk.ac.uk'', you start by asking the owner of the ``.uk''
+domain. It does not have the address of every single machine in the
+UK, but it knows which DNS servers are responsible of the top-level
+subdomains (e.g.~co, ac, etc), so it can redirect you to the ``ac''
+responsible. This server does not know every single machine in British
+universities, but it know who is responsible of each subdomain
+(e.g.~bbk, ox, cam, etc), and will send you to the server responsible
+of ``bbk''. This server can tell you what is the address of
+``www.bbk.ac.uk'' so that you can access the homepage of Birkbeck. 
+
+As you can see, dividing the problems of postal mail delivery and
+domain name resolution into smaller subproblems makes them more
+manageable. You have also observed that the smaller subproblems are
+basically smaller versions of the big problem. This is the type of
+situation in which recursive approaches come naturally. 
+
+\subsection{Programming example: depth and size of a tree}
+\label{sec:progr-exampl-depth}
+
+A divide-and-conquer strategy is defined by three steps: 
+
+\begin{enumerate}
+\item Division of the big problem into two or more subproblems.
+\item Finding the solution of the smaller subproblems.
+\item Integration of the subsolution into a solution to the big
+  problem. 
+\end{enumerate}
+
+We have already seen an example of a divide-and-conquer strategy. When
+we calculated the depth of a binary tree, we did not need to iterate through
+all the nodes in the tree counting steps as we traversed the tree up
+and down. Instead, we divided the problem into two smaller
+subproblems: finding the size of the left subtree and the right
+subtree. Once we found the solution of both subproblems, the
+integration involved taking the maximum depth and add one to it. 
+
+A related problem is finding the size of a tree, i.e.~the number of
+elements it contains. First, we divide the problem into two smaller
+subproblems: finding the size of the left and right subtrees. Once we
+get the solution to those problems, we can combine them by adding them
+up plus one (for the root). 
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "d14"
+%%% End:
