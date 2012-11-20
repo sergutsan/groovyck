@@ -1,3 +1,4 @@
+\vspace{1cm}
 
 \section{Divide-and-conquer}
 \label{sec:divide-conquer}
@@ -22,11 +23,12 @@ Another example of divide-and-conquer in the real world (that, like
 the Julius Caesar's example, seemed more interesting in the days before email
 and twitter) is the postal mail system. The postal mail does not
 deliver each letter individually, because that would be too
-costly. Instead, the letter are roughly organised into zones, and then
-send to the zone offices to be delivered. Zone offices do not deliver
+costly. Instead, the letters are roughly organised into zones, and then
+sent in big lots to the zone offices to be delivered. Zone offices do not deliver
 letters individually either, but assign them to areas or postal codes,
 and send them in big batches to the right local post office. The local
-post office is then able to deliver all letter to their destinations. 
+post office is then able to deliver all letters in their area to their
+final destinations. 
 
 In the days of the internet, the Domain Name System is another example
 of recursive divide-and-conquer. When you look for the server at
@@ -35,7 +37,7 @@ domain. It does not have the address of every single machine in the
 UK, but it knows which DNS servers are responsible of the top-level
 subdomains (e.g.~co, ac, etc), so it can redirect you to the ``ac''
 responsible. This server does not know every single machine in British
-universities, but it know who is responsible of each subdomain
+universities, but it knows who is responsible of each subdomain
 (e.g.~bbk, ox, cam, etc), and will send you to the server responsible
 of ``bbk''. This server can tell you what is the address of
 ``www.bbk.ac.uk'' so that you can access the homepage of Birkbeck. 
@@ -70,8 +72,25 @@ A related problem is finding the size of a tree, i.e.~the number of
 elements it contains. First, we divide the problem into two smaller
 subproblems: finding the size of the left and right subtrees. Once we
 get the solution to those problems, we can combine them by adding them
-up plus one (for the root). 
+up plus one (for the root). Look at the following example with
+additional comments marking the steps: 
 
+\begin{verbatim}
+    public int size() {
+        // Step 1: Division of the problem into size-of-left and size-of-right
+        int leftSize = 0
+        if (left != null) {
+            leftSize = left.size();
+        }
+        int rightSize = 0;
+        if (right != null) {
+            rightSize = right.size();
+        }
+        // Step 2: Integration of both subproblems
+        int result = 1 + leftSize + rightSize;
+        return result;
+    }
+\end{verbatim}
 
 
 %%% Local Variables:
