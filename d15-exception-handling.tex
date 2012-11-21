@@ -1,3 +1,127 @@
+
+\section{Exception handling}
+\label{sec:exception-handling}
+
+If you try to parse as an integer something that is not an integer
+number, you get a \verb+NumberFormatException+. If you try to call the
+object of an object but the object is \verb+null+, you get a
+\verb+NullPointerException+. But what are exceptions? And is there a
+way to handle them so that they do not always crash a program? 
+
+Exceptions represent exceptional circumstances that should never occur
+in the normal (some would say \emph{ideal}) execution of a
+program. When one of these exceptional circumstances ---like trying to
+follow a \verb+null+ pointer--- happens, the Java Virtual Machine
+throws an exception to indicate it. 
+
+An exception interrupts the normal execution of the method where it
+happened. It breaks the method where it was happening and moves up to
+the calling method, where it may be caught. If it is not caught in the
+calling method, it will go up again, and again, until it is caught. If
+it is not caught, not even in the original \verb+main+ method, it will
+be caught by the Java Virtual Machine and it will be printed on the
+standard output as you have seen several times already. 
+
+\begin{verbatim}
+    Exception in thread "main" java.lang.NullPointerException
+      at LinkedListNode.addNode(LinkedListNode.java:49)
+      at LinkedList.addNode(LinkedList.java:30)
+	at HospitalManager.launch(HospitalManager.java:71)
+	at HospitalManager.main(HospitalManager.java:13)
+\end{verbatim}
+
+\subsubsection*{Reading a stack trace}
+
+An exception contains information about the state of the Java Virtual
+Machine when it was thrown. In particular, it contains the whole stack
+of methods calls. This is very useful because it helps programmers to
+find what went wrong (and maybe why). 
+
+The most useful line of the stack trace is usually the first one,
+because it says exactly where the exceptional situation happened. For
+example, in the stack trace above we can observe that a
+\verb+NullPointerException+ was thrown at line 49 of the code of class 
+\verb+LinkedListNode+. With this information a programmer can look at
+that specific line and try to understand why a null pointer was
+accessed when this should not happen. 
+
+If we want more information we just need to follow the stack trace
+line by line. We can see that the program started at the main method
+of class \verb+HospitalManager+, that the \verb+launch()+ method was
+called on like 13, and that this method called the method
+\verb+addNode()+ in class \verb+LinkedList+ (on line 71), which in
+turn called the method \verb+addNode()+ of class \verb+LinkedListNode+
+(on line 30), where the exception was thrown. 
+
+There is no limit to the length of a stack trace. Then can have as
+many steps as the size of your stack, which is several thousands of
+calls deep (depending on the number of local variables per method
+call). 
+
+Sometimes the stack trace goes into code that has not been written by
+us, as in the following example (comments ommitted for brevity): 
+
+\begin{verbatim}
+01    public class ExceptionThrower {
+02       public static void main(String[] args) {
+03          ExceptionThrower et = new ExceptionThrower();
+04          et.launch();
+05       }
+06       private void launch() {
+07          System.out.print("Write a number: ");
+08          int n = getNumber();
+09          String evenness = (n % 2 == 0) ? "even" : "odd";
+10          System.out.println("You entered " + n + ", an " + evenness + " number."$
+11       }
+12       private int getNumber() {
+13          String str = System.console().readLine();
+14          int result = Integer.parseInt(str);
+15          return result;
+16       }
+17    }
+\end{verbatim}
+
+If you enter numbers like 2 or 19, all will work well. However, if you
+enter something like ``three'' you will get a detailed stack trace to
+blame you for your incompetence typing integer numbers: 
+
+\begin{verbatim}
+    Exception in thread "main" java.lang.NumberFormatException: For input string: "three"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:48)
+	at java.lang.Integer.parseInt(Integer.java:449)
+	at java.lang.Integer.parseInt(Integer.java:499)
+	at ExceptionThrower.getNumber(ExceptionThrower.java:14)
+	at ExceptionThrower.launch(ExceptionThrower.java:8)
+	at ExceptionThrower.main(ExceptionThrower.java:4)
+\end{verbatim}
+
+We can see that the program started in the \verb+main+ method, that is called
+the method \verb+launch()+, that this method called the method
+\verb+getNumber()+, and then this method called
+\verb+Integer.parseInt()+. From that point on, the stack trace shows
+method calls happening inside classes of the basic Java Library, like
+\verb+Integer+ and \verb+NumberFormatException+, but you can see that
+the information is exactly the same: method calls and line numbers. If
+you have access to the source code of those external classes, you will
+see the line numbers and will be able to trace the stack of method
+calls in detail. If you work with external libraries from which you do
+not have the source code, you will only see the names of the methods
+but not the line number. 
+
+The example allows us to observer the ``interrupting'' nature of
+exceptions. The \verb+NumberFormatException+ interrupted the execution
+of method \verb+getNumber()+ (line 15 was not executed), then
+interrupted the caller method \verb+launch()+ (lines 09--10 were never
+executed), and then interrupted the \verb+main+ method. Since the
+exception was never \emph{caught}, it went all the way up to the
+\verb+main+ method and then was shown by the Java Virtual Machine. 
+
+\subsection{Catching exception}
+\label{sec:catching-exception}
+
+
+
+
 % Intro: 
 %   What are exceptions?
 %   We have seen some already
@@ -26,7 +150,20 @@
 
 % How to create a new exception
 %   Make it runtime or not
+%   Re-throw an exception
+
+% Other throwables: Errors
+
+% Final note: comparison with error-checking
 
 % Exercises: 
 %  - Sequence flow with or without exception
-%  - 
+%  - Read numbers. If not a number, show error message and start
+%    again.
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "d15"
+%%% End:
