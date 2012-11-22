@@ -116,41 +116,121 @@ executed), and then interrupted the \verb+main+ method. Since the
 exception was never \emph{caught}, it went all the way up to the
 \verb+main+ method and then was shown by the Java Virtual Machine. 
 
-\subsection{Catching exception}
+\subsection{Catching exceptions}
 \label{sec:catching-exception}
 
+Exceptions are handles by using try/catch constructs: you ``try'' some
+code where exceptions may be thrown; if exceptions are thrown, you
+``catch'' them and do something about them. See the following example: 
+
+\begin{verbatim}
+12    private int getNumber() {
+13       int result = 0; // default
+14       try { 
+15          String str = System.console().readLine();
+16          result = Integer.parseInt(str);
+17          System.out.println("You entered " + result + ".");
+18       } catch (NumberFormatException ex) {
+19          System.out.println("You entered something that is not an integer number.");
+20       }
+21       return result;
+22    }
+\end{verbatim}
+
+If a \verb+NumberFormatException+ is thrown at line 16, the normal
+execution of the method is interrupted. Program execution jumps out of
+the current \verb+try+ clause (i.e.~until the next closing curly
+bracket). It is caught there ---there is a \verb+catch+ statement for
+that type of exception---, and the code inside the \verb+catch+ clause is 
+executed. Then the execution proceeds normally. 
+
+If the exception jump up to the end of the scope and is not caught, it
+will jump up to the end of the next scope. If it is still not caught,
+it will jump up to the end of the next scope and so on. This usually
+means that the exception is moving up the method stack from calling
+method to calling method until it is caught. If it is never caught, it
+will crash your program and appear on screen. 
+
+In a way, you can think
+of this as a huge \verb+catch+ statement just out of your main method
+that only prints the stack trace.
+
+\begin{verbatim}
+    // WARNING: this is only a metaphore, not real code
+    try {
+        mainMethod();
+    } catch (AnyException ex) {
+        ex.printStackTrace().
+    }
+\end{verbatim}
+
+The method \verb+printStackTrace()+ is very useful, and is almost
+always used in \verb+catch+ statements because it really helps in
+debugging your program when a exception is thrown in an unexpected
+place. The method prints the name of every single method that had been
+called when the exception was thrown, including the line that was
+being executed (if the source code for the class is known). 
+
+A \verb+try+ clause can have many \verb+catch+ clauses associated to
+it, as in the following example: 
+
+\begin{verbatim}
+12    private int getNumber() {
+13       int result = 0; // default
+14       try {
+15           System.out.print("Enter a number with at least 3 digits: ");
+16           String str = System.console().readLine();
+17           result = Integer.parseInt(str);
+18           System.out.println("You entered " + result + ".");
+19           char thirdDigit = str.charAt(2);
+20           System.out.println("The third digit is " + thirdDigit + ".");
+21       } catch (NumberFormatException ex) {
+22           System.out.println("ERROR 1: You entered something that is not an $
+23       } catch (IndexOutOfBoundsException ex) {
+24           System.out.println("ERROR 2: You entered integer with less than 3 $
+25       }
+26       return result;
+27     }
+\end{verbatim}
+
+If a \verb+NumberFormatException+ is thrown on line~17, the execution
+of the program will jump to line~21, where it will be caught. After
+that \verb+catch+ clause is executed, the program will continue at the
+end of the try/catch construct at line~26. If a
+\verb+IndexOutOfBoundsException+ is thrown at line~19, the execution
+of the program will jump to line~21, and then to line~23, where it
+will be caught. After that \verb+catch+ clause is executed, the
+program will continue at the end of the try/catch construct at line~26.  
+
+A \verb+try+ clause can also have a \verb+finally+ clause, which can
+used for cleaning up resources. We will see more of this when we learn
+about input/output. 
+
+\subsection{Which methods throw exceptions?}
+\label{sec:which-methods-throw}
 
 
-
-% Intro: 
-%   What are exceptions?
-%   We have seen some already
-
-% How do they work
-%   If something exceptional happens, an exception is thrown. It will go
-%   ``up'' until it is caught. If it is not caught, it will stop the
-%   program. 
-
-%   It is important to note that they go up the stack trace,
-%   interrupting every single method, until they get to the main method,
-%   and then interrupt it again. 
 
 %   Example...
 
 % How to handle them
 %   try/catch constructs
-%   finally
+%   finally -> left for files?
 
 % Checked exception and unchecked (runtime) exceptions
 %   checked must be caught 
 %     or declared as thrown (so that somebody else catches them)
 
+% The danger of "disappearing" exceptions. 
+
+Once an exception is caught, it does not go ``up'' anymore. It
+disappears. 
 
 % How to throw an exception
 
 % How to create a new exception
-%   Make it runtime or not
 %   Re-throw an exception
+%   Should all new exceptions be runtime exceptions? 
 
 % Other throwables: Errors
 
