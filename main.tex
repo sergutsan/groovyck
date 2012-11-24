@@ -4,12 +4,12 @@
 \usepackage[dvips]{graphicx}
 \usepackage{framed}
 \usepackage{moreverb} % env: comment
+\usepackage{amssymb,amsmath}
 %\usepackage{alltt} 
 %\usepackage{pifont} 
 %\usepackage{color} 
 %\usepackage{subfigure}
 %\usepackage{listings}
-%\usepackage{amssymb}
 %\usepackage{epstopdf}
 %\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 %\usepackage{draftwatermark} 
@@ -389,16 +389,20 @@ only my own fault.
 % \item Remember they have already seen recursion: add and delete in
 %       linked lists
 % \item Exercise: merge sort, quicksort (if seen after lists)
+\input{d13-recursion}
+\input{d14-more-recursion}
 
 % Day 15,16: Exceptions and (finally) I/O (files, mostly)
 % \item Exception Handling
 %   plus checked exceptions, runtime exceptions, and 
 %        *never* do "catch (Exception e) {}"!
 %   plus the 3 Abrahams guarantees
+\input{d15-exception-handling}
 % \item I/O in Java
 % \item ASSIGNMENT: something that reads a CSV with rains in different
 %    regions and returns a file that says who had more rains, what was
 %    the average, etc
+\input{d16-io}
 
 % Day 17,18: Concurrency
 % Day 17:
