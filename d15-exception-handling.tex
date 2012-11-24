@@ -161,6 +161,7 @@ that only prints the stack trace.
         mainMethod();
     } catch (AnyException ex) {
         ex.printStackTrace().
+        System.exit(0); // Stop the Java Virtual Machine
     }
 \end{verbatim}
 
@@ -185,9 +186,9 @@ it, as in the following example:
 19           char thirdDigit = str.charAt(2);
 20           System.out.println("The third digit is " + thirdDigit + ".");
 21       } catch (NumberFormatException ex) {
-22           System.out.println("ERROR 1: You entered something that is not an $
+22           System.out.println("ERROR 1: You entered something that is not an integer.");
 23       } catch (IndexOutOfBoundsException ex) {
-24           System.out.println("ERROR 2: You entered integer with less than 3 $
+24           System.out.println("ERROR 2: You entered integer with less than three digits.");
 25       }
 26       return result;
 27     }
@@ -200,7 +201,11 @@ end of the try/catch construct at line~26. If a
 \verb+IndexOutOfBoundsException+ is thrown at line~19, the execution
 of the program will jump to line~21, and then to line~23, where it
 will be caught. After that \verb+catch+ clause is executed, the
-program will continue at the end of the try/catch construct at line~26.  
+program will continue at the end of the try/catch construct at
+line~26.  
+Once an exception is caught, it does not go ``up'' anymore. It
+disappears. 
+
 
 A \verb+try+ clause can also have a \verb+finally+ clause, which can
 used for cleaning up resources. We will see more of this when we learn
@@ -209,32 +214,223 @@ about input/output.
 \subsection{Which methods throw exceptions?}
 \label{sec:which-methods-throw}
 
+The exceptions thrown by a method should be specified in the
+documentation, in its JavaDoc comments. This is done by means of
+\verb+@throws+. This is as important as describing the arguments for
+the method or the return type. (Check the methods in the core Java
+Library: they all document the exceptions they can throw). 
+
+\begin{verbatim}
+    /**
+     * Gets a number as introduced by the user on the console, which
+     * must be at least three digits long. Otherwise, an 
+     * IndexOutOfBounds will be thrown.
+     *
+     * @return the number introduced by the user
+     *
+     * @throws NumberFormatException if the user types a not-number
+     * @throws IndexOutOfBoundsException if the user types less than three digits
+     */
+\end{verbatim}
+
+Additionally, many exceptions must be documented in the code
+too. These are called \emph{checked exceptions}. 
+
+\subsection{Checked and runtime exceptions}
+\label{sec:check-runt-except}
+
+All exceptions in Java extend class \verb+Exception+, in package
+\verb+java.lang+. Many exceptions, including all you have met so far,
+are in the same package. Classes from this package are automatically
+imported, so you do not need to do import them explicitly. 
+
+A subclass of \verb+Exception+ is \verb+RuntimeException+. Descendants
+of the latter are called (unsurprisingly) \emph{runtime exceptions},
+while all other descendants of \verb+Exception+ are called
+\emph{checked exceptions}. The difference between these two types is
+that checked exceptions \emph{must} be either explicitly declared or
+explicitly caught. 
+
+If a checked exception is thrown in some line of a method it must be
+caught (by using a try/catch construct). If it is not caught, it must
+be declared as (possibly) thrown up, as in the following example:
+
+\begin{verbatim}
+    /**
+     * ...
+     * @throws SomeCheckedException when that exceptional situation happens
+     */
+    public void doggyMethod() throws SomeCheckedException {
+        // do things here that throw some checked exception
+    }
+\end{verbatim}
+
+By declaring that the method throws \verb+SomeCheckedException+, the
+programmer is telling the compiler to check that any method calling
+\verb+doggyMethod+ is catching the exception\ldots or throwing it up
+once again. If a checked exception can be thrown in a line, the line
+must be inside a \verb+try+ block or the exception must be declared as
+thrown. Otherwise, the compiler will complain. 
+
+This does not happen with \verb+RuntimeException+. The reason is that
+they are so common that it would be a lot of work to always declare
+them or catch them.
 
 
-%   Example...
+\subsection{Mishandling exceptions}
+\label{sec:mish-except}
 
-% How to handle them
-%   try/catch constructs
-%   finally -> left for files?
+There are two common mistakes when handling exceptions, and both of
+them are related to laziness. As laziness is an essential part of
+being human (or at least very common), it is important to be warned to
+avoid the same mistakes that thousands of programmers have done in the
+past (sometimes with terrible consequences). 
 
-% Checked exception and unchecked (runtime) exceptions
-%   checked must be caught 
-%     or declared as thrown (so that somebody else catches them)
+The first common mistake is not being specific enough when catching
+exceptions. When you code throws three or four different exceptions,
+it is quite tempting to use a quick \verb+catch(Exception)+ that will
+work for all of them. This is usually a bad idea in the long run
+because different exceptions happen in different circumstances and
+should be dealt with in different ways. If you use the same code for
+all of them, this may be confusing further down the line. As a rule of
+thumb, it is better to catch different exceptions separately. 
 
-% The danger of "disappearing" exceptions. 
+The second ---and more dangerous--- mistake is not doing anything when
+catching an exception. This is really bad. Once an exception is
+caught, it disappears, it does not move up anymore. Unless you do
+something about it, nobody will ever know that an exceptional
+situation happened. For all your users know, your program may be
+deleting money from their bank accounts without a hint that something
+is wrong until it is too late. This is so important that I will write
+it in big letter so that you do not ever forget. Repeat with me: 
 
-Once an exception is caught, it does not go ``up'' anymore. It
-disappears. 
+\begin{center}  
+{\large \bf Do not write empty \verb+catch+ blocks. Ever. }
+\end{center}
 
-% How to throw an exception
+Sometimes it is boring to write a \verb+catch+ block because you are
+interested in the main algorithm and not the exceptional situations
+along the borders of your problem. If you follow the Test Driven
+Methodology we have seen in past weeks this will happen less often,
+but it will happen, and you will be tempted many times to just write
+an empty \verb+catch+ block and ``come later to write it
+properly''. 
 
-% How to create a new exception
-%   Re-throw an exception
-%   Should all new exceptions be runtime exceptions? 
+Believe me when I tell you that ``later'' never comes. If you cannot
+think of anything reasonable for your \verb+catch+ block ---or do not
+want to---, copy and paste either of the following two lines (or
+both) in there and ``come later to write it properly'': 
 
-% Other throwables: Errors
+\begin{verbatim}
+    ex.printStackTrace();
+    throw new RuntimeException(ex); // See more about this in next section
+\end{verbatim}
 
-% Final note: comparison with error-checking
+If you leave empty \verb+catch+ blocks in your code you will face many
+sleepless nights hunting missing exceptions and ghost bugs. You have
+been warned. 
+
+\subsection{Throwing your own exceptions}
+\label{sec:throwing-your-own}
+
+Creating your own exceptions is easy. Just create a class that extends
+either \verb+Exception+ (for checked exceptions) or
+\verb+RuntimeException+ (for runtime exceptions). It is rare that you
+need to create additional exceptions, but in some cases it can be
+useful to be more precise in your exception handling. 
+
+Exceptions usually have three constructors: one without parameters,
+one that takes a String (the message of the exception), and one that
+takes another exception (so the new exception acts as a wrapper of the
+old exception). 
+
+Throwing an exception is also very easy. It is done by means of the
+keyword \verb+throw+. 
+(See the example below.)
+Any exception can be thrown. 
+
+\begin{verbatim}
+    //...
+    throw new SomeException();
+    // ...
+\end{verbatim}
+
+This line creates a new exception (an object of class
+\verb+RuntimeException+) and throws it. The exception can be created
+in a different line, of course, and assigned to a variable. 
+
+
+
+\paragraph{Re-throwing an exception}
+\label{sec:re-throwing-an}
+
+When an exception is caught, it disappears and does not go further up
+in the method call stack. Unless we want it to happen, in which case
+we can just either wrap it inside another exception and throw the
+latter: 
+
+\begin{verbatim}
+    //...
+    } catch(SomeException e) {
+        throw new RuntimeException(e);
+    }
+    // ...
+\end{verbatim}
+
+or ---even simpler--- re-throw it directly (it is still an exception,
+after all, so it can be thrown): 
+
+\begin{verbatim}
+    //...
+    } catch(SomeException e) {
+        throw e;
+    }
+    // ...
+\end{verbatim}
+
+The first option is quite better because it provides additional
+information. I would not recommend to use the latter \emph{in any
+  case}. It is only included here to illustrate the
+relationship between exceptions and the \verb+throws+ keyword.
+
+\subsection{Afterthoughts on exception handling}
+\label{sec:afterth-except-handl}
+
+\subsubsection{Should I create checked or runtime exceptions?}
+\label{sec:should-i-create}
+
+This is a difficult question, and there is not a clear answer for
+it. Personally, I would recommend to make all new exceptions
+\verb+RuntimeException+. 
+
+Runtime exceptions will make your code easier to write
+and not more difficult to read. They will go up your stack when thrown
+and crash your program, which provides a good incentive to fix
+the bug (probably by catching them at the right place). 
+Not having checked and runtime exceptions (only the latter) seems
+to be the route taken by more modern languages, including some very
+popular ones like Python.
+
+\subsubsection{Throw throws throwables}
+\label{sec:throw-throws-throw}
+
+The keyword \verb+throw+ can be used to throw other classes, not just
+exceptions. In particular, any descendant of class \verb+Throwable+
+can be thrown (and caught). 
+
+There are two types of throwables in Java: \verb+Exception+ and
+\verb+Error+. We already know exceptions. Errors are used to indicate
+serious problems, like the \verb+StackOverflowError+ that is thrown
+when the program runs out of stack space (e.g.~due to a buggy infinite
+recursive call). It is not expected from normal applications to catch
+errors, but it is possible. 
+
+% \subsubsection{Exception handling error-checking}
+% \label{sec:exception-handling-1}
+
+% TODO: leave this section for next year
+
+
 
 % Exercises: 
 %  - Sequence flow with or without exception
