@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[dvips]{graphicx}
+\begin{document}
+
+\section*{Learning goals}
+\label{sec:learning-goals}
+
+Before the next day, you should have achieved the following learning
+goals: 
+
+\begin{itemize}
+\item Understand what exceptions are and how they are used.
+\item Create your own exceptions, both checked and runtime.
+\item Catch exceptions by means of try/catch. 
+\end{itemize}
+
+\section{Code flow}
+\label{sec:code-flow}
+
+Look at the following code and write the code flow (use the line
+numbers to indicate which lines are executed in which order) in the
+following situations: 
+
+\begin{itemize}
+\item \verb+userInput+ is 0.
+\item \verb+userInput+ is 2.
+\item \verb+userInput+ is 4.
+\item \verb+userInput+ is 6.
+\end{itemize}
+
+\begin{verbatim}
+01   public void launch(int userInput) {
+02       List<Integer> intList = new ArrayList<Integer>();
+03       intList.add(1);
+04       intList.add(2);
+05       intList.add(3);
+06       intList.add(4);
+07       intList.add(5);
+08       intList.add(6);
+09       try {
+10          intList.remove(0);
+11          System.out.println(intList.get(userInput));
+12          intList.remove(0);
+13          System.out.println(intList.get(userInput));
+14          intList.remove(0);
+15          System.out.println(intList.get(userInput));
+16          intList.remove(0);
+17          System.out.println(intList.get(userInput));
+18          intList.remove(0);
+19          System.out.println(intList.get(userInput));
+20          intList.remove(0);
+21          System.out.println(intList.get(userInput));
+22          intList.remove(0);
+23          System.out.println(intList.get(userInput));
+24       } catch (IndexOutOfBoundsException ex) {
+25          ex.printStackTrace();
+26       }
+27    }
+\end{verbatim}
+
+Incorporate this code into a simple class to verify your answers. 
+
+\section{Exception}
+\label{sec:exception}
+
+Read the following code and check whether there is anything wrong with
+it. Then write some similar code and check your answer. 
+
+\begin{verbatim}
+     // Some code here
+     try {
+       // more code here
+       list.add(newElement);
+       // more code here
+     } catch (Exception ex) {
+       ex.printStackTrace();
+     } catch (NullPointerException ex) {
+       ex.printStackTrace();    
+     }
+\end{verbatim}
+
+
+\section{Error handling on user input}
+\label{sec:error-handling-user}
+
+\subsection*{a)}
+
+Write a program that reads 10 numbers from the user and then prints
+the mean average. If the user inputs something that is not a number,
+the program should complain and ask for a number again until 10
+numbers have been introduced. 
+
+\subsection*{b)}
+
+Modify the program so that it first asks how many numbers the user
+wants to enter, and then asks for the numbers. The computer should
+complain if the user enters something that is not a number in both
+cases. Use methods to prevent code repetitions. 
+
+% Create exception and throw it
+%      both checked and runtime
+
+\section{More patients}
+\label{sec:more-patients}
+
+Write a class that asks for data (name and year of birth) about new patients in a
+hospital and keeps them in a list of \verb+Patient+. The constructor
+of \verb+Patient+ must throw an \verb+IllegalArgumentException+ if the
+age of the patient is negative or greater than 130. 
+
+\section{Prime divisors}
+\label{sec:list-without-null}
+
+Create a class \verb+PrimeDivisorList+. Integers (as in class
+\verb+Integer+) can be added to~/~removed from the list. If a
+\verb+null+ number is
+passed to the \verb+add(Integer)+ method, a
+\verb+NullPointerException+ must be thrown. If a non-prime number is
+added, an \verb+IllegalArgumentException+ must be thrown. 
+
+Override the method \verb+toString()+ so that it returns something
+like:
+
+\begin{verbatim}
+    [ 2 * 3^2 * 7 = 126 ]
+\end{verbatim}
+
+for a list containing one 2, two 3, and one 7. 
+
+Use the TDD methodology to create the class (interface,
+tests,implementation).  
+You can base your class on classes and interfaces from the Java
+Collections Library.
+
+\section{Your first exceptions}
+\label{sec:your-first-exception}
+
+Create two exceptions, one checked exception and one runtime
+exception. Then create a simple class that will throw each of them in
+two different situations, according to user input: 
+
+\begin{enumerate}
+\item inside a \verb+try+ block.
+\item outside a \verb+try+ block.
+\end{enumerate}
+
+Note: Two exceptions times two situations means four different inputs from
+users. Create the new exceptions with four different messages (using
+the appropriate constructor), e.g.~''I am a checked exception and I
+have been thown out of a try block''. 
+
+Assuming you do all of the above inside the \verb+launch()+ method of
+your class, did you have to make any changes to the method's
+declaration? 
+
+\section{Hierarchies of classes, hierarchies of exceptions}
+\label{sec:hier-class-hier}
+
+(Borrowed from Bruce Eckel.) Create a three-level hierarchy of
+exceptions (i.e.~an exception extends some exceptions that extends
+some exception). Now create a base-class A with a method that throws an
+exception at the base of your hierarchy. Inherit B from A and override
+the method so it throws an exception at level two of your
+hierarchy. Repeat by inheriting class C from B. In the \verb+launch()+
+method of another class, create a C
+and upcast it to A, then call the method.
+
+\section{Exaggerating list (*)}
+\label{sec:exaggerating-list}
+
+Create a class \verb+ExaggeratingList+ that implements 
+\verb+java.util.List+ for type integer. 
+Implement all methods in the interface, with
+the following peculiarities: 
+
+\begin{itemize}
+\item When a small element is added to the list, it is transformed
+  into a bigger element. What ``small'' means is decided at
+  construction time (i.e.~as a parameter of the constructor of
+  \verb+ExaggeratingList+).
+\item The output of \verb+size()+ is actually twice the number of
+  elements in the list.
+\end{itemize}
+
+Pay special attention to the exceptions that must be thrown at each
+method (according to the interface documentation), especially in the
+following two cases:
+
+\begin{itemize}
+\item No \verb+null+ elements can be added. Bear this in mind and
+  implement the appropriate exceptions to be thrown (according to the
+  interface documentation).
+\item The list does not support methods \verb+removeAll()+ and
+  \verb+retainAll()+. 
+\end{itemize}
+
+
+
+\end{document}
