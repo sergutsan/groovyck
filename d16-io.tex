@@ -170,9 +170,10 @@ it is this source that is opened (and closed at the end) to
 read. Conversely, an output sink of data (a \verb+Writer+) can be
 created with a file, opened, write to, and closed. 
 
-% TODO: talk about streams?
+% TODO: talk about streams? Probably not. The small note at the end
+% about binary files should do, I think. 
 
-\subsubsection{Reader}
+\subsubsection{Readers}
 \label{sec:reader}
 
 \verb+Reader+ is the abstract class from which all other reader
@@ -189,7 +190,10 @@ a different purpose:
 \item[BufferedReader: ] A general-purpose reader that reads characters
   from a character input stream, bufferring them for efficiency. This
   means that you do not need to read character by character. It
-  provides useful methods like \verb+readLine()+.
+  provides useful methods like \verb+readLine()+\footnote{Although the
+  name is the same, and the functionality is quite similar, this
+  method has nothing to with the readLine() method of class Console,
+  the one that we use when we execute System.out.console().}.
 \item[StringReader: ] A string-based reader that uses a string as the
   input source of data. Can be useful if the data is already stored in
   a String instead of being read from a file or network connection. 
@@ -227,6 +231,43 @@ Once the data source is opened, we can read from it line by line using
 \verb+readLine()+. When we reach the end of the file,
 \verb+readLine()+ returns \verb+null+. 
 
+Usually text files are read line by line, and something is done every
+time for every line. This looks like a \verb+while+ loop: 
+
+\begin{verbatim}
+    String line = in.readLine());
+    while (line != null) {
+        // do things here with the line...
+        line = in.readLine();
+    }
+\end{verbatim}
+
+This repeats the \verb+readLine()+ call, so we may think of using a
+\verb+do...while()+ loop: 
+
+\begin{verbatim}
+    do {
+        String line = in.readLine());
+        // do things here with the line...
+    } while (line != null) {
+\end{verbatim}
+
+\ldots but this is wrong. Sooner or later the end of the file will be
+reached and a \verb+NullPointerException+ will be thrown. So we need
+to use a \verb+while+ loop, but we can write it a bit neater (although
+it seems confusing at first): 
+
+\begin{verbatim}
+    while ((String line = readLine()) != null) {
+        // do things here with the line...
+        line = in.readLine();
+    }
+\end{verbatim}
+
+This is the usual idiom for reading lines from text files in
+Java. Although mixing assignment and conditional clauses in the same
+line is usually discouraged because it can be confusing, this idiom is
+so common that everybody uses it without confusion. 
 
 \paragraph{Closing the source}
 \label{sec:closing-source}
@@ -249,17 +290,20 @@ at the following code:
 05            // ... do things with the data here
 06        }
 07        in.close();
-08    } catch (IOException ex) {
-09        ex.printStackTrace();
-10    } catch (FileNotFoundException ex) {
-11        System.out.println("File " + file + " does not exist.");
+08    } catch (FileNotFoundException ex) {
+09        System.out.println("File " + file + " does not exist.");
+10    } catch (IOException ex) {
+11        ex.printStackTrace();
 12    }    
 \end{verbatim}
 
 If a \verb+FileNotFoundException+ is thrown on line 03 nothing bad
-happens; it is dealt with at the appropiate catch block. But what
+happens; it is dealt with at the appropiate catch block\footnote{If
+  you look at the Java Doc, you will see that FileNotFoundException is
+  a subclass of IOException, so this catch block must come before the
+  other.}. But what
 happens if an \verb+IOException+ is thrown at line 04 or inside the
-loop? The execution flow will jump to the catch clause on line 08,
+loop? The execution flow will jump to the catch clause on line 10,
 skipping line 07 and the data source will never be closed! 
 
 \begin{itemize}
@@ -292,34 +336,126 @@ executed. The code would look like this:
 04        while ((String line = in.readLine) != null) {
 05            // ... do things with the data here
 06        }
-07    } catch (IOException ex) {
-08        ex.printStackTrace();
-09    } catch (FileNotFoundException ex) {
-10        System.out.println("File " + file + " does not exist.");
+08    } catch (FileNotFoundException ex) {
+09        System.out.println("File " + file + " does not exist.");
+10    } catch (IOException ex) {
+11        ex.printStackTrace();
 11    } finally { 
 12        in.close()
 13    }
 \end{verbatim}
 
 
+\subsubsection{Writers}
+\label{sec:writers}
+
+Class \verb+Writer+ is the dual opposite of \verb+Reader+, and the
+class from where all writers descend. Writers are used to write on
+files on disk. 
+
+Most of the reader classes have an equivalent writer class. There is a
+\verb+Writer+, a \verb+BufferedWriter+, a \verb+FileWriter+, and a
+\verb+StringWriter+. They are used mostly in the same way, although
+there is one important difference: there is no \verb+writeLine()+
+method. Apart from this, they are used in a very similar way to how
+readers have been used in the preceding section. 
+
+There is an additional class that has no dual reading counterpart but
+is very convenient to use: \verb+PrintWriter+. This class provides a
+constructor to build an object from a \verb+File+, and it provides 
+convenient methods for writing into files, including: 
+\verb+append(char)+, 
+\verb+print(String)+, 
+\verb+printf(...)+ (similar to C's), 
+and 
+\verb+println(String)+.
+The code below shows a typical use of \verb+PrintWriter+: 
+
+\begin{verbatim}
+    File file = new File("file.csv");
+    try {
+        PrintWriter out = new PrintWriter(file); 
+        out.write(...);
+    } catch (FileNotFoundException ex) {
+        // This happens if file does not exist and cannot be created, 
+        // or if it exists, but is not writable
+        System.out.println("Cannot write to file " + file + ".");
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    } finally { 
+        out.close()
+    }    
+\end{verbatim}
+
+
+\paragraph{Flushing}
+\label{sec:flushing}
+
+When you read from a file, your program will not continue until the
+read operation finished. This is not exactly the case with writing
+operations. When you execute one of \verb+write()+ methods, this only
+puts the information in some structure of the operating system. This
+may or may not be put immediately on disk, depending in different
+factors. 
+
+This may produce strange effects, like data being lost because the
+program crashed after the \verb+write()+ call but before the data was
+actually committed to disk. If you want to ensure that data has been
+written on disk, you can use method \verb+flush()+. 
+
+Closing a data sink automatically flushes it before closing to prevent
+data loss. 
+
+
+\subsection{Binary files}
+\label{sec:binary-files}
+
+Text files contain text. They contain only printable characters. They
+can be seen as a big string on disk. You are encouraged to
+use only text files: they are simpler, they are clearer, and they
+allow you to examine them when there are bugs in your code. In the
+preceding notes we have seen how to interact with text files. 
+
+Old applications sometimes use \emph{binary} files. Binary files
+contain non-printable characters and cannot be read by
+people. Compiled class files are binary files. Try
+opening a \verb+.class+ file in your favourite text editor to get a
+feel of what they look like (hint: gibberish). Old application use
+binary file usually because they use less space on disk, and disk (and
+memory!) space was limited in old times. 
+
+In order to work with binary files, the classes \verb+InputStream+ and
+\verb+OutputStream+ are used, instead of \verb+Reader+ and
+\verb+Writer+. If you ever need to work with binary files in your
+future career as a programmer, you are prepared at this point to read
+the documentation directly from the Java Doc. The main ideas are the
+same: open resource, read and write, close resource. There is also a
+class \verb+RandomAccessFile+ that allows you to read from and write
+to arbitrary positions in a file, instead of using it as a stream. 
+
+Unless you are deadling with old legacy code, you should use always
+plain text in your programs. Memory and disk space are much 
+cheaper than sleepless nights trying to debug binary data with an
+hexadecimal editor. 
 
 
 
+% TODO: preferences
 
+% TODO: try-with-resources
 
-% Talk about finally
-%
 % and the new way of doing finally in Java 7
 % 
 % Exercises: 
 %
 % - ls
-% - cd
 % - mkdir 
 % - cat
+% - copy
 % - tr
 % - uniq (*)
 % - sort (*)
+% - Read temperatures and output the averages
 
 %%% Local Variables:
 %%% mode: latex
