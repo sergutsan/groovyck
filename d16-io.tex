@@ -18,7 +18,7 @@ the local disk.
 \subsection{The basics}
 \label{sec:basics}
 
-\subsubsection*{File systems}
+\subsubsection{File systems}
 \label{sec:filesystems}
 
 Computers have different levels of memory, but there is a clear
@@ -69,7 +69,7 @@ a dot (meaning ``current directory'') but they usually start with the
 name of a file or directory. 
 
 
-\subsubsection*{Process}
+\subsubsection{Process}
 \label{sec:process}
 
 The process of reading from / writing to an external source always
@@ -109,6 +109,7 @@ interacting with the local disks. Some of the most commonly used
 include: 
 \verb+createNewFile()+, 
 \verb+delete()+, 
+\verb+exists()+, 
 \verb+isDirectory()+, 
 \verb+isFile()+, 
 \verb+length()+, 
@@ -157,7 +158,154 @@ run on any computer:
 \subsection{Reading from and writing to files}
 \label{sec:reading-from-writing}
 
-Once we have a 
+Once we have a pointer to a file (through its name) we can try to open
+it as we said in Section~\ref{sec:process}. Note that the file may or
+may not exist. The \verb+File+ object is only a reference to the
+name. If we want to know whether it exists, we can execute the
+\verb+exists()+ method. 
+
+\verb+File+ objects cannot be directly opened in Java. Instead, an
+input source of data (a \verb+Reader+) can be created with a file and
+it is this source that is opened (and closed at the end) to
+read. Conversely, an output sink of data (a \verb+Writer+) can be
+created with a file, opened, write to, and closed. 
+
+% TODO: talk about streams?
+
+\subsubsection{Reader}
+\label{sec:reader}
+
+\verb+Reader+ is the abstract class from which all other reader
+classes descend, and it defines methods to read characters, either one
+by one or many in one go. 
+There are three main reader classes, each of them with
+a different purpose: 
+
+\begin{description}
+\item[FileReader: ] The class for reading from text files\footnote{For
+  binary files you use a FileInputStream.} (including
+  common format like CSV and XML (and XML-based formats like
+  OpenDocument). 
+\item[BufferedReader: ] A general-purpose reader that reads characters
+  from a character input stream, bufferring them for efficiency. This
+  means that you do not need to read character by character. It
+  provides useful methods like \verb+readLine()+.
+\item[StringReader: ] A string-based reader that uses a string as the
+  input source of data. Can be useful if the data is already stored in
+  a String instead of being read from a file or network connection. 
+\end{description}
+
+\paragraph{Open data source}
+\label{sec:open-data-source}
+
+A \verb+Reader+ is automatically open at creation (with
+\verb+new+). There is no need to explicitly open it with a method
+call. 
+
+The usual idiom to create an input source
+combines a \verb+FileReader+ (to read from a
+\verb+File+) with a \verb+BufferedReader+ to have access to buffered
+data input and the \verb+readLine()+ method. If a \verb+FileReader+ is
+directly used (without buffering), the performance of the application
+may suffer. 
+
+\begin{verbatim}
+    File file = new File("here/be/the/route/to/the/file");
+    BufferedReader in = new BufferedReader(new FileReader(file); 
+\end{verbatim}
+
+Creation of a \verb+FileReader+ may throw an
+\verb+FileNotFoundException+, and this is a checked exception. This
+means that the code above must be placed inside a \verb+try+/\verb+catch+
+construct or the method must declare that it \verb+throws+ this
+exception. 
+
+\paragraph{Reading from the source}
+\label{sec:reading-from-source}
+
+Once the data source is opened, we can read from it line by line using
+\verb+readLine()+. When we reach the end of the file,
+\verb+readLine()+ returns \verb+null+. 
+
+
+\paragraph{Closing the source}
+\label{sec:closing-source}
+
+When we have finished with reading from the file, we must close the
+data source. This is easily done with the \verb+close()+ method. 
+
+\begin{verbatim}
+     in.close();
+\end{verbatim}
+
+Alert readers may have noticed that this poses a small problem. Look
+at the following code: 
+
+\begin{verbatim}
+01    File file = new File("file.csv");
+02    try {
+03        BufferedReader in = new BufferedReader(new FileReader(file); 
+04        while ((String line = in.readLine) != null) {
+05            // ... do things with the data here
+06        }
+07        in.close();
+08    } catch (IOException ex) {
+09        ex.printStackTrace();
+10    } catch (FileNotFoundException ex) {
+11        System.out.println("File " + file + " does not exist.");
+12    }    
+\end{verbatim}
+
+If a \verb+FileNotFoundException+ is thrown on line 03 nothing bad
+happens; it is dealt with at the appropiate catch block. But what
+happens if an \verb+IOException+ is thrown at line 04 or inside the
+loop? The execution flow will jump to the catch clause on line 08,
+skipping line 07 and the data source will never be closed! 
+
+\begin{itemize}
+\item We cannot move line 07 out of the \verb+try+ block because
+  \verb+in+ is defined inside that scope.
+\item We cannot move it to the \verb+catch+ block because that means
+  \verb+in+ will not be closed if no exceptions occur, which is even
+  worse. 
+\item Another possibility would be to declare \verb+in+ out of the
+  \verb+try+ block and initialise it inside, then closing it
+  outside. However, this risks a \verb+NullPointerException+ if it is
+  never initialised (e.g.~because the file does not exist or is not
+  readable). 
+\item Finally, a fourth possibility is to duplicate the \verb+close()+
+  call, which is clearly suboptimal.
+\end{itemize}
+
+We just need a way to make sure that a data source is always closed. 
+
+This is what \verb+finally+ is for. Every \verb+try+ can have a
+\verb+finally+ block that is always executed after the \verb+try+
+block; if an exception was thrown and caught, the \verb+finally+
+method will be executed after the code in the \verb+catch+ block is
+executed. The code would look like this: 
+
+\begin{verbatim}
+01    File file = new File("file.csv");
+02    try {
+03        BufferedReader in = new BufferedReader(new FileReader(file); 
+04        while ((String line = in.readLine) != null) {
+05            // ... do things with the data here
+06        }
+07    } catch (IOException ex) {
+08        ex.printStackTrace();
+09    } catch (FileNotFoundException ex) {
+10        System.out.println("File " + file + " does not exist.");
+11    } finally { 
+12        in.close()
+13    }
+\end{verbatim}
+
+
+
+
+
+
 
 % Talk about finally
 %
