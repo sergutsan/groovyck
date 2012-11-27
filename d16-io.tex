@@ -2,17 +2,98 @@
 \section{Input/Output (I/O)}
 \label{sec:inputoutput-io}
 
+Computer programs are just processors of data. They take some data as
+input, they return some data as output. Up to now, all the data that
+our little programs have processed was either provided by a human user
+or already included in the program. In the real world, however, the
+most usual sources of data are computers; either the computer where
+the program is running (local files), a computer in the vicinity (a
+database server), or a remote computer (remote resources through the
+net). 
+
+We are going to learn now how to use the first of these three sources
+of information: how to read from the local disk and how to write to
+the local disk. 
+
+\subsection{The basics}
+\label{sec:basics}
+
+\subsubsection*{File systems}
+\label{sec:filesystems}
+
+Computers have different levels of memory, but there is a clear
+separation between primary and secondary memory. Primary memory is
+faster but requires electricity to run; if the computer is switched
+on, the contents of the memory are lost. Secondary memory is slower,
+but its contents are persistent, i.e.~they are still there when the
+computer is switched off and on again. Seconday memory is usually
+implemented in the form of a hard disk or so-called flash
+memories. It is usually referred to as ``disk'', regardless of the
+actual technology used for it. 
+
+Data is stored in secondary memory in files\footnote{This name, as
+  many others, comes from an ancient era where files, archives,
+  directories, and folders were physical objects that contained
+  documents or data.}  
+The file system is a subsystem of the operating
+systems that keeps all your files in place, and provides a way of
+accessing them. Usually this is done by means of hierarchies: there is
+one folder/directory at the top level of the hierarchy (called the
+\emph{root}), which contains some files and subdirectories, each of
+these subdirectories may contain files and/or subdirectories, etc. In
+order to access a file \verb+taxForm2012.odt+ inside a folder
+\verb+taxes+, inside a folder \verb+MyStuff+, you may access it with a
+route like: 
+
+\begin{verbatim}
+    /home/john/MyStuff/taxes/taxForm2012.odt                     (unix)
+    c:\Documents and Settings\john\MyStuff\taxes\taxForm2012.odt (windows)
+\end{verbatim}
+
+Different operating systems use different conventions for the root of
+the tree of subdirectories and the separation of the levels of
+hieararchy. Unix systems (e.g.~Linux, MacOS/X) use a single root
+(``/'') for the whole filesystem, and separate directories using a
+slash (``/''). Windows use different roots, one per physycal device or
+partition (C:, D:, etc) and separate directories with a 
+backslash~(``\verb+\+''). 
+
+\subsubsection*{Process}
+\label{sec:process}
+
+The process of reading from / writing to an external source always
+follows the same sequence of steps:
+
+\begin{enumerate}
+\item Open the resource (e.g.~file). If it cannot be opened, finish.
+\item Read from and write to the resource.
+\item Close the resource. 
+\end{enumerate}
+
+This process is the basis of all interaction with external data
+sources, including files, databases, and remote resources\footnote{As
+  we will see, in the network resources this is usually hidden from
+  the programmer.}.
+It is \emph{very important to close the resource} (file, database
+connection, remote connection / socket) at the
+end. Otherwise, the resource may not be accessed by other programs (or
+even by your same program in some situations). In a way, closing a
+data source is like releasing memory that you no longer
+used. Unfortunately, it is not possible to create something like a
+garbage collector for data sources, so programmers have to close their
+data sources manually.
+
+
+
 Read/Write
 
-Sources:
-  - Files
-  - Network?
-  - 
-
-
-
-
-
+% File.SEPARATOR
+%
 % Talk about finally
 %
 % and the new way of doing finally in Java 7
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "d16"
+%%% End:
