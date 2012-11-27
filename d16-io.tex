@@ -58,6 +58,8 @@ slash (``/''). Windows use different roots, one per physycal device or
 partition (C:, D:, etc) and separate directories with a 
 backslash~(``\verb+\+''). 
 
+
+
 \subsubsection*{Process}
 \label{sec:process}
 
@@ -82,6 +84,32 @@ data source is like releasing memory that you no longer
 used. Unfortunately, it is not possible to create something like a
 garbage collector for data sources, so programmers have to close their
 data sources manually.
+
+\subsection{Files in Java}
+\label{sec:files-java}
+
+File names are represented in Java by the class \verb+File+ in package
+\verb+java.io+. It is important to note that Java uses the unix
+tradition of considering (almost) everything a file: letters and
+spreadsheets are files, but so are directories for example. Therefore,
+an object of class \verb+File+ can represent the name of an actual
+file or the name of a directory.
+
+This class implements a lot of methods that are useful when
+interacting with the local disks. Some of the most commonly used
+include: 
+\verb+delete()+, 
+\verb+isDirectory()+, 
+\verb+isFile()+, 
+\verb+length()+, 
+\verb+list()+ (lists all files in a directory), 
+and
+\verb+mkdir()+ (creates a directory). There are many other useful
+methods, as you can see on the JavaDoc of \verb+File+\footnote{As you
+  have done many times in the past weeks, you can find the JavaDoc of
+  this class by searching for ``java file''. Usually the first link
+  will be the documentation of the class. }, and most of them have
+quite self-descriptive name. . 
 
 
 
