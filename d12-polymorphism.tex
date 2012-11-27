@@ -215,7 +215,7 @@ we can use an even simpler notation using type wildcards:
 \begin{verbatim}
     public class School {
         // ...
-        public void returnElementCount(List<?> stack) {
+        public int returnElementCount(List<?> stack) {
             return stack.size();
         }
         // ... more methods here
@@ -229,7 +229,7 @@ if necessary:
 \begin{verbatim}
     public class School {
         // ...
-        public void returnElementCount(List<? extends Person> stack) {
+        public int returnElementCount(List<? extends Person> stack) {
             return stack.size();
         }
         // ... more methods here
