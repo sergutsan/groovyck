@@ -48,6 +48,7 @@ route like:
 \begin{verbatim}
     /home/john/MyStuff/taxes/taxForm2012.odt                     (unix)
     c:\Documents and Settings\john\MyStuff\taxes\taxForm2012.odt (windows)
+    ./MyStuff/taxes/taxForm2012.odt
 \end{verbatim}
 
 Different operating systems use different conventions for the root of
@@ -58,6 +59,14 @@ slash (``/''). Windows use different roots, one per physycal device or
 partition (C:, D:, etc) and separate directories with a 
 backslash~(``\verb+\+''). 
 
+File routes that start at the root are called \emph{absolute} and
+those that do not are called \emph{relative} (because they point to
+different files depending on the current directory). Absolute routes in
+unix always start with ``/'', but in Windows they can start in
+different ways (e.g.~''\verb+C:\+'', ''\verb+D:\+'', ''\verb+\+'',
+etc) because there are many roots. Relative routes may start with
+a dot (meaning ``current directory'') but they usually start with the
+name of a file or directory. 
 
 
 \subsubsection*{Process}
@@ -98,6 +107,7 @@ file or the name of a directory.
 This class implements a lot of methods that are useful when
 interacting with the local disks. Some of the most commonly used
 include: 
+\verb+createNewFile()+, 
 \verb+delete()+, 
 \verb+isDirectory()+, 
 \verb+isFile()+, 
@@ -111,15 +121,57 @@ methods, as you can see on the JavaDoc of \verb+File+\footnote{As you
   will be the documentation of the class. }, and most of them have
 quite self-descriptive name. . 
 
+Using the \verb+File+ class to get a pointer to a file (or directory)
+on disk is really easy: 
 
+\begin{verbatim}
+    String filename = "filename.txt"; 
+    File file = new File(filename);
+\end{verbatim}
 
-Read/Write
+The name of the file (\verb+filename+) can be any valid route,
+e.g. \verb+/home/john/file.odt+. However, there are two things that a
+Java developer should keep in mind to make sure that Java programs can
+run on any computer: 
 
-% File.SEPARATOR
-%
+\begin{description}
+\item[Slash as separator] You should use slash (``/'') as a separator,
+  as it works in both unix and windows systems. For extra security,
+  you can use the static final field \verb+File.separator+ that always
+  has the right value for the operating system the Java Virtual
+  Machine is running on. Do not use names like \verb+.\myFile.txt+;
+  use \verb+./myFile.txt+ instead or, to make sure it works in all
+  computers:
+
+\begin{verbatim}
+    ''.'' + File.separator + ''myFile.txt''
+\end{verbatim}
+
+\item[Relative filenames: ] Your filenames should always be
+  \emph{relative}, rather than absolute. Absolute routes will not work
+  among different operating systems. For example, \verb+myFile.txt+ and
+  \verb+./myStuff/myFile.txt+ are fine, but \verb+c:\myStuff\file.txt+
+  is not. 
+\end{description}
+
+\subsection{Reading from and writing to files}
+\label{sec:reading-from-writing}
+
+Once we have a 
+
 % Talk about finally
 %
 % and the new way of doing finally in Java 7
+% 
+% Exercises: 
+%
+% - ls
+% - cd
+% - mkdir 
+% - cat
+% - tr
+% - uniq (*)
+% - sort (*)
 
 %%% Local Variables:
 %%% mode: latex
