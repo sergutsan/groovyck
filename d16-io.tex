@@ -266,9 +266,9 @@ to use a \verb+while+ loop, but we can write it a bit neater (although
 it seems confusing at first): 
 
 \begin{verbatim}
-    while ((String line = readLine()) != null) {
+    String line;
+    while ((line = readLine()) != null) {
         // do things here with the line...
-        line = in.readLine();
     }
 \end{verbatim}
 
@@ -454,7 +454,7 @@ Unless you are dealing with old legacy code, you should always use
 plain text in your programs. Memory and disk space are much 
 cheaper\footnote{If you are really concerned about space, use text
   files compressed with ZIP ---this is what LibreOffice does---. Look
-  at package \verb+java.util.zip+, where you will find many classes
+  at package \emph{java.util.zip} where you will find many classes
   that take care of the compressing / decompressing process.} 
 than sleepless nights trying to debug binary data with an
 hexadecimal editor. 
