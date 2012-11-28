@@ -266,7 +266,7 @@ to use a \verb+while+ loop, but we can write it a bit neater (although
 it seems confusing at first): 
 
 \begin{verbatim}
-    while ((String line = readLine()) != null) {
+    while ((String line = in.readLine()) != null) {
         // do things here with the line...
         line = in.readLine();
     }
