@@ -11,9 +11,12 @@ the program is running (local files), a computer in the vicinity (a
 database server), or a remote computer (remote resources through the
 net). 
 
-We are going to learn now how to use the first of these three sources
+We are going to learn how to use the first of these three sources
 of information: how to read from the local disk and how to write to
 the local disk. 
+%
+Next week we will learn a bit about network programming, and next term
+we will learn about database access. 
 
 \subsection{The basics}
 \label{sec:basics}
@@ -22,11 +25,13 @@ the local disk.
 \label{sec:filesystems}
 
 Computers have different levels of memory, but there is a clear
-separation between primary and secondary memory. Primary memory is
+separation between primary and secondary memory. Primary memory
+(usually referred to as simply ``memory'' or ``RAM'')
 faster but requires electricity to run; if the computer is switched
-on, the contents of the memory are lost. Secondary memory is slower,
+off, the contents of the memory are lost. Secondary memory (usually
+referred to as ``disk'') is slower,
 but its contents are persistent, i.e.~they are still there when the
-computer is switched off and on again. Seconday memory is usually
+computer is switched off and on again. Secondary memory is usually
 implemented in the form of a hard disk or so-called flash
 memories. It is usually referred to as ``disk'', regardless of the
 actual technology used for it. 
@@ -49,27 +54,28 @@ route like:
     /home/john/MyStuff/taxes/taxForm2012.odt                     (unix)
     c:\Documents and Settings\john\MyStuff\taxes\taxForm2012.odt (windows)
     ./MyStuff/taxes/taxForm2012.odt
+    MyStuff/taxes/taxForm2012.odt
 \end{verbatim}
 
 Different operating systems use different conventions for the root of
-the tree of subdirectories and the separation of the levels of
-hieararchy. Unix systems (e.g.~Linux, MacOS/X) use a single root
+the tree of subdirectories and the separation of levels in the 
+hierarchy. Unix systems (e.g.~Linux, MacOS/X) use a single root
 (``/'') for the whole filesystem, and separate directories using a
-slash (``/''). Windows use different roots, one per physycal device or
+slash (``/''). Windows use different roots, one per physical device or
 partition (C:, D:, etc) and separate directories with a 
 backslash~(``\verb+\+''). 
 
 File routes that start at the root are called \emph{absolute} and
-those that do not are called \emph{relative} (because they point to
-different files depending on the current directory). Absolute routes in
-unix always start with ``/'', but in Windows they can start in
+those that do not are called \emph{relative} (because they are
+relative to the current directory). Absolute routes in
+Unix always start with ``/'', but in Windows they can start in
 different ways (e.g.~''\verb+C:\+'', ''\verb+D:\+'', ''\verb+\+'',
 etc) because there are many roots. Relative routes may start with
 a dot (meaning ``current directory'') but they usually start with the
 name of a file or directory. 
 
 
-\subsubsection{Process}
+\subsubsection{The I/O Process}
 \label{sec:process}
 
 The process of reading from / writing to an external source always
@@ -77,35 +83,36 @@ follows the same sequence of steps:
 
 \begin{enumerate}
 \item Open the resource (e.g.~file). If it cannot be opened, finish.
-\item Read from and write to the resource.
+\item Read from and/or write to the resource.
 \item Close the resource. 
 \end{enumerate}
 
 This process is the basis of all interaction with external data
 sources, including files, databases, and remote resources\footnote{As
-  we will see, in the network resources this is usually hidden from
-  the programmer.}.
+  we will see, in the case of network resources this process is
+  usually hidden from the programmer.}.
 It is \emph{very important to close the resource} (file, database
 connection, remote connection / socket) at the
-end. Otherwise, the resource may not be accessed by other programs (or
+end. Otherwise, the resource may not be used by other programs (or
 even by your same program in some situations). In a way, closing a
 data source is like releasing memory that you no longer
 used. Unfortunately, it is not possible to create something like a
 garbage collector for data sources, so programmers have to close their
 data sources manually.
 
-\subsection{Files in Java}
+\subsection{File names in Java and the File class}
 \label{sec:files-java}
 
 File names are represented in Java by the class \verb+File+ in package
-\verb+java.io+. It is important to note that Java uses the unix
-tradition of considering (almost) everything a file: letters and
-spreadsheets are files, but so are directories for example. Therefore,
+\verb+java.io+. It is important to note that Java uses the Unix
+tradition of considering (almost) everything a file: source code,
+letters, and 
+spreadsheets are files, but so are directories too. Therefore,
 an object of class \verb+File+ can represent the name of an actual
 file or the name of a directory.
 
 This class implements a lot of methods that are useful when
-interacting with the local disks. Some of the most commonly used
+interacting with the local disk. Some of the most commonly used
 include: 
 \verb+createNewFile()+, 
 \verb+delete()+, 
@@ -116,11 +123,11 @@ include:
 \verb+list()+ (lists all files in a directory), 
 and
 \verb+mkdir()+ (creates a directory). There are many other useful
-methods, as you can see on the JavaDoc of \verb+File+\footnote{As you
+methods, as you can see on the JavaDoc of class \verb+File+\footnote{As you
   have done many times in the past weeks, you can find the JavaDoc of
   this class by searching for ``java file''. Usually the first link
   will be the documentation of the class. }, and most of them have
-quite self-descriptive name. . 
+quite self-descriptive name. 
 
 Using the \verb+File+ class to get a pointer to a file (or directory)
 on disk is really easy: 
@@ -137,12 +144,12 @@ run on any computer:
 
 \begin{description}
 \item[Slash as separator] You should use slash (``/'') as a separator,
-  as it works in both unix and windows systems. For extra security,
+  as it works in both Unix and windows systems. For extra security,
   you can use the static final field \verb+File.separator+ that always
   has the right value for the operating system the Java Virtual
   Machine is running on. Do not use names like \verb+.\myFile.txt+;
-  use \verb+./myFile.txt+ instead or, to make sure it works in all
-  computers:
+  use either \verb+./myFile.txt+ or ---to make sure it works in all
+  computers---:
 
 \begin{verbatim}
     ''.'' + File.separator + ''myFile.txt''
@@ -158,17 +165,17 @@ run on any computer:
 \subsection{Reading from and writing to files}
 \label{sec:reading-from-writing}
 
-Once we have a pointer to a file (through its name) we can try to open
+Once we have a pointer to a file (through its name) we can try opening
 it as we said in Section~\ref{sec:process}. Note that the file may or
 may not exist. The \verb+File+ object is only a reference to the
-name. If we want to know whether it exists, we can execute the
+name. If we want to know whether the file actually exists, we can call the
 \verb+exists()+ method. 
 
 \verb+File+ objects cannot be directly opened in Java. Instead, an
 input source of data (a \verb+Reader+) can be created with a file and
 it is this source that is opened (and closed at the end) to
 read. Conversely, an output sink of data (a \verb+Writer+) can be
-created with a file, opened, write to, and closed. 
+created with a file, opened, written to, and closed. 
 
 % TODO: talk about streams? Probably not. The small note at the end
 % about binary files should do, I think. 
@@ -185,21 +192,21 @@ a different purpose:
 \begin{description}
 \item[FileReader: ] The class for reading from text files\footnote{For
   binary files you use a FileInputStream.} (including
-  common format like CSV and XML (and XML-based formats like
+  common formats like CSV and XML (and XML-based formats like
   OpenDocument). 
 \item[BufferedReader: ] A general-purpose reader that reads characters
-  from a character input stream, bufferring them for efficiency. This
+  from a character input stream, buffering them for efficiency. This
   means that you do not need to read character by character. It
   provides useful methods like \verb+readLine()+\footnote{Although the
   name is the same, and the functionality is quite similar, this
   method has nothing to with the readLine() method of class Console,
-  the one that we use when we execute System.out.console().}.
+  the one that we use when we execute System.console().readLine().}.
 \item[StringReader: ] A string-based reader that uses a string as the
   input source of data. Can be useful if the data is already stored in
   a String instead of being read from a file or network connection. 
 \end{description}
 
-\paragraph{Open data source}
+\paragraph{Opening a data source}
 \label{sec:open-data-source}
 
 A \verb+Reader+ is automatically open at creation (with
@@ -208,14 +215,14 @@ call.
 
 The usual idiom to create an input source
 combines a \verb+FileReader+ (to read from a
-\verb+File+) with a \verb+BufferedReader+ to have access to buffered
-data input and the \verb+readLine()+ method. If a \verb+FileReader+ is
+\verb+File+) with a \verb+BufferedReader+ (to have access to buffered
+data input and the \verb+readLine()+ method). If a \verb+FileReader+ is
 directly used (without buffering), the performance of the application
 may suffer. 
 
 \begin{verbatim}
     File file = new File("here/be/the/route/to/the/file");
-    BufferedReader in = new BufferedReader(new FileReader(file); 
+    BufferedReader in = new BufferedReader(new FileReader(file)); 
 \end{verbatim}
 
 Creation of a \verb+FileReader+ may throw an
@@ -231,8 +238,9 @@ Once the data source is opened, we can read from it line by line using
 \verb+readLine()+. When we reach the end of the file,
 \verb+readLine()+ returns \verb+null+. 
 
-Usually text files are read line by line, and something is done every
-time for every line. This looks like a \verb+while+ loop: 
+Usually text files are read line by line, and something is done 
+for every line. This looks like a situation to use a \verb+while+
+loop, as in this example:
 
 \begin{verbatim}
     String line = in.readLine());
@@ -267,12 +275,12 @@ it seems confusing at first):
 This is the usual idiom for reading lines from text files in
 Java. Although mixing assignment and conditional clauses in the same
 line is usually discouraged because it can be confusing, this idiom is
-so common that everybody uses it without confusion. 
+so common that everybody uses it without any confusion. 
 
 \paragraph{Closing the source}
 \label{sec:closing-source}
 
-When we have finished with reading from the file, we must close the
+When we have finished reading from the file, we must close the
 data source. This is easily done with the \verb+close()+ method. 
 
 \begin{verbatim}
@@ -286,7 +294,7 @@ at the following code:
 01    File file = new File("file.csv");
 02    try {
 03        BufferedReader in = new BufferedReader(new FileReader(file); 
-04        while ((String line = in.readLine) != null) {
+04        while ((String line = in.readLine()) != null) {
 05            // ... do things with the data here
 06        }
 07        in.close();
@@ -298,10 +306,10 @@ at the following code:
 \end{verbatim}
 
 If a \verb+FileNotFoundException+ is thrown on line 03 nothing bad
-happens; it is dealt with at the appropiate catch block\footnote{If
+happens; it is dealt with at the appropriate catch block\footnote{If
   you look at the Java Doc, you will see that FileNotFoundException is
   a subclass of IOException, so this catch block must come before the
-  other.}. But what
+  other one.}. But what
 happens if an \verb+IOException+ is thrown at line 04 or inside the
 loop? The execution flow will jump to the catch clause on line 10,
 skipping line 07 and the data source will never be closed! 
@@ -309,14 +317,14 @@ skipping line 07 and the data source will never be closed!
 \begin{itemize}
 \item We cannot move line 07 out of the \verb+try+ block because
   \verb+in+ is defined inside that scope.
-\item We cannot move it to the \verb+catch+ block because that means
+\item We cannot move line 07 to the \verb+catch+ block because that means
   \verb+in+ will not be closed if no exceptions occur, which is even
   worse. 
 \item Another possibility would be to declare \verb+in+ out of the
   \verb+try+ block and initialise it inside, then closing it
   outside. However, this risks a \verb+NullPointerException+ if it is
   never initialised (e.g.~because the file does not exist or is not
-  readable). 
+  readable) before \verb+in.close()+ is called. 
 \item Finally, a fourth possibility is to duplicate the \verb+close()+
   call, which is clearly suboptimal.
 \end{itemize}
@@ -325,15 +333,15 @@ We just need a way to make sure that a data source is always closed.
 
 This is what \verb+finally+ is for. Every \verb+try+ can have a
 \verb+finally+ block that is always executed after the \verb+try+
-block; if an exception was thrown and caught, the \verb+finally+
+block; if an exception is thrown and caught, the \verb+finally+
 method will be executed after the code in the \verb+catch+ block is
-executed. The code would look like this: 
+executed. The resulting code would look like this: 
 
 \begin{verbatim}
 01    File file = new File("file.csv");
 02    try {
 03        BufferedReader in = new BufferedReader(new FileReader(file); 
-04        while ((String line = in.readLine) != null) {
+04        while ((String line = in.readLine()) != null) {
 05            // ... do things with the data here
 06        }
 08    } catch (FileNotFoundException ex) {
@@ -362,7 +370,7 @@ readers have been used in the preceding section.
 
 There is an additional class that has no dual reading counterpart but
 is very convenient to use: \verb+PrintWriter+. This class provides a
-constructor to build an object from a \verb+File+, and it provides 
+constructor to build an object from a \verb+File+, and it also provides 
 convenient methods for writing into files, including: 
 \verb+append(char)+, 
 \verb+print(String)+, 
@@ -392,8 +400,8 @@ The code below shows a typical use of \verb+PrintWriter+:
 \label{sec:flushing}
 
 When you read from a file, your program will not continue until the
-read operation finished. This is not exactly the case with writing
-operations. When you execute one of \verb+write()+ methods, this only
+read operation finishes. This is not exactly the case with writing
+operations. When you execute one of the \verb+write()+ suite of methods, this only
 puts the information in some structure of the operating system. This
 may or may not be put immediately on disk, depending in different
 factors. 
@@ -401,27 +409,28 @@ factors.
 This may produce strange effects, like data being lost because the
 program crashed after the \verb+write()+ call but before the data was
 actually committed to disk. If you want to ensure that data has been
-written on disk, you can use method \verb+flush()+. 
+written on disk, you can use the method \verb+flush()+. 
 
-Closing a data sink automatically flushes it before closing to prevent
-data loss. 
+Closing a data sink using \verb+close()+ 
+automatically flushes it before closing to prevent data loss. 
 
 
 \subsection{Binary files}
 \label{sec:binary-files}
 
-Text files contain text. They contain only printable characters. They
+Text files contain text. They contain only printable characters; they
 can be seen as a big string on disk. You are encouraged to
 use only text files: they are simpler, they are clearer, and they
-allow you to examine them when there are bugs in your code. In the
+allow you to examine them when there are bugs in your code that
+corrupt data. In the
 preceding notes we have seen how to interact with text files. 
 
 Old applications sometimes use \emph{binary} files. Binary files
 contain non-printable characters and cannot be read by
 people. Compiled class files are binary files. Try
 opening a \verb+.class+ file in your favourite text editor to get a
-feel of what they look like (hint: gibberish). Old application use
-binary file usually because they use less space on disk, and disk (and
+feel of what they look like (hint: gibberish). Old applications use
+binary files usually because they use less space on disk, and disk (and
 memory!) space was limited in old times. 
 
 In order to work with binary files, the classes \verb+InputStream+ and
@@ -433,18 +442,20 @@ same: open resource, read and write, close resource. There is also a
 class \verb+RandomAccessFile+ that allows you to read from and write
 to arbitrary positions in a file, instead of using it as a stream. 
 
-Unless you are deadling with old legacy code, you should use always
+Unless you are dealing with old legacy code, you should always use
 plain text in your programs. Memory and disk space are much 
-cheaper than sleepless nights trying to debug binary data with an
+cheaper\footnote{If you are really concerned about space, use text
+  files compressed with ZIP ---this is what LibreOffice does---. Look
+  at package \verb+java.util.zip+, where you will find many classes
+  that take care of the compressing / decompressing process.} 
+than sleepless nights trying to debug binary data with an
 hexadecimal editor. 
-
-
 
 % TODO: preferences
 
 % TODO: try-with-resources
 
-% and the new way of doing finally in Java 7
+% TODO:  and the new way of doing finally in Java 7
 % 
 % Exercises: 
 %
