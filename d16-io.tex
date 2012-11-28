@@ -152,7 +152,7 @@ run on any computer:
   computers---:
 
 \begin{verbatim}
-    ''.'' + File.separator + ''myFile.txt''
+    "." + File.separator + "myFile.txt"
 \end{verbatim}
 
 \item[Relative filenames: ] Your filenames should always be
@@ -345,22 +345,65 @@ method will be executed after the code in the \verb+catch+ block is
 executed. The resulting code would look like this: 
 
 \begin{verbatim}
-01    File file = new File("file.csv");
-02    try {
-03        BufferedReader in = new BufferedReader(new FileReader(file); 
-04        String line;
-05        while ((line = in.readLine()) != null) {
-06            // ... do things with the data here
-07        }
-08    } catch (FileNotFoundException ex) {
-09        System.out.println("File " + file + " does not exist.");
-10    } catch (IOException ex) {
-12        ex.printStackTrace();
-13    } finally { 
-14        in.close()
-15    }
+     File file = new File("file.csv");
+     BufferedReader in = null;
+     try {
+         in = new BufferedReader(new FileReader(file); 
+         String line;
+         while ((line = in.readLine()) != null) {
+             // ... do things with the data here
+         }
+     } catch (FileNotFoundException ex) {
+         System.out.println("File " + file + " does not exist.");
+     } catch (IOException ex) {
+         ex.printStackTrace();
+     } finally { 
+         try {
+             if (in != null) {
+                 in.close()
+             }
+         } catch (IOException ex) {
+             ex.printStackTrace();
+         }
+     }
 \end{verbatim}
 
+There are several things worth noticing. First, the BufferedReader
+must be declared before the \verb+try/catch/finally+ blocks to be
+visible in all scopes. Second, the method \verb+close()+ of readers
+can throw an \verb+IOException+, so it must be called inside another
+\verb+try/catch+ construct. The code is a bit complicated, but we can
+make it much clearer by using a private method to hide some of the
+details: 
+
+\begin{verbatim}
+     // ... in some method...
+         File file = new File("file.csv");
+         BufferedReader in = null;
+         try {
+             in = new BufferedReader(new FileReader(file); 
+             String line;
+             while ((line = in.readLine()) != null) {
+                 // ... do things with the data here
+             }
+         } catch (FileNotFoundException ex) {
+             System.out.println("File " + file + " does not exist.");
+         } catch (IOException ex) {
+             ex.printStackTrace();
+         } finally { 
+             closeReader(in);
+         }
+     // ...
+     private void closeReader(Reader reader) { 
+         try {
+             if (reader != null) {
+                 reader.close()
+             }
+         } catch (IOException ex) {
+             ex.printStackTrace();
+         }
+     }        
+\end{verbatim}
 
 \subsubsection{Writers}
 \label{sec:writers}
@@ -384,7 +427,9 @@ convenient methods for writing into files, including:
 \verb+print(String)+, 
 \verb+printf(...)+ (similar to C's), 
 and 
-\verb+println(String)+.
+\verb+println(String)+. On top of that, closing a \verb+PrintWriter+
+does not throw an \verb+IOException+ so there is no need for an
+additional \verb+try/catch+ inside a \verb+finally+ block. 
 The code below shows a typical use of \verb+PrintWriter+: 
 
 \begin{verbatim}
@@ -402,6 +447,11 @@ The code below shows a typical use of \verb+PrintWriter+:
         out.close()
     }    
 \end{verbatim}
+
+% TODO: say something about PrintWriter writing in files from scratch
+% (resetting the output file), but only if it makes a
+% difference... i.e. can you append things to a file with a
+% BufferedWriter? 
 
 
 \paragraph{Flushing}
