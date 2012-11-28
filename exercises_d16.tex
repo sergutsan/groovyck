@@ -48,6 +48,31 @@ If the first file does not exist, the program must say so. If the
 second file does exists, the program must ask the user whether to
 overwrite it or not, and act accordingly.
 
+% A solution
+%
+%   public static void main(String[] args) throws Exception {
+%        File src = new File(args[0]);
+%        File dst = new File(args[1]);
+%        if (dst.exists()) {
+%             System.out.println("Overwrite " + dst + " [y/N]?");
+%             String yn = System.console().readLine();
+%             if (!yn.equals("y")) {
+%                  System.out.println("Aborting copy...");
+%                  System.exit(0);
+%             }
+%        }
+%        BufferedReader in = new BufferedReader(new FileReader(src));
+%        PrintWriter out = new PrintWriter(dst);
+%        String line;
+%        while ((line = in.readLine()) != null) {
+%             out.println(line);
+%        }
+%        in.close();
+%        out.close();
+%        System.out.println(src + " -> " + dst);
+%   }
+
+
 \section{tr (*)}
 \label{sec:tr}
 
