@@ -294,30 +294,37 @@ at the following code:
 01    File file = new File("file.csv");
 02    try {
 03        BufferedReader in = new BufferedReader(new FileReader(file); 
-04        while ((String line = in.readLine()) != null) {
-05            // ... do things with the data here
-06        }
-07        in.close();
-08    } catch (FileNotFoundException ex) {
-09        System.out.println("File " + file + " does not exist.");
-10    } catch (IOException ex) {
-11        ex.printStackTrace();
-12    }    
+04        String line;
+05        while ((line = in.readLine()) != null) {
+06            // ... do things with the data here
+07        }
+08        in.close();
+09    } catch (FileNotFoundException ex) {
+10        System.out.println("File " + file + " does not exist.");
+11    } catch (IOException ex) {
+12        ex.printStackTrace();
+13    }    
 \end{verbatim}
 
-If a \verb+FileNotFoundException+ is thrown on line 03 nothing bad
+If a \verb+FileNotFoundException+ is thrown on 
+line 03 nothing bad
 happens; it is dealt with at the appropriate catch block\footnote{If
   you look at the Java Doc, you will see that FileNotFoundException is
   a subclass of IOException, so this catch block must come before the
   other one.}. But what
-happens if an \verb+IOException+ is thrown at line 04 or inside the
-loop? The execution flow will jump to the catch clause on line 10,
-skipping line 07 and the data source will never be closed! 
+happens if an \verb+IOException+ is thrown at 
+line 05 or inside the loop? 
+The execution flow will jump to the catch clause on 
+line 11, skipping 
+line 08 
+and the data source will never be closed! 
 
 \begin{itemize}
-\item We cannot move line 07 out of the \verb+try+ block because
+\item We cannot move 
+  line 08 out of the \verb+try+ block because
   \verb+in+ is defined inside that scope.
-\item We cannot move line 07 to the \verb+catch+ block because that means
+\item We cannot move 
+  line 08 to the \verb+catch+ block because that means
   \verb+in+ will not be closed if no exceptions occur, which is even
   worse. 
 \item Another possibility would be to declare \verb+in+ out of the
@@ -341,16 +348,17 @@ executed. The resulting code would look like this:
 01    File file = new File("file.csv");
 02    try {
 03        BufferedReader in = new BufferedReader(new FileReader(file); 
-04        while ((String line = in.readLine()) != null) {
-05            // ... do things with the data here
-06        }
+04        String line;
+05        while ((line = in.readLine()) != null) {
+06            // ... do things with the data here
+07        }
 08    } catch (FileNotFoundException ex) {
 09        System.out.println("File " + file + " does not exist.");
 10    } catch (IOException ex) {
-11        ex.printStackTrace();
-11    } finally { 
-12        in.close()
-13    }
+12        ex.printStackTrace();
+13    } finally { 
+14        in.close()
+15    }
 \end{verbatim}
 
 
