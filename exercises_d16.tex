@@ -10,13 +10,94 @@ Before the next day, you should have achieved the following learning
 goals: 
 
 \begin{itemize}
-\item 
-\item 
-\item 
+\item Read from text files
+\item Write to text files
 \end{itemize}
 
-% Programar un cat
+\section{ls}
+\label{sec:ls}
 
+Write a program that shows on screen the names of the files in the
+current directory. (Hint: look at methods from class File). 
+
+\section{mkdir}
+\label{sec:mkdir}
+
+Write a program that takes a name from the user at the command line
+and creates a directory with that name. Remember that the only
+argument of method \verb+main+ is an array of Strings, each of them
+an argument written after the name of the class. For example, if you
+write \verb+java myClass this That 0+, the elements in \verb+args+
+will be three strings of values ``this'', ``That'', and ``0''. 
+
+\section{cat}
+\label{sec:cat}
+
+Write a program that takes a name from the user at the command
+line. If a file with that name exists, the program must show its
+contents on screen. If it does not, the program must say so. 
+
+\section{cp}
+\label{sec:cp}
+
+Write a program that takes two names from the user at the command
+line. If a file with the first name exists, the program must copy it
+into a file with the second name. 
+
+If the first file does not exist, the program must say so. If the
+second file does exists, the program must ask the user whether to
+overwrite it or not, and act accordingly.
+
+\section{tr (*)}
+\label{sec:tr}
+
+Write a program that takes a name and two strings from the user at the
+command line. If a file with that name exists, the program must show
+its contents on screen, but substituting any occurrence of the first
+string by the second string. If the file does not exist, the program
+must say so.
+
+\section{sort (*)}
+\label{sec:sort-}
+
+Write a program that takes a name from the user at the command
+line. If a file with that name exists, the program must show its
+contents on screen, but with the lines shown alphabetically. If the
+does not exist, the program must say so. 
+
+Hint: Remember that Strings in Java implement the interface
+\verb+Comparable<String>+. 
+
+\section{uniq (*)}
+\label{sec:uniq-}
+
+Write a program that takes a name from the user at the command
+line. If a file with that name exists, the program must show its
+contents on screen, but removing duplicates lines (showing on screen 
+only one line for each set of duplicated lines). If the
+does not exist, the program must say so. 
+
+\section{Temperature averages}
+\label{sec:temperature-averages}
+
+Write a program that reads a file from disk in comma-separated
+format~(CSV). Every line must contain a list of number separated by
+commas. 
+
+The program must output the average for every line plus the average
+for the whole file. A file may look like the following: 
+
+\begin{verbatim}
+    25, 24, 20, 18, 15, 13, 14, 13, 15, 17, 19, 21 
+    25, 25, 24, 20, 18, 15, 13, 14, 13, 15, 17, 19 
+    21, 25, 25, 24, 20, 18, 15, 13, 14, 17, 19, 21 
+    25, 25, 24, 20, 18, 15, 13, 14, 13, 15, 17, 19 
+    21, 25, 25, 24, 20, 18, 15, 13, 14, 13, 15, 17 
+    21, 25, 25, 24, 20, 18, 15, 13, 14, 13, 15, 17 
+    19, 21, 25, 25, 24, 20, 18, 15, 13, 14, 13, 15 
+    17, 19, 21, 25, 25, 24, 20, 18, 15, 13, 14, 13
+    ...
+\end{verbatim}
 
 
 
