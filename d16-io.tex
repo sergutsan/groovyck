@@ -293,7 +293,7 @@ at the following code:
 \begin{verbatim}
 01    File file = new File("file.csv");
 02    try {
-03        BufferedReader in = new BufferedReader(new FileReader(file); 
+03        BufferedReader in = new BufferedReader(new FileReader(file)); 
 04        String line;
 05        while ((line = in.readLine()) != null) {
 06            // ... do things with the data here
@@ -348,7 +348,7 @@ executed. The resulting code would look like this:
      File file = new File("file.csv");
      BufferedReader in = null;
      try {
-         in = new BufferedReader(new FileReader(file); 
+         in = new BufferedReader(new FileReader(file)); 
          String line;
          while ((line = in.readLine()) != null) {
              // ... do things with the data here
@@ -381,7 +381,7 @@ details:
          File file = new File("file.csv");
          BufferedReader in = null;
          try {
-             in = new BufferedReader(new FileReader(file); 
+             in = new BufferedReader(new FileReader(file)); 
              String line;
              while ((line = in.readLine()) != null) {
                  // ... do things with the data here
