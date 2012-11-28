@@ -360,7 +360,7 @@ executed. The resulting code would look like this:
      } finally { 
          try {
              if (in != null) {
-                 in.close()
+                 in.close();
              }
          } catch (IOException ex) {
              ex.printStackTrace();
@@ -397,7 +397,7 @@ details:
      private void closeReader(Reader reader) { 
          try {
              if (reader != null) {
-                 reader.close()
+                 reader.close();
              }
          } catch (IOException ex) {
              ex.printStackTrace();
