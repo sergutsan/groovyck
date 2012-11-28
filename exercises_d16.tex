@@ -33,12 +33,23 @@ will be three strings of values ``this'', ``That'', and ``0''.
 \section{cat}
 \label{sec:cat}
 
+\subsection*{a) }
+
 Write a program that takes a name from the user at the command
 line. If a file with that name exists, the program must show its
 contents on screen. If it does not, the program must say so. 
 
+\subsection*{b) (*)}
+\label{sec:b}
+
+Modify the program so that it takes many file names at the command
+line, and then shows them all one after the other. 
+
 \section{cp}
 \label{sec:cp}
+
+\subsection*{a) }
+\label{sec}
 
 Write a program that takes two names from the user at the command
 line. If a file with the first name exists, the program must copy it
@@ -72,6 +83,13 @@ overwrite it or not, and act accordingly.
 %        System.out.println(src + " -> " + dst);
 %   }
 
+\subsection*{b) (*)}
+\label{sec:brr}
+
+Modify the program so that it takes many file names at the command
+line. When this happens, the last name must be a directory (otherwise,
+your program should complain). If it is a directory, your program has
+to copy all files (i.e.~the other arguments) into that directory. 
 
 \section{tr (*)}
 \label{sec:tr}
@@ -124,7 +142,18 @@ for the whole file. A file may look like the following:
     ...
 \end{verbatim}
 
+\section{Binary cp (**)}
+\label{sec:binary-cp}
 
+Write a program that takes two names from the user at the command
+line. If a file with the first name exists, the program must copy it
+into a file with the second name. If the first file does not exist,
+the program must say so. If the second file does exists, the program
+must ask the user whether to overwrite it or not, and act accordingly.
 
+This is the same exercise as above with an important difference: it
+must be able to copy binary files (use \verb+InputStream+ instead of
+\verb+Reader+, etc). Try it with \verb+.class+ and \verb+.exe+ files
+and check that the copies work exactly like the originals.
 
 \end{document}
