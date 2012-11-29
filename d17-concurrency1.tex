@@ -4,15 +4,33 @@
 
 intro
 
+Why concurrency?
+  - Performance. Multiple processors.
+  - Responsiveness: 
+    - Not just what your computer does, 
+    - Think also of the garbage collector
+    - Exercise: have an example that downloads but waits for a return
+      to interrupt
+  - Easier design
+
+
+Difference between multithreading and mono-threading
+
+sleep(), interrupt, 
+
 Launching thread (with Thread.start()
 
 The problems of concurrency
   - Access to resources
-    - Starvation
-    - Deadlock
-    - Livelock
 
 Locks
 
 Immutable objects
+
+    - Starvation
+    - Deadlock
+    - Livelock
+
+
+Example: different threads going on through the same code...
 
