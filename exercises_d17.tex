@@ -18,7 +18,7 @@ goals:
 \label{sec:counter}
 
 Have a look at the following code. What will be the value of the
-counter at the end of its execution?
+counter at the end of its execution (comments ommitted for brevity)? 
 
 \begin{verbatim}
     public class Increaser implements Runnable {
@@ -31,7 +31,8 @@ counter at the end of its execution?
        public static void main(String args[]) {
           Counter counter = new Counter();
           for (int i = 0; i < 100; i++) {
-             (new Thread(new Increaser(counter))).start();
+             Thread t = new Thread(new Increaser(counter));
+             t.start();
           }
        }
     
@@ -59,14 +60,155 @@ Compile and execute this code several times. Do you get the result you
 expected? Do you get always the same result? What can you do to make
 the last value of the counter what it should be?
 
-% Dining philosophers 
+\section{Bank account}
+\label{sec:bank-account}
+
+Look at the following code of a simplified bank account. Assume that
+there are many threads accessing this object and think what is the
+minimum number of \verb+synchronized+ statements that are needed to
+ensure a correct behaviour. 
+
+\begin{verbatim}
+    public class BankAccount {
+        private int balance = 0;
+        public int getBalance() {
+            return balance;
+        }
+        public void deposit(int money) {
+            balance = balance + money;
+        }
+        public int retrieve(int money) {
+            int result = 0;
+            if (balance > money) {
+                 result = money;
+            } else {
+                 result = balance;
+            }
+            balance = balance - result;
+            return result;
+        }
+    }
+\end{verbatim}
+
+Check your answer with a colleage or with one of the members of the
+faculty. 
+
+\section{Responsive UI}
+\label{sec:responsive-ui}
+
+Write a program that asks from the user the length in milliseconds of
+ten tasks. As the user enters the length, the tasks start running in
+the background while the user enters the length of the other
+tasks. When the tasks end, the program must register it and say it
+unless it is waiting for the user to enter data. See this sample
+output: 
+
+\begin{verbatim}
+    Enter the duration (in ms) of task 0: 10
+    Enter the duration (in ms) of task 1: 3000
+    Finished tasks: 0
+    Enter the duration (in ms) of task 2: 2000
+    Enter the duration (in ms) of task 3: 1000
+    Enter the duration (in ms) of task 4: 10
+    Enter the duration (in ms) of task 5: 1000
+    Finished tasks: 2, 1, 3, 4
+    Enter the duration (in ms) of task 6: 
+    ...
+\end{verbatim}
+
+\section{Parallel computation}
+\label{sec:parallel-computation}
+
+Look at the attached program \verb+ComputationLauncher+ for an example
+of a heavy computation being performed in sequence or in parallel
+using more than one processor at the same time. In an old machine with
+two processors, the output looks like: 
+
+\begin{verbatim}
+    Result: 7.999582837247596E14
+    Time without threads: 11110ms
+    Result: 7.999582837247596E14
+    Time with threads: 6326ms
+\end{verbatim}
+
+Make sure you understand how the program works. How would you modify
+the program if you machine had four processors? You can see how many
+processors (or cores) your machine has by reading the value of: 
+
+\begin{verbatim}
+    Runtime.getRuntime().availableProcessors();
+\end{verbatim}
 
 % Exercises from Sokratis
 
-% Adding things to a list 
+\section{Self-ordering list (*)}
+\label{sec:self-ordering-list}
 
-% Having a list with an internal thread that keeps it sorted
+One of the advantages of using threads in some applications is that
+they allow programmers to do costly operations in the background when
+nobody is looking. For example, a self-sorting list can reorder itself
+in between calls to minimise the time needed to add elements (e.g.~in
+applications where elements are added in big batches, but consulted
+only rarely).
+
+Hint: For this exercise, it may be easier to create your own dynamic
+list instead of relying on those from the Java Collections
+Library. Remember that the latter are not thread-safe, i.e.~they are
+not properly synchronised, so they require external synchronisation. 
+
+\subsection{a)}
+
+Create a list of Integer that keeps itself sorted by sorting itself
+when others are not looking. The list must have at least methods
+\verb+add(Integer)+ (to add new Integers) and \verb+get(int)+ (to get
+the i$^{th}$ integer in the (sorted) list. 
+
+\begin{itemize}
+\item The list \verb+add()+ method must add the new element at the end
+  of the list, mark the list as ``not sorted'' and return immediately.
+\item A thread must be always looking up the list and checking whether
+  it is in order; if it is, it must mark it as ``sorted''; if it is
+  not, if must sort it. The thread must order the list in small steps
+  to make sure it does not cause additional delay when new elements
+  are added to the list while it is sorting itself.
+\item The method \verb+get(int)+ must always return the i$^{th}$
+  integer in the (sorted) list; if this method is called while the
+  list is ``not sorted'', the list must be fully sorted before it can
+  return; no additional elements can be added until the call of
+  \verb+get(int)+ returns.
+\end{itemize}
+
+\subsection{b)}
+\label{sec:b}
+
+Create another self-ordering list in which the \verb+add()+ method
+launches a new thread whose only purpose is to add the new integer at
+the right position. (Hint: if the new element has to be placed at the
+beginning of the list, there is no need to launch a thread only for
+that). 
 
 % Reordering a list with several threads at the same time
+
+\section{Dining philosophers (*)}
+\label{sec:dining-philosophers}
+
+A group of weak-sighted philosophers gathered around a circular table
+to have dinner together. They were served on one big round plate in
+the middle of the table, and they were given each a fork. In order to
+prevent everybody to take food at the same time, risking their clumsy
+hand hacking at each other's, they decided to adhere to the following
+protocol: each philosopher could only get food if it had taken both
+forks at their left and right. 
+
+Write a program that implements a dinner with $n$ philosophers and $n$
+forks. Make sure that each fork can be grabbed by only one philosopher
+at a time. Verify that a naive synchronisation strategy can lead very
+quickly to a deadlock; fix the program so that this cannot happen. 
+
+(Hint: during development, it may be helpful to implement a monitoring
+class (waiter?)  that checks what the philosophers are doing, e.g.~how
+many forks have they grabbed).
+
+
 
 \end{document}
