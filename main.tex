@@ -113,6 +113,15 @@ only my own fault.
 %   D21: network 2: REST
 %   D22: work in the lab: only one day... for revision
 
+%   I start to think that I need more days for doing serious stuff
+%   with concurrency (see notes below)... and maybe network
+%   programming too (and maybe other topics). Should I dedicate four
+%   days per topic and then let them choose topic (the notes are
+%   available for both strands, so they can read them later)? And the
+%   final two days are for working in pairs and revision...
+% 
+% Possibilities for other strands: graphics and FX, Clojure, Jython, Scala
+
 % PT:  
 %   D1: refresh
 %   D2: Git
@@ -138,6 +147,7 @@ only my own fault.
 %   D21: work in the lab: a full fortnight for revision
 %   D22: work in the lab: a full fortnight for revision
 
+% See notes on full-time on letting them choose topic
 
 % Day 0: what do I want from you?
 %   - to be self-sufficient learners
@@ -399,10 +409,9 @@ only my own fault.
 %   plus the 3 Abrahams guarantees
 \input{d15-exception-handling}
 % \item I/O in Java
-% \item ASSIGNMENT: something that reads a CSV with rains in different
-%    regions and returns a file that says who had more rains, what was
-%    the average, etc
 \input{d16-io}
+% TODO: try-with-resources, including the special treatment for
+%       exceptions 
 
 % Day 17,18: Concurrency
 % Day 17:
@@ -412,12 +421,24 @@ only my own fault.
 %       synchronized: class and object locks 
 % Day 18:
 % \item package java.concurrency
+%
+% TODO: basics (day 1), 
+% volatile, happens-before relations, the Java
+% Memory Model, the post by Jeremy Manson on "Atomicity, Visibility, and
+% Ordering" (day 2), 
+% java.util.concurrent, fork/join (day 3), 
+% CSP (day 4)
 
 
 % Day 19,20: Network programming (which means more I/O)
 % \item OBSOLETE: Network programming: TCP, UDP
 % \item Web services
 % \item ASSIGNMENT: chat program
+% TODO: 
+% day 1: basics... sockets
+% day 2: web services
+% day 3: REST
+% day 4: Google's process buffers, or RMI, or something of the sort
 
 % Day 21, 22
 % 
