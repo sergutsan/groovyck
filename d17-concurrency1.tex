@@ -2,45 +2,52 @@
 \label{sec:concurrency}
 
 Every program that we have written up to now consisted of one single
-thread of execution. The flow of execution started at the beginning of
+thread. The flow of execution started at the beginning of
 the \verb+main+ method and continued line-by-line up the last
 statement of such method. Method calls were executed orderly,
-line-by-line, from the beginning to the end. When method called other
-methods, the called methods were executed to the end (or until an
+line-by-line, from the beginning to the end. When methods called other
+methods, called methods were executed to the end (or until an
 exception was thrown) before the calling method continued its
-execution. When an exception was thrown, the flow jumped downward
+execution. When an exception was thrown, the flow jumped downwards
 until an adequate \verb+catch+ block was found or until the the end of
-the method, and then continued in the same fashion on the calling
-method, and so on (maybe up to, and out of, the \verb+main+ method). 
+the method; if the exception found the end of the method, it continued
+looking for a \verb+catch+ block on the calling
+method, and continued moving up on the stack until it found it 
+(maybe up to, and out of, the \verb+main+ method). 
 
-In any case, there was one and only thing to do at any moment in
+In any case, there was one and only thing to do at any point in
 time. Our programs have been \emph{deterministic}. If we knew what
 statement had just been executed by the computer, we knew which
 statement was going to be executed next (and with which values, etc). 
 
 However, we know that computers can do several things at the same
-time. The computer you are working now on is able to show you this
+time. The computer you are working on now is able to show you this
 document, accept input from your keyboard and mouse, browse the
-internet, keep several services active in the background, and several
-other tasks. Computers have been traditionally able to do this by
-switching tasks in the microprocessor (a bit of reading data from the
-network, a bit of reading keyboard input, a bit of painting the
-screen, a bit of network again\ldots), but the switching happens so
-fast that it gives the impression to humans of happening
+internet, keep several services active in the background, and
+performing several other tasks at the same time. 
+Computers are able to do this by
+switching tasks on the microprocessor (some nanoseconds of reading data from the
+network, then a bit of reading keyboard input, then painting the
+screen, then a bit of network again\ldots), but the switching happens so
+fast that it gives the impression to humans of all tasks happening
 simultaneously. Additionally, now that multi-processor computers and
 multi-core processors are becoming the norm, computers are able to
-actually do more than one task at the same time (plus they still
+actually do more than one task at the same time, one per
+microprocessor or core (plus they still
 switch tasks).
 
 In this section we are going to learn the basics of concurrent
 programming, enabling our programs to do more than one thing at the
 same time. This is intended to be only a very basic
-introduction. Concurrent programming is a very complicated topic, even
-for seasoned programmers. There are even programming languages that
-were created with the explicit goal of easing the creation of concurrent
-programs\footnote{Examples include educational languages like SR or
+introduction. Concurrent programming is a very complicated topic,
+difficult even
+for seasoned programmers\footnote{Concurrent programming is so
+  difficult that several programming languages have been 
+  created with the explicit goal of easing the creation of concurrent
+  programs. Examples range from educational languages like SR to
   production-oriented languages like Erlang, Scala, Go, or
-  Clojure. Scala and Clojure run on the Java Virtual Machine and can
+  Clojure (and arguably Java). 
+  Scala and Clojure programs run on the Java Virtual Machine and can
   interact easily with Java programs.}. 
 
 \subsection{Why concurrency?}
@@ -51,18 +58,18 @@ programming, but it bear many important benefits, including:
 
 \begin{description}
 \item[Performance. ] If your task can be separated into many subtasks,
-  and each subtask can be done in parallel in different processor or
+  and each subtask can be done in parallel in different processors or
   machines, the whole task may be completed faster. This is a very
   common approach to perform complicated scientific and engineering
   calculations that take long to complete (e.g.~weather simulations).
 \item[Responsiveness. ] Concurrent programs are able ---by
-  definition--- to do several things at the same time. For example, a
-  concurrent program can start a long calculation in the background
-  but still listen to user input, even if the calculation has not
-  finished yet. You can think of the Java garbage collector; it is
+  definition--- to do several things at the same time. This enables 
+  concurrent programs to start long calculations in the background
+  while still listening to user input, even if the calculation has not
+  finished yet. Think of the Java garbage collector, for example; it is
   running at the same time as your programs, looking for unreachable
   memory to release; it does not need your program to end before
-  memory can be recuperated.
+  memory can be recovered.
 \item[Cleaner design. ] Many applications require different tasks to
   happen at the same time: games require many enemies to move, web
   browsers require several images to be downloaded for visualising a
@@ -81,8 +88,8 @@ programming, but it bear many important benefits, including:
 
 The benefits of concurrent programming come at a cost that we have
 hinted at already: determinism. Concurrent programs are not
-deterministic, we cannot tell which is the next statement to be
-executed if we know which one was executed last. 
+deterministic, we cannot tell which will be the next statement to be
+executed even if we know exactly which one was executed last. 
 
 This is because the machine will keep switching tasks and we do not
 have any control over that process. The machine will switch tasks
@@ -112,10 +119,10 @@ program\footnote{Modern operating systems allow for communication
   calls and is out of the scope of this section.}, e.g.~by accessing
 the same variables or objects. 
 
-Concurrent programming in Java is done by using threads. The Java
+\emph{Concurrent programming in Java is done by using threads}. The Java
 Virtual Machine switches between threads, activating or deactivating
 them according to different factors beyond the control of the
-programmers. As far as the programmer is concerned, threads run in
+programmer. As far as the programmer is concerned, threads run in
 parallel at random (and variable) speeds. 
 
 \subsubsection{Atomic operations}
@@ -132,14 +139,16 @@ It is important to note ---especially if you have experience with C
 or~C++--- that \verb_n++_ is \emph{not} atomic. In Java, that
 statement is equivalent to three statements: one read, one increment,
 and one write. It is possible that your thread will be interrupted
-after the read but before the write. 
+after the read but before the write. If another thread interacts
+with \verb+n+ then, the result is unpredictable and may result in data
+loss. 
 
 \subsection{Launching new threads}
 \label{sec:launch-new-thre}
 
-Java provides a class \verb+Thread+ to launch and run new threads. New
+Java provides a class called \verb+Thread+ to launch and run new threads. New
 threads are defined by using a class that implements interface
-\verb+Runnable+. This interface only contains one simple method: 
+\verb+Runnable+. This interface consists of just one simple method: 
 
 \begin{verbatim}
     public void run();
@@ -147,7 +156,7 @@ threads are defined by using a class that implements interface
 
 Starting a thread with a new \verb+Runnable+ task is easy. First, we
 create the thread, then we start it. Assuming we have a runnable
-object called \emph{myRunnable}, the code would look like:
+object called \emph{myRunnable}, the code looks like:
 
 \begin{verbatim}
     Thread t = new Thread(myRunnable);
@@ -220,7 +229,7 @@ value of 0 (not 1!).
 If we had more than two threads, the situation could be even more
 complicated and unpredictable. For example, a third thread may have called
 \verb+increment()+ and \verb+decrement()+ while T1 and T2 had not
-finished their executing of \verb+getCount()+. 
+finished their execution of \verb+getCount()+. 
 %
 Keep also in mind that interruptions and thread-switching
 could have happened in between the \verb_count++_ and \verb+count--+
@@ -230,25 +239,28 @@ The moral of the story is: concurrent programming is difficult, and
 non-deterministic; you have to be very careful or you will get it
 wrong. 
 
-\subsection{Synchronization}
+\subsection{Synchronisation}
 \label{sec:synchronization}
 
-Computer programs are instructions to make computers process data in a
+Computer programs are lists of instructions to make computers process data in a
 reliable (and fast) way. If we want our programs to be reliable even
 when using non-deterministic threads we need to make sure threads are
-synchronised is some ways. The most common way of achieving
+synchronised in some way. The most common way of achieving
 synchronisation is by means of \emph{locks}. By acquiring and
-releasing locks, we can make sure that our threads do not overlaps
+releasing locks, we can make sure that our threads do not overlap
 with bad results. 
 
 We can think of thread locks as locks on doors. When a door is open
 (lock free) any person (thread) can open the door and enter (acquire
-the lock), closing the door afterwards. Any other persons that tries
-to open the door (acquire the lock) while another person has locked it
-(while another thread has the lock) will be blocked, and will wait. As
+the lock, and start executing some code), 
+closing the door behind. Any other persons that tries
+to open the door (tries to acquire the lock) 
+while another person has locked it
+(while another thread has the lock) will be blocked, and will have to wait. As
 soon as the person that locked the door opens it and comes out (thread
 releases the lock) another person can enter (another thread can
-acquire the lock). It is important to note that thread do not make an
+acquire the lock and start executing the code). 
+It is important to note that threads do not make an
 ordered queue before a lock like good British citizens. Quite the
 opposite: when a lock is released, any thread that was waiting for the
 lock may acquire it. You can think of locks as noisy foreigners,
@@ -282,21 +294,23 @@ block waiting for the lock to be available.
     }
 \end{verbatim}
 
-When T1 enters the \verb+synchronized+ block, it may be stopped by the
-machine but this will not pose a problem when T2 executes
-\verb+getCount()+ because T2 will try to acquire the lock of the
+When T1 enters the \verb+synchronized+ block, it may be interrupted
+because the machine switches to~T2. Thanks to the use of locks, 
+this will not pose a problem when~T2 executes
+\verb+getCount()+ because~T2 will try to acquire the lock of the
 object (\verb+obj+), realise it is already acquired by another
-thread, and get blocked. When the machine switches back to T1, it will
-continue with the execution until it returns a value. At this point,
-the lock on \verb+this+ will be released and T2 (or other threads
-waiting for the same lock, maybe in other methods of the same object)
+thread, and get blocked. When the machine switches back to~T1, it will
+continue with its execution until it returns a value
+from \verb+getCount()+. At this point,
+the lock on \verb+obj+ will be released and~T2 (or other threads
+waiting for the same lock, \emph{maybe in other methods of the same object})
 will be able to acquire and continue with their execution. 
 
-Note that we could have used any object for locking that piece of
+Note that we could have used any object for locking this block of
 code. For example, if \verb+count+ was an \verb+Integer+ instead of an
-\verb+int+, we could have used its lock to synchronize this block. We
+\verb+int+, we could have used its lock to synchronise the block. We
 could have also acquired the lock of \verb+this+ object. Note as well
-that the object on which we lock must be a field and cannot be a local
+that the object from which we use the lock must be a field and cannot be a local
 variable because every thread has its own stack, so the following code
 will not work as intended: 
 
@@ -312,7 +326,7 @@ will not work as intended:
 \end{verbatim}
 
 The second way in which \verb+synchronized+ can be used is to
-synchronize full methods, as in this example: 
+synchronise full methods, as in this example: 
 
 \begin{verbatim}
     public synchronized int getCount() {
@@ -324,19 +338,21 @@ synchronize full methods, as in this example:
 
 When it is used in this way, the thread trying to execute the
 synchronised method will acquire the lock of the object. In a
-way, this is similar to using \verb+synchronized(this)+, but the
+way, this is similar to using \verb+synchronized(this)+ on the full
+code of the method, but the
 effect is a bit different. Synchronising the whole method has two
 benefits: it is simpler (less lines of code) and clearer (the
 \verb+synchronized+ will appear in the documentation of your class,
 making it explicit to other programmers). Synchronising a fragment has
 two benefits: it allows you to synchronise only part of the method
-and it can use different objects for locks, not only \verb+this+. Both
+(finer-grained synchronisation) 
+and it can use different objects for locks, not just \verb+this+. Both
 aspects may be important for making sure that your program does
-not block, depending on the application (see next section). 
+not block, depending on the application (see Section~\ref{sec:why-not-make}). 
 
 Note that \verb+synchronized+ does not make your block of statements
 \emph{atomic}. Your thread can still be interrupted an arbitrary
-number of times for arbitrary periods while it is executing a
+number of times while it is executing a
 synchronised block. The only thing that \verb+synchronized+ will do
 for you is making sure that other threads do not enter the same block
 of statements until the current thread has finished with it (either by
@@ -346,18 +362,18 @@ released the lock.
 \subsubsection*{A note on terminology}
 \label{sec:note-terminology}
 
-Locks are sometimes called \emph{mutex}, because they provide mutually
-exclusive access to a resource. \emph{Semaphores} are a special type
-of lock that allows several thread to gain access to a
+Locks are sometimes called \emph{mutex}, because they provide \emph{mut}ually
+\emph{ex}clusive access to a resource. \emph{Semaphores} are a special type
+of lock that allows several threads to gain access to a
 resource. Semaphores can be represented as an integer number, and
 every thread that gets access to the resource decreases it. When it
 gets to zero, the next thread will need to wait until the semaphore
 raises again. A lock can be viewed as a semaphore of value 1. 
 
-\subsubsection{Why not make everything synchronized?}
+\subsubsection{Why not make everything synchronised?}
 \label{sec:why-not-make}
 
-Synchronising access to resources prevent harmful overlapping of
+Synchronising access to resources prevents harmful overlapping of
 threads using the same resource, but we cannot make every single
 method in our program \verb+synchronized+. First of all,
 synchronisation comes at a performance cost. Checking, acquiring, and
@@ -366,8 +382,8 @@ will make it run slower. However, this is not our main concern.
 
 The most important problem of careless synchronisation is that our
 program may block. If thread A has acquired lock L1 and is waiting for
-lock L2 to become free, while thread B has acquired lock L2 and is
-waiting for L1 to become free, our program cannot continue. This is
+lock L2, while thread B has acquired lock L2 and is
+waiting for L1, our program cannot continue. This is
 called a \emph{deadlock}, and is one of the most common problems with
 concurrent programs (the other being race conditions leading
 to harmful overlapping of threads accessing the same resource). 
@@ -386,7 +402,7 @@ example if one thread acquires a lock but never releases it; threads
 waiting for that lock will remain ``dormant'' forever.
 %
 A \emph{livelock} is similar to a deadlock in the sense that two or
-more thread are blocking each other, but the difference is that the
+more threads are blocking each other, but the difference is that the
 program is still running, only not making any progress. Imagine that
 Andrew and Bob meet in the middle of the corridor; Andrew moves to the
 left to let Bob pass, and Bob moves to the right for the same reason:
@@ -409,13 +425,14 @@ deadline.
 \subsubsection{Sleeping, waiting, and notifying}
 \label{sec:sleep-wait-notify}
 
-Sometimes we need something beyond a lock to synchronise our threads. 
-Sometimes we want one of your threads to wait until one condition is
+Sometimes a lock is not what we need to synchronise our threads; 
+sometimes we want one of your threads to wait until one condition is
 true (i.e.~set as true by another thread). For example, the thread
 that takes our mail should not read from the inbox until some other
 thread has left any mail on it. The block of code that comes after
 such a condition is sometimes called a \emph{guarded block}, because
-it is guarded/protected by the condition. 
+it is guarded/protected by the condition. We could implement guarded
+blocks with a simple \verb+while+ loop, as shown below:
 
 \begin{verbatim}
     while (!conditionMet) {}
@@ -423,7 +440,7 @@ it is guarded/protected by the condition.
 \end{verbatim}
 
 The code above is really wasteful. The computer will spend a lot of
-CPU time doing a lot of empty loops. We may think that it would be
+CPU time doing a lot of empty loops. It would be
 better to let the computer make a short pause and then continue with
 the execution. We can do this by using the static method
 \verb+sleep()+ and providing the length of the pause in milliseconds. 
@@ -482,12 +499,12 @@ monitor is by synchronising the method, as in the following code:
 When a thread executes \verb+wait()+, it releases the lock it had
 acquired. Other thread may acquire it then and enter the same
 \verb+synchronized+ block of code (or others), and maybe get blocked
-at the same \verb+wait()+ call. The thread can also be acquired by a
+at the same \verb+wait()+ call. The lock can also be acquired by another
 thread to enter a block of code where it calls \verb+notifyAll()+. At
-this points, all the thread that were waiting on the same object are
+this point, all the threads that were waiting on the same object are
 woken up ---but they cannot continue executing because the lock is
 still with the thread that executed the notification. After this
-thread releases the thread, one of the awaiting thread will re-acquire
+thread releases the lock, one of the awaiting threads will re-acquire
 it (without the need to re-enter the code, it is already there) and
 continue its execution. Note that this may or may not have a real
 effect, depending on whether the condition has already been met; if it
@@ -507,8 +524,8 @@ interaction between different threads. Since immutable objects cannot
 change state, they cannot be corrupted by thread interference and
 cannot be observed in an inconsistent state.
 
-The simples strategy to create immutable objects is declaring all the
-class' fields as final. However, this is not enough in the general
+The simplest strategy to create immutable objects is declaring all the
+class' fields as \verb+final+. However, this is not enough in the general
 case. In order to ensure that an object is immutable, the following
 rules must be followed: 
 
@@ -519,7 +536,7 @@ rules must be followed:
   (possible, even if the pointer is \verb+final+).
 \item Do not allow subclasses to override methods. The easiest way to
   achieve this is by declaring the class as \verb+final+.
-\item If the instance fields point to mutable objects (e.g.~a String),
+\item If instance fields point to mutable objects (e.g.~a String),
   do not share the reference to those objects. 
   \begin{itemize}
   \item Never store references to objects passed in the constructor,
@@ -534,13 +551,13 @@ The latter point is commonly referred to as \emph{making defensive
 even if immutable objects are not used. 
 %
 Since it can be generally assumed that other threads will make
-changes to the objects passed to them, so it is always a good idea to
+changes to the objects passed to them, it is always a good idea to
 pass copies of our own objects instead of references to the objects
 themselves. Otherwise, other threads may make changes to the objects
 with unpredictable effects on other threads. 
 
 Making defensive copies at construction time or in response to method
-calls incurrs in a certain overhead, but this rarely constitutes a
+calls incurs in a certain overhead, but this rarely constitutes a
 bottleneck. The performance cost is generally compensated by the
 simplicity gained by the program. 
 
