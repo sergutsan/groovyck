@@ -11,9 +11,15 @@ to move them from one computer to the next).
 
 The development of network technologies and the Internet made it
 feasible to communicate computers directly and in real time, faster
-and faster every year. The logical conclusion of this process is being
+and faster every year. This has opened the door to network
+programming, where programs run in more than one computer at the same
+time. In the early stages, most of the computation was done in one
+machine (where the data was) and a little part of it (visualising the
+results) was done in another one (where the human user was). Nowadays,
+grids are 
 able to run programs on several computers at the same time, each of
-them running only part of the program, giving the general impression
+them working only on a small part of 
+the problem, giving the general impression
 of having a bigger, broader, more powerful computer running the whole
 program. 
 
@@ -21,36 +27,42 @@ In this section we will learn how to create programs that run in more
 than one computer, different objects of the same program communicating
 with each other through the network, even if they live on different
 machines. Although the topic of network programming is very broad and
-exceeds the scope of this module, many of the main concepts that we
-will learn are common to different technologies. 
+exceeds the scope of this module, the main concepts that we
+will learn are common to several different technologies. 
 
 \subsection{The basics}
 \label{sec:basics}
 
 Most network applications follow the client--server
 paradigm\footnote{In recent years, the P2P (peer to peer) model has
-  become quite popular. In these applications, all programs are client
-  and server at the same time.}. This means that there are two parts
-of the program: \emph{server} and \emph{client}. The former is
-runnning in a well-known computer, waiting for clients to requests its
-services.  \emph{Clients} run on different computers, and use the
+  become quite popular. In these applications, all programs can be client
+  and server at the same time.}. This means that the program has two 
+parts: \emph{server} and \emph{client}. The former is
+runnning in a well-known computer, waiting for clients to request its
+services.  \emph{Clients} run on different computers and use the
 services provided by the server. Attentive readers may have noticed
 that this looks similar to classes calling methods of other classes,
 and this is actually the way in which it is modelled in many
 object-oriented languages as we will see later.
 
-Depending on the application, the server and the client can be seen as
-the same or as two different program. For example, web servers (like
+Depending on the application, the server and the client can be
+perceived as the same program or as two different programs. 
+For example, web servers (like
 Apache) and web browsers (like Mozilla Firefox or Google Chrome) are
 seen as different programs, and actually they are developed by
 different teams of people. On the other hand, the clients and the
 servers of games like World of Warcraft are considered to be part of
-the same program. 
+the same program. This is only a matter of perception: at a technical
+level, client and server are always two different processes with two
+different and unrelated memory spaces (stack and heap), usually on two
+different machines\footnote{Some applications, including databases and
+email programs, have different client and server processes even on the
+same machine.}. 
 
-By metonimy, the words client and server are commonly used to refer to
+By metonymy, the words client and server are commonly used to refer to
 the machines where the server or the clients run. For example,
 depending on the context, the term ``web server'' may refer to the
-program that serves web pages or the physical computer where this
+program that serves web pages or a physical computer where this
 program is running. 
 
 \subsection{Remote Method Invocation (RMI)}
@@ -72,9 +84,10 @@ own memory space.
 In order to be able to call methods on objects that do no exist on
 their own machine, clients ask the registry for a \emph{stub} to the
 server. The registry is a special kind of program ---a sort of white
-pages--- where server can register themselves, and then clients can
-ask for a reference for the server. On request, the registry will
-provide stubs for those servers that have been registered. 
+pages--- where servers can register themselves, and then clients can
+ask for a reference to a server by providing a name. 
+On request, the registry will
+provide a reference to a stub for those servers that have been registered. 
 
 \begin{figure}[hbtp]
   \centering
@@ -84,9 +97,9 @@ provide stubs for those servers that have been registered.
 \end{figure}
 
 The stub implements the same interface (i.e.~the same methods) as the
-server, so the client can call them (Figure~\ref{fig:rmiflow}). 
+server, so the client can call them (Figure~\ref{fig:rmiflow}) directly. 
 However, the stub does not do any
-real work: it just packs up the parameters provided by the client and
+real computation: it ``just'' packs up the parameters provided by the client and
 sends them to the server through the network. The server receives
 those parameters, runs the appropriate code, and returns a result
 through the network to the stub. The stub can then return this result
@@ -95,7 +108,7 @@ to the client
 The good thing about RMI is that almost all the
 complexity of the network communication (opening up sockets,
 serializing objets as parameters, recovering from network errors, etc)
-is hidden from the programmer. From the point of the programmer, it
+is hidden from the programmer. From the point of view of the programmer, it
 looks (almost) like a normal method call. 
 
 \begin{figure}[hbtp]
@@ -111,8 +124,10 @@ looks (almost) like a normal method call.
   \centering
   \includegraphics[width=\textwidth]{gfx/rmi-steps2}
   \caption{RMI step by step: (2) the client requests a stub for a
-    server from the registry, and (3) the registry provides one if a
-    server has registered with the right name already. }
+    server (as identified by a name) from the registry, 
+    and (3) the registry provides a
+    reference to a stub of a server object if it
+    has registered with the right name already. }
   \label{fig:rmiflow2}
 \end{figure}
 
@@ -131,7 +146,7 @@ When computation is distributed among different machines there are
 security concerns to address. Who can access the machine? For what
 purpose? 
 
-Security issues are handles in RMI by meas of security
+Security issues are handled in RMI (and Java, in general) by means of security
 policies. Although a full revision of security policies in Java goes
 beyond of the scope of this section, the basic concepts that we need
 for running simple RMI applications are simple to grasp. 
@@ -163,9 +178,11 @@ methods must throw \verb+java.rmi.RemoteException+ (in case anything
 goes wrong with network connectivity). 
 
 If we had a very simple service called \verb+echo+ that just returned
-the same string that was provided (such a service exists, and it used
-to be used to verify network connectivity), the interface may look
-like this: 
+the same string that was provided as a parameter\footnote{Such a
+  service actually exists, and it used to be employed to verify
+  network connectivity. A modern parody / homage can be accessed at
+  www.ismycomputeron.com.}, 
+its interface may look like this: 
 
 \begin{verbatim}
     import java.rmi.Remote;
@@ -184,17 +201,26 @@ like this:
     }
 \end{verbatim}
 
+All objects used as parameters or return values in a RMI interface
+must implement the interface \verb+java.io.Serializable+. This is a
+tagging interface ---an interface with no methods--- that indicates
+that Java should be able to ``flat down'' the object into bytes
+(serializing) and then reconstruct the object again at the other end
+(marshalling).  Usual data types from Java (e.g.~Integer, String)
+implement \verb+Serializable+.
+
 \subsection{Implementing the service}
 \label{sec:implementing-service}
 
-The service, as we have mentioned, is implemented like a normal Java
+The server that provides the service, 
+as we have mentioned, is implemented like a normal Java
 object\ldots with two additional details. First, the server object
-must extend \verb+UnicastRemoteObject+ (this means that it cannot be a
-class that extends another class). Second, an explicit constructor
+must extend \verb+UnicastRemoteObject+ (this means that it cannot 
+extends another class). Second, an explicit constructor
 must be provided ---even if empty--- that throws
 \verb+RemoteException+
 
-The implementation of the interface above could look like (commented
+The implementation of the interface above could look like (comments
 ommitted for brevity): 
 
 \begin{verbatim}
@@ -218,15 +244,15 @@ public class EchoServer extends UnicastRemoteObject implements EchoService {
 \end{verbatim}
 
 We can now compile the server and create the stub to be sent to
-clients. Compiling the server is like any normal Java compilation: 
+clients. Compiling the server requires a normal Java compilation: 
 
 \begin{verbatim}
     javac EchoServer.java
 \end{verbatim}
 
 This will produce an \verb+EchoServer.class+ file, as we know. To
-create the stub, we must use the \verb+rmic+ program on the class 
-file (not the source file):
+create the stub, we must use the RMI compiler \verb+rmic+ 
+on the class file (not the source file):
 
 \begin{verbatim}
     rmic EchoServer
@@ -268,7 +294,9 @@ different class, maybe in a file called \verb+EchoServerLauncher.java+):
 \end{verbatim}
 
 If the security manager or the registry are not running, they must be
-started. Then an instance of the server class is created and
+started. The registry will listen on port~1099 by default, but this
+can be changed (e.g.~to pass through a firewall that forbids use of
+port~1099). Then an instance of the server class is created and
 registered (i.e.~bound) with a given name. This name must be known by
 clients that want to use the services offered by the server.
 
@@ -284,7 +312,7 @@ command line:
 
 We are almost there. The only piece missing is the client! 
 
-After setting up the security manager (using the same two lines as the
+After setting up the security manager (using the same code as the
 server), the first thing that the client needs to do is to find a
 reference to the remote server object. It can do so by asking the
 registry:
@@ -307,11 +335,12 @@ as easy as a normal method call:
     String receivedEcho = echoService.echo("Hello!");
 \end{verbatim}
 
-This line will fire sets 4 and 5 on Figure~\ref{fig:rmiflow}: the stub
+This simple line will fire steps~4 and~5 
+on Figure~\ref{fig:rmiflow}: the stub
 will take string ``Hello!'', convert it into bytes, and send them to
 the server. The server will reconstruct the string, execute the
 method, and send the return value back to the stub. The stub will give
-the return value to the client, who will stored it in variable
+the return value to the client, who will store it in variable
 \verb+receivedEcho+. If anything goes wrong at any point, a
 \verb+RemoteException+ will be thrown. 
 
@@ -321,6 +350,11 @@ policy (usually different) on the command line:
 \begin{verbatim}
     java -Djava.security.policy=client.policy EchoClient <someTextHere>
 \end{verbatim}
+
+The client must have access (on its CLASSPATH) to the classes needed
+to serialize and marshall the objects sent and received to the
+server. This includes the stub and those classes used for parameters
+and return values. 
 
 \subsection{Summary}
 \label{sec:summary}
