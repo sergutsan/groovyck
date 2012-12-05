@@ -10,10 +10,10 @@ Before the next day, you should have achieved the following learning
 goals: 
 
 \begin{itemize}
-\item Launch different thread in a program
-\item Have a general understanding of how a non-deterministic program
+\item Launching different thread in a program
+\item Having a general understanding of how a non-deterministic program
   works. 
-\item Synchronize access to shared resources
+\item Synchronising access to shared resources
 \end{itemize}
 
 \section{Text loops}
@@ -29,14 +29,14 @@ the output be for each of the ``thread'' and the ``no threads'' modes?
         private final String name;
     
         public TextLoop(String name) {
-        this.name = name;
+            this.name = name;
         }
     
         @Override
         public void run() {
-        for (int i = 0; i < COUNT; i++) {
-            System.out.println("Loop:" + name + ", iteration:" + i + ".");
-        }
+            for (int i = 0; i < COUNT; i++) {
+                System.out.println("Loop:" + name + ", iteration:" + i + ".");
+            }
         }
     
         public static void main(String args[]) {
@@ -79,7 +79,8 @@ counter at the end of its execution (comments ommitted for brevity)?
        public static void main(String args[]) {
           Counter counter = new Counter();
           for (int i = 0; i < 100; i++) {
-             Thread t = new Thread(new Increaser(counter));
+             Increaser increaserTask = new Increaser(counter);
+             Thread t = new Thread(increaserTask);
              t.start();
           }
        }
@@ -93,7 +94,7 @@ counter at the end of its execution (comments ommitted for brevity)?
        }
     }
     
-    class Counter {
+    public class Counter {
        private int n = 0;
        public void increase() {
           n++;
@@ -105,13 +106,14 @@ counter at the end of its execution (comments ommitted for brevity)?
 \end{verbatim}
 
 Compile and execute this code several times. Do you get the result you
-expected? Do you get always the same result? What can you do to make
-the last value of the counter what it should be?
+expected? Do you get always the same result? What would you change to make
+sure the last value of the counter is what it should be?
 
 \section{Bank account}
 \label{sec:bank-account}
 
-Look at the following code of a simplified bank account. Assume that
+Look at the following code of a simplified bank account (comments
+ommitted for brevity). Assume that
 there are many threads accessing this object and think what is the
 minimum number of \verb+synchronized+ statements that are needed to
 ensure a correct behaviour. 
@@ -187,7 +189,14 @@ processors (or cores) your machine has by reading the value of:
     Runtime.getRuntime().availableProcessors();
 \end{verbatim}
 
-% Exercises from Sokratis
+\section{Immutability (*)}
+\label{sec:immutability}
+
+Look at the attached program \verb+ImmutableExample+. Read it
+carefully. Do you see any flaws? If yes, what whould you change to
+make the program work without problems?
+
+What whould you change to make the IDCard class immutable?
 
 \section{Self-ordering list (*)}
 \label{sec:self-ordering-list}
@@ -209,16 +218,18 @@ not properly synchronised, so they require external synchronisation.
 Create a list of Integer that keeps itself sorted by sorting itself
 when others are not looking. The list must have at least methods
 \verb+add(Integer)+ (to add new Integers) and \verb+get(int)+ (to get
-the i$^{th}$ integer in the (sorted) list. 
+the i$^{th}$ integer in the (sorted) list). 
 
 \begin{itemize}
-\item The list \verb+add()+ method must add the new element at the end
+\item The \verb+add()+ method must add the new element at the end
   of the list, mark the list as ``not sorted'' and return immediately.
-\item A thread must be always looking up the list and checking whether
-  it is in order; if it is, it must mark it as ``sorted''; if it is
+\item Another thread must be always observing the list and checking whether
+  it is sorted; if it is, it must mark it as ``sorted''; if it is
   not, if must sort it. The thread must order the list in small steps
   to make sure it does not cause additional delay when new elements
-  are added to the list while it is sorting itself.
+  are added to the list while it is sorting itself (i.e.~do not
+  include a long loop in your synchronised code that may block the
+  addition of new elements for a long time).
 \item The method \verb+get(int)+ must always return the i$^{th}$
   integer in the (sorted) list; if this method is called while the
   list is ``not sorted'', the list must be fully sorted before it can
@@ -242,20 +253,22 @@ that).
 
 A group of weak-sighted philosophers gathered around a circular table
 to have dinner together. They were served on one big round plate in
-the middle of the table, and they were given each a fork. In order to
+the middle of the table, and they were given a fork each. In order to
 prevent everybody to take food at the same time, risking their clumsy
-hand hacking at each other's, they decided to adhere to the following
-protocol: each philosopher could only get food if it had taken both
-forks at their left and right. 
+hands hacking at their neighbours' with the forks, 
+the philosophers discussed and agreed to adhere to the following
+protocol: each philosopher could only get food if it had grabbed both
+forks on their left and their right. 
 
 Write a program that implements a dinner with $n$ philosophers and $n$
 forks. Make sure that each fork can be grabbed by only one philosopher
 at a time. Verify that a naive synchronisation strategy can lead very
-quickly to a deadlock; fix the program so that this cannot happen. 
+quickly to a deadlock (when/why does this happen?); 
+fix the program so that this cannot happen. 
 
 (Hint: during development, it may be helpful to implement a monitoring
 class (waiter?)  that checks what the philosophers are doing, e.g.~how
-many forks have they grabbed).
+many forks they have grabbed).
 
 
 
