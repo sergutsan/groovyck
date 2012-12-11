@@ -194,7 +194,14 @@ public final class WebAnalyzer
     }
 
     public static void main(String args[]) throws Exception {
-        WebAnalyzer wa = new WebAnalyzer("http://www.bbk.ac.uk");
+        String host;
+        if (args.length < 1) {
+	    System.out.println("No host provided. Analysing bbk...");
+	    host = "http://www.bbk.ac.uk";
+	} else {
+	    host = args[0];
+	}      
+        WebAnalyzer wa = new WebAnalyzer(host);
         for (String s : wa.getEmails()) {
             System.out.println("email: " + s);
         }
