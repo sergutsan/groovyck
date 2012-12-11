@@ -283,7 +283,7 @@ different class, maybe in a file called \verb+EchoServerLauncher.java+):
             // 4. Register (bind) the server object on the registy. 
             //    The registry may be on a different machine
             String registryHost = "//localhost/";
-            String serviceName = echo;
+            String serviceName = "echo";
             Naming.rebind(registryHost + serviceName, server);
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
