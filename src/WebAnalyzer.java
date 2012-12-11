@@ -58,18 +58,17 @@ public final class WebAnalyzer
      */
     public WebAnalyzer(String url) throws MalformedURLException,IOException, BadLocationException 
     {
-        this.url=new URL(url);
-        document=getHTMLDocument();
+        this.url = new URL(url);
+        document = getHTMLDocument();
     }
       
     private HTMLDocument getHTMLDocument() throws IOException, BadLocationException
     {
-        HTMLEditorKit kit=new HTMLEditorKit(); 
-        HTMLDocument document=(HTMLDocument) kit.createDefaultDocument(); 
+        HTMLEditorKit kit = new HTMLEditorKit(); 
+        HTMLDocument document = (HTMLDocument) kit.createDefaultDocument(); 
         document.putProperty("IgnoreCharsetDirective", Boolean.TRUE);
-        Reader reader=new InputStreamReader(url.openStream()); 
-        kit.read(reader, document, 0);
-            
+        Reader reader = new InputStreamReader(url.openStream()); 
+        kit.read(reader, document, 0);            
         return document;            
     }
 
@@ -81,13 +80,13 @@ public final class WebAnalyzer
      */
     public Set<String> getLinks()
     {
-        Set<String> result=new HashSet<String>();
+        Set<String> result = new HashSet<String>();
       
-        for (HTMLDocument.Iterator iterator=document.getIterator(Tag.A);iterator.isValid();iterator.next())
+        for (HTMLDocument.Iterator iterator = document.getIterator(Tag.A);iterator.isValid();iterator.next())
             {
-                AttributeSet attributes=iterator.getAttributes();
-                String href=(String)attributes.getAttribute(Attribute.HREF);
-                href=buildAbsoluteURL(href);
+                AttributeSet attributes = iterator.getAttributes();
+                String href = (String)attributes.getAttribute(Attribute.HREF);
+                href = buildAbsoluteURL(href);
                   
                 if(!href.equals("") && !href.startsWith("javascript"))
                     {
@@ -106,26 +105,24 @@ public final class WebAnalyzer
      */
     public Set<String> getEmails()
     {
-        Set<String> result=new HashSet<String>();
+        Set<String> result = new HashSet<String>();
 
-        ElementIterator iterator=new ElementIterator(document); 
+        ElementIterator iterator = new ElementIterator(document); 
         Element element; 
     
-        while((element=iterator.next())!=null)
+        while((element = iterator.next()) != null)
             {
-                AttributeSet attributes=element.getAttributes();
-                Object name=attributes.getAttribute(StyleConstants.NameAttribute);
+                AttributeSet attributes = element.getAttributes();
+                Object name = attributes.getAttribute(StyleConstants.NameAttribute);
 
                 if (name instanceof Tag)
                     {
-                        StringBuffer buffer=new StringBuffer();
-                        int count=element.getElementCount();
-        
-                        for (int i=0; i<count; i++)
-                            {
-                                Element child=element.getElement(i);
-                                AttributeSet childAttributes=child.getAttributes();
-
+                        StringBuffer buffer = new StringBuffer();
+                        int count = element.getElementCount();
+                        for (int i = 0; i<count; i++)
+				    {
+                                Element child = element.getElement(i);
+                                AttributeSet childAttributes = child.getAttributes();
                                 if (childAttributes.getAttribute(StyleConstants.NameAttribute)==Tag.CONTENT)
                                     {
                                         int startOffset = child.getStartOffset();
@@ -141,14 +138,12 @@ public final class WebAnalyzer
                                             }
                                     }
                             }
-
-                        Pattern pattern=Pattern.compile(EMAIL_PATTERN);
-                        StringTokenizer tokenizer=new StringTokenizer(buffer.toString());
-            
+                        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+                        StringTokenizer tokenizer = new StringTokenizer(buffer.toString());
                         while(tokenizer.hasMoreTokens())
                             {
-                                String token=tokenizer.nextToken();
-                                Matcher matcher=pattern.matcher(token);             
+                                String token = tokenizer.nextToken();
+                                Matcher matcher = pattern.matcher(token);             
                                 if(matcher.matches())
                                     {
                                         result.add(token);
@@ -156,16 +151,15 @@ public final class WebAnalyzer
                             }
                     }
             }
-
         return result;
     }
       
     private String buildAbsoluteURL(String href)
     {
-        URI uri=null;
+        URI uri = null;
         try
             {
-                uri=new URI(href);
+                uri = new URI(href);
             }
         catch(URISyntaxException e)
             {
@@ -176,25 +170,24 @@ public final class WebAnalyzer
             {
                 System.err.println("URI problem: " + href);
                 return "";
-            }
-            
+            }            
         if(uri.isAbsolute())
             {
                 return href;
             }
-        String newUrl="";
-        newUrl+=url.getProtocol()+"://";  
-        newUrl+=url.getAuthority();
-        String path=url.getPath();
-        int position=path.lastIndexOf('/')+1;
-        path=path.substring(0,position);
+        String newUrl = "";
+        newUrl += url.getProtocol()+"://";  
+        newUrl += url.getAuthority();
+        String path = url.getPath();
+        int position = path.lastIndexOf('/')+1;
+        path = path.substring(0,position);
         if(path.equals(""))
             {
-                newUrl+="/";
+                newUrl += "/";
             }
         else
             {
-                newUrl+=path;
+                newUrl += path;
             }
             
         return newUrl+href;
