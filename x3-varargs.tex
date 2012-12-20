@@ -1,0 +1,123 @@
+
+\section{Variable arguments}
+\label{sec:variable-arguments}
+
+Sometimes a method requires an unknown number of parameters. For
+example, you may have a method \verb+add(...)+ that took several
+integers and returned the addition of them all. You already know two
+different approaches for implementing such a method: the first one
+involves the use of lists\ldots
+
+\begin{verbatim}
+    int add(List<Integer> operands) { ... }
+\end{verbatim}
+
+\ldots while the second one involves arrays\ldots
+
+\begin{verbatim}
+    int add(int[] operands) { ... }
+\end{verbatim}
+
+Both approaches are a bit clunky for programmers that want to use
+them: they must create the list or array, populate it with data, and
+then pass it as a parameter. 
+%
+Since Java 5 there is another way called \emph{varargs} (short for
+\emph{var}iable \emph{arg}ument\emph{s}). Varargs is nothing more than
+syntantic sugar\footnote{The term \emph{syntactic sugar} is used in
+  programming to refer to those features of a programming language
+  that make the programmer's life easier (both writing and reading)
+  but do not represent a difference in design or paradigm with respect
+  to other similar languages or to former versions of the same
+  language. Boxing/unboxing, varargs, and the \emph{for--each} loop are 
+  examples of syntactic sugar in Java.} for the array version
+that allows the programmer to 
+just add the operands on the method call. 
+
+\subsection{How to use varargs}
+\label{sec:how-use-varargs}
+
+A method with a variable number of arguments is defined using
+triple-dot notation: 
+
+\begin{verbatim}
+    public int add(int... operands) {
+        ...
+    }
+\end{verbatim}
+
+It is important to note that varargs can only exist at the end of the
+list of parameters. 
+
+\begin{verbatim}
+    /** 
+     * A generalisation of add(...) that admits any operation 
+     * (as long as it is commutative) and any number of operands. 
+     */
+    public int apply(Operation op, Operand... numbers) {
+        ...
+    }
+
+    /*
+     * This is not valid Java. It will not compile. 
+     */
+    public int add(Operation... op, Operand... numbers) {
+        ...
+    }
+
+    /*
+     * This is not valid Java. It will not compile. 
+     */
+    public int add(Operand... numbers, Operation op) {
+        ...
+    }
+\end{verbatim}
+
+Calling a method with varargs is as easy as calling any other
+method. The following are all valid invocations of
+\verb+add(...)+. Note that the number of varargs may be zero, as in the
+last example. 
+
+\begin{verbatim}
+    int result = add(1);
+    int result = add(1, 2, 3, 4, 5);
+    int result = add(1, 2, 3, 4, 5, 5, 4, 3, 4, 10);
+    int result = add();
+\end{verbatim}
+
+From the point of view of the method, the varargs are just a normal
+array: 
+
+\begin{verbatim}
+    public int add(int... operands) {
+       int result = 0;
+       for (int i = 0; i < operands.length; i++) {
+           result += operands[i];
+       } 
+       return result;
+    }
+
+    // another possibility, using a for-each loop for more clarity
+    public int add(int... operands) {
+       int result = 0;
+       for (int operand : operands) {
+           result += operand;
+       } 
+       return result;
+    }
+\end{verbatim}
+
+\subsection{When to use varargs in methods you create}
+\label{sec:when-use-varargs}
+
+Varargs are useful for any situation in which a method may accept an
+arbitrary number of objects. It is very convenient in the case
+of methods that accept arrays, especially in the case of generic
+arrays. 
+
+You should use varargs with care, always trying to make your code
+clearer. For example, if your method requires two lists, it is
+probably better to use two lists intead of a list and an
+array/varargs. It is also a bad idea to overload a varargs method
+because it may be difficult to figure out (from the caller's point of
+view) which version of the method is being called. 
