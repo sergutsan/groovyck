@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[margin=2cm]{geometry}
 \usepackage[dvips]{graphicx}
-\title{Assignment 3}
+\title{Assignment 3 (v1.1)}
 \author{Programming in Java}
 \date{2012--13}
 \begin{document}
@@ -40,6 +40,9 @@ analyse your code.
 
 \subsection{ContactManager}
 \label{sec:contactmanager}
+
+% Maybe we can make them create a set that comes chronologically
+% ordered? ...for next year \ \
 
 \begin{verbatim}
 import java.util.Calendar;
@@ -100,9 +103,6 @@ public interface ContactManager {
    */
   List<Meeting> getFutureMeetingList(Contact contact);
 
-% Maybe we can make them create a set that comes chronologically
-% ordered? ...for next year \ \
-
   /**
    * Returns the list of meetings that are scheduled for, or that took
    * place on, the specified date
@@ -139,7 +139,7 @@ public interface ContactManager {
    *      empty, or any of the contacts does not exist
    * @throws NullPointerException if any of the arguments is null
    */
-  void newPastMeeting(Set<Contact> contacts, Calendar date, String text);
+  void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text);
 
   /**
    * Add notes to a meeting. 
