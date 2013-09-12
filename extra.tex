@@ -19,29 +19,68 @@ you change the program to make it work properly?
 
 \subsection*{Exercise X3}
 
-Write a program that takes a series of numbers and counts
+Write a program that takes a series of numbers (ending in 0) and counts
 the number of times that the number 100 appears in the list.  For example,
-for the series 2, 6, 100, 50, 101, 100, 88, it would output 2.
+for the series 2, 6, 100, 50, 101, 100, 88, 0, it would output 2.
 
 \subsection*{Exercise X4}
 
-Write a program that takes a series of lines and,
+Write a program that takes a series of lines of text (ending by 
+an empty string) and,
 at the end, outputs the longest line.
 You may assume there is at least one line in the input.
 
 \subsection*{Exercise X5 (this one is a bit harder)}
 
 Write a program that takes
-a series of numbers.  If the
+a series of numbers (ending in 0).  If the
 current number is the same as the previous number, it says ``Same'';
 if the current number is greater than the previous one, it says ``Up'',
 and if it's less than the previous one, it says ``Down''.
 It makes no response at all to the
-very first number.  For example, its output for the list 9, 9, 8, 5, 10, 10,
+very first number.  For example, its output for the list 9, 9, 8, 5,
+10, 10, 0,
 would be Same, Down, Down, Up, Same
 (comparing, in turn, 9 and 9, 9 and 8, 8 and 5, 5 and 10, 10 and 10).
 You may assume there are at least two numbers in the input.
 
+\begin{verbatim}
+Enter the first number: 9
+Enter the next number (0 to finish): 9
+Same
+Enter the next number (0 to finish): 8
+Down
+Enter the next number (0 to finish): 5
+Down
+Enter the next number (0 to finish): 10
+Up
+Enter the next number (0 to finish): 10
+Same
+Enter the next number (0 to finish): 0
+\end{verbatim}
+
+\subsection*{Exercise X5bis (still a bit harder)}
+
+Write a solution for exercise X5 that prints all the ``Down'',
+``Same'', and ``Up'' messages together at the end. 
+
+\begin{verbatim}
+Enter the first number: 3
+Enter the next number (0 to finish): 5
+Enter the next number (0 to finish): 4
+Enter the next number (0 to finish): 4
+Enter the next number (0 to finish): 6
+Enter the next number (0 to finish): 8
+Enter the next number (0 to finish): 2
+Enter the next number (0 to finish): 6
+Enter the next number (0 to finish): 7
+Enter the next number (0 to finish): 5
+Enter the next number (0 to finish): 6
+Enter the next number (0 to finish): 6
+Enter the next number (0 to finish): 7
+Enter the next number (0 to finish): 0
+Up Down Same Up Up Down Up Up Down Up Same Up 
+\end{verbatim}
 
 %%% Local Variables:
 %%% mode: latex
