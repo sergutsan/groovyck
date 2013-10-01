@@ -456,21 +456,29 @@ shown on Figure
 \subsubsection{Push}
 \label{sec:push}
 
-If you wanted to improve this program, you could edit it yourself, add
+If you wanted to improve the former program (the currency converter), 
+you could edit it yourself, add
 new features, change some code, etc. You would commit regularly to
-make sure you always have the history of your project up to date, so
-you can see what changes you introduced over time. 
+make sure you always have the history of your project up to date (so
+you can see what changes you introduced over time).
 
 At some point you will want to make your changes public (in Git
 jargon, this is called \emph{pushing your changes}), e.g. to allow
-other members of your team to see what you have done. To make your
-changes public, you usually need a place to put your \emph{public
-repository} (as opposed to your \emph{local copy}, where you
-work). You can host your public repository anywhere you want, but
-GitHub is a convenient, well-known, and costless possibility. For the
-purposes of this discussion, I will assume that you have an account at
-GitHub, that your account name is ``ilovegit'', and that you have
-created a repository in GitHub called ``my-currency-exchange''. 
+other members of your team to see what you have done. 
+Usually, you push to the same public copy that you cloned the code
+from; by default, this public copy is called ``origin'' by Git,
+although you can change this name and/or have more than one remote
+copies where you push your changes (``git help remote'' is the place
+to start if you want to learn more about this). Pushing changes is
+very easy: 
+% To make your
+% changes public, you usually need a place to put your \emph{public
+% repository} (as opposed to your \emph{local copy}, where you
+% work). You can host your public repository anywhere you want, but
+% GitHub is a convenient, well-known, and costless possibility. For the
+% purposes of this discussion, I will assume that you have an account at
+% GitHub, that your account name is ``ilovegit'', and that you have
+% created a repository in GitHub called ``my-currency-exchange''. 
 
 % The first thing you have to do (but you only need to do this the first
 % time) is telling Git where to push the changes. This is done by adding
@@ -529,7 +537,7 @@ fail for several reasons, like your network connection going down.
 
 Once you have pushed your changes, how do other people see them? How
 do they take the code you have \emph{pushed} into your remote
-repository and put in their local copies of the source code? As you
+repository and put it in their local copies of the source code? As you 
 can imagine, they \emph{pull} it. 
 
 \begin{verbatim}
@@ -543,13 +551,15 @@ say that the default branch in most projects is called ``master'', and
 sometimes it is the only one. If you are not sure which branch you are
 pulling from, ``master'' is usually a good guess.
 
-Once you pull, Git will download the changes made public at that
-public repository and merge them with your local copy. At this point,
-you have the latest copy of the project's source code, including those
-changes that somebody else (maybe you) made in a different computer. 
+Once you pull, Git will download the code (or, in other words, the
+changes made public at that 
+remote repository and merge them with your local copy. Once it
+finishes, you have the latest copy of the project's source code,
+including those changes that somebody else (maybe you) made in a
+different computer.  
 
 At this point, you have surely noticed that Git can be used to
-synchronise with other team members, each other pulling whatever
+synchronise with other team members, each of them pulling whatever
 changes others have pushed so that everybody is up to date; but it can
 also be used to keep up to date with yourself: you can work on
 different computers (at home, at the office, on your laptop on a
