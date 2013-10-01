@@ -684,7 +684,7 @@ You can also revert any combination of commits that you want.
 Usually, Git will do all the necessary changes to revert all those
 commits and give the resulting files. 
 However, reverting arbitrary commits
- may result in a conflict. A conflict happens when Git
+may result in a \emph{conflict}. A conflict happens when Git
 cannot reliably make a change in the code to accommodate your
 wishes. This is uncommon, but may happen if you are not careful when
 reverting changes or merge two very different pieces of code. 
@@ -710,8 +710,8 @@ or the code between \verb+====+ and \verb+>>>>+. Maybe none is
 correct and you need to write new code to fix the conflict (and remove
 the \verb+<+, \verb+=+, and \verb+>+ symbols, of course). 
 
-In any case, once the conflict is resolved, you have to commit the
-changes. 
+In any case, once the conflict is resolved (by you), 
+you have to commit the changes. 
 
 
 \subsection{Branches, branches everywhere\ldots}
