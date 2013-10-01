@@ -439,11 +439,12 @@ shown on Figure
   \begin{tabular}{p{2cm}p{8cm}}
     ID & Identifies\ldots \\
     \hline
-    9ecf9 & \ldots any commit as long as the string is unique \\
+    9ecf9 & \ldots any commit whose 40-digit ID contains \emph{9ecf9}
+    as long as there is only one \\
     HEAD & \ldots the latest commit done \\
-    ^ & \ldots this suffix identifies the commit before another one \\ 
-    HEAD^ & the commit before the latest \ldots \\
-    9ecf9^^ & \ldots the commit before the commit before \emph{9ecf9} \\
+    \verb+^+ & \ldots this suffix identifies the commit before another one \\ 
+    HEAD\verb-^- & \ldots the commit before the latest \\
+    9ecf9\verb-^^- & \ldots the commit before the commit before \emph{9ecf9} \\
   \end{tabular}
   \caption{Commit names in Git}
   \label{tab:tagnames}
