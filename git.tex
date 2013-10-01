@@ -590,7 +590,7 @@ a good idea to make small commits so that it is easier to go through
 the history of your code and understand every step if you have to. The
 cost of 
 committing is almost zero so you should not be afraid of having too
-many commits. There is no such thing. 
+many commits (there is no such thing as ``too many commits''). 
 
 Of course, this does not mean that you commit every single character
 that you write. Committing every single line is also probably too
@@ -626,7 +626,8 @@ robot wandering around Mars\footnote{Actually, a robot in Mars cannot
   very poor compared to your home connection.}. 
 As a rule of thumb, push every time you 
 have finished a coding session (e.g. before turning off the computer
-or standing up to grab some lunch), or as soon as possible after that.
+or before standing up to grab some lunch), 
+or as soon as possible after that.
 
 \subsection{Back to the past\ldots}
 \label{sec:branching}
@@ -669,7 +670,7 @@ revert and then commit again, like in this example.
 HEAD is a special tag that means\footnote{Strictly speaking, it means
   the last commit \emph{for the current branch}, but for now we are
   assuming we only have one branch, called \emph{master}.} ``the last
-commit''. Git will ask you 
+commit'' (see Table~\ref{tab:tagnames}). Git will ask you 
 to introduce a commit message to explain why you are reverting that
 change. You are not limited to revert the last commit. You can revert
 many commits, as in this example (remember the special tags from
