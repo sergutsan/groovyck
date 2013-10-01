@@ -84,7 +84,7 @@ your life as a programmer, this section will help you learn the
 basics. 
 
 As you can imagine, a full book could be written about all the
-possibilities and options that come with Git. Actually, several ones
+possibilities and options that come with Git ---actually, several ones
 have been published already. In this section I will just present the
 most important 10\% of Git, which is all 
 you will need 90\% of the time.  
@@ -92,65 +92,120 @@ you will need 90\% of the time.
 \subsection{Starting a new project}
 \label{sec:starting-new-project}
 
-Let's start by creating a new programming project. Create a new folder
-where you will put your programs. Now we want to start keeping track
-of all changes. Assuming Git is installed in your system, and that you
-are on the right folder, you only need to type \verb+git init+. With
-this simple command, you have told Git to \emph{be ready} to keep 
-track of whatever happens in this folder. So the full initialisation
-of a complex complete version control system with Git looks like this: 
+Let's start by creating a new programming project. There are two ways
+of doing this, locally and using an online repository manager. As the
+latter is simpler from the point of view of sharing your code (more on
+that later), we will explain that option here. 
+
+We will use GitHub (www.github.com), 
+one of the most well-knowned online repository
+managers\footnote{There are many others: BitBucket, Google Code\ldots
+  the list is endless.}. 
+It is also costless to use, which is a big plus. 
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{gfx/gitHubScreenshot.eps}
+  \caption{Screenshot of GitHub. You can see the name of the user
+    (``bbk-msccs''), the name of the repository
+    (``currency-exchanger''), and the URL. 
+    % You can use the URL both to
+    % clone the reposity and to push your changes (as long as this
+    % repository is yours, i.e. you can \emph{write} on it).
+    }
+  \label{fig:github}
+\end{figure}
+
+Creating an account on GitHub is easy and free. Click on the ``Create
+a repo'' button, choose a name and a description, and you are ready to
+go. It could not be easier. 
+
+Now that you now how to create repositories, we will learn how use
+them to keep track of the evolution of your source code. For the
+purposes of the following discussion, I will assume that you have an
+account at GitHub and that your account name is ``ilovegit''.  In some
+cases I will need a sample repository to explain some of the features;
+unless the text says otherwise, I will assume that you have created a
+repository in GitHub called ``my-currency-exchange'' and the examples
+will refer to this repository created by ``ilovegit''.
+
+% REMOVED - FOR EXTRA INFO
+
+% Create a new folder
+% where you will put your programs. Now we want to start keeping track
+% of all changes. Assuming Git is installed in your system, and that you
+% are on the right folder, you only need to type \verb+git init+. With
+% this simple command, you have told Git to \emph{be ready} to keep 
+% track of whatever happens in this folder. So the full initialisation
+% of a complex complete version control system with Git looks like this: 
+
+% \begin{verbatim}
+%     > mkdir MyProject
+%     > cd MyProject
+%     > git init
+% \end{verbatim}
+
+% That was easy, wasn't it? Now you can keep track of all changes to
+% your files in this folder. Moving on\ldots
+
+% \subsection{Name and email address}
+% \label{sec:name-email-address}
+
+% Every time somebody makes a change to a program, Git marks the change
+% with the name and the email address of the person responsible for it. 
+% As you do not want to do is writing your
+% name and your email address every time you make a change, this is
+% usually set up at the beginning. You can do it with the command 
+% \verb+git config+. 
+
+% \begin{verbatim}
+%     > git config --global user.name "John Smith"
+%     > git config --global user.email "john.smith@student-bbk-ac-uk"
+%     > git config --global user.email "john.smith@gmail"
+% \end{verbatim}
+
+% These commands will set your name and email address for every (local)
+% repository in your machine because you are using the \verb+--global+
+% flag. 
+% %
+% Without the \verb+--global+ flag, 
+% the command modifies the configuration of
+% the current repository only. 
+% Sometimes you want to have different names or
+% emails on different repositories, although this is rare. 
+
+% Note that the email address does not need to be valid. To avoid spam,
+% it is not uncommon for users to use email addresses that are perfectly
+% understandable for human beings but confusing for spambots, 
+% e.g. removing the last \verb+.com+ (john.smith@gmail)
+% or changing dots for dashes (john.smith@student-bbk-ac-uk).
+
+\subsection{Think global, act local}
+\label{sec:cloning-technology}
+
+A repository is just a place (somewhere on the internet or in a
+private intranet) where the source code for a software project is
+stored. There are two types of repositories for any project:
+\emph{local copies}, where you do the work; and \emph{one public
+  copy}, that other people can look at.  Any machine on the internet
+can be used to host a public copy of a Git project and GitHub
+(\verb+www.github.com+) is a convenient place that many people use.
+
+You cannot write your programs on GitHub, you can only do it in your
+local copy. Therefore, the first thing you have to do after creating
+your repository on GitHub is making a local copy, a process known as
+\emph{cloning}. 
 
 \begin{verbatim}
-    > mkdir MyProject
-    > cd MyProject
-    > git init
+    > git clone https://github.com/bbk-myName/my-repository.git
 \end{verbatim}
 
-That was easy, wasn't it? Now you can keep track of all changes to
-your files in this folder. Moving on\ldots
+This will create a local copy of the remote repository you have just
+created. You can now make changes to it: create new files, modify the
+existing ones, etc.
 
-\subsection{Name and email address}
-\label{sec:name-email-address}
-
-Every time somebody makes a change to a program, Git marks the change
-with the name and the email address of the person responsible for it. 
-As you do not want to do is writing your
-name and your email address every time you make a change, this is
-usually set up at the beginning. You can do it with the command 
-\verb+git config+. 
-
-\begin{verbatim}
-    > git config --global user.name "John Smith"
-    > git config --global user.email "john.smith@student-bbk-ac-uk"
-    > git config --global user.email "john.smith@gmail"
-\end{verbatim}
-
-These commands will set your name and email address for every (local)
-repository in your machine because you are using the \verb+--global+
-flag. 
-%
-A repository is just a place (somewhere in the internet) where the
-source code for a project is stored. There are two types of 
-repositories for any project:
-local copies, where you do the work; and a public copy, that other
-people can look at. 
-Any machine on the internet can
-be used to host a public copy of a Git project
-and GitHub (\verb+www.github.com+) 
-is a convenient place that
-many people use. (We will use it too, but I will come to that later.)
-%
-Without the \verb+--global+ flag, 
-the command modifies the configuration of
-the current repository only. 
-Sometimes you want to have different names or
-emails on different repositories, although this is rare. 
-
-Note that the email address does not need to be valid. To avoid spam,
-it is not uncommon for users to use email addresses that are perfectly
-understandable for human beings but confusing for spambots, 
-e.g. removing the last \verb+.com+ (john.smith@gmail)
-or changing dots for dashes (john.smith@student-bbk-ac-uk).
+(You can also clone repositories that were created long time ago and/or
+by other people. More on that later.) 
 
 \subsection{Keeping track of changes}
 \label{sec:keep-track-chang}
@@ -387,43 +442,43 @@ purposes of this discussion, I will assume that you have an account at
 GitHub, that your account name is ``ilovegit'', and that you have
 created a repository in GitHub called ``my-currency-exchange''. 
 
-The first thing you have to do (but you only need to do this the first
-time) is telling Git where to push the changes. This is done by adding
-a remote site (with the command\ldots \verb+git remote+, surprise!):
+% The first thing you have to do (but you only need to do this the first
+% time) is telling Git where to push the changes. This is done by adding
+% a remote site (with the command\ldots \verb+git remote+, surprise!):
 
-\begin{verbatim}
-    > git remote add origin https://github.com/sergutsan/groovyck.git
-\end{verbatim}
+% \begin{verbatim}
+%     > git remote add origin https://github.com/sergutsan/groovyck.git
+% \end{verbatim}
 
-There are many things on that line that need explaining. First,
-``add'' tells git that you want to add a new remote site; you can also
-remove (``rm'') and rename (``rename'') remote sites. By default,
-\verb+git remote+ will just show a list of your remote sites (name,
-url\ldots). The word ``origin'' is just a name for the new remote site
-to be used locally; origin is a common name for the main repository
-where you push your changes. We could have used ``my-projects'', or
-``myRemoteSite'', or any other name as long as we have not used it
-yet. Finally, the URL is where the remote site
-is. GitHub\footnote{GitHub does give you much more than just hosting
-  your repositories: issue tracker, statistics, graphs, and limited
-  social networking capabilities are some of the features you can use
-  easily from their webpage. Not bad for a free service. Another good
-  option is Google Code.} will give
-you a URL that you can copy and paste (see Figure~\ref{fig:github}).
+% There are many things on that line that need explaining. First,
+% ``add'' tells git that you want to add a new remote site; you can also
+% remove (``rm'') and rename (``rename'') remote sites. By default,
+% \verb+git remote+ will just show a list of your remote sites (name,
+% url\ldots). The word ``origin'' is just a name for the new remote site
+% to be used locally; origin is a common name for the main repository
+% where you push your changes. We could have used ``my-projects'', or
+% ``myRemoteSite'', or any other name as long as we have not used it
+% yet. Finally, the URL is where the remote site
+% is. GitHub\footnote{GitHub does give you much more than just hosting
+%   your repositories: issue tracker, statistics, graphs, and limited
+%   social networking capabilities are some of the features you can use
+%   easily from their webpage. Not bad for a free service. Another good
+%   option is Google Code.} will give
+% you a URL that you can copy and paste (see Figure~\ref{fig:github}).
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{gfx/gitHubScreenshot.eps}
-  \caption{Screenshot of GitHub. You can see the name of the user
-    (``bbk-msccs''), the name of the repository
-    (``currency-exchanger''), and the URL. You can use the URL both to
-    clone the reposity and to push your changes (as long as this
-    repository is yours, i.e. you can \emph{write} on it).}
-  \label{fig:github}
-\end{figure}
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=\textwidth]{gfx/gitHubScreenshot.eps}
+%   \caption{Screenshot of GitHub. You can see the name of the user
+%     (``bbk-msccs''), the name of the repository
+%     (``currency-exchanger''), and the URL. You can use the URL both to
+%     clone the reposity and to push your changes (as long as this
+%     repository is yours, i.e. you can \emph{write} on it).}
+%   \label{fig:github}
+% \end{figure}
 
-Once you have configured your remote repository or repositories,
-pushing your changes is very easy: you only need to say where to push. 
+% Once you have configured your remote repository or repositories,
+% pushing your changes is very easy: you only need to say where to push. 
 
 \begin{verbatim}
     > git push origin 
