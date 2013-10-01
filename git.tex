@@ -210,8 +210,10 @@ by other people. More on that later.)
 \subsection{Keeping track of changes}
 \label{sec:keep-track-chang}
 
-Now it is time to write some code. For example, we could create a
-simple \emph{Hello World} application in Groovy. In other words, we
+Let's start by writing some code. For example, let's create a
+simple \emph{Hello World} application in Groovy\footnote{Feel free to
+  use Java Decaf or Java instead of Groovy for the following
+  examples.}. In other words, we 
 will edit a file called \verb+helloworld.groovy+ and write on it:
 
 \begin{verbatim}
@@ -220,7 +222,7 @@ will edit a file called \verb+helloworld.groovy+ and write on it:
 
 If we execute this little program, it will print the words ``Hello
 World!'' on the screen. So far, so good. Time to start filling up our
-version journal! 
+\emph{version journal}! 
 
 The first step is to tell Git that we want to keep track of this
 file. In other words, we \emph{add} it to the list of files under
@@ -242,11 +244,12 @@ is about. Git automatically adds information about which files are
 committed and what changes have been performed on them. The programmer
 must provide some additional information: a short message to explain
 to other programmers what the changes are about. Note that ``other
-programmers'' can be yourself in two weeks time, when you have
+programmers'' can mean yourself in two weeks time ---when you have
 forgotten what you committed at this point. Typical messages are
 ``First commit'', ``Fixed bug \#1304'', ``Added a new feature
 for\ldots''; examples of bad non-informative commit messages are ``new
-commit'', ``More code'', or ``Fixed it AT LAST!''. Write whatever you
+commit'', ``More code'', or ``Fixed it AT LAST!'' (what is
+\emph{it}?). Write whatever you 
 want, but make a (small) effort to think what message will be useful
 for people reading it in the future.
 
@@ -254,7 +257,8 @@ When you finish writing your commit description, save it and close the
 editor. The commit will be performed, and you will be given some
 output from Git. That output will include information about the
 branch (by default, it is called \emph{master}), the identifier for
-this commit (a unique identifier), your commit text, and some 
+this commit (a unique identifier similar to ``12a0006''), 
+your commit text, and some 
 statistics about what the commit did: lines added, edited, or removed,
 files added or removed, etc (\emph{see
   Figure~\ref{fig:git-example-output}}). 
@@ -276,6 +280,7 @@ files added or removed, etc (\emph{see
 
 Now your project has a history! 
 It looks more or less like Figure~\ref{fig:git-example-1}.
+Not very impressive, but we are just starting.
 
 \begin{figure}[htbp!]
   \centering
@@ -283,6 +288,10 @@ It looks more or less like Figure~\ref{fig:git-example-1}.
   \caption{Initial history of this project}
   \label{fig:git-example-1}
 \end{figure}
+
+
+\subsubsection*{What to do when you mess up}
+\label{sec:what-do-when}
 
 Let's say we are not happy with our program. It does not do much. We
 can modify the program to look like this:
@@ -294,10 +303,11 @@ can modify the program to look like this:
     println "Hello " + s + "!"
 \end{verbatim}
 
-Now we can commit again (\verb+git add helloworld.groovy+;
-\verb+git commit+, plus a commit description). Then we try to run
-it\ldots Groovy will complain. We have messed up! At this point, we
-have two options:
+Once we have saved the changes, we can commit again (\verb+git add
+helloworld.groovy+; \verb+git commit+, plus a commit description). 
+
+However, if we try to run the program, Groovy will complain. 
+We have messed up! At this point, we have two options:
 
 \begin{itemize}
 \item If we know where the problem is (and in this simple example, we
@@ -310,7 +320,8 @@ have two options:
   until we find the commit in
   which the problem started. Looking at the changes on that commit we
   can see how the \emph{bug} was introduced. Thanks to version
-  control, finding bugs is much easier (and that is 80\% of the job). 
+  control, finding bugs is much easier (and 
+  finding bugs is 80\% of the job). 
 \end{itemize}
 
 \begin{figure}[htbp!]
@@ -326,12 +337,13 @@ a file, and we are going to see how to do that in the next section.
 \subsection{Looking into the past}
 \label{sec:looking-into-past}
 
-Contrary to most novelists, programmers do not start working on a
-project from a blank editor page. The most common situation is to work
+Contrary to most novelists, professional programmers do not usually
+start working on a project from a blank editor page. 
+The most common situation is to work
 on a project that has already been going on for some time. Maybe the
 programmer is a new employee in the company, or has been transferred
 to a different project, or has ``inherited'' a project that somebody
-else started. It may be that the programmer wants to contribute to
+else started. Or it may be that the programmer wants to contribute to
 another project because the project is appealing or
 famous\footnote{Examples of interesting free/open-source projects with
   many contributors include web browsers like Firefox or Chrome, the
@@ -349,14 +361,12 @@ Git. You just need to be given a URL\footnote{A Uniform
   constitutes a reference to an Internet resource. Examples of URLs
   are \texttt{http://www.bbk.ac.uk} and
   \texttt{ftp://gb.archive.ubuntu.com/ubuntu/}.
-} to the source code, as
-in the following example:
+} to the source code, and clone it. Cloning other people's project
+works in the same way as cloning your own project: 
 
 \begin{verbatim}
     > git clone https://github.com/bbk-msccs/currency-exchanger.git
 \end{verbatim}
-
-This is called \emph{cloning} the repository, for obvious reasons. 
 
 Now that we have a copy of the Currency Exchanger project, let's look
 at it. You will see that it has only two files: a ``read me'' file
@@ -419,6 +429,24 @@ The ``-'' sign on the margin shows a deleted line while the ``+'' sign
 shows an added line; the other lines were not changed. 
 If you take everything into account, the only thing that changed
 in this commit was the name of two variables on that line. 
+
+You can also use some special tag names for referring to a commit, as
+shown on Figure
+
+\begin{table}[hbtp]
+  \centering
+  \begin{tabular}{p{2cm}p{8cm}}
+    ID & Identifies\ldots \\
+    \hline
+    9ecf9 & \ldots any commit as long as the string is unique \\
+    HEAD & \ldots the latest commit done \\
+    ^ & \ldots this suffix identifies the commit before another one \\ 
+    HEAD^ & the commit before the latest \ldots \\
+    9ecf9^^ & \ldots the commit before the commit before \emph{9ecf9} \\
+  \end{tabular}
+  \caption{Commit names in Git}
+  \label{tab:tagnames}
+\end{table}
 
 \subsection{Sharing is caring}
 \label{sec:sharing-caring}
