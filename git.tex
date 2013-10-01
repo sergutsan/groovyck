@@ -44,8 +44,8 @@ pursue the same two goals:
 
 \begin{description}
 \item[Reversibility: ] the capacity of going back in time if you mess
-  up and introduce bugs in your code; sorry, \emph{when} you introduce
-  bugs in your code.
+  up and introduce bugs in your code (sorry, I meant \emph{when} you
+  introduce bugs in your code).
 \item[Concurrency: ] the capacity of working together with other
   people on the same project, on the same file, at the same time. 
 \end{description}
@@ -60,11 +60,10 @@ that. Additionally, programmers ---even good programmers, as long as
 they are human--- make mistakes all the time, sometimes serious
 mistakes that break their programs completely, and they need to go
 back in time to the point where everything was working fine and start
-again (in large and complicated programs, this can be a long time
-before).
+again (in large and complicated programs, this may mean a long time).
 
 In this chapter we will learn to make version control on your source
-code files \emph{right}, not as shown above (e.g. myProgramOLD.groovy,
+code files \emph{right}, not as shown above (e.g. myProgramOLD.jdc,
 etc). We will use a program for doing so called \emph{Git}.
 
 \section{Git}
@@ -149,8 +148,9 @@ emails on different repositories, although this is rare.
 
 Note that the email address does not need to be valid. To avoid spam,
 it is not uncommon for users to use email addresses that are perfectly
-understandable for human beings but confusing for spambots
-(e.g. removing the last \verb+.com+ or changing dots for dashes.).
+understandable for human beings but confusing for spambots, 
+e.g. removing the last \verb+.com+ (john.smith@gmail)
+or changing dots for dashes (john.smith@student-bbk-ac-uk).
 
 \subsection{Keeping track of changes}
 \label{sec:keep-track-chang}
@@ -502,7 +502,7 @@ that you write. Committing every single line is also probably too
 much, unless those lines are really special (e.g.~they fix a bug). 
 \emph{Do not spend more time
 writing commit messages than writing code}. That said, if you have not
-committed for the last half and hour, either you have written a lot of
+committed for the last half hour, either you have written a lot of
 code and you should commit early (as in \emph{now}); or you are tired
 or distracted, and not really programming, so maybe you should have a
 break.
@@ -521,12 +521,14 @@ you cannot even push because you do not have a network connection,
 although this is becoming more and more uncommon these days, where you
 can connect to the internet from planes, submarines, and almost a
 robot wandering around Mars\footnote{Actually, a robot in Mars cannot
-  connect to the internet, at least not what we call ``the Internet'' in
-  2012. Radio waves travel \emph{only} as fast as light-speed, and it
+  connect to the internet, at least not what we call ``the Internet'' 
+  in 2012 (computers interconnected using the TCP/IP and related protocols). 
+  Radio waves travel \emph{only} as fast as light-speed, and it
   takes them so long to reach the Earth that internet hosts would
-  timeout before a connection can be stablished. You \emph{could} connect to
-  the Internet from the Moon ---your bandwitdh would be
-  very poor compared to your home connection, though.}. 
+  timeout before a connection could be stablished. 
+  You \emph{could} connect to
+  the Internet from the Moon, though, but your bandwitdh would be
+  very poor compared to your home connection.}. 
 As a rule of thumb, push every time you 
 have finished a coding session (e.g. before turning off the computer
 or standing up to grab some lunch), or as soon as possible after that.
@@ -638,7 +640,7 @@ and this is very common for large projects.
 Branches are important in Git, and in any version control
 system. Branches allow programmers to advance development without
 compromising the stability of the code released to clients, to try
-experimental features that may or may not be worth to add to the
+experimental features that may or may not be worth been added to the
 project, and to collaborate with external programmers that want to
 help in the development. 
 
@@ -655,9 +657,11 @@ branch.
 Let's see what branches are about with a small step-by-step example: 
 
 \begin{enumerate}
-\item Create a new Git repository. Create and a new file called
-  \verb+mainFile+ and make some
-  basic edits. Commit your changes (to \emph{master}). 
+\item Create a new empty Git repository. Clone it.
+\item Create a new file called \verb+mainFile+ inside 
+  the local copy of the repository, and then make some
+  simple changes to it (e.g. add a few lines of text). 
+  Commit your changes (to \emph{master}). 
 \item Create a new branch: \verb+git branch testing+. Change to the
   new branch: \verb+git checkout testing+.
 \item You are now in \verb+testing+. Create a new file
@@ -690,7 +694,7 @@ visible in \verb+master+ and viceversa.
 \end{figure}
 
 If at a later point you become convinced that your work
-in testing is work of being merged into the main branch, you can do so
+in testing is worth being merged into the main branch, you can do so
 with:
 
 \begin{verbatim}
@@ -702,7 +706,7 @@ This will merge both branches and create a new commit in \emph{master}
 that includes all the changes from \emph{testing}. Note that,
 depending on the changes you have made in both branches since they
 separated, a conflict may arise and you will need to 
-fix it (and then commit) manually.
+fix it (and then commit) manually (see Section~\ref{sec:conflicts}).
 
 \begin{figure}[htbp!]
   \centering
@@ -779,8 +783,8 @@ exceptions to wildcard rules (with ``!''), and many more useful
 tricks. Remember, \verb+git help gitignore+ is a good place to start
 looking for help. 
 
-The file \verb+.gitignore+ can be added and committed to your
-repository like any other file.
+The file \verb+.gitignore+ can (and should) be added and 
+committed to your repository like any other file.
 
 
 
