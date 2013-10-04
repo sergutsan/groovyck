@@ -20,4 +20,5 @@ latex $FILE && \
    echo && \
    latex $FILE |grep "LaTeX Warning" |cat && \
    echo && \
-   echo $FILE.pdf created...
+   echo $FILE.pdf created... && \
+   rm $FILE.ps
