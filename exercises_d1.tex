@@ -61,9 +61,9 @@ Hint: the reserved word \verb+break+ exits the current loop.
 \label{sec:prime-numbers}
 
 Write a program that asks a number from the user, then says whether
-the number is prime or not. Remember that a number that is divisible
-by any number apart from 1 and itself is prime. You can use the modulo
-operator (if \verb+a % b + is zero, then a is divisible by b).
+the number is prime or not. Remember that a prime number is a number
+that is divisible only by 1 and itself. You can use the modulo
+operator (if \verb+a % b + is zero, then $a$ is divisible by $b$).
 
 \section{Multiplication}
 \label{sec:multiplication}
@@ -140,10 +140,14 @@ following list (from best to worst):
 If you ever launch an online poker business, this could be one (very
 small) piece of it.
 
-\section{Number piramids}
-\label{sec:number-piramids}
+\section{Number pyramids}
+\label{sec:number-pyramids}
 
-Write a program that output a number piramid like the one below. 
+\subsection*{a)}
+\label{sec:number-pyramidsa}
+
+Write a program that outputs a number pyramid like the one below,
+going on forever (until you press Ctrl-C). 
 
 \begin{verbatim}
   1
@@ -153,7 +157,27 @@ Write a program that output a number piramid like the one below.
   55555
   666666
   7777777
-  {\ldots} 
+  ...
+\end{verbatim}
+
+\subsection*{b) (*)}
+\label{sec:number-pyramidsb}
+
+Write a program that reads a number between 1 and 25, and then outputs
+a number pyramid like the one below (the example is for number 8) with
+that number of levels. Notice that you must write the right number of
+spaces at each level so that the pyramid is properly aligned to the
+right. 
+
+\begin{verbatim}
+         1
+        22
+       333
+      4444
+     55555
+    666666
+   7777777
+  88888888
 \end{verbatim}
 
 \section{All the primes up to 1,000 (*)}
