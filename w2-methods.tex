@@ -11,12 +11,18 @@
 %
 %
 
+% TODO: For next year, introduce for loops here; this year I guess the
+% slides are OK. 
+
+
+
 
 \section{Methods}
 \label{sec:methods}
 
 We have briefly introduced the concept of
-\emph{methods}. In the last section we have seen that they have an
+\emph{methods}. In the last section we have seen that they have a
+name, an
 \emph{identifier} ---like variables--- and that they have (round)
 brackets. Sometimes we can put variables or values inside the
 brackets, as with methods \verb+charAt()+ or \verb+substring()+ of
@@ -118,9 +124,9 @@ usually have names consisting of a single word
 (e.g.~\verb+length()+) or several words in so-called \emph{camel case}
 starting with a verb (e.g.~\verb+isLetter()+
 or~\verb+containsOnlyLowerCaseLetters()+). Note that variables usually
-have identifiers that are a noun or an adjective, not methods'
-identifiers usually start with a verb (with the occasional 1-word
-noun, like \verb+length()+).
+have identifiers that are a \emph{noun} or an \emph{adjective}, 
+while methods' identifiers usually start with a \emph{verb} 
+(with the occasional 1-word noun, like \verb+length()+).
 
 The return type of a method is a data type, simple or complex, that is
 returned by the method when it finishes. When a method finishes, it
@@ -146,9 +152,10 @@ As you can see, a method definition starts in Java with the return
 type, followed by the name of the method, followed by the parameters
 inside brackets. 
 Note that the code is the same that we wrote before. The difference is
-we only need to write it once and can use it from anywhere else in the
+we only need to write it once and then we can 
+use it from anywhere else in the
 program just by calling it by its name. 
-We are avoiding duplication of code. That is good. 
+\textbf{We are avoiding duplication of code. That is good.}
 
 This method has a return type ``boolean'', so we
 must create a boolean variable and return it at the end. The \verb+return+
@@ -218,7 +225,7 @@ method without parameters.
 
 \emph{Positional} parameters get their name because they come in some
 order and they must be called \emph{in the same order}. Let's see how
-it is done. 
+this is done. 
 
 \subsection{Calling (i.e.~using) methods}
 \label{sec:using}
@@ -299,8 +306,9 @@ The output is:
 \end{verbatim}
 
 You can see that the value of \verb+myNumber+ never changes. The
-method made a copy of \verb+myNumber+, used it ---under the name
-\verb+number+--- inside the method, and then forgot it as soon as the
+method made a copy of \verb+myNumber+, used it inside the method 
+---under the name
+\verb+number+---, and then forgot it as soon as the
 \verb+return+ statement was reached. 
 
 \subsubsection*{Void methods}
@@ -310,7 +318,7 @@ Note also that the method does not return anything (i.e.~return type
 is \verb+void+). When this is the case, 
 i.e.~there is nothing to return, the method
 ends after the final statement is reached or when the first \verb+return+
-statement is found (with no value). There is no need to have a return
+statement is found (with no return value). There is no need to have a return
 statement, but it may be useful in some cases that we will see further
 down the line. 
 
@@ -322,14 +330,15 @@ Methods that return void are sometimes called
 \label{beware}
 
 We have seen that methods make a copy of their
-parameters, and use the copy instead of using the actual variable. In
+parameters and use the copy instead of using the actual variable. In
 other words, \emph{what happens in the method remains in the method}
 with the only exception of the return value. 
 
 Actually, this is not completely true. Methods make copies of the
 ``boxes'' that are sent to them, but not of the objects they are
 pointing to if they are complex types. This means that changes to an
-object survive the method scope. Let's see how this works with a
+object (an instance of a class, a complex type) 
+survive the method scope. Let's see how this works with a
 detailed example. 
 
 \begin{verbatim}
@@ -349,8 +358,8 @@ detailed example.
     }
     // Program execution starts here
     Point myPoint = new Point();
-    point.x = 0;
-    point.y = 0;
+    myPoint.x = 0;
+    myPoint.y = 0;
     int myInt = 0;
     println "The integer is now " + myInt;
     println "The point is now " + myPoint.x + "," + myPoint.y;
@@ -401,7 +410,7 @@ applicable);
 make sure that you understand what is the state of all variables
 (inside and outside the method) at every point. 
 
-\subsection{Methods in classes}
+\subsection{Methods in classes (and the keyword 'this')}
 \label{sec:methods-classes}
 
 In the same way that classes can have member fields, they can also have
