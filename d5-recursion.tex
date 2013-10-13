@@ -49,6 +49,7 @@ Java, Java Decaf, and Groovy.
 % learn more about how recursion works, when it is a good idea to use
 % it, and what are the possible pitfalls and how to avoid them. 
 
+\label{neverends}
 \begin{verbatim}
 01    public int countForeverUp(int previousCount) {
 02        int newCount = previousCount + 1;
@@ -152,6 +153,12 @@ write:
 \subsection{How does recursion work?}
 \label{sec:how-does-recursion}
 
+% How does it work in simple terms?
+% Define a base case, trivial (i.e. 0-bricks wall)
+% Define how one case depends on a former case (a wall with all but
+% one brick)
+% ...I am not sure this works well in writing...
+
 Recursion works as any other method call. There is no magic. When a
 statement in Java calls a method, the same process is always 
 followed: 
@@ -160,7 +167,7 @@ followed:
 \item A new level is added to the stack.
 \item The values given by the caller code are copied into the
   parameters in the new level.
-\item A hidden parameter ``this'' is also copied into the stack,
+\item The \emph{hidden parameter} ``this'' is also copied into the stack,
   pointing to the object where the method is called. It is accessed
   with the reserved keyword \verb+this+ (e.g.~\verb+this.name = name+).
 \item The code of the method is executed as usual. Any new local
@@ -174,10 +181,12 @@ followed:
 \end{enumerate}
 
 This does not change in the case of a recursive call. If we take the
-calculation of 4! that we used before as an example, 
+calculation of 4! (factorial of 4) that we used before as an example, 
 the computer stack changes are
 represented if Figure~\ref{fig:fact}. First, a level is added to the
-stack and the parameters are copied (only \verb+n+ in this case, with
+stack and the parameters are copied (only \verb+n+ in this 
+case\footnote{The \emph{hidden parameter ``this'' is not 
+shown for clarity}}, with
 value~4). The code of the method is executed line by line: as \verb+n+
 is not equal to~1 (line~2), 
 a new local variable \verb+result+ is created (line~5); its value
@@ -205,7 +214,7 @@ even if they execute the \emph{same} lines of code.
 For every method call, recursive
 or not, the calling code remains \emph{on pause} while the new level
 in the stack is created and the code of the called method is
-executed (in the example, the value is result is not defined until a
+executed (in the example, the value of \verb+result+ is not defined until a
 return value is received from the called method). 
 When a result is returned, the calling code can continue its
 execution. When a method calls a method that calls a method, etc,
@@ -228,8 +237,8 @@ variables are new and independent.
 \subsection{Pitfalls}
 \label{sec:pitfalls}
 
-At this point you are familiar with loops (\verb+while+, \verb+for+,
-\verb+do...while+) and you know that you must be careful with the
+At this point you are familiar with loops (\verb+while+, 
+\verb+for+\ldots) and you know that you must be careful with the
 way you set the condition of a loop to prevent infinite loops that
 block your programs. In a similar way, you must keep in mind a couple
 of things when you write recursive code. 
@@ -240,17 +249,23 @@ of things when you write recursive code.
 Every recursive program or method must have a base case for which the
 answer is known. In the case of the factorial, we know that~1! is~1;
 in the case of the Fibonacci numbers, we know 
-that the answer for F(1) and F(2) is~1; when we calculate the depth of
-of a tree, we know that the depth of a tree with no descendants is 0;
-when we add a new element to a a list recursively, we know that the
-element will be added to the element were \verb+next+ is pointing to
-\verb+null+. 
+that the answer for F(1) and F(2) is~1.
+% BAD EXAMPLES NOW THAT LISTS AND TREES HAPPEN AFTER RECURSION-1
+%  when we calculate the depth of
+% of a tree, we know that the depth of a tree with no descendants is 0;
+% when we add a new element to a a list recursively, we know that the
+% element will be added to the element were \verb+next+ is pointing to
+% \verb+null+. 
 
 If a recursive method does not have a base case, the method will call
 itself continuously until the stack is overflown, i.e.~until the
 computer tries to add a new level to the stack (to execute the next
-method) and find there is no more space to do it. At that point, the
+method) and finds there is no more memory to do it. At that point, the
 Java Virtual Machine will throw a \verb+StackOverflowError+. 
+
+Look at the code on page~\pageref{neverends}. It does not have a base
+case, so it will run forever until the computer runs out of memory
+space for the stack. 
 
 \paragraph{No convergence}
 \label{sec:no-convergence}
@@ -264,7 +279,8 @@ general--- must be nearer to the base case.
 In simple cases like the factorial or the Fibonacci numbers, it is
 easy to see that the method will converge. This can be more difficult
 when the recursion involves more than one method, e.g.~method A calls
-method B, and method B recursively calls A (A and B may be methods in
+method B, and method B recursively calls A (note than A 
+and~B may be methods in
 different classes\footnote{A real story: There was a project in which
   we had a window, and inside of it a canvas on which different
   objects were painted. Different elements of the application needed
@@ -273,7 +289,7 @@ different classes\footnote{A real story: There was a project in which
   origin was (e.g.~at initialisation), it asked the canvas. The canvas
   set the origin at initialisation, and informed the window. If the
   user started a new canvas (e.g.~by opening a new file), the new
-  canvas did not know the origin but it could as the window (which was
+  canvas did not know the origin but it could ask the window (which was
   already there). All was working well until the first day that a
   user, instead of starting the application and then a file, opened a
   file directly. The file opened in a canvas, that did not know where
@@ -299,8 +315,8 @@ when recursive methods are used, it is solved \emph{recursively}.
 Every problem that can be solved iteratively can be solved
 recursively, and viceversa\footnote{This is one of the results of the
  Turing--Church thesis.}. Some programming languages do not have
-loops, and some do not have recursion. Most modern languages,
-including Java, have both. 
+loops, and some others do not have recursion. Most modern languages,
+including Java, Java Decaf, and Groovy have both. 
 
 There is no clear set of rules about when to use one or the other. In
 general, recursive code tends to be shorter, simpler, and clearer (but
@@ -308,10 +324,21 @@ not always). On the other hand, recursive calls make heavy use of the
 stack, which can be an issue in small devices with limited memory. 
 
 As a general rule, you should use whatever you feel is more natural
-for the problem at hand. You should keep in mind that recursive
-solutions are harder to think, especially when you are not familiar
-with the idea, but easier to read. Code is written once and read many
-times (for maintenance, extension, etc); therefore, it is usually a good
+for the problem at hand. Sometimes the solution to a problem can be
+naturally thought in terms of ``if only I had\ldots it would easy
+to\ldots''; for example, if you want to build a wall of 100 bricks,
+you can think ``if only I had a wall of~99~bricks, it would be easy
+to add the~100th~brick''; and if you wanted a wall of~99~bricks, it
+would be easy as long as you had a wall made of~98~bricks, and so
+on. Then you just need a trivial base case, like ``building a wall 
+of~0~bricks'' and you have a recursive solution to your problem. 
+
+You should keep in mind that recursive
+solutions are sometimes a bit \emph{harder to think}, 
+especially when you are not familiar
+with the idea, but they are generally \emph{easier to read}. 
+As code is written once but read many times 
+(for maintenance, extension, etc), it is usually a good
 idea to be a bit biased towards recursive approaches unless the amount
 of memory is really limited (and even in that case, remember that
 memory and computing power grow every year). 
