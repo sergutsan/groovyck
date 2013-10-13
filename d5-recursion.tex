@@ -49,6 +49,14 @@ Java, Java Decaf, and Groovy.
 % learn more about how recursion works, when it is a good idea to use
 % it, and what are the possible pitfalls and how to avoid them. 
 
+\begin{verbatim}
+01    public int countForeverUp(int previousCount) {
+02        int newCount = previousCount + 1;
+03        printLine(newCount);
+04        countForeverUp(newCount); // the method calls itself
+05    }
+\end{verbatim}
+
 We are going to learn now the basic of recursive programming. This
 will help us understand a bit deeper how the stack works when a method
 is called, and it will also be useful when we start learning about
@@ -61,8 +69,8 @@ recursion during the second half of the course.
 \subsubsection{Factorials}
 
 The factorial of a natural number is represented with an exclamation
-mark (!) and defined\footnote{If you like maths and would like to see
-  how the factorial of a \emph{real} number is defined, search for the
+mark (!) and defined\footnote{If you maths-inclined and would like to see
+  how the factorial of a \emph{real} (non-natural) number is defined, search for the
   $\Gamma$ (gamma) function.} as:  
 
 $$ n! = n \times (n - 1) \times (n - 2) \times \ldots \times 2 \times 1 $$
@@ -71,7 +79,7 @@ This definition makes it very easy to write a function that calculates
 the factorial of a number recursively: 
 
 \begin{verbatim}
-01    public static int factorial(int n) {
+01    public int factorial(int n) {
 02        if (n == 1) {
 03          return 1; 
 04        } else {
@@ -81,10 +89,13 @@ the factorial of a number recursively:
 08    }
 \end{verbatim}
 
-Note that the method is static because it has no side effects,
-i.e.~it is a \emph{pure function}. 
-If the argument is 1, the function returns 1 (because 1! =
-1). Otherwise, the function returns the argument multiplied by the
+%%% No "static" at this point. On year-2 static is introduced after
+%%% recursion. 
+% Note that the method is static because it has no side effects,
+% i.e.~it is a \emph{pure function}. 
+If the argument is 1, the function returns 1 (because 
+\mbox{1! = 1).} 
+Otherwise, the function returns the argument multiplied by the
 factorial of the argument minus one; that function call will in turn
 return its argument (n-1) multiplied by the factorial of its argument
 minus one (n-2); and so on. If we want to calculate the factorial
@@ -128,11 +139,11 @@ calculate the n$^{th}$ Fibonacci number is quite straightforward to
 write: 
 
 \begin{verbatim}
-    public static int fib(int n) {
+    public int fib(int n) {
         if ((n == 1) || (n == 2)) {
           return 1; 
         } else {
-            int result = fib(n-1) + fib(n-2);
+            int result = fib(n-1) + fib(n-2); // method calls itself
             return result;
         }
     }
