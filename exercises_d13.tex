@@ -24,7 +24,7 @@ What number would the following method print on screen if you called
 \verb+printNumbers(6)+?
 
 \begin{verbatim}
-    public static void printNumbers(int n) {
+    void printNumbers(int n) {
         if (n <= 0) {
             return;
         }
@@ -44,7 +44,7 @@ and check your answer.
 Do you see anything wrong with the following code?
 
 \begin{verbatim}
-    public String doggyMethod(int n) {
+    String doggyMethod(int n) {
         String result = doggyMethod(n-3) + n + doggyMethod(n-2);
         if (n <= 0) {
             return "";
@@ -60,7 +60,7 @@ Calculate the result of calling this method with arguments 50, 73,
 and~95. Note that the recursion on line 5 is double. 
 
 \begin{verbatim}
-    public int mcCarthy91(int n) {
+    int mcCarthy91(int n) {
         if (n > 100) {
             return n - 10;
         } else {

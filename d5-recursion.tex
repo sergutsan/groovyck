@@ -51,7 +51,7 @@ Java, Java Decaf, and Groovy.
 
 \label{neverends}
 \begin{verbatim}
-01    public int countForeverUp(int previousCount) {
+01    int countForeverUp(int previousCount) {
 02        int newCount = previousCount + 1;
 03        printLine(newCount);
 04        countForeverUp(newCount); // the method calls itself
@@ -80,7 +80,7 @@ This definition makes it very easy to write a function that calculates
 the factorial of a number recursively: 
 
 \begin{verbatim}
-01    public int factorial(int n) {
+01    int factorial(int n) {
 02        if (n == 1) {
 03          return 1; 
 04        } else {
@@ -140,7 +140,7 @@ calculate the n$^{th}$ Fibonacci number is quite straightforward to
 write: 
 
 \begin{verbatim}
-    public int fib(int n) {
+    int fib(int n) {
         if ((n == 1) || (n == 2)) {
           return 1; 
         } else {
