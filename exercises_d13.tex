@@ -28,20 +28,34 @@ What number would the following method print on screen if you called
         if (n <= 0) {
             return;
         }
-        System.out.println(n);
+        printLine(n);
         printNumbers(n-2);
         printNumbers(n-3);
-        System.out.println(n);
+        printLine(n);
     }
 \end{verbatim}
 
-Do this exercise on paper. Then add this static method to a Java class
-and check your answer. 
+Do this exercise on paper. Then add this method to a Java Decaf
+program and check your answer. 
 
 \subsection*{b)}
 \label{sec:b-1}
 
-Do you see anything wrong with the following code?
+Do you see anything wrong with the following code? How would you fix it?
+
+\begin{verbatim}
+    String buggyMethod(int n) {
+        if (n == 0) {
+            return "";
+        }
+        return n + " " + buggyMethod(n - 2);
+    }
+\end{verbatim}
+
+\subsection*{c)}
+\label{sec:b-3}
+
+Do you see anything wrong with the following code? How would you fix it?
 
 \begin{verbatim}
     String doggyMethod(int n) {
@@ -53,7 +67,7 @@ Do you see anything wrong with the following code?
     }
 \end{verbatim}
 
-\subsection*{c) McCarthy's 91 function}
+\subsection*{d) McCarthy's 91 function}
 \label{sec:c}
 
 Calculate the result of calling this method with arguments 50, 73, 
@@ -76,7 +90,7 @@ version of this code that prints the numbers on screen can help).
 
 \subsection{a) Factorial }
 
-Write a class with a static method that calculates the factorial of an
+Write a small program with a method that calculates the factorial of an
 integer number as seen in the notes. 
 
 Is it easy to do this both iteratively and recursively? Try both ways
@@ -85,8 +99,8 @@ other way.
 
 \subsection{b) Fibonacci }
 
-Write a class with a static method that calculates the n$^{th}$ element
-of the Fibonacci sequence as seen in the notes. 
+Write a small program with a method that calculates the n$^{th}$ element
+of the Fibonacci sequence as seen in the notes.
 
 Is it easy to do this both iteratively and recursively? Try both ways
 and see which is more natural for you. If one takes too long, try the
@@ -112,11 +126,12 @@ on any post (all other discs are bigger); the biggest disc can only be
 placed on an empty post.
 
 Create a method that calculates the number of moves necessary to move
-a set of $n$ Hanoi disks from the initial post to the last post. Hint:
+a set of $n$ Hanoi disks from the initial post to the last post. 
+\textbf{Hint:}
 if you want to play monk yourself in order to better understand the
 problem, ask the lecturer for a ``Hanoi envelope''. 
 
-\section{Paper sizes}
+\section{Paper sizes (*)}
 \label{sec:paper-sizes}
 
 A Din-A0 sheet of paper is 841mm $\times$ 1189mm (its surface is one
@@ -128,7 +143,7 @@ while a Din-A00 is double of Din-A0, or 1189mm$\times$ 1682mm.
 Create a method that takes a String parameter representing a size
 (e.g.~''A4'', ``A00000'') and prints on screen the size of the
 corresponding sheet of paper. For simplicity, you can ignore rounding
-errors with calculating smaller sizes. 
+errors when calculating smaller sizes. 
 
 \section{Queue length}
 \label{sec:queue-length}
