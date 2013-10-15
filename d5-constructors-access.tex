@@ -58,27 +58,27 @@ A constructor method looks like a method without a return type (not
 even \verb+void+). Have a look at this example:
 
 \begin{verbatim}
-class Point {
-    double x;
-    double y;
-    
-    Point(double x, double y) {
-        this.x = x;
-        this.y = y;
+    class Point {
+        double x;
+        double y;
+        
+        Point(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+        
+        double moveTo(Point remote) {
+            this.x = remote.x;
+            this.y = remote.y;
+        }
+        
+        // more methods here...
     }
-    
-    double moveTo(Point remote) {
-        this.x = remote.x;
-        this.y = remote.y;
-    }
-    
-    // more methods here...
-}
-Point point = new Point(1,1);
-println "The point is now at " + point.x + "," + point.y
-Point remotePoint = new Point(10,20);
-point.moveTo(remotePoint);
-println "The point is now at " + point.x + "," + point.y
+    Point point = new Point(1,1);
+    println "The point is now at " + point.x + "," + point.y
+    Point remotePoint = new Point(10,20);
+    point.moveTo(remotePoint);
+    println "The point is now at " + point.x + "," + point.y
 \end{verbatim}
 
 No need to initialise the points after creating them. The constructor
@@ -89,23 +89,23 @@ could create a class Rectangle that has one or two parameters, and
 then create different instances (i.e.~objects) of it: 
 
 \begin{verbatim}
-class Rectangle {
-    int length;
-    int width;
-    Rectangle(int length, int width) {
-        this.length = length;
-        this.width  = width;
+    class Rectangle {
+        int length;
+        int width;
+        Rectangle(int length, int width) {
+            this.length = length;
+            this.width  = width;
+        }
+        // This method creates a square, all sides equal
+        Rectangle(int length) {
+            this.length = length;
+            this.width  = length;
+        }
     }
-    // This method creates a square, all sides equal
-    Rectangle(int length) {
-        this.length = length;
-        this.width  = length;
-    }
-}
-Rectangle dominoRectangle = new Rectangle(1,2);
-Rectangle pitagoreanRectangle = new Rectangle(3,4);
-Rectangle goldenRectangle = new Rectangle(1618,1000);
-Rectangle square = new Rectangle(5); 
+    Rectangle dominoRectangle = new Rectangle(1,2);
+    Rectangle pitagoreanRectangle = new Rectangle(3,4);
+    Rectangle goldenRectangle = new Rectangle(1618,1000);
+    Rectangle square = new Rectangle(5); 
 \end{verbatim}
 
 Every class has 
@@ -114,7 +114,16 @@ If it is not explicit ---as it has been
 the case with all classes in the previous sections---, Java 
 implicitly adds an empty
 constructor: a constructor method with no parameters that does not
-initialise any field. 
+initialise any field\footnote{Strictly speaking, the constructor is
+  not empty: it calls the constructor of the parent class. We will see
+  this when we learn about inheritance.}. 
+
+\begin{verbatim}
+    // If there is no constructor for Rectangle, Java 
+    // will add an "implicit empty constructor" like this
+    public Rectangle() {
+    }
+\end{verbatim}
 
 
 \subsection{Levels of access (public, private) and information hiding}
@@ -161,9 +170,10 @@ following rules cover 90\% of all cases, but do not expect them to be
 valid in absolutely every situation. 
 
 \begin{itemize}
-\item If a class does not have any methods (not counting
+\item If a class has methods, its fields must be private. This is the
+  most common case. 
+\item If-and-only-if a class does not have any methods (not counting
   constructors), its fields must be public.
-\item If a class has methods, its fields must be private.
 \item Methods of a class must be private unless their purpose is to be
   called from outside the class, in which case they must be public.
 \item Constructor methods must be public. 

@@ -11,7 +11,7 @@ language.
 \label{sec:everything-class}
 
 In Java all the code comes inside a class. There is no class-less
-code as in Groovy. 
+code as in Groovy or Java Decaf.
 
 Usually every class is defined in its own file, e.g.~a \verb+Person+
 class is defined in a file called \verb+Person.java+. When a file
@@ -19,7 +19,8 @@ contains only one class, this class must be \verb+public+ and have the same
 name as the file (without the \verb+.java+ extension). 
 
 Classes in different files must be compiled independently before they
-can be used. This is another important difference with the Groovy
+can be used. This is another important difference with the Groovy or
+Java Decaf
 scripts we have been using until now, where every script was
 self-contained. From now on we will have classes in different files,
 and unless we compile\footnote{If you do not remember clearly what
@@ -35,7 +36,7 @@ compiler, \verb+javac+.
 
 This will produce a file \verb+Person.class+ in your folder. Once you
 have it, you can use the Person class from any other file (e.g.~your
-Groovy scripts). 
+Groovy or Java Decaf scripts). 
 
 \paragraph{Classpath. }
 \label{sec:classpath.-}
@@ -108,7 +109,8 @@ as a Java programmer.
 
 As we have said, everything is an object in Java. One consequence of
 this is
-that the \verb+println+ command that we have been using in Groovy is no
+that Groovy's \verb+println+ and Java Decaf's \verb+printLine()+
+that we have been using are no 
 longer available. Instead, we can use its full object-oriented
 version: 
 
@@ -118,7 +120,7 @@ version:
 
 Note that \verb+println+ is just a normal method, called from an
 object with dot-notation and with a list of parameters.
-Up to now, Groovy was adding all the additional elements to make our
+Up to now, Groovy and Java Decaf were adding all the additional elements to make our
 lifes easier; but we must do it ourselves in the full Java world. 
 
 \subsection{Semicolons are compulsory}
@@ -143,7 +145,7 @@ Java will get confused and complain.
 
 As you already know, Groovy is a dynamically-typed language, which
 means that a variable can change its type during the execution of the
-program (the box can change its \emph{type} tag). 
+program (i.e.~the box can change its \emph{type} tag). 
 
 Java, on the other hand, is a statically-typed language. Once a
 variable is created, Java will not change its type. If you try to
@@ -202,12 +204,12 @@ this is called an \emph{array}.
 
 Arrays are a way of having several elements of data of the same type;
 for example, a company could have a payroll program that used an array with
-the IDs of all its employees (an array of integers). In Groovy and
-Java, arrays can be of simple but also complex types; therefore, the
+the IDs of all its employees (an array of integers). 
+Arrays can be of simple but also complex types; therefore, the
 aforementioned program could also have array of Strings to store the
 names of the employees. 
 
-An array is declared using square brackets. Square brackets are also
+An array is declared using \emph{square} brackets. Square brackets are also
 used to access the elements in the array. Let's see an 
 example\footnote{Remember that this is Java code, not Groovy code, so
   it must be \emph{in} a method \emph{in} a class; it cannot be in a
@@ -264,7 +266,7 @@ as arrays of \verb+char+.
 
 If you try to access an element of an array (or a String) that is at
 position $length$ or beyond, or on a negative position, you will get
-an \verb+IndexOutOfBounds+. A common error is trying to
+an \verb+IndexOutOfBoundsException+. A common error is trying to
 access the last element in the array using
 \verb+myArray[myArray.length]+ instead 
 of \verb+myArray[myArray.length - 1]+.
@@ -306,7 +308,7 @@ example:
 \end{verbatim}
 
 As you can see, a multi-dimensional array is just an array of
-arrays. It is initialised in the samw way as any other array, and its
+arrays. It is initialised in the same way as any other array, and its
 elements are accessed in the same way as with a 1-D array, only using
 more indexes. You can also use curly-bracket notation to initialise an
 array in a more compact way: 
