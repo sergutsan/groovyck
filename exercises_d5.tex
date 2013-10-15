@@ -21,7 +21,8 @@ goals:
   class.
 \item Be able to create classes in their own \verb+.java+ file, 
   compile them using
-  \verb+javac+, and use those classes from Groovy scripts.
+  \verb+javac+, and use those classes from 
+  Groovy or Java Decaf programs. 
 \item Be able to cast simple types from one type to another.
 \item Be able to create and use arrays in one or more dimensions. 
 \end{itemize}
@@ -48,7 +49,7 @@ the screen.
 Note that you will will need to cast the parameters into \verb+double+
 to perform exact division. 
 
-Write a small Groovy program that uses all the methods of
+Write a small Groovy or Java Decaf program that uses all the methods of
 \verb+Calculator+.
 
 
@@ -88,7 +89,8 @@ class should have methods for:
   should be initialised to 1. 
 \item a method \verb+setElement(int,int,int)+ to modify one element
   of the array, given its position 
-  as two integers and the value to be put in that position. 
+  (the first two integers) and the new value to be put in that 
+  position (the third integer).
   The method must check that the indeces are valid
   before modifying the array to avoid an
   \verb+IndexOutOfBoundsException+. If the indeces are invalid, the
@@ -137,16 +139,16 @@ e.g.~1,2,3;4,5,6;7,8,9.
 Make a class \verb+MatrixChecker+ with three methods: 
 
 \begin{itemize}
-\item \verb+\isSymmetrical(int[])+ takes an array of \verb+int+ and
+\item \verb+isSymmetrical(int[])+ takes an array of \verb+int+ and
   returns true if the array is symmetrical and false otherwise. An
   array is symetrical if the element at [0] is the same as the
   element at [length-1], the element at [1] is the same as the
   element at [length-2], etc.
-\item \verb+\isSymmetrical(int[][])+ takes an bidimensional array of
+\item \verb+isSymmetrical(int[][])+ takes an bidimensional array of
   \verb+int+ and returns true if the matrix is symmetrical and false
   otherwise. An matrix is symmetrical if \verb+m[i][j] == m[j][i]+ for
   any value of \verb+i+ and \verb+j+.
-\item \verb+\isTriangular(int[][])+ takes an bidimensional array of
+\item \verb+isTriangular(int[][])+ takes an bidimensional array of
   \verb+int+ and returns true if the matrix is triangular\footnote{A
     matrix can be up-triangular or low--triangular, but just checking
     one of the two is fine for this exercise.} and false
@@ -175,8 +177,10 @@ Then create a Java class \verb+Target+ with the following methods:
   of integers of the
   proposed size in all three dimensions. All elements must be set to
   zero.
-\item \verb+init()+ that sets one element, selected randomly, to 1 and
-  all the others to zero. Hint: Remember that you can get a random
+\item A method called \verb+init()+ 
+  that sets all the elements in the matrix to 0 except one
+  ---selected randomly--- that will be set to 1. 
+  Hint: Remember that you can get a random
   integer between 0 and N (not including N) by
   using \verb+int numberToGuess = (int) Math.abs(N * Math.random())+.
 \item \verb+fire(int,int,int)+ a method that checks whether the
