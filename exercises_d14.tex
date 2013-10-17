@@ -10,8 +10,54 @@ Before the next day, you should have achieved the following learning
 goals: 
 
 \begin{itemize}
+\item Understand that storing intermediate values for reuse
+  (memoization) can largely speed up some computations. 
 \item Implement divide-and-conquer solutions to problems. 
 \end{itemize}
+
+\subsection{Memoized Fibonacci}
+
+Write a Java class with a with a static method that calculates 
+the n$^{th}$ element of the Fibonacci sequence as seen in the notes.
+
+Do it with and without memoization. Compare
+the time that is needed in each case to find F(40) or F(45). 
+
+\section{Anagrams}
+\label{sec:anagrams}
+
+An anagram is a word created by recombination of the letters in
+another words. Some anagrams make sense (``silent'', ``listen'') and
+some do not (``nietsl''). Some people only accepts ``real'' anagrams,
+but in this exercise we will accept them all, even if they do not
+exist as real words. 
+
+Write a class with a static method that takes a String as a parameter
+and returns a list (hint: you can use \verb+List<String>+ and
+\verb+ArrayList<String>+) of strings with all the anagrams that can be
+made with it. 
+
+Is it easy to do this both iteratively and recursively? Is this
+similar to a former exercise?
+
+\section{Hailstone numbers}
+\label{sec:hailstone-numbers}
+
+The sequence hailstone numbers is defined as follows:
+
+\begin{itemize}
+\item If the number $n$ is even, the next number is $n \over 2$
+\item If the number is odd, the next number is $3n + 1$
+\end{itemize}
+
+It is thought that this sequence always converges 
+to~1 (this is the Collatz conjecture,
+not demonstrated yet). 
+
+Write a method that returns a list of integers
+(hint: you can use \verb+List<Integer>+ and verb+ArrayList<Integer>+) 
+with the sequence of hailstone numbers that starts at some
+given natural number provided by the user. 
 
 \section{Binary search}
 \label{sec:binary-search}

@@ -1,6 +1,12 @@
 \documentclass{article}
 \usepackage[margin=2cm]{geometry}
+\title{Notes on Git installation}
+\author{Programming in Java}
+\date{}
 \begin{document}
+\maketitle
+
+\vspace{1cm}
 
 \section{Install Git in your account}
 \label{sec:install-git-your}
@@ -19,6 +25,8 @@ the relevant folder and executing \verb+git+. You should see a listing
 of all the possible commands. (Hint: the folder you are looking for is
 called \verb+bin+, for ``binary file''; this is a typical name for the
 folder that stores the executable files of a project). 
+
+\vspace{1cm}
 
 \section{Add git.exe to your path}
 \label{sec:add-git.exe-your}
@@ -54,7 +62,9 @@ Very easy. Just type 'path' on the command line.
 \subsection{How can I edit the PATH?}
 
 The right way of doing it requires to have Administrator rights, so
-you cannot do it in the lab. You can check online how to do it, it is
+you probably cannot do it in the lab\footnote{But you can try just in
+  case\ldots}.  
+You can check online how to do it, it is
 explained in thousands of places (googling "change path windows
 7/Vista/XP/whatever" will probably get you good results).
 
@@ -73,7 +83,7 @@ is easy too; the only thing you have to know is that the old value of
 PATH can be accessed with \%PATH\%. In other words, if you type\ldots
 
 \begin{verbatim}
-  > path %PATH%e
+  > path %PATH%
 \end{verbatim}
 
 \ldots you will have the same path. Now it is easy to add things. You
@@ -97,7 +107,7 @@ The inverted commas are only necessary if you have spaces in your PATH.
   separated with a colon (:), not a semicolon.
 \item In Unix (Linux, Mac OS X, etc), environment variables (like
   PATH) are accessed using an initial dollar symbol instead of using
-  enclosing percents, i.e.~to see your path, type: echo \$PATH
+  enclosing percents, i.e.~to see your path, type: \verb+echo $PATH+
 \end{itemize}
 
 \end{document}

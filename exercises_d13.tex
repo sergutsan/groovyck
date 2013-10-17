@@ -13,9 +13,11 @@ goals:
 \item Be able to write recursive for simple problems
 \item Understand what a recursive method looks like, and how it
   differs from an iterative method. 
-\item Understand that storing intermediate values for reuse
-  (memoization) can largely speed up some computations. 
 \end{itemize}
+
+Remember that \textbf{exercises marked with a star (*) are harder and take
+longer to solve}, so you should not try them until you have solved all
+the non-star ones. 
 
 \section{Recursive code, line by line}
 \label{sec:read-recurs-code}
@@ -26,27 +28,41 @@ What number would the following method print on screen if you called
 \verb+printNumbers(6)+?
 
 \begin{verbatim}
-    public static void printNumbers(int n) {
+    void printNumbers(int n) {
         if (n <= 0) {
             return;
         }
-        System.out.println(n);
+        printLine(n);
         printNumbers(n-2);
         printNumbers(n-3);
-        System.out.println(n);
+        printLine(n);
     }
 \end{verbatim}
 
-Do this exercise on paper. Then add this static method to a Java class
-and check your answer. 
+Do this exercise on paper. Then add this method to a Java Decaf
+program and check your answer. 
 
 \subsection*{b)}
 \label{sec:b-1}
 
-Do you see anything wrong with the following code?
+Do you see anything wrong with the following code? How would you fix it?
 
 \begin{verbatim}
-    public String doggyMethod(int n) {
+    String buggyMethod(int n) {
+        if (n == 0) {
+            return "";
+        }
+        return n + " " + buggyMethod(n - 2);
+    }
+\end{verbatim}
+
+\subsection*{c)}
+\label{sec:b-3}
+
+Do you see anything wrong with the following code? How would you fix it?
+
+\begin{verbatim}
+    String doggyMethod(int n) {
         String result = doggyMethod(n-3) + n + doggyMethod(n-2);
         if (n <= 0) {
             return "";
@@ -55,14 +71,14 @@ Do you see anything wrong with the following code?
     }
 \end{verbatim}
 
-\subsection*{c) McCarthy's 91 function}
+\subsection*{d) McCarthy's 91 function}
 \label{sec:c}
 
 Calculate the result of calling this method with arguments 50, 73, 
 and~95. Note that the recursion on line 5 is double. 
 
 \begin{verbatim}
-    public int mcCarthy91(int n) {
+    int mcCarthy91(int n) {
         if (n > 100) {
             return n - 10;
         } else {
@@ -78,7 +94,7 @@ version of this code that prints the numbers on screen can help).
 
 \subsection{a) Factorial }
 
-Write a class with a static method that calculates the factorial of an
+Write a small program with a method that calculates the factorial of an
 integer number as seen in the notes. 
 
 Is it easy to do this both iteratively and recursively? Try both ways
@@ -87,8 +103,8 @@ other way.
 
 \subsection{b) Fibonacci }
 
-Write a class with a static method that calculates the n$^{th}$ element
-of the Fibonacci sequence as seen in the notes. 
+Write a small program with a method that calculates the n$^{th}$ element
+of the Fibonacci sequence as seen in the notes.
 
 Is it easy to do this both iteratively and recursively? Try both ways
 and see which is more natural for you. If one takes too long, try the
@@ -114,11 +130,12 @@ on any post (all other discs are bigger); the biggest disc can only be
 placed on an empty post.
 
 Create a method that calculates the number of moves necessary to move
-a set of $n$ Hanoi disks from the initial post to the last post. Hint:
+a set of $n$ Hanoi disks from the initial post to the last post. 
+\textbf{Hint:}
 if you want to play monk yourself in order to better understand the
 problem, ask the lecturer for a ``Hanoi envelope''. 
 
-\section{Paper sizes}
+\section{Paper sizes (*)}
 \label{sec:paper-sizes}
 
 A Din-A0 sheet of paper is 841mm $\times$ 1189mm (its surface is one
@@ -130,41 +147,18 @@ while a Din-A00 is double of Din-A0, or 1189mm$\times$ 1682mm.
 Create a method that takes a String parameter representing a size
 (e.g.~''A4'', ``A00000'') and prints on screen the size of the
 corresponding sheet of paper. For simplicity, you can ignore rounding
-errors with calculating smaller sizes. 
+errors when calculating smaller sizes. 
 
-\section{Queue length}
-\label{sec:queue-length}
-
-Reuse the code of one of your dynamic lists from former weeks, and add
-a method that calculates the length of the list (maybe you have done
-this already). 
-
-Is it easy to do this both iteratively and recursively? Try both ways
-and see which is more natural for you. If one takes too long, try the
-other way. 
-
-\section{Anagrams}
-\label{sec:anagrams}
-
-An anagram is a word created by recombination of the letters in
-another words. Some anagrams make sense (``silent'', ``listen'') and
-some do not (``nietsl''). Some people only accepts ``real'' anagrams,
-but in this exercise we will accept them all, even if they do not
-exist as real words. 
-
-Write a class with a static method that takes a String as a parameter
-and returns a list (hint: you can use \verb+List<String>+ and
-\verb+ArrayList<String>+) of strings with all the anagrams that can be
-made with it. 
-
-Is it easy to do this both iteratively and recursively? Is this
-similar to a former exercise?
+Hint: note that two consecutive sizes always share one side and only
+the other one is multiplied or divided by two, e.g. the \emph{short}
+side of~Din-A2 is as long as the \emph{long} side of~Din-A3, while the
+long side of~Din-A2 is twice as long as the short side of~Din-A3.
 
 \section{Palindrome}
 \label{sec:palindrome}
 
-Create a class with a (recursive) static method that takes a String
-paremeters and
+Create a program with a (recursive) method that takes a String
+paremeter and
 returns true if the String is a palindrome and false
 otherwise. Compare this recursive version with the iterative version
 you wrote in past weeks. Which one seems clearer to you?
@@ -178,23 +172,6 @@ e.g.~\verb+pow(2,3)+ calculates $2^3$.
 
 Is it easy to do this both iteratively and recursively? 
 
-% \section{Hailstone numbers}
-% \label{sec:hailstone-numbers}
-
-% The sequence hailstone numbers is defined as follows:
-
-% \begin{itemize}
-% \item If the number $n$ is even, the next number is $n \over 2$
-% \item If the number is odd, the next number is $3n + 1$
-% \end{itemize}
-
-% This sequence always converges to 1 (this is the Collatz conjecture,
-% not demonstrated yet). Write a method that returns a list of integers
-% (hint: you can use \verb+List<Integer>+ and verb+ArrayList<Integer>+) 
-% with the hailstone sequence of hailstone numbers that starts at some
-% given natural number provided by the user. 
-
-% The method should be recursive and use memoization to store...
 
 \section{Eight Dames (**)}
 \label{sec:eight-dames}
@@ -204,7 +181,7 @@ eight Dames: ``given a chess board, and knowing that the Dame can reach
 any tile horizontally, vertically, or diagonally, place 8 Dames on the
 board so that none of them can reach the others by doing only one
 move''. You can return the solution as an array of 8x8 booleans where
-eight tiles are true and the others are false. 
+eight tiles are true (those with the Dames on them) and the others are false. 
 
 For extra complexity, make your method return all the possibilities in
 which the problem can be solved (this may take a long time). 
@@ -222,7 +199,7 @@ movement?
 Write a method that calculates the number of moves necessary to
 exchange $n$ discs. 
 
-\section{How big is your stack (*)?}
+\section{How big is your stack? (*)}
 \label{sec:how-big-your}
 
 Write a method that calculates the maximum size of the stack (measured

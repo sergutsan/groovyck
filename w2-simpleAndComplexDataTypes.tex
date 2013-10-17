@@ -67,7 +67,7 @@ assignment as putting a value inside that box (Figure~\ref{fig:var2}).
 \begin{figure}[hbtp]
   \centering
   \includegraphics[width=\textwidth]{gfx/variables1}
-  \caption{Declaring a variable in Groovy can be seen as creating a
+  \caption{Declaring a variable can be seen as creating a
     box. The box has a tag for the name and another for the type.}
   \label{fig:var1}
 \end{figure}
@@ -84,7 +84,8 @@ assignment as putting a value inside that box (Figure~\ref{fig:var2}).
 \subsection{Static typing and dynamic typing}
 \label{sec:strong-typing-weak}
 
-You have already seen that Groovy, as most languages, puts some
+You have already seen that Groovy, as most languages (including Java
+and Java Decaf), puts some
 restrictions to what you can use as a ``name'' tag for your boxes. You
 know that they have to start with a letter: ``count'' is a valid name
 but ``/me'' or ``5thNumber'' are not. You also know that some words
@@ -106,8 +107,9 @@ is an int and later in time is a boolean or a String. These languages
 are called \emph{dynamically typed languages}. They have pros and cons
 compared to their statically typed counterparts. Groovy is an example
 of a dynamically typed language. The following code excerpt is valid
-in Groovy but not in Java. In Java a variable cannot be a String, and
-then a boolean, and then a String again. Note that \emph{true} is a
+in Groovy but not in Java. In Java a variable cannot be a String,
+then become a boolean, and then a String again. 
+Note that \emph{true} is a
 boolean while \emph{``true''} (in quotes) is a String. 
 
 \begin{verbatim}
@@ -141,7 +143,7 @@ seen how to use it:
     int count = 1
 \end{verbatim}
 
-There are two versions of integers for some special uses. When a
+There are two other kinds of integers for some special uses. When a
 program needs very large (positive or negative) values, there is a
 type \verb+long+, for \emph{long integer}. It is called ``long''
 because it uses 64~bits instead of 32, which means a long integer
@@ -170,7 +172,7 @@ $$ 1.23 \cdot 10^{-3} = 123 \cdot 10^{-5} = 0.00123 \cdot 10^0 $$
 
 We cannot use superindex notation in a plain-text file, so we need a
 special way of writing these numbers. 
-The three version of the number above can be written
+Those three ways of depicting the number above can be written
 as \verb+1.23E-3+, \verb+123E-5+, and \verb+0.00123+, and the three are
 equivalent. 
 
@@ -193,7 +195,25 @@ among real numbers as we can do with integers. Two numbers could be
 notionally the same but be different due to rounding errors, so they
 are never compared with equality with ``==''. Instead, what is
 usually done is test whether the difference is less that some
-precision limit appropriate for the application (e.g.~1.0E-6). 
+precision limit appropriate for the application (e.g.~1.0E-6), as in
+the example below. Note: Math.abs() returns the absolute value of the
+number inside the brackets, e.g. \verb+Math.abs(-3)+ returns \verb+3+. 
+
+\begin{verbatim}
+    double d1 = 2 / 3
+    double d2 = 2 * 1000 / 9000 * 3
+    // WRONG!
+    if (d1 == d2) {
+       // this is not printed due due to rounding errors
+       println "They are the same (wrong comparison)" 
+    } 
+    // RIGHT!
+    if (Math.abs(d1 - d2) < 10E-6) {
+       println "They are the same (right comparison)"
+    } 
+\end{verbatim}
+
+
 
 \subsubsection{Boolean (binary) values}
 \label{sec:bool-binary-valu}
@@ -231,12 +251,12 @@ what the boxes are used for.
 
 Modern computers have \emph{a lot} of memory. Long forgotten are the
 days when Bill Gates said: ``640kB of memory should be enough for
-everything''. Part of that memory is used for the boxes (in a part of
+everything''. Part of a computer's memory is used for the boxes (in a part of
 memory called ``the stack'') and most of the rest is used for
 everything else, including complex data (that part is called, quite
 unceremoniously, ``the heap''). 
 
-When your Groovy or Java code uses some complex data, the computer
+When your Groovy, Java Decaf, or Java code uses some complex data, the computer
 stores that data in some region of the heap ---identified by a \emph{memory
   address}; then it stores the address in a box in the stack, much in
 the way it stores integers and booleans. This looks similar to
@@ -263,7 +283,8 @@ method: this is because complex types have something called a
 going to see now several examples, starting with the pervasive
 Strings. 
 
-One final note. Complex data types usually have names that start with capital
+\paragraph{One final note about names.} 
+Complex data types usually have names that start with capital
 letters. This is not compulsory but it is what everybody expects:
 simple types with non-capital letters (e.g.~\verb+int+, \verb+double+)
 and complex letters with capital letters (e.g.~\verb+String+,
@@ -319,7 +340,8 @@ data~(Figure~\ref{fig:nullpiounter}).
 
 As a null pointer does not point to any real data, if you try to
 access a variable that is pointing to null, the computer will complain
-with a \verb+NullPointerException+, as in the following example: 
+with a \verb+NullPointerException+, as in the following example 
+(try it!): 
 
 \begin{verbatim}
     String str = null
@@ -340,9 +362,10 @@ used complex type.
 At their most basic, strings are sequences of characters. You already
 know how to read a piece of text from the user: 
 
-\begin{verbatim}
-   String str = System.console().readLine()
-\end{verbatim}
+\begin{description}
+   \item{In Groovy:} String str = System.console().readLine()
+   \item{In Java Decaf: } String str = nextLine()
+\end{description}
 
 If you want to create a string in your program without reading it from
 the user, the basic form of creating a string is like this: 
@@ -358,8 +381,9 @@ but you already know that this can be made in an easier way:
 \end{verbatim}
 
 The former two statements are equivalent in Groovy\footnote{They are
-  NOT equivalent in Java, but we will learn why when the time
-  comes.}, only the second is more convenient and most people use it
+  NOT equivalent in Java, but the difference is subtle and we will
+  learn more about it when the time comes.}, 
+only the second is more convenient and most people use it
 instead of the other. 
 
 It is important to note that a String with only one character is
@@ -428,7 +452,7 @@ The result of this little program is:
 \begin{verbatim}
     Initial string: "This is an example"
     The length of the string is 18
-    The first ;character is T
+    The first character is T
     The substring from char 8 to char 17 is "an example"
 \end{verbatim}
 
@@ -438,7 +462,7 @@ The result of this little program is:
 
 String is the most common complex type, but it is not the only one. As
 a matter of fact, programmers can create their own complex
-types very easily. In order to create a new type of complex data, we use the
+types very easily. In order to create new types of complex data, we use the
 keyword \verb+class+. You can think of it as creating new classes of
 data. 
 
@@ -512,14 +536,17 @@ so-called
 are also called \emph{objects}. Every time you use the
 keyword \verb+new+ you are creating another object (this involves
 looking for a place in memory to store it and place the corresponding
-pointer pointing to it). 
+pointer pointing to it). You can think of a \emph{class} as a
+blueprint, and thus creating a new instance (by using \verb+new+) 
+is creating a new object according to that blueprint. 
+
 Note that fields on an object are accessed using a dot to
 separate the name of the variable that identifies the object
 (e.g.~employee) and the name of the variable inside the object, the
 field (e.g.~name), as in \verb+employee.name+.
 
 We can make the example slightly more complicated by using more than
-one variable of the class Person. 
+one instance of the class Person. 
 
 \begin{verbatim}
     Person john = new Person();
@@ -566,7 +593,7 @@ like those that you know from String.
 \subsection{Boxed types: Integer, Double, and Character}
 \label{sec:boxed-types:-integer}
 
-For every simple type in Groovy and Java, there is a ``boxed'' complex
+For every simple type in Groovy, Java Decaf, and Java, there is a ``boxed'' complex
 version. The most important ones are summarised in
 Table~\ref{tab:jajksdfj}. 
 Note that the name of the complex type uses capital letters and is
@@ -646,10 +673,11 @@ Note that you do not need to write
 explicitly \verb+i2 = new Integer(1)+, but i2 is still a complex boxed
 type, its box contains just a pointer to some place in memory where a
 ``1'' is stored. The variable i1, on the other hand, is a \emph{bona
-  fide} integer variable, a box with a ``1'' inside. However, thanks
+  fide} integer variable, a box with 
+a ``1'' inside (see Figure~\ref{fig:integervars}). However, thanks
 to auto-boxing, you can compare one with the other: the computer will
 automatically extract the ``1'' inside the boxed type to perform the
-comparison with the other ``1''. You do not need to do it yourself. 
+comparison with the other ``1''. You do not need to do it yourself!
 
 \begin{figure}[htbp]
   \centering
@@ -660,11 +688,11 @@ comparison with the other ``1''. You do not need to do it yourself.
   \label{fig:integervars}
 \end{figure}
 
-\subsection{A final note on names}
+\subsection{A final note on terminology}
 \label{sec:final-note-name}
 
 If you read other books or web pages about Groovy or Java, you may
-notice that they use names that are different from the ones we have
+notice that they use terms that are different from the ones we have
 used in this section. We go through some of them here for the sake of
 clarity. 
 
@@ -686,8 +714,9 @@ clarity.
   different way. I think many programming languages have constructs
   that share the same name and behave in slightly different ways
   (Strings is a major example) so this is not of much
-  concern. Besides, it looks to me very confusing to access a null
-  ``reference'' and get a Null\emph{Pointer}Exception.
+  concern. Besides, it looks to me like very confusing to 
+  access a null ``reference'' or a null ``handle'' and 
+  get a Null\textbf{Pointer}Exception as a consequence. 
 \end{description}
 
 %%%%%%%%%%%%%%5
