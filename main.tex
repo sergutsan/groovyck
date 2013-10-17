@@ -76,26 +76,29 @@ only my own fault.
 
 \tableofcontents
 
-% MAJOR REORGANISATION FOR NEXT YEAR:
+% MAJOR REORGANISATION FOR YEAR-2:
 % 
 % Goals: 
 %   - Trevor constraint: PT must see trees before D11 has ended
 %   - Corolary to the Trevor constraint: PT should go to Xmas 
 %       knowing how to use the Java Collections Library 
-%   - Recursion constraint: recursion should be understood before 
-%       trees are presented
-%   - only solution: FT and PT follow different schedules
+%   - Recursive tree traversal constraint: recursion should be 
+%       understood before trees are presented
+%   - First solution: FT and PT follow different schedules
+%   - Second solution: Divide Recursion into Basic and Advanced, 
+%       and separate both days. 
 %   - In PC++ the difficulty is pointers and recursion; in PiJ the 
 %       difficulty is pointers and multi-threading (recursion falls
-%       down to level 2 of difficulty)
+%       down to level 2 of difficulty). Update: recursion is still 
+%       very difficult, above everything else that is not
+%       multithreading or pointers. 
 %
-% FT:  
 %   D01: refresh
 %   D02: Git
 %   D03: simple / complex types
-%   D04: methods
+%   D04: methods; introduce for loops
 %   D05: recursion 1: the basics
-%   D06: arrays, access levels, reading javadoc, differences groovy/java
+%   D06: arrays, access levels, reading javadoc, differences groovy/java, introduce do/while
 %   D07: pointers, lists
 %   D08: static, interfaces, stacks, queues, 
 %   D09: trees,
@@ -124,37 +127,14 @@ only my own fault.
 % 
 % Possibilities for other strands: graphics and FX, Clojure, Jython, Scala
 
-% PT:  
-%   D1: refresh
-%   D2: Git
-%   D3: simple / complex types
-%   D4: methods
-%   D5: arrays, access levels, reading javadoc, differences groovy/java
-%   D6: recursion all in one day (but it IS a full week)
-%   D7: pointers, lists
-%   D8: static, interfaces, stacks, queues, 
-%   D9: trees (and what are arrays for: main method, varargs)
-%   D10: inheritance
-%   D11: polymorphism (and the collections library)
-%   ------- Xmas ---------
-%   D12: testing, introducing annotations
-%   D13: TDD, final, more annotations, write javadoc
-%   D14: Exception handling
-%   D15: I/O
-%   D16: concurrency 1: basics
-%   D17: concurrency 2: java.concurrent and fork/join
-%   D18: concurrency 3: CSP? Just more time for practice?
-%   D19: network 1: RPC
-%   D20: network 2: REST
-%   D21: work in the lab: a full fortnight for revision
-%   D22: work in the lab: a full fortnight for revision
-
-% See notes on full-time on letting them choose topic
-
 % EXTRA MATERIAL
+% D1 - EXTRA: Clojure-1
+% D2 - EXTRA: Clojure-2
 % D3 - ADDITION: strong vs weak typing
 %    - ADDITION: example of complex type with numeric addresses in the
 %                heap
+%    - EXTRA: Clojure-3
+% D4 - EXTRA: Regular expressions
 % D6 - ADDITION: why str = new String("Aa") is different from str = "Aa"
 
 % Day 0: what do I want from you?
