@@ -107,12 +107,12 @@ seen some examples as \verb+Math.random()+
 and the widely used \verb+Integer.parseInt(String)+. 
 
 Static methods can only access \verb+static+ fields. As they are
-run from the class, they can only access data that is in the class and
-not in the objects; you can think of it in the following way: the
+run from the \emph{class}, they can only access data that is \emph{in the class} and
+not \emph{in the objects}. You can think of it in the following way: the
 class does not know where the objects are stored in the memory, so
-instance (i.e.~in the object) data cannot be accessed. Class data and
+all instance data (i.e.~data in the objects) cannot be accessed. Class data and
 class methods, however, can be accessed from anywhere, just using the
-name of the class as in \verb+Integer.parseInt(String)+. 
+name of the class (as in \verb+Integer.parseInt(String)+). 
 
 \paragraph{Rules of thumb}
 \label{sec:rules-thumb-use}
