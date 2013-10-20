@@ -269,9 +269,12 @@ launching method. This method is commonly called \verb+run()+ or
         }
     
         public static void main(String[] args) {
+            // 1. Parameter analysis / processing
             String host = args[0];
             int port = Integer.parseInt(args[1]);
+            // 2. Object construction / building of main data structures
             BitTorrentDownloader downloader = new BitTorrentDownloader(host, port);
+            // 3. Execution of the program
             downloader.launch();
         }
 
@@ -323,7 +326,7 @@ that produces the following output:
 \end{verbatim}
 
 This is because the equality operator ``=='' only works with simple
-types, with little ``boxes''. When it is used to compare objects like
+types in Java, with little ``boxes''. When it is used to compare objects like
 Strings, it compares the pointers not the contents of the objects (see
 Figure~\ref{fig:equals}). The
 method \verb+.equals()+, on the other hand, can be used to compare the
