@@ -147,14 +147,14 @@ method is the entry point for your Java application.
 \section{The main method}
 \label{sec:main-method}
 
-As we leave Groovy behind and move into full-flavour Java, we need a
+As we leave Groovy and Java Decaf behind and move into full-flavour Java, we need a
 way to launch our program: a starting point. It is all too well to
 have a lot of Java classes, each of them in their own \verb+.java+
 file, but this is of little use if we cannot start our program from
 the command like (or clicking on an icon, for that matter). 
 
-In Groovy, we did not need an entry point. The programs or scripts
-were their own entry point. We only needed to 
+In Groovy and Java Decaf, we did not need an entry point. The programs or scripts
+were their own entry point. For example, we only needed to 
 write \verb+groovy myScript.groovy+ and Groovy would
 start the execution. The situation is slightly more complex in Java
 because all files are classes, not scripts. We need to have an entry
@@ -185,7 +185,7 @@ already learnt what each of its elements means:
   accessed from outside the class (and how would the program launch
   then?).
 \item It must be \verb+static+, because it pertains to the class, not
-  to each of its objects.
+  to each of its instances (i.e.~objects).
 \item It returns \verb+void+. This is a method that is never called by
   other classes, so a return type is unnecessary.
 \item The only parameter is a 1-D array of Strings, called \verb+args+
@@ -194,8 +194,10 @@ already learnt what each of its elements means:
   if any. For example, if you run a program with a line like
   \verb+java myClass+ \verb+www.google.com+ \verb+80+ \verb+true+, 
   the first element
-  (i.e.~args[0]) of \verb+args+ will be ``www.google.com'', the second
-  element will be ``80'', and the third one will be ``true''. If you
+  of \verb+args+ (i.e.~args[0]) will be ``www.google.com'', 
+  the second element (i.e.~args[1]) will be ``80'', 
+  and the third one (i.e.~args[2]) will be ``true''. All of them are
+  Strings, if you
   want to use these parameters with a different type you need to parse
   them. 
 \end{itemize}
