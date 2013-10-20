@@ -127,11 +127,12 @@ In other words, if you had to remember just four things about the keyword
 \verb+static+, remember these four rules: 
 
 \begin{itemize}
-\item Use \emph{static} sparingly. If you use it often, you are
+\item Use \verb+static+ \emph{sparingly}. If you use it often, you are
   probably doing it wrong. Thing again about your program, and look
   for ways to get rid of your static state (i.e.~fields/variables).
-\item If you have static fields, they should be constants and they
-  should be public. One such example is \verb+Math.PI+.
+\item If you have static fields, they should be \emph{constants} and they
+  should be \verb+public+. One such example is \verb+Math.PI+: its
+  value is always the same 3,14159\ldots
 \item If you have static methods, they should be \emph{pure functions}. This
   means they should not have side effects, and they should return a
   value that depends only on their arguments. One such example is
