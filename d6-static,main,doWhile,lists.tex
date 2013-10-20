@@ -442,7 +442,7 @@ Most applications in the real world, however, do not know in advance
 how much data they will need: a hospital does not know how many
 patient records it will need every day, a car manufacturer does not
 know in advance how many employees it will have or how many cars it
-will be producing at the same time. Even if they knew, these
+will be producing at any given week. Even if they knew, these
 desired characteristics of the program ---called
 \emph{requirements}--- may change over the life of the program, e.g.~:
 maybe the hospital knows it only has ninety beds, but five years later
@@ -482,7 +482,8 @@ could have an array of patients:
 \end{verbatim}
 
 But, as we already know, this is limited because the hospital may have
-more than 90 patients. We can overcome this limitation by using a
+at a later point more than 90 patients. 
+We can overcome this limitation by using a
 linked list. Our list will be composed of objects of a slightly
 modified class \verb+Patient+:
 
@@ -506,7 +507,7 @@ modified class \verb+Patient+:
 The only difference is the pointer to another \verb+Patient+. A linked
 list of patients is nothing more than a sequence of patients in which
 each patient links to the next one, and the last one 
-points to \verb+null+. The beginning of the list will
+points to \verb+null+. The starting point of the list will
 appear in your main program and probably be initialised in the
 \verb+launch()+ method, while new patients can be added to the list by
 using the following method: 
