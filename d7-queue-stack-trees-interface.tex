@@ -313,9 +313,9 @@ Some queues may have a
 maximum size\footnote{Strictly speaking, all queues are limited: even
   ``unbounded'' queues cannot be larger than the memory available on
   the machine.} and provide a 
-method \verb+getMaxSize()+ that returns the maximum size possible, so
-that other classes know in order to prevent data
-loss. For example, when you hear in the news that a website has
+method \verb+getMaxSize()+ that returns the maximum size possible (so
+that other classes know in advance, in order to prevent data
+loss). For example, when you hear in the news that a website has
 suffered a Distributed Denial of Service attack (DDoS) that means that
 a lot of computers are issuing simultanenous requests to the same web
 server until its queue is full and all new requests are ignored.
@@ -332,7 +332,8 @@ data, called the \emph{key}, with one or more pieces of data, called
 the \emph{value} or \emph{values}. The contact agenda in your mobile
 phone is an example of a map: it maps names to phone numbers. Other
 examples of maps are address books that link addresses with people,
-building maps that link floors with companies, and keyboards that link
+indexes in corporate buildings 
+that link floors with companies, and keyboards that link
 physical keys with letters and symbols. 
 
 A map can link each key with one value or more. Depending on the
