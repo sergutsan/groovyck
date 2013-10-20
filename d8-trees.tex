@@ -100,7 +100,7 @@ piece of data when everything in order..
 When we want to add a new element to a tree we start at the root. Then
 we check whether we want to add it to the right or to the left. Then
 we continue the process on that branch. Let's see an example based on 
-clas \verb+IntegerTreeNode+ above.
+class \verb+IntegerTreeNode+ above.
 
 \begin{verbatim}
     public add(int newNumber) {
@@ -122,7 +122,7 @@ clas \verb+IntegerTreeNode+ above.
 
 You can see that the process is symmetrical: we decide to go left or
 right based on the new number to add, and then we continue on that
-side of the tree. This leaves the three automatically sorted: ``lowers''
+side of the tree. This leaves the tree automatically sorted: ``lowers''
 on the left, ``highers'' on the right, at every level of the tree. If
 there is nothing in the branch, we add our new element; otherwise, we
 compare again. 
@@ -173,7 +173,7 @@ class \verb+IntegerTreeNode+.
 \end{verbatim}
 
 There is no need to look at all the elements
-(Figure~\ref{fig:fhsdhshgfhjsdg}! After every check, we
+(Figure~\ref{fig:fhsdhshgfhjsdg}). After every check, we
 discard half of all remaining elements (assuming that the tree is
 balanced, i.e.~has approximately the same number of elements under left
 branches than under right branches). If the tree contains 1000
@@ -183,7 +183,8 @@ in a tree is proportional to the logarithm (in base 2) of the size of
 the tree\footnote{A number $l$ is the logarithm of $x$ in base $a$ if
  $a^l = x$.}. Finding an element in a list of 15 elements will take at
 most 15 comparisons, but if the list has 255 elements it will take at
-most 255 comparisons; finding an element in a tree of 15 elements will
+most 255 comparisons; by comparison, 
+finding an element in a tree of 15 elements will
 need at most 4 comparisons, but if the tree has 255 elements it will
 take at most 8 comparisons. This is a real improvement for big amounts
 of data!
