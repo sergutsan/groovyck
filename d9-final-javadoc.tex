@@ -1,0 +1,158 @@
+\section{Constants}
+\label{sec:constants}
+
+Programs use data, lots of data. Data is stored in variables of simple
+and complex types (the latter being pointers that point to objects in
+the memory, in the heap). We have used a lot of variables since we
+started our journey into programming. 
+
+Sometimes, we know that a piece of data is not going to change. 
+Maybe it is a physical constant like the
+speed of light, maybe it is a mathematical constant like $\pi$, or
+maybe it something else. Any such piece of data in your program, that
+is known to not change, is called a \emph{constant}. 
+
+You do not want your program to allow any section
+of the code to modify your constants, even by mistake. This is achieved by
+using the keyword \verb+final+. This keyword tells Java that the value
+of a variable must never change from the moment it is initialised
+until the program ends. See an example: 
+
+\begin{verbatim}
+    public static final double PI = 3.14159265359; 
+\end{verbatim}
+
+By convention, constants are written all in capital
+letters. Multi-word constants use underscores, as in: 
+
+\begin{verbatim}
+    public static final int SPEED_OF_LIGHT = 299792458;
+\end{verbatim}
+
+% Cross-refs
+You remember that we said that static \emph{fields} should be used
+sparingly, and mostly (or only) for constants. The keyword
+\verb+final+ is used to declare an identifier as constant, and
+therefore both keywords (\verb+static+ and \verb+final+)
+are frequently found together when applied to constants: final ensures
+the value cannot be changed while static ensures there is only one
+field (a ``box'') for the whole class rather than one duplication in
+every object of the class.
+
+You may also remember that we mentioned that constant fields can be
+made public, as there is no risk of anyone modifying their values
+producing some undesirable side effect. If you ever make a field public in a
+class that has methods, make sure you make it static and (especially)
+final.
+
+\begin{center}
+{\large \textbf{If a field is public, it must be static and final.}}  
+\end{center}
+
+The only exception to this rule is for classes without
+methods. Remember that such a class can be used as a way of
+interchanging several pieces of data bundled together (as a return
+value, for example). 
+
+% TODO: next year, make a bigger point of how final for a complex
+% types means just a constant pointer, not a constant object. 
+
+\section{Documenting your code with JavaDoc}
+\label{sec:docum-your-code}
+
+% TODO: write this better
+
+We have already seen how the Java library is completely documented
+online. All classes are described on a web page that explains
+what they are and what they do (i.e.~their
+methods, explaining the parameters), and this information is online on
+the Java API documenation or JavaDoc. You can find the JavaDoc easily
+by typing ``Java API'' on your favourite search engine. 
+
+The good news is that it is easy to document your own classes in the
+same professional way as the core Java library. In order to do so, we
+just need to write the comments of our code in a special way and then
+use the program \verb+javadoc+. 
+
+\subsection{How to write comments}
+\label{sec:writing-comments}
+
+As we briefly saw when we introduced interfaces, JavaDoc comments
+start by \verb+/**+, end by \verb+*/+, and can span several
+lines. JavaDoc comments can also tag additional information regarding
+parameters or return values, as shown in the following example: 
+
+\begin{verbatim}
+    /**
+     * An StringStack is a dynamic structure that can contain any number
+     * of strings. 
+     * 
+     * New elements (i.e. Strings) can be put on top of the stack or
+     * removed from the top of the stack. Only the element at the top of
+     * the stack can be removed at any given time; to access a specific 
+     * element, all elements on top of it must be removed (popped) first. 
+     * 
+     * This interface allows the user to replace some elements of the list
+     * even if they are not accessible. 
+     */
+    public interface StringStack {
+        /**
+         * Put an element at the top of the stack. 
+         *
+         * @param newString the new string to be put
+         */
+        void push(String newString);
+        /**
+         * Removes the element at the top of the stack and returns it. 
+         *
+         * @return the element at the top of the stack
+         */
+        String pop();
+        /**
+         * Replaces every occurrence of one string in the stack
+         * for another string. 
+         *
+         * @param oldString the string to be replaced
+         * @param newString the new string to replace it with
+         */
+        void push(String oldString, String newString);
+    }
+\end{verbatim}
+
+There are three important things to notice in this example: 
+
+\begin{itemize}
+\item All comments start with \verb+/**+ and end with \verb+*/+. It is
+  customary to make each line in the comment start with a star too.
+\item Parameters are documented with the tag \verb+@param+, followed
+  by the name of the parameter, followed by the description.
+\item Return values are documented with the tag \verb+@return+,
+  followed by the description of what is returned. 
+\end{itemize}
+
+Comments should explain the functionality of your classes and methods
+in a short and clear way. Comments should not explain the internal
+implementation details unless it really makes a difference to other
+programmers using those classes or methods. In other words, comments
+should be as clear as possible, and as short as possible, in that
+order of importance\footnote{The Java documentation itself is a good
+  inspiration of what good comments should look like. Use it as an
+  inspiration as well as a source of information.}. 
+
+\subsection{How to create the online documentation}
+\label{sec:how-create-online}
+
+Creating the webpages with the documentation of your classes and
+methods is very simple. Assumming that you have all your classes
+documented (i.e.~with proper comments) in a folder called \verb+src+
+and want to put all the web pages in a folder called \verb+www+, you
+just need to run the following command: 
+
+\begin{verbatim}
+    > javadoc path/to/src/*java -d path/to/www/
+\end{verbatim}
+
+This will generate all the web pages, HTML files, CSS style sheets,
+links, etc, for you on the \verb+www+ folder. The folder will contain
+a file called \verb+index.html+ as a starting point. 
+
