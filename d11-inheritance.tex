@@ -128,8 +128,9 @@ same method in just one place so that each class could use it, in the
 same way that the code in a method can be used from anywhere in the
 class. 
 
-It would be great if we could put the code in the interface; then, all
-classes would have it. It turns out we can do something like
+In cases like this one, it would be great if we could put the 
+real code in the interface, not just the declaration; then, all
+classes would have it\ldots Well, it turns out we can do something like
 that in Java. Although we cannot write any code in an interface, 
 we can transform the interface into an \emph{abstract class}, and then
 make the other classes \emph{extend} it. Let's see an example: assuming
@@ -181,9 +182,9 @@ There are also some similarities:
 
 \begin{itemize}
 \item Both abstract classes and interfaces can be used as data
-  types to declare a variable of a complex type 
+  types to \emph{declare} a variable of a complex type 
   (e.g.~\verb+Animal indiana = new Dog()+).
-\item Neither can be used to instantiate an object using \verb+new+
+\item Neither can be used to \emph{instantiate} an object using \verb+new+
   (because neither contains a full ``blueprint'' of what the new
   object would look like, e.g.~\verb+new Animal()+ is not valid). 
 \end{itemize}
@@ -250,7 +251,7 @@ the same method, such method should be put in a parent class:
 
 Now the method \verb+closeForTheNight()+ is available to both
 \verb+ManorHouse+ and \verb+Castle+ because they are extending
-\verb+GateGuardedBilding+. 
+the parent (abstract) class \verb+GateGuardedBilding+. 
 
 Clear? Not so easy\ldots There are situations in which 
 this ``repetition of code'' is not straighforward. Look at the
@@ -349,7 +350,9 @@ that the ``repeated'' methods had two effects: a return value
 (to give change) and a side effect (release can or chocolate bar). Because of
 this, we needed to create a new intermediate class \verb+Sale+ ---with
 no methods--- in order to be able to return two values from the new
-method \verb+buy()+.
+method \verb+buy()+. Remember that methods can only return one value;
+the only way they can return more is by using a complex type to
+encapsulate them all. 
 
 \subsection{Visibility revisited}
 \label{sec:protected-keyword}
@@ -493,17 +496,22 @@ methods that are overriden by many classes.
    }
 \end{verbatim}
 
-The \verb+@Override+ annotation is optional, but it is a good idea to
+The \verb+@Override+ annotation\footnote{We will see more about
+  annotations in a week, when we start doing automated testing. For
+  now, you just need to know that they are added just before the
+  method declaration and start with a @ sign. } is optional, but it is a good idea to
 always use it. This will make it evident to other programmers 
 that the method is overriding a
 method from an ancestor class. 
 
+% TODO: Remove Footnote
+
 \paragraph{Final methods}
 \label{sec:final-methods}
 
-In the same way that we can declate a class to be \verb+final+ so that
+In the same way that we can declare a class to be \verb+final+ so that
 it cannot be extended, we can declare a method as \verb+final+; this
-will prevent the method being overriden. 
+will prevent the method from being overriden. 
 
 If a class is final, then all its methods are final too. 
 The opposite is not true: a class with all its method
