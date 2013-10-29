@@ -586,7 +586,7 @@ This constructor does not do much (just calls the superclass'
 constructor) and has no parameters. If you do not add your own
 constructor to your classes, they will at least have this one. On the
 other hand, as soon as you add a constructor to a class Java will see
-it, not adding the default constructor in that case.
+it, and will not add the default constructor in that case.
 
 \paragraph{Default call to the parent class' constructor}
 \label{sec:default-call-parent}
@@ -629,7 +629,7 @@ only one class.
 
 On the other hand, a class can implement an arbitrary number of
 interfaces. As interfaces do not contain any implementation, it is not
-a problem to implement two interfaces that define the same method: any
+a problem to implement two interfaces that declare the same method: any
 implementation of that method will satisfy both
 interfaces\footnote{Some people use the argument of implementing
   several interfaces in Java to say that Java allows for a ``special''
@@ -656,7 +656,7 @@ it gets access to all its public and protected fields and methods.
 Composition establishes a ``has-a'' relationship (e.g.~a dog has a leg
 and has cells), and is implemented by including the ``contained''
 classes as types of fields of the ``container'' class.  When a class
-contains another class(es) it gets access to all its public methods
+contains some other class/es it gets access to all its/their public methods
 and fields. 
 
 Both compositition and inheritance give access to the functionality of
@@ -698,8 +698,11 @@ easier to modify. Type hierarchies defined by \verb+extends+ become
 very rigid over time: changing one of the classes in the hierarchy
 tree usually involves changes in many other classes in different parts
 of the source code. In other words, type hierarchies provide structure
-to the code, but increse its \emph{coupling} (dependance between classes) 
-which also increments its viscosity. Composition, on
+to the code, but increse its \emph{coupling} (dependance between
+classes); a high coupling is bad because its makes the code more
+difficult to change and modify\footnote{Some people refer to this as a
+code of \emph{high viscosity}. }. 
+Composition, on
 the other hand, provides more flexibility. Changes to the classes
 inside a class are typically invisible to all other classes (they are
 \verb+private+ fields) so the disruption of the code is contained. 
