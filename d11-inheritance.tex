@@ -540,18 +540,20 @@ in this trivial example:
     }
 \end{verbatim}
 
-Calling methods from the superclass is not very useful in practical
-terms, there are few situations in which this is needed or
-adequate. However, there is another use of \verb+super+ that is extremely important to
-understand: it is used to call the constructor of the parent class
+In practice, calling methods from the superclass is not something that
+is used very often (there are some exceptions, but few and far
+between). 
+The only situation in which it is common to use \verb+super+ to call
+methods from the parent class ---and it is important to understand
+it--- is when the keyword is used to call the constructor of the parent class
 inside the constructor of the subclass. This is so important that it must be
 done at the first line of the constructor: 
 
 \begin{verbatim}
-    public MyClass() {     public MyClass(arguments) {
-        super();               super(arguments);
-        // rest here...        // rest here...    
-    }                      }
+    public MyClass() {               public MyClass(arguments) {
+        super();                         super(arguments);
+        // rest of method here...        // rest of method here...    
+    }                                }
 \end{verbatim}
 
 If you try to do anything ---like initialising your fields--- before
