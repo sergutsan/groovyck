@@ -268,8 +268,25 @@ classes are employed.
 
 A full description of generics in Java, how they are implemented
 internally, and the full list of possibilities and caveats, is beyond
-the scope of this course. As a rule of thumb, use generics sparingly in
-Java and do not use generics of generics. Your brain will thank you. 
+the scope of this course. As a rule of thumb, remember these three
+simple rules: 
+
+\begin{itemize}
+\item You cannot create new objects of generic types. Code like
+  \verb+new T()+ or \verb+new T[]+ will generate a compile error.
+\item You cannot create local variables of generic types. Code like
+  \verb+T newNumber = new Integer(1)+ will generate a compile error. 
+\end{itemize}
+
+And remember these two pieces of advise: 
+
+\begin{itemize}
+\item Use generic \emph{sparingly} in your Java code, and always with
+  good reason.
+\item Do not abuse generics creating generics types of generics types
+  (your brain will thank you in the long term).
+\end{itemize}
+
 
 
 \section{Method overloading}
@@ -445,6 +462,7 @@ downcast a class into something that it is not, Java will throw a
 \begin{verbatim}
     java.lang.ClassCastException: Cat cannot be cast to Dog
 \end{verbatim}
+
 
 
 %%% Local Variables:
