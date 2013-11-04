@@ -37,7 +37,7 @@ etc.
 \end{verbatim}
 
 This seems a bit like code repetition. A \emph{generic class}, on the 
-other hand, could work in the same with more than one
+other hand, could work in the same way with more than one
 type, saving the programmer from the hassle of having different but very
 similar types (e.g. stacks) for each different type of data they want
 to use (i.e.~string stacks, integer stacks, patient stacks, etc). 
@@ -47,7 +47,7 @@ to use (i.e.~string stacks, integer stacks, patient stacks, etc).
 
 A generic class is very similar to a normal class. The only
 difference ---but it is a crucial one--- is that it uses one or more
-\emph{type parameter} to indicate that it needs another type to be
+\emph{type parameters} to indicate that it needs another type to be
 fully declared. Type parameters
 are specified in low quotes (``$<$'', ``$>$''). Let's see an
 example of a generic interface, a stack (JavaDoc comments removed for
@@ -138,6 +138,8 @@ Restricting the type is easy and can be done in more than one way. For
 now, we will look at just one way of doing it by means of
 interfaces. Look at this example:
 
+% TODO: Talk about 'super' here
+
 \begin{verbatim}
     public interface PersonList<P extends Person> {
         void push(P object);
@@ -159,8 +161,10 @@ complain.
 \label{sec:type-wildcards}
 
 Generic classes can also be used in a generic way (no pun
-intended). For example, we may want to write a method that takes a
-generic class inside a non-generic class, as in this example, where a
+intended) by using \emph{type wildcards}. 
+For example, we may want to write a generic method 
+that takes a generic-class parameter inside a non-generic class, 
+as in this example, where a
 \verb+School+ class has a method that always returns the first element
 of a list, regardless of it being a list of students, of teachers, or of
 homework assignments: 
@@ -187,11 +191,13 @@ solving this problem. First, we could make School a generic class:
         // ...
 \end{verbatim}
 
-This is a bad idea. Classes should not be made generic unless there is
-a reason for it. Generics add an additional level of complexity in the
-code that must be balanced with some clear benefit, as in the case of
-container classes (lists, stacks, trees, maps, etc). Another
-possibility is to generify only the method
+This is a bad idea in this case because classes 
+should not be made generic unless there is
+a good reason for it. Generics add an additional level of complexity in the
+code that must be balanced with some clear benefit ---as it 
+is the case with
+container classes such as lists, stacks, trees, maps, etc). Another,
+better, possibility is to generify only the method
 \verb+returnFirstElement()+: 
 
 \begin{verbatim}
@@ -208,7 +214,7 @@ This is slightly better because it keeps the generics more
 contained, i.e.~restricted to the method. 
 
 If the method returns a generified type, restricting generics to the
-methods is the best
+method is the best
 we can do. However, if the return type is not generic, 
 we can use an even simpler notation using type wildcards: 
 
@@ -237,7 +243,9 @@ if necessary:
 \end{verbatim}
 
 In this case, the method will accept a list of any type as long as the
-type is a \verb+Person+. 
+type is a \verb+Person+. The third way is the best approach in this
+case because it is the simplest, the one that hides the most
+information without losing any functionality. 
 
 % Maybe add something here about PECS? Next year!
 %
@@ -435,7 +443,7 @@ In some rare occasions,
 programmers need to do the opposite, i.e.~move down from the general
 to the specific: this is called \emph{downcasting}. The syntax in this
 case is very similar to the casting of simple types. Imagine that we
-have a list of animals, but we knew (somehow) that all those animals
+had a list of animals, but we knew (somehow) that all those animals
 were dogs, and we wanted to make them bark. As \verb+bark()+ is a
 method of \verb+Dog+ but not of \verb+Animal+ we would need to
 downcast them: 
