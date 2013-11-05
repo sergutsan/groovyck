@@ -54,7 +54,7 @@ that the output is within the range.
 \section{Practice "Find bugs once"}
 \label{sec:practice-find-bugs}
 
-\subsection*{a)}
+% \subsection*{a)}
 
 The method \verb+getInitials(String)+ has a bug! If you introduce a
 name with more than one space between words, it throws an exception.
@@ -67,139 +67,148 @@ Then follow the ``find bugs once'' algorithm: reproduce the bug manually,
 reproduce the bug programmatically by adding a new test to the testing
 class, then fix the bug and check that all tests pass. 
 
-\subsection*{b)}
-\label{sec:b}
+%%%
+%%%
+%%% TODO: 
+%%%   The purpose of the (b) exercise is good, but the actual program
+%%%   is terrible. The fix is really easy, and the amount of work
+%%%   needed to refactor it to make it easily testable is large. 
+%%%   TODO: think of a better example. 
+%%%
+%%%
+% \subsection*{b) (*)}
+% \label{sec:b}
 
-Another programmer has created a simple program for personal
-accounting. This program asks the user for the number of bills that have not
-been paid yet and calculates the total debt. Look at the Accounting
-and Bill classes below. 
+% Another programmer has created a simple program for personal
+% accounting. This program asks the user for the number of bills that have not
+% been paid yet and calculates the total debt. Look at the Accounting
+% and Bill classes below. 
 
-\begin{figure}[hbtp]
-  \centering
-\begin{verbatim}
-/**
- * A program for simple personal accounting. 
- *
- * Asks the users about their bills, and then 
- * says how many bills there are, and what is the
- * total debt.
- */
-public class Accounting {
-    /**
-     * The first element of the list of bills
-     */
-    private Bill firstBill = null;
+% \begin{figure}[hbtp]
+%   \centering
+% \begin{verbatim}
+% /**
+%  * A program for simple personal accounting. 
+%  *
+%  * Asks the users about their bills, and then 
+%  * says how many bills there are, and what is the
+%  * total debt.
+%  */
+% public class Accounting {
+%     /**
+%      * The first element of the list of bills
+%      */
+%     private Bill firstBill = null;
 
-    public static void main(String[] args) {
-        Accounting acc = new Accounting();
-        acc.launch(args);
-    }
+%     public static void main(String[] args) {
+%         Accounting acc = new Accounting();
+%         acc.launch(args);
+%     }
 
-    private void launch(String[] args) {
-        String concept = "";
-        int amount = 0;
-        do {
-            System.out.println("What's your next bill (type \"END\" to finish)?");
-            System.out.print("  Concept: "); 
-            concept = System.console().readLine();
-            if (!concept.equals("END")) {
-                System.out.print("  Amount: "); 
-                String strAmount = System.console().readLine();
-                amount = Integer.parseInt(strAmount);
-            }
-            Bill newBill = new Bill(concept, amount);
-            addBillToList(newBill);
-        } while (!concept.equals("END"));
-        int count = 0;
-        int totalDebt = 0;
-        for (Bill current = firstBill; current != null; current = current.getNextBill()) {
-            count++;
-            totalDebt += current.getAmount();
-        }
-        System.out.println("You have " + count + " bills unpaid (total debt: " + totalDebt + ")");
-    }
-\end{verbatim}
-  \caption{Class Accounting (1 of 2)}
-  \label{fig:accountingggggt}
-\end{figure}
+%     private void launch(String[] args) {
+%         String concept = "";
+%         int amount = 0;
+%         do {
+%             System.out.println("What's your next bill (type \"END\" to finish)?");
+%             System.out.print("  Concept: "); 
+%             concept = System.console().readLine();
+%             if (!concept.equals("END")) {
+%                 System.out.print("  Amount: "); 
+%                 String strAmount = System.console().readLine();
+%                 amount = Integer.parseInt(strAmount);
+%             }
+%             Bill newBill = new Bill(concept, amount);
+%             addBillToList(newBill);
+%         } while (!concept.equals("END"));
+%         int count = 0;
+%         int totalDebt = 0;
+%         for (Bill current = firstBill; current != null; current = current.getNextBill()) {
+%             count++;
+%             totalDebt += current.getAmount();
+%         }
+%         System.out.println("You have " + count + " bills unpaid (total debt: " + totalDebt + ")");
+%     }
+% \end{verbatim}
+%   \caption{Class Accounting (1 of 2)}
+%   \label{fig:accountingggggt}
+% \end{figure}
 
-\begin{figure}[hbtp]
-  \centering
-\begin{verbatim}
-    private void addBillToList(Bill bill) {
-        if (firstBill == null) {
-            firstBill = bill;
-            return;
-        } 
-        Bill current = firstBill;
-        while (current != null) {
-            if (current.getNextBill() == null) {
-                current.setNextBill(bill);
-                return;
-            }
-            current = current.getNextBill();
-        }
-        return;
-    }
-}
-\end{verbatim}
-  \caption{Class Accounting (2 of 2)}
-  \label{fig:accountinggggg}
-\end{figure}
+% \begin{figure}[hbtp]
+%   \centering
+% \begin{verbatim}
+%     private void addBillToList(Bill bill) {
+%         if (firstBill == null) {
+%             firstBill = bill;
+%             return;
+%         } 
+%         Bill current = firstBill;
+%         while (current != null) {
+%             if (current.getNextBill() == null) {
+%                 current.setNextBill(bill);
+%                 return;
+%             }
+%             current = current.getNextBill();
+%         }
+%         return;
+%     }
+% }
+% \end{verbatim}
+%   \caption{Class Accounting (2 of 2)}
+%   \label{fig:accountinggggg}
+% \end{figure}
 
-\begin{figure}[hbtp]
-  \centering
-\begin{verbatim}
-public class Bill {
-    private String concept;
-    private int amount;
-    private Bill next;
+% \begin{figure}[hbtp]
+%   \centering
+% \begin{verbatim}
+% public class Bill {
+%     private String concept;
+%     private int amount;
+%     private Bill next;
 
-    public Bill(String concept, int amount) {
-        this.concept = concept;
-        this.amount  = amount;
-        this.next    = null;
-    }
-    public String getConcept() {
-        return concept;
-    }
-    public int getAmount() {
-        return amount;
-    }
-    public void setNextBill(Bill bill) {
-        next = bill;
-    }
-    public Bill getNextBill() {
-        return next;
-    }
-}
-\end{verbatim}
-  \caption{Class Bill}
-  \label{fig:accountingggggtr}
-\end{figure}
+%     public Bill(String concept, int amount) {
+%         this.concept = concept;
+%         this.amount  = amount;
+%         this.next    = null;
+%     }
+%     public String getConcept() {
+%         return concept;
+%     }
+%     public int getAmount() {
+%         return amount;
+%     }
+%     public void setNextBill(Bill bill) {
+%         next = bill;
+%     }
+%     public Bill getNextBill() {
+%         return next;
+%     }
+% }
+% \end{verbatim}
+%   \caption{Class Bill}
+%   \label{fig:accountingggggtr}
+% \end{figure}
 
-The programmer comes to see you because the program does not work as
-expected: it says that there is one bill too many, and the calculated
-total debt is wrong too. The programmer asks for
-your help. You decide to use the ``find bugs once'' algorithm to find
-the bug, create a test that reproduces the bug,
-and then fix the bug once and for all. 
+% The programmer comes to see you because the program does not work as
+% expected: it says that there is one bill too many, and the calculated
+% total debt is wrong too. The programmer asks for
+% your help. You decide to use the ``find bugs once'' algorithm to find
+% the bug, create a test that reproduces the bug,
+% and then fix the bug once and for all. 
 
-This is a common situation in companies. There is some software that
-has been developed in the past (maybe by programmers that have left
-the company since) and it needs fixing. The programmers responsible of
-fixing the program have never seen the code before, they are just told
-what it should do. 
+% This is a common situation in companies. There is some software that
+% has been developed in the past (maybe by programmers that have left
+% the company since) and it needs fixing. The programmers responsible of
+% fixing the program have never seen the code before, they are just told
+% what it should do. 
 
-Usually the first step is to \emph{refactor} the code to make it
-easier to test; this may involve breaking up methods and classes into
-smaller, simpler methods and classes. For example, you may want to
-separate the ``getting user input'' and the ``create new bill''
-functionalities in method \verb+launch()+ above, so that you can
-test the latter with JUnit; you can never test user input in an
-automated way, but you can test what you do with that input by
-creating fake user data and passing it to your methods. 
+% Usually the first step is to \emph{refactor} the code to make it
+% easier to test; this may involve breaking up methods and classes into
+% smaller, simpler methods and classes. For example, you may want to
+% separate the ``getting user input'' and the ``create new bill''
+% functionalities in method \verb+launch()+ above, so that you can
+% test the latter with JUnit; you can never test user input in an
+% automated way, but you can test what you do with that input by
+% creating fake user data and passing it to your methods. 
 
 
 \section{Test implementations of a given interface}
