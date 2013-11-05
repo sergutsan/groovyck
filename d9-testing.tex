@@ -355,15 +355,16 @@ Basic functionality is not the main source of bugs.
 Programs have a tendency to break around the \emph{borders}. Using the
 metaphor of the cave, you can think that corners are usually darker
 than the rest of a cave room, so they are good hiding places for
-bugs. Border cases (the first, the last, etc) are usually slightly
+bugs. Border cases (the first of something, the last of something, null
+cases, empty structures, etc) are usually slightly
 different from the general case and your implementation may break
 there: a list may not remove the first element correctly, or the
 last; a loop may not check the last element in a list, or go out of
 bounds; a method may break when it is given an empty list as a
 parameter (or null). 
 
-Border cases must always be checked in your tests. This is very
-important. Leaving corners and borders in the shadows is just a
+Border cases must always be checked in your tests. \textbf{This is very
+important}. Leaving corners and borders in the shadows is just a
 disaster waiting to happen. Many programmers forget to test border
 cases and are later surprised by bugs in a code that seemed to be
 ``working fine''.
@@ -373,10 +374,11 @@ cases and are later surprised by bugs in a code that seemed to be
 
 This is the most important rule in software testing, yet it is usually
 forgotten by many programmers (especially lazy programmers). Whenever
-you find a bug in a code, and you will find many in your life as a
-programmer, you have to follow this simple algorithm: 
+you find a bug in a code ---and you will find many in your life as a
+programmer--- you have to follow this simple algorithm: 
 
 \begin{enumerate}
+\item First of all, do \emph{not} fix the bug yet. 
 \item Find the bug again. Repeat the same steps until you know exactly
   how and when the bug appears. This is called
   \emph{reproducing the bug} and it is not always easy in large,
