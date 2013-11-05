@@ -204,7 +204,9 @@ A second important difference are those \verb+import+ statements at
 the beginning, before the class definition. These  statements
 are the way in which a programmer can tell Java to use classes that
 are not in the current folder (they must be in the \emph{classpath},
-though). If you want to import just some static methods from some
+though). 
+
+If you want to import just some \emph{static methods} from some
 class, you can use \emph{static imports}. In this example, the method
 \verb+assertEquals(String,String)+ is statically imported from class
 \verb+Assert+. This is only a convenience so that you do not need to
@@ -218,7 +220,7 @@ Java, and have a special meaning for the compiler. In this case, the
 annotation \verb+@Test+ tells JUnit that the method
 \verb+testsNormalName()+ is a test to be run by JUnit. This is the way
 JUnit knows which methods to run and which methods to ignore. (We will
-learn more about annotations in the future). In conclusion, you must
+learn more about annotations in the future). In short, you must
 write \verb+@Test+ before each of your test methods. 
 
 You can also appreciate some conventions in the code. The test class
@@ -230,7 +232,7 @@ variable names: \verb+input+, \verb+output+, \verb+expected+ (for
 expected output). 
 
 The tests ends with the method \verb+assertEquals(String,String)+,
-statically imported from class \verb+Assert+. This method performs an
+statically imported from class \verb+org.junit.Assert+. This method performs an
 \emph{assertion}, a test that the parameters verify some condition
 (equality in this case). If that is not true, the method will throw an
 exception and JUnit will report a failure in your test. Assertion can
@@ -243,7 +245,10 @@ class\footnote{http://junit.sourceforge.net/javadoc/org/junit/Assert.html}.
 \subsection{Running tests}
 \label{sec:running-tests}
 
-To run your tests, you must run JUnit from the command line. In order
+To run your tests, you must run JUnit from the command
+line\footnote{In the future, we will learn how to do this
+  automatically from an IDE like Eclipse, but for now we will make the
+effort of understanding each step by itself.}. In order
 to do so, you must bear in mind some facts: 
 
 \begin{itemize}
@@ -266,12 +271,24 @@ command:
 This will compile your test class(es). The \verb+-cp+ parameter is the
 way you can modify the classpath when executing \verb+javac+ or
 \verb+java+. Remember that elements in the classpath are separated by
-colons on Linux and Mac, but they are separated by semicolons on
-Windows. To run the tests, you must execute:
+colons~(:) on Linux and Mac, but they are separated by semicolons~(;) on
+Windows. To run the tests, you must execute the main method in class
+\verb+JUnitCore+, which is inside package \verb+org.junit.runner+,
+passing all your test classes as parameters: 
 
 \begin{verbatim}
     > java -cp .:junit-4.10.jar org.junit.runner.JUnitCore PersonTest
 \end{verbatim}
+
+You can read that as ``execute on the Java Virtual Machine'', using as
+classpath both the current folder~(.) and the JAR file of
+JUnit\footnote{If you have left the JAR file, your classpath will look
+different. You must write the full path to your JAR file in the
+classpath.}, the
+main method of class \verb+org.junit.runner.JUnitCore+ and pass as
+argument the string ``PersonTest''. This will make JUnit run all the
+tests inside the class PersonTest (as marked by the \verb+@Test+
+annotation). 
 
 If all tests run successfully, JUnit will congratulate you. If one or
 more of the tests fail, JUnit will inform you of which tests failed
