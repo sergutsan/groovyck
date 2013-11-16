@@ -13,38 +13,12 @@ goals:
 \item Strengthen your knowledge of JUnit4, practicing the use of the
   new annotations.
 \item Understand the Test-Driven Development methodology. 
-\item Understand the use of \verb+final+.
-\item Understand how JavaDoc is used.
+%\item Understand the use of \verb+final+.
+%\item Understand how JavaDoc is used.
 \end{itemize}
 
 You should be able to finish the first exercise and most of the second
 one in the lab.
-
-\section{Final is final}
-\label{sec:final-final}
-
-Look at the following code. Is everything OK? How many errors can you spot?
-
-\begin{verbatim}
-    public class Person {
-        private final String name;
-
-        public Person(String name) {
-            this.name = name;
-        }
-
-        public String getName()
-            return this.name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-\end{verbatim}
-
-Once you think you have found all the errors, try to compile the code
-and see if your intuition was right. 
 
 \section{Practicing TDD: }
 \label{sec:jj}
@@ -206,5 +180,33 @@ small script that illustrates these situations:
 \item The ``maximum books'' is reduced to one, then to zero, then it
   is increased to the original value.  
 \end{itemize}
+
+\section{Final is final}
+\label{sec:final-final}
+
+Look at the following code. Is everything OK? How many errors can you spot?
+
+\begin{verbatim}
+    public class Person {
+        private final String name;
+
+        public Person(String name) {
+            this.name = name;
+        }
+
+        public String getName()
+            return this.name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+\end{verbatim}
+
+Once you think you have found all the errors, try to compile the code
+and see if your intuition was right. 
+
+
 
 \end{document}
