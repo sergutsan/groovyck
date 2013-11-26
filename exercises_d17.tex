@@ -145,6 +145,16 @@ ensure a correct behaviour.
 Check your answer with a colleage or with one of the members of the
 faculty. 
 
+% ANSWER: The three methods must be synchronised. In principle only
+% deposit() and retrieve() must be synchronised to prevent data loss
+% (e.g. you have 100, you deposit 50, but before you finish your wife
+% retrieves 50, and depending on when the threads are stopped and
+% activated you may end up with 100 or 200).
+% However, in this particular case of a bank account, you must also
+% synchronise getBalance(); otherwise, you could deposit 50, then get
+% balance, and see only 100 ---because deposit() had not finished
+% executing yet when you call getBalance()!
+
 \section{Responsive UI}
 \label{sec:responsive-ui}
 
