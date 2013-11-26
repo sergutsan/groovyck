@@ -178,6 +178,8 @@ output:
     ...
 \end{verbatim}
 
+Note that several tasks may end in between two user inputs. 
+
 \section{Parallel computation}
 \label{sec:parallel-computation}
 
@@ -237,7 +239,8 @@ the i$^{th}$ integer in the (sorted) list).
   of the list, mark the list as ``not sorted'' and return immediately.
 \item Another thread must be always observing the list and checking whether
   it is sorted; if it is, it must mark it as ``sorted''; if it is
-  not, if must sort it. The thread must order the list in small steps
+  not, the thread must sort it. The thread must re-order 
+  the list in small steps
   to make sure it does not cause additional delay when new elements
   are added to the list while it is sorting itself (i.e.~do not
   include a long loop in your synchronised code that may block the
@@ -265,7 +268,8 @@ that).
 
 A group of weak-sighted philosophers gathered around a circular table
 to have dinner together. They were served on one big round plate in
-the middle of the table, and they were given a fork each. In order to
+the middle of the table, and they were given a fork each (so there was
+a fork on the table between every two adjacent philosophers). In order to
 prevent everybody to take food at the same time, risking their clumsy
 hands hacking at their neighbours' with the forks, 
 the philosophers discussed and agreed to adhere to the following
