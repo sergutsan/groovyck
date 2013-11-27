@@ -145,7 +145,7 @@ looks (almost) like a normal method call.
   \label{fig:rmiflow3}
 \end{figure}
 
-\subsubsection*{Security issues}
+\subsection{Security issues}
 \label{sec:security}
 
 When computation is distributed among different machines there are
@@ -226,7 +226,7 @@ The server that provides the service,
 as we have mentioned, is implemented like a normal Java
 object\ldots with two additional details. First, the server object
 must extend \verb+UnicastRemoteObject+ (this means that it cannot 
-extends another class). Second, an explicit constructor
+extend another class!). Second, an explicit constructor
 must be provided ---even if empty--- that throws
 \verb+RemoteException+
 
@@ -310,7 +310,8 @@ port~1099). Then an instance of the server class is created and
 registered (i.e.~bound) with a given name. This name must be known by
 clients that want to use the services offered by the server.
 
-The server can be launched by specifying the security policy on the
+The server can be launched by specifying the security policy (i.e. a
+file like described on Section~\ref{sec:security}) on the
 command line: 
 
 \begin{verbatim}
