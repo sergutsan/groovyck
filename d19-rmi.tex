@@ -385,6 +385,31 @@ The client needs to look up the server at the registry (by providing a
 name). Once it has a reference to it (through the stub), it can call
 the methods in the interface like it was a local object. 
 
+\section{Conclusion}
+\label{sec:conclusion}
+
+In the modern world, programs are no longer confined to a single
+machine, and many program actually run on several machines at the same
+time. Some popular examples include web servers and web browser,
+bitTorrent programs, distributed storage programs, and version control
+programs like Git. 
+
+Most networking programs are based on the client--server paradigm,
+including P2P programs in which every computer can act as a server or
+a client at the same time. Servers expose or offer services and
+clients make requests for those services, e.g. asking for a webpage or
+pushing the latests commits. 
+
+We have seen how RMI works. RMI is a specific Java technology that we
+have chosen because it is a core Java component (i.e.~it does not need
+external libraries) and it suffices to illustrate most of the main
+networking concepts. The concepts we have learned are common to any
+network technology you will use in the future: client, server,
+registry, remote method invocation, security policy. Understanding how
+to implement these concepts in RMI will make it easy to learn and use
+other technologies in the future, such as REST and web services.
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "d19"
