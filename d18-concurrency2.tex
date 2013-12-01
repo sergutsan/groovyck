@@ -25,3 +25,42 @@ explained in the following sections.
 \section{Executors}
 \label{sec:executors}
 
+An \verb+Executor+ is an object that executes tasks. These tasks are
+defined by other objects. 
+
+This is similar to what we have been doing with threads. We have
+created threads that ran tasks that were defined by a \verb+Runnable+
+object, with a \verb+run()+ method. 
+
+The problem with this approach is that the creation of the thread, its
+lifetime, and the task it performs are closely linked. There is no
+separation between thread and task, between container and
+content. The thread lives for as long as the task is running, and as
+soon as the task finished the thread dies. This has several
+disadvantages: 
+
+\begin{itemize}
+\item Thread management is done manually and, therefore, is an
+  error-prone process. The programmer must take care not only of the
+  tasks that needs to be performed, but also of creating 
+  the thread to run it, starting it, managing its interruptions, etc.
+\item Thread creation takes time. In a highly concurrent application,
+  creation and destruction (i.e. garbage collection) of threads can
+  result in a performance penalty.
+\item Thread are memory structures that use a non-trivial amount of
+  memory. If threads are created manually one by one there is no
+  way to measure the load of the application and to manage 
+  it carefully to prevent running out of resources (not easily, at
+  least). 
+\end{itemize}
+
+In a large-scale application, it makes sense to separate thread
+creation and management from the rest of the application. Executors
+are objects that encapsulate these operations hiding them from the
+rest of the program. 
+
+\subsection{Three types of executors}
+\label{sec:three-types-exec}
+
+Executors are defined by three interfaces in the java.util.concurrent
+package. 
