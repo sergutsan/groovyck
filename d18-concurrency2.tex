@@ -62,5 +62,62 @@ rest of the program.
 \subsection{Three types of executors}
 \label{sec:three-types-exec}
 
-Executors are defined by three interfaces in the java.util.concurrent
-package. 
+Executors are defined by three interfaces in the
+\verb+java.util.concurrent+ package; the package also provides some
+implementation for these interfaces. 
+
+\begin{description}
+\item[Executor: ] This is the basic executor. It just supports
+  launching new tasks.
+\item[ExecutorService: ] This is an extension of the former one, and
+  adds features that help manage the lifecyle of the tasks to be run
+  and also the executor itself.
+\item[ScheduledExecutorService: ] An extension of the former one, this
+  interface adds methods to execute tasks in the future and at
+  scheduled times. 
+\end{description}
+
+As usual, variables that represent executor objects should be declared
+as one of these interfaces and not as one of the classes that
+implement them.
+
+\subsubsection{Executor}
+\label{sec:executor}
+
+The \verb+Executor+ interface defines only one method:
+\verb+execute(...)+. This interface is rarely used compared to the
+other two, but it was designed to be an easy replacement when fixing
+legacy code that had been implemented using pure threads and locks. If
+\verb+r+ is a \verb+Runnable+ object and \verb+e+ is an
+\verb+Executor+ object, than we can replace: 
+
+\begin{verbatim}
+    Thread t = new Thread(r);
+    t.start();
+\end{verbatim}
+
+with 
+
+\begin{verbatim}
+    e.execute(r);
+\end{verbatim}
+
+Simple, cleaner, and ---more important--- it opens the door to using
+one of the other two more powerful executors. Additionally, depending
+on the class that implements the \verb+Executor+, it may be able to
+reuse threads from a thread pool or put the runnable tasks in a queue
+if the system is busy; these things are not possible when using plain
+threads. Thread pools and queues of tasks are two constructs that
+are very convenient to ease the management of threads and solve some
+of the problems of using plain threads as explained above. More on
+that below. 
+
+\subsubsection{Executor Services}
+\label{sec:executor-services}
+
+The \verb+ExecutorService+ interface extends the plain \verb+Executor+
+with the \verb+submit(...)+ method, which is similar to
+\verb+execute(...)+ but more versatile because it accepts both
+\verb+Runnable+ and \verb+Callable+ tasks (i.e.~described by
+objects). Callable objects are similar to runnable objects but they
+can return a value when they finish their computation. 
