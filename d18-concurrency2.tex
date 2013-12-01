@@ -121,3 +121,24 @@ with the \verb+submit(...)+ method, which is similar to
 \verb+Runnable+ and \verb+Callable+ tasks (i.e.~described by
 objects). Callable objects are similar to runnable objects but they
 can return a value when they finish their computation. 
+
+The \verb+submit()+ method returns a \verb+Future+, which represents
+the result of the computation; it is called \emph{future} because it
+is only known after some indeterminate time passes after the service
+is called. The \verb+Future+ object can be used to retrieve the
+Callable return value, and to manage the status of both Callable and
+Runnable tasks. 
+
+% TODO: more on Futures
+
+The interface \verb+ScheduledExecutorService+ adds methods to schedule
+the execution of \verb+Ruunable+ and \verb+Callable+ tasks at specific
+points in time: \verb+schedule(...)+ executes the tasks after some
+time delay has passed, while \verb+scheduleAtFixedRate(...)+ and
+\verb+scheduleWithFixedDelay+ execute specified tasks repeatedly at 
+defined intervals. 
+
+
+\subsection{Thread pools}
+\label{sec:thread-pools}
+
