@@ -1,0 +1,27 @@
+\section{More concurrency}
+\label{sec:more-concurrency}
+
+Last unit we covered the basics of concurrent programming. We used the
+low-level elements that we can use in Java to create program where
+different tasks are being executed at the same time: threads and
+locks (and in particular, the \verb+synchronized+ keyword). 
+
+Although any kind of concurrent program can be created with these
+elements, in reality they are too basic for big programs and/or
+advanced tasks. It is very easy to make mistakes that will make a
+program run slower or ---worse--- block completely by using threads
+and locks directly. In the current context, in which multi-core
+computers have become the norm and applications need to be able to
+benefit from this inherent parallelism provided by the hardware,
+higher-order structures are needed to create reliable concurrent
+programs. 
+
+Java 5 introduced several features that aimed at covering this
+gap. The two most imporant, executors and concurrent collections, are
+explained in the following sections.
+
+% TODO: do fork/join
+
+\section{Executors}
+\label{sec:executors}
+
