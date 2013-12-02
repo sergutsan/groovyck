@@ -142,3 +142,69 @@ defined intervals.
 \subsection{Thread pools}
 \label{sec:thread-pools}
 
+The classes in \verb+java.util.concurrent+ that implement the executor
+interfaces described in the former section use in most cases a
+\emph{thread pool}. A thread pool is a collection or worker threads
+to which tasks (defined by \verb+Runnable+ and \verb+Callable+
+objects) can be asigned. This kind of thread exists separately from
+the tasks it executes and is often used to execute multiple tasks at
+different times. 
+
+Using thread pools reduces the overhead due to thread creation. Thread
+objects use a non-trivial amount of memory; in large projects
+allocation and disposal of a lot of thread objects can result in a
+noticeable performance cost. Having a pool of thread already created
+that can be reused reuslts in better performance. 
+
+One common type of thread pool is the fixed thread pool. A pool of
+this types has a specified number of threads running at all time; if
+for any reason a thread terminates while it is still in use, another
+thread will be created to replace it. If there are more tasks to be
+executed than threads, tasks will be added to an internal queue. As
+soon as thread finish tasks and become available, new tasks are
+retrieved from the queue and assigned to the thread. In the uncommon
+situation in which there are more tasks than threads ---or no tasks at
+all--- then the ``idle'' threads will \verb+wait()+.
+
+Having a fixed thread pool is a way of managing the load of your
+application. By capping the number of parallel tasks that the system
+will be running at any given time, the programmer makes sure that the
+system will not crash unexpectdely under stress. Without a limit on
+the number of thread to be created, the application will continue
+creating threads until it runs out of memory, and then it will crash,
+which is bad. By limiting the number of tasks that can be executing at
+the same time, and putting the new incoming tasks in a queue until
+there is a thread available for them, the application \emph{degrades
+  gracefully}; this means that it simply becomes gradually more slow
+in its response time, instead of becoming unresponsive suddenly and
+unexpectedly, and this is good.
+
+\section{Concurrent Collections}
+\label{sec:conc-coll}
+
+We have already used several collections from the Java Collections
+Framework (JCF): \verb+List+, \verb+Queue+, \verb+Stack+, \verb+Map+,
+\verb+Set+\ldots However, all these interfaces are not defined to be
+thread-safe, and therefore the classes that implement them (such as
+\verb+ArrayList+ and \verb+HashSet+ are not expected to be. This is OK
+for single-threaded applications, but in concurrent applications we
+need to make sure that our data structures remain consistent. 
+
+We can do this by using threads and locks (i.e.~\verb+synchronized+),
+but the \verb+java.util.concurrent+ package also includes some nice
+additions to the JCF. The two more interesting ones are described
+below: 
+
+\begin{description}
+\item[BlockingQueue: ] This is like a normal queue with two
+  exceptions. When you try to insert an element into an already full
+  queue, it will wait until there is space instead of failing; it can
+  timeout if the queue remains full for too long. A similar behaviour
+  applies when you try to retrieve an element from an empty queue: it
+  will wait until there is something to retrieve\ldots or timeout.
+\item[ConcurrentMap: ] This is an extension of \verb+Map+ that adds
+  atomicity to the usual put-replace-delete operations of maps. These
+  operations remove or replace a key-value pair only if the key is
+  present, or add a key-value pair only if the key is absent. Making
+  these operations atomic helps avoid external synchronization.
+\end{description}
