@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[dvips]{graphicx}
+\begin{document}
+
+\section*{Learning goals}
+\label{sec:learning-goals}
+
+Before the next day, you should have achieved the following learning
+goals: 
+
+\begin{itemize}
+\item Use the main classes from package \verb+java.util.concurrent+.
+\item Understand the concepts of \emph{thread pool} and \emph{graceful
+  degradation}.
+\end{itemize}
+
+\section{Graceful degradation everywhere}
+\label{sec:grac-degr-everywh}
+
+Think of three examples of concurrent applications that you use every
+week and that benefit from graceful degradation, i.e. becoming
+gradually more slow under high load rather than crashing unexpectedly.
+
+Once you have thought of three examples, check them with one of your
+colleagues. Have you thought of the same examples?
+
+\section{Text loops re-executed}
+\label{sec:text-loops}
+
+Modify the code of the exercise ``Text Loops'' from last day to use
+one of the \verb+Executor+ instead of plain threads. 
+
+\section{Responsive UI (that degrades gracefully)}
+\label{sec:responsive-ui-that}
+
+Modify your solution of exercise ``Responsive UI'' so that: 
+
+\begin{itemize}
+\item It has two classes: one represents the application and one
+  represents its users.
+\item The former uses an \verb+Executor+ with a thread of pools
+  instead of using plain threads.
+\item The latter will use another \verb+Executor+ to have a lot of
+  threads representing users, and the threads will programatically
+  create new tasks instead of the human user doing it by hand,
+  i.e. there is no need to ask the user to enter data at any point in
+  this version of the exercise. Threads should create tasks as
+  fast as the time they need to be run (e.g.~if a task that will make
+  the thread sleep for one second, the next task should be created
+  a second later). 
+\item The ``application'' class should implement a method
+  \verb+getMinimumWait()+ that returns the sum of the time needed to
+  execute all tasks already in the queue.
+\item The ``users'' (threads) will ask for the minimum waiting time
+  before they assign a new task. If the wait is above a certain
+  threshold, the user should print ``The site is down! I will
+  come back later...'' and then wait for a long time before sending
+  more tasks. 
+\end{itemize}
+
+Try your implementation with different numbers of users and see how
+many users it can handle. 
+
+\section{Self-ordering list (*)}
+\label{sec:self-ordering-list--}
+
+Re-implement your solutions for the exercise ``Self-ordering list'' by
+using an \verb+Executor+. 
+
+\section{Dining philosophers (*)}
+\label{sec:dining-philosophers}
+
+Re-implement your solutions for the exercise ``Self-ordering list'' by
+using an \verb+Executor+. 
+
+\section{Implementing Executor (**)}
+\label{sec:impl-exec-}
+
+Create your own implementation of Executor, with a thread pool of $n$,
+where $n$ is set at construction time. Use your implementation in the
+former exercises. 
+
+
+\end{document}
