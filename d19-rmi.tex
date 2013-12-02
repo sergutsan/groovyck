@@ -8,6 +8,12 @@ computers could communicate was by passing programs or data
 indirectly using external data storage units
 like perforated tapes, magnetic disks, or CDs (and using a human being
 to move them from one computer to the next). 
+%
+In the 1960s-70s computers were physically huge machines to which
+users connected through so-called dumb terminals. In the 1980s-90s
+personal computers became the norm, and therefore there were many more
+computers in the world, but they were still mostly isolated from each
+other.
 
 The development of network technologies and the Internet made it
 feasible to communicate computers directly and in real time, faster
@@ -16,7 +22,7 @@ programming, where programs run in more than one computer at the same
 time. In the early stages, most of the computation was done in one
 machine (where the data was) and a little part of it (visualising the
 results) was done in another one (where the human user was). Nowadays,
-grids are 
+grids and clouds are 
 able to run programs on several computers at the same time, each of
 them working only on a small part of 
 the problem, giving the general impression
@@ -35,8 +41,8 @@ will learn are common to several different technologies.
 
 Most network applications follow the client--server
 paradigm\footnote{In recent years, the P2P (peer to peer) model has
-  become quite popular. In these applications, all programs can be client
-  and server at the same time.}. This means that the program has two 
+  become quite popular. In P2P applications, all computers act as client
+  \emph{and} server at the same time.}. This means that the program has two 
 parts: \emph{server} and \emph{client}. The former is
 runnning in a well-known computer, waiting for clients to request its
 services.  \emph{Clients} run on different computers and use the
@@ -56,14 +62,14 @@ the same program. This is only a matter of perception: at a technical
 level, client and server are always two different processes with two
 different and unrelated memory spaces (stack and heap), usually on two
 different machines\footnote{Some applications, including databases and
-email programs, have different client and server processes even on the
-same machine.}. 
+email programs, have different client and server processes running on
+the same machine.}. 
 
 By metonymy, the words client and server are commonly used to refer to
 the machines where the server or the clients run. For example,
 depending on the context, the term ``web server'' may refer to the
-program that serves web pages or a physical computer where this
-program is running. 
+program that serves web pages (like Apache) or a physical computer
+where this program is running (like 'www.dcs.bbk.ac.uk'). 
 
 \subsection{Remote Method Invocation (RMI)}
 \label{sec:remote-meth-invoc}
@@ -71,7 +77,7 @@ program is running.
 There are many technologies to create network applications. Some 
 popular ones include RPC, CORBA, RMI, REST, GWT, servlets, and web
 services. Most of them have several things in common. We are going to
-learn to use RMI, the acronym for Remote Method Invocation. 
+learn to use RMI (the acronym is for Remote Method Invocation). 
 
 RMI applications are based on the client--server paradigm. Servers are
 implemented by objects that expose (i.e.~implement) some
@@ -82,7 +88,7 @@ need a pointer to the object, and pointers can only exist inside their
 own memory space. 
 
 In order to be able to call methods on objects that do no exist on
-their own machine, clients ask the registry for a \emph{stub} to the
+their own machine, clients ask the \emph{registry} for a \emph{stub} to the
 server. The registry is a special kind of program ---a sort of white
 pages--- where servers can register themselves, and then clients can
 ask for a reference to a server by providing a name. 
@@ -139,7 +145,7 @@ looks (almost) like a normal method call.
   \label{fig:rmiflow3}
 \end{figure}
 
-\subsubsection*{Security issues}
+\subsection{Security issues}
 \label{sec:security}
 
 When computation is distributed among different machines there are
@@ -167,6 +173,8 @@ machines ``127.0.0.1'' (which
 means \emph{localhost}, i.e.~the machine the program is running on) on
 any port, and to connect to machine ``127.0.0.1'' on any port or to
 machine ``192.168.0.1'' on port 80. 
+
+% TODO: maybe a little more explanation here would be good?
 
 \subsection{Offering a remote service through RMI}
 \label{sec:offer-remote-serv}
@@ -205,8 +213,10 @@ All objects used as parameters or return values in a RMI interface
 must implement the interface \verb+java.io.Serializable+. This is a
 tagging interface ---an interface with no methods--- that indicates
 that Java should be able to ``flat down'' the object into bytes
-(serializing) and then reconstruct the object again at the other end
-(marshalling).  Usual data types from Java (e.g.~Integer, String)
+(this is called \emph{serializing}) 
+and then reconstruct the object again at the other end
+(this is called \emph{marshalling}).  
+Usual data types from Java (e.g.~Integer, String, etc)
 implement \verb+Serializable+.
 
 \subsection{Implementing the service}
@@ -216,7 +226,7 @@ The server that provides the service,
 as we have mentioned, is implemented like a normal Java
 object\ldots with two additional details. First, the server object
 must extend \verb+UnicastRemoteObject+ (this means that it cannot 
-extends another class). Second, an explicit constructor
+extend another class!). Second, an explicit constructor
 must be provided ---even if empty--- that throws
 \verb+RemoteException+
 
@@ -300,7 +310,8 @@ port~1099). Then an instance of the server class is created and
 registered (i.e.~bound) with a given name. This name must be known by
 clients that want to use the services offered by the server.
 
-The server can be launched by specifying the security policy on the
+The server can be launched by specifying the security policy (i.e. a
+file like described on Section~\ref{sec:security}) on the
 command line: 
 
 \begin{verbatim}
@@ -373,6 +384,31 @@ The steps to be followed on the server side are:
 The client needs to look up the server at the registry (by providing a
 name). Once it has a reference to it (through the stub), it can call
 the methods in the interface like it was a local object. 
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+In the modern world, programs are no longer confined to a single
+machine, and many program actually run on several machines at the same
+time. Some popular examples include web servers and web browser,
+bitTorrent programs, distributed storage programs, and version control
+programs like Git. 
+
+Most networking programs are based on the client--server paradigm,
+including P2P programs in which every computer can act as a server or
+a client at the same time. Servers expose or offer services and
+clients make requests for those services, e.g. asking for a webpage or
+pushing the latests commits. 
+
+We have seen how RMI works. RMI is a specific Java technology that we
+have chosen because it is a core Java component (i.e.~it does not need
+external libraries) and it suffices to illustrate most of the main
+networking concepts. The concepts we have learned are common to any
+network technology you will use in the future: client, server,
+registry, remote method invocation, security policy. Understanding how
+to implement these concepts in RMI will make it easy to learn and use
+other technologies in the future, such as REST and web services.
+
 
 %%% Local Variables:
 %%% mode: latex

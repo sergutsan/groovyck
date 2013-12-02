@@ -22,19 +22,20 @@ statement was going to be executed next (and with which values, etc).
 
 However, we know that computers can do several things at the same
 time. The computer you are working on now is able to show you this
-document, accept input from your keyboard and mouse, browse the
-internet, keep several services active in the background, and
+document while accepting input from your keyboard and mouse, 
+browsing the internet, 
+keeping several services active in the background, and
 performing several other tasks at the same time. 
 Computers are able to do this by
 switching tasks on the microprocessor (some nanoseconds of reading data from the
 network, then a bit of reading keyboard input, then painting the
 screen, then a bit of network again\ldots), but the switching happens so
-fast that it gives the impression to humans of all tasks happening
+fast that it gives the impression to humans that all tasks happen
 simultaneously. Additionally, now that multi-processor computers and
-multi-core processors are becoming the norm, computers are able to
+multi-core processors have become the norm, computers are able to
 actually do more than one task at the same time, one per
 microprocessor or core (plus they still
-switch tasks).
+switch tasks fast).
 
 In this section we are going to learn the basics of concurrent
 programming, enabling our programs to do more than one thing at the
@@ -54,7 +55,7 @@ for seasoned programmers\footnote{Concurrent programming is so
 \label{sec:why-concurrency}
 
 Concurrent programming is harder than simple deterministic
-programming, but it bear many important benefits, including: 
+programming, but it bears many important benefits, including: 
 
 \begin{description}
 \item[Performance. ] If your task can be separated into many subtasks,
@@ -91,14 +92,15 @@ hinted at already: determinism. Concurrent programs are not
 deterministic, we cannot tell which will be the next statement to be
 executed even if we know exactly which one was executed last. 
 
-This is because the machine will keep switching tasks and we do not
-have any control over that process. The machine will switch tasks
-depending on many different factors that we cannot control, and this
+This is because the machine will keep switching tasks and we \emph{do not
+have any control} over that process. The machine will switch tasks
+depending on many different factors that we cannot control and this % TODO: search synonym for this or the former "control"
 means that our execution flow may be stopped after one or one hundred
 statements have been executed, and the context may have changed when
 the execution is resumed. Imagine that you are going to take the last
 sandwich on the plate but, just before you grab it, it disappears;
-this means that the computer stopped you midway through, continued
+this means that the computer stopped you midway through your action
+``taking sandwich'', continued
 executing another thread (that grabbed the sandwich and ran away), and
 then continued executing you\ldots but the context had changed (the
 sandwich had disappeared). 
@@ -156,11 +158,12 @@ threads are defined by using a class that implements interface
 
 Starting a thread with a new \verb+Runnable+ task is easy. First, we
 create the thread, then we start it. Assuming we have a runnable
-object called \emph{myRunnable}, the code looks like:
+object called \emph{myRunnable} (that implements 
+interface \verb+Runnable+), the code looks like:
 
 \begin{verbatim}
-    Thread t = new Thread(myRunnable);
-    t.start();
+    Thread newThread = new Thread(myRunnable);
+    newThread.start();
 \end{verbatim}
 
 From this point on, the new thread will be running in parallel with
@@ -207,37 +210,34 @@ that is common when multithreaded programs are not studied carefully.
 
 Let's imagine that we have two threads, T1 and T2, running in
 parallel. (Read the following lines carefully, its gets messy). 
-%
-T1 is executing at the moment, and T2 is ``dormant''. 
-%
-T1 calls method \verb+getCount()+ when \verb+count+ is 0, calls
+\begin{itemize}
+\item T1 is executing at the moment, and T2 is ``dormant''.
+\item T1 calls method \verb+getCount()+ when \verb+count+ is 0, calls
 \verb+increment()+ and increases the value to 1, 
-then it is interrupted. 
-%
-T2 resumes its execution, which includes
+then it is interrupted.
+\item T2 resumes its execution, which includes
 calling \verb+getCount()+ (\verb+count+ is now 1), and then calls
-\verb+increment()+, and increments \verb+count+, that is now 2. 
-% 
-T2 is interrupted and T1 resumes execution. It finishes with
+\verb+increment()+, and increments \verb+count+, that is now 2.
+\item T2 is interrupted and T1 resumes execution. It finishes with
 \verb+increment()+, returns to \verb+getCount()+ and calls
 \verb+decrement()+, decreasing the value of \verb+count+ to 1, then
-returns to \verb+getCount()+ and returns 1 (not 0!). 
-%
-T2 continues execution and finishes \verb+getCount()+ returning a
+returns to \verb+getCount()+ and returns 1 (not 0!).
+\item T2 continues execution and finishes \verb+getCount()+ returning a
 value of 0 (not 1!).
-%
+\end{itemize}
+
 If we had more than two threads, the situation could be even more
 complicated and unpredictable. For example, a third thread may have called
 \verb+increment()+ and \verb+decrement()+ while T1 and T2 had not
-finished their execution of \verb+getCount()+. 
-%
+finished their execution of \verb+getCount()+.
 Keep also in mind that interruptions and thread-switching
 could have happened in between the \verb_count++_ and \verb+count--+
-statements.
+statements because they are not atomic despite the fact that they are
+just one short line. 
 
 The moral of the story is: concurrent programming is difficult, and
 non-deterministic; you have to be very careful or you will get it
-wrong. 
+wrong.
 
 \subsection{Synchronisation}
 \label{sec:synchronization}
@@ -250,20 +250,24 @@ synchronisation is by means of \emph{locks}. By acquiring and
 releasing locks, we can make sure that our threads do not overlap
 with bad results. 
 
-We can think of thread locks as locks on doors. When a door is open
-(lock free) any person (thread) can open the door and enter (acquire
-the lock, and start executing some code), 
-closing the door behind. Any other persons that tries
+We can think of thread locks as locks on doors: door locks control
+access to rooms and thread locks control access to pieces of code. 
+When a door is open
+(lock free) any person (thread) can open the door and enter (start
+executing some code),  
+closing the door behind (acquiring the lock). 
+Any other persons that tries
 to open the door (tries to acquire the lock) 
 while another person has locked it
 (while another thread has the lock) will be blocked, and will have to wait. As
 soon as the person that locked the door opens it and comes out (thread
 releases the lock) another person can enter (another thread can
 acquire the lock and start executing the code). 
-It is important to note that threads do not make an
-ordered queue before a lock like good British citizens. Quite the
+
+It is important to note that threads do \emph{not} make an
+ordered queue in front of a lock like good British citizens. Quite the
 opposite: when a lock is released, any thread that was waiting for the
-lock may acquire it. You can think of locks as noisy foreigners,
+lock may acquire it. You can think of threads as noisy foreigners,
 pushing each other to be in front of the door when it opens, ready to
 rush in as soon as the person inside gets out. 
 
@@ -271,46 +275,57 @@ In Java, locks are acquired (and released) easily by using one of the
 few keywords we have not seen yet: \verb+synchronized+. This keyword
 can be used on methods or on fragments of code. 
 
+\subsubsection{Synchronising fragments of code}
+\label{sec:synchr-fragm-code}
+
 When used on a fragment of code, it must specify the object from which
 to acquire the lock. 
 %
 Every Java object contains a lock inside, so every Java object can be
 used for this purpose. 
 %
-If it is available, the lock will be acquired and the code
+If the lock is available, it will be acquired and the code
 will execute. At the end of the scope, the lock will be released. If
-the lock is not available (another thread has it), the thread will
-block waiting for the lock to be available. 
+the lock is not available (another thread has it) the thread will
+block, waiting for the lock to be available. 
 
 \begin{verbatim}
-    private Object obj = new Object();
-    // ...
-    public int getCount() {
-        synchronized (obj) { 
-            increment();
-            decrement();
-            return count;
-        }
-    }
+1    private Object obj = new Object();
+2    // ...
+3    public int getCount() {
+4        synchronized (obj) { 
+5            increment();
+6            decrement();
+7            return count;
+8        }
+9    }
 \end{verbatim}
 
-When T1 enters the \verb+synchronized+ block, it may be interrupted
+When T1 enters the \verb+synchronized+ block (lines 4--8), 
+it may be interrupted
 because the machine switches to~T2. Thanks to the use of locks, 
 this will not pose a problem when~T2 executes
-\verb+getCount()+ because~T2 will try to acquire the lock of the
-object (\verb+obj+), realise it is already acquired by another
-thread, and get blocked. When the machine switches back to~T1, it will
+\verb+getCount()+ because~T2 will try to acquire the lock of object
+\verb+obj+ (line 4), realise it is already acquired by another
+thread, and get blocked. When the machine switches back to~T1 at an
+undetermined time in the future, it will
 continue with its execution until it returns a value
-from \verb+getCount()+. At this point,
-the lock on \verb+obj+ will be released and~T2 (or other threads
-waiting for the same lock, \emph{maybe in other methods of the same object})
-will be able to acquire and continue with their execution. 
+from \verb+getCount()+ (line 7). The lock is released when a thread
+reaches the end of a \verb+synchronised+ block, either explicitly (in
+the example, by reaching line 8) or implicitly, either by returning a
+value (as in this example) or by throwing an exception. 
 
-Note that we could have used any object for locking this block of
+When the lock on \verb+obj+ is released, T2 (or any other thread
+waiting for the same lock, \emph{maybe in other methods of the same object})
+will be able to acquire it and continue with their execution. 
+
+Note that we could have used \emph{any} object for locking this block of
 code. For example, if \verb+count+ was an \verb+Integer+ instead of an
 \verb+int+, we could have used its lock to synchronise the block. We
-could have also acquired the lock of \verb+this+ object. Note as well
-that the object from which we use the lock must be a field and cannot be a local
+could have also acquired the lock of \verb+this+ object (the object
+where the code is being executed). Note as well
+that the object from which we use {\bf the lock must be a field} and 
+cannot be a local
 variable because every thread has its own stack, so the following code
 will not work as intended: 
 
@@ -325,6 +340,9 @@ will not work as intended:
     }
 \end{verbatim}
 
+\subsubsection{Synchronising full methods}
+\label{sec:synchr-full}
+
 The second way in which \verb+synchronized+ can be used is to
 synchronise full methods, as in this example: 
 
@@ -337,20 +355,27 @@ synchronise full methods, as in this example:
 \end{verbatim}
 
 When it is used in this way, the thread trying to execute the
-synchronised method will acquire the lock of the object. In a
+synchronised method will acquire the lock of \verb+this+ object. In a
 way, this is similar to using \verb+synchronized(this)+ on the full
 code of the method, but the
-effect is a bit different. Synchronising the whole method has two
+effect is a bit different. 
+
+\begin{itemize}
+\item Synchronising the whole method has two
 benefits: it is simpler (less lines of code) and clearer (the
 \verb+synchronized+ will appear in the documentation of your class,
-making it explicit to other programmers). Synchronising a fragment has
+making it explicit to other programmers).
+\item Synchronising a fragment has
 two benefits: it allows you to synchronise only part of the method
 (finer-grained synchronisation) 
-and it can use different objects for locks, not just \verb+this+. Both
-aspects may be important for making sure that your program does
-not block, depending on the application (see Section~\ref{sec:why-not-make}). 
+and it can use different objects for locks, not just \verb+this+. 
+\end{itemize}
 
-Note that \verb+synchronized+ does not make your block of statements
+Both aspects may be important for making sure that your program does
+not block, depending on the application (see
+Section~\ref{sec:why-not-make}).
+
+Note that \verb+synchronized+ does \emph{not} make your block of statements
 \emph{atomic}. Your thread can still be interrupted an arbitrary
 number of times while it is executing a
 synchronised block. The only thing that \verb+synchronized+ will do
@@ -388,13 +413,15 @@ called a \emph{deadlock}, and is one of the most common problems with
 concurrent programs (the other being race conditions leading
 to harmful overlapping of threads accessing the same resource). 
 %
-Imagine that Andrew stops before the gate, to let Bob pass first; Bob
-also stops before the gate to let Andrew pass first; as each of them
-is waiting for the other to act, none of them do: this is a deadlock. 
+Remember that we said that thread locks are like door locks? Imagine
+that Andrew stops before the door to let Bob pass first, and the same
+time Bob also stops before the door to let Andrew pass first; as each
+of them is waiting for the other to act, none of them do: this is a
+deadlock.  
 
-There is no easy way to avoid deadlocks in our code. We must be really
-careful in our design, as we have to be to avoid other less common but
-equally bad situations: starvation and livelock. 
+There is no easy way to avoid deadlocks in our code: we must be really
+careful in our design. Careful design will prevent deadlocks and also 
+other less common but equally bad situations: starvation and livelock. 
 
 \emph{Starvation} occurs when one or more of our threads never execute
 and/or have access to some resource they need. This may happen for
@@ -406,7 +433,7 @@ more threads are blocking each other, but the difference is that the
 program is still running, only not making any progress. Imagine that
 Andrew and Bob meet in the middle of the corridor; Andrew moves to the
 left to let Bob pass, and Bob moves to the right for the same reason:
-they are block again; then Andrew moves to the right and Bob moves to
+they are blocked again; then Andrew moves to the right and Bob moves to
 the left, blocking each other again; and this continues forever. 
 
 Finally, a \emph{race condition} happens when the outcome of our
@@ -435,7 +462,9 @@ it is guarded/protected by the condition. We could implement guarded
 blocks with a simple \verb+while+ loop, as shown below:
 
 \begin{verbatim}
-    while (!conditionMet) {}
+    while (!conditionMet) { 
+        // empty loop -- no code
+    }
     // Guarded block comes here...
 \end{verbatim}
 
@@ -448,7 +477,7 @@ the execution. We can do this by using the static method
 \begin{verbatim}
     while (!conditionMet) {
         try {
-            Thread.sleep(1000); // sleep 1 second
+            Thread.sleep(1000); // sleep 1000ms = 1 second
         } catch (InterruptedException ex) {
             // Nothing to do in this case, just sleep less...
         }
@@ -458,14 +487,15 @@ the execution. We can do this by using the static method
 
 (Methods that put a thread on hold, like \verb+Thread.sleep()+, can be
 interrupted. If that happens, an \verb+InterruptedException+ will be
-thrown. This is a checked exception.)
+thrown. This is a checked exception and, therefore, must be caught).
 
 This is better than the former version, but it still checks every
 single second. Maybe the condition will take a long time before it
 evaluates to \verb+true+. Is there any way to tell the thread to wait
-indefinitely until the time comes to wake up again? 
+\emph{indefinitely} until the time comes to wake up again? 
 
-As it happens, there is. An object can call \verb+wait()+ to interrupt
+As it happens, there is. An object can call its own method
+\verb+wait()+ to interrupt 
 the execution of a thread at a given point. The thread will remain
 stopped until notified by another thread (using method
 \verb+notifyAll()+\footnote{There is also a method notify(). There are
@@ -478,37 +508,38 @@ lock on the object, otherwise Java will throw an
 monitor is by synchronising the method, as in the following code: 
 
 \begin{verbatim}
-    public synchronized void doSomething() {
-        while (!conditionMet) {
-            try {
-                wait(); // sleep until notified
-            } catch (InterruptedException ex) {
-                // Nothing to do in this case, just wait less...
-            }
-        }  
-        // Guarded block comes here...
-    }
-    // ...
-    public synchronized void anotherMethod() {
-        // ...
-        notifyAll();
-        // ...
-    }
+01    public synchronized void doSomething() {
+02        while (!conditionMet) {
+03            try {
+04                wait(); // sleep until notified
+05            } catch (InterruptedException ex) {
+06                // Nothing to do in this case, just wait less...
+07            }
+08        }  
+09        // Guarded block comes here...
+10    }
+11    // ...
+12    public synchronized void anotherMethod() {
+13        // ...
+14        notifyAll();
+15        // ...
+16    }
 \end{verbatim}
 
-When a thread executes \verb+wait()+, it releases the lock it had
+When a thread executes \verb+wait()+ (line~4), it releases the lock it had
 acquired. Other thread may acquire it then and enter the same
 \verb+synchronized+ block of code (or others), and maybe get blocked
 at the same \verb+wait()+ call. The lock can also be acquired by another
-thread to enter a block of code where it calls \verb+notifyAll()+. At
+thread to enter a block of code where it calls
+\verb+notifyAll()+ (line~14)). At
 this point, all the threads that were waiting on the same object are
 woken up ---but they cannot continue executing because the lock is
 still with the thread that executed the notification. After this
-thread releases the lock, one of the awaiting threads will re-acquire
+thread releases the lock (line~16), one of the awaiting threads will re-acquire
 it (without the need to re-enter the code, it is already there) and
 continue its execution. Note that this may or may not have a real
-effect, depending on whether the condition has already been met; if it
-is not, the thread will \verb+wait()+ again. 
+effect, depending on whether the condition has already been met (line~2); if it
+is not, the thread will \verb+wait()+ again (line~4). 
 
 \subsection{Immutable objects}
 \label{sec:immutable-objects}
