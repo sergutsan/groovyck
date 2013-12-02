@@ -31,17 +31,51 @@ colleagues. Have you thought of the same examples?
 Modify the code of the exercise ``Text Loops'' from last day to use
 one of the \verb+Executor+ instead of plain threads. 
 
+
 \section{Responsive UI (that degrades gracefully)}
 \label{sec:responsive-ui-that}
+
+\subsection{Implement Executor}
+\label{sec:implement-executor}
+
+Create your own implementation of \verb+Executor+. Look at the
+documentation of the API of \verb+Executor+ for ideas. Your
+implementation must be able to execute one \verb+Runnable+ at a time
+(but you can make it run several tasks in paralel, see also
+Exercise~\ref{sec:impl-exec-}) and must have a queue of pending
+tasks. 
+
+Try your implementation by exchaning the class that you used in your
+solution for the former exercise by your new implementation of
+\verb+Executor+. 
+
+\subsection{Extend Executor}
+\label{sec:extending-executor}
+
+Create a class \verb+TimedTask+ that implements
+\verb+Runnable+ where the \verb+run()+ method is only a call to
+\verb+Thread.sleep()+ for a number of milliseconds set at creation
+time. This number must be at most 1000 (if a higher number is given at
+construction time, it must be capped at 1000). 
+
+Now extend your implementation of \verb+Executor+ so that it has a
+public method \verb+getMaxPendingTime()+ that returns the maximum
+theoretical time needed to run all tasks in the queue (i.e~assuming
+all of them last 1000ms).
+
+
+\subsection{Use Executor}
+\label{sec:use-new-executor}
 
 Modify your solution of exercise ``Responsive UI'' so that: 
 
 \begin{itemize}
 \item It has two classes: one represents the application and one
   represents its users.
-\item The former uses an \verb+Executor+ with a thread of pools
-  instead of using plain threads.
-\item The latter will use another \verb+Executor+ to have a lot of
+\item The former uses your implementation of \verb+Executor+ with a
+  thread of pools instead of using plain threads.
+\item The latter will use an \verb+Executor+ from Java 
+  to have a lot of
   threads representing users, and the threads will programatically
   create new tasks instead of the human user doing it by hand,
   i.e. there is no need to ask the user to enter data at any point in
@@ -50,17 +84,38 @@ Modify your solution of exercise ``Responsive UI'' so that:
   the thread sleep for one second, the next task should be created
   a second later). 
 \item The ``application'' class should implement a method
-  \verb+getMinimumWait()+ that returns the sum of the time needed to
+  \verb+getMaxWait()+ that returns the (theoretical) time needed to
   execute all tasks already in the queue.
-\item The ``users'' (threads) will ask for the minimum waiting time
+\item The ``users'' (threads) will ask for the waiting time
   before they assign a new task. If the wait is above a certain
-  threshold, the user should print ``The site is down! I will
-  come back later...'' and then wait for a long time before sending
+  threshold (set at construction time for each ``user''), the ``user'' 
+  should print ``The site is down! I will come back later...'' and
+  then wait for a long time before sending 
   more tasks. 
 \end{itemize}
 
 Try your implementation with different numbers of users and see how
 many users it can handle. 
+
+% TODO: think this through next year. It is 02h00 now...
+%
+% \subsection{TimedRunnable (*)}
+% \label{sec:extending-executor}
+
+% Create an interface \verb+TimedRunnable+ that extends \verb+Runnable+
+% with a method \verb+timeNeeded()+, that returns the time needed to run
+% the tasks in milliseconds. Create also a class that implements
+% \verb+TimedRunnable+ where the \verb+run()+ method is only a call to
+% \verb+Thread.sleep()+ for a number of milliseconds set at creation
+% time.
+
+% Now extend your implementation of \verb+Executor+ so that it is able
+% to execute both normal \verb+Runnable+ tasks and \verb+TimedRunnable+
+% task. Both types of tasks should be stored in different queues. It
+% must also implement a public method \verb+getExactTime()+ 
+% that returns the sum of the time needed to run all
+% \verb+TimedRunnable+ in the queue. 
+
 
 \section{Self-ordering list (*)}
 \label{sec:self-ordering-list--}
@@ -74,10 +129,12 @@ using an \verb+Executor+.
 Re-implement your solutions for the exercise ``Self-ordering list'' by
 using an \verb+Executor+. 
 
-\section{Implementing Executor (**)}
+\section{Implementing Executor Services (**)}
 \label{sec:impl-exec-}
 
-Create your own implementation of Executor, with a thread pool of $n$,
+Create your own implementation of \verb+Executor+,
+\verb+ExecutorService+ and 
+\verb+ScheduledExecutorService+, with a thread pool of $n$, 
 where $n$ is set at construction time. Use your implementation in the
 former exercises. 
 
