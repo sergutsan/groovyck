@@ -1,3 +1,5 @@
 grant {
-    permission java.net.SocketPermission "127.0.0.1:*", "connect,accept";
+    permission java.net.SocketPermission "127.0.0.1:*", "connect,accept";  // this machine, where the server lives
+    permission java.net.SocketPermission "193.61.29.163:*", "connect,accept";
+    permission java.net.SocketPermission "193.61.29.208:*", "connect,accept"; // this machine, where the server lives
 };
