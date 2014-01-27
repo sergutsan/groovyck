@@ -89,6 +89,9 @@ of the array to another method; second, remove the first \verb+if+ by
 including the base cases (1 and 2) in the array at initialisation. The
 new code would look like this: 
 
+% TODO: yet another improvement, use a final NOT_USED instead of a
+% magic -1
+
 \begin{verbatim}
     // arrays are 0-based, so F(1) is stored at position 0, etc
     private int[] precalculated = null;
