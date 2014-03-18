@@ -434,17 +434,17 @@ The code below shows a typical use of \verb+PrintWriter+:
 
 \begin{verbatim}
     File file = new File("file.csv");
+    PrintWriter out = null;
     try {
-        PrintWriter out = new PrintWriter(file); 
+        out = new PrintWriter(file); 
         out.write(...);
-    } catch (FileNotFoundException ex) {
-        // This happens if file does not exist and cannot be created, 
-        // or if it exists, but is not writable
+    } catch (FileNotFoundException ex) { // 
+        // FileNotFoundException extends IOException; it is 
+        // thrown if the file does not exist and cannot be 
+        // created, or if it exists but is not writable.
         System.out.println("Cannot write to file " + file + ".");
-    } catch (IOException ex) {
-        ex.printStackTrace();
     } finally { 
-        out.close()
+        out.close();
     }    
 \end{verbatim}
 
