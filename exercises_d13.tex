@@ -166,25 +166,11 @@ you wrote in past weeks. Which one seems clearer to you?
 \section{Power}
 \label{sec:power}
 
-Create a class with a static method \verb+pow+ that takes to integers
+Create a class with a method \verb+pow+ that takes two integers
 (\verb+base+ and \verb+exponent+) and calculates the power, 
 e.g.~\verb+pow(2,3)+ calculates $2^3$. 
 
 Is it easy to do this both iteratively and recursively? 
-
-
-\section{Eight Dames (**)}
-\label{sec:eight-dames}
-
-Create a method that calculates the solution to the problem of the
-eight Dames: ``given a chess board, and knowing that the Dame can reach
-any tile horizontally, vertically, or diagonally, place 8 Dames on the
-board so that none of them can reach the others by doing only one
-move''. You can return the solution as an array of 8x8 booleans where
-eight tiles are true (those with the Dames on them) and the others are false. 
-
-For extra complexity, make your method return all the possibilities in
-which the problem can be solved (this may take a long time). 
 
 \section{Hanoi Redux (**)}
 \label{sec:hanoi-redux}
@@ -204,8 +190,9 @@ exchange $n$ discs.
 
 Write a method that calculates the maximum size of the stack (measured
 in method calls) by forcing a \verb+StackOverflowError+. Use different
-methods, which different number and types of local variables, and see
-how the number of maximum function calls changes.
+version of your method, each of them with a different number and
+different types of local variables, and see
+how the number of maximum function calls changes depending on that. 
 
 % Exercises
 %   - Greatest common divisor ( p > q => gcd(p,q) = gcd(q, p % q) )
