@@ -25,6 +25,7 @@
 * Pre: 
 
 * During:
+  Exercise on board about methods.
 
 * Post: 
 
