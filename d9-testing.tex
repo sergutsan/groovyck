@@ -258,14 +258,17 @@ to do so, you must bear in mind some facts:
 \item When you modify the CLASSPATH, you must remember to add the
   current folder (or Java will not find your class!).
 \item The core class in JUnit is called, perhaps unsurprisingly,
-  \verb+JUnitCore+. 
+  \verb+JUnitCore+.
+\item From version 4.11 on (or, in other words, since 2013) JUnit uses
+  a pattern-matching library called HamCrest. 
 \end{itemize}
 
-With this in mind, you are now able to run the following
-command: 
+With this in mind, you are now able to run the following command
+(please note that the JAR files may have a version number in their
+names):
 
 \begin{verbatim}
-    > javac -cp .:junit-4.10.jar PersonTest.java
+    > javac -cp .:junit.jar:hamcrest-core.jar PersonTest.java
 \end{verbatim}
 
 This will compile your test class(es). The \verb+-cp+ parameter is the
@@ -277,7 +280,7 @@ Windows. To run the tests, you must execute the main method in class
 passing all your test classes as parameters: 
 
 \begin{verbatim}
-    > java -cp .:junit-4.10.jar org.junit.runner.JUnitCore PersonTest
+    > java -cp .:junit.jar:hamcrest-core.jar org.junit.runner.JUnitCore PersonTest
 \end{verbatim}
 
 You can read that as ``execute on the Java Virtual Machine'', using as
@@ -421,7 +424,7 @@ regress, i.e.~it does not go backwards.
 
 It is common for most professional projects to run \emph{all tests}
 on a daily basis, usually overnight when the programmers involved are
-sleeping\footnote{Well, most of them at least.}. This is done by means
+sleeping\footnote{Well, most of them anyway.}. This is done by means
 of an automatic script that retrieves the sources from a public
 repository (e.g.~on GitHub), compiles everything, and then runs all
 the regression tests. If anything is wrong, the programmers can fix it
