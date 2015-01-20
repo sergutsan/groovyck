@@ -58,6 +58,7 @@ store these value in memory for later use we do not need to calculate
 them again. We can use an array for this purpose, created the first
 time the method is called. The resulting method could look like this: 
 
+% NOTE: verified code
 \begin{verbatim}
     // arrays are 0-based, so F(1) is stored at position 0, etc
     private int[] precalculated = null;
@@ -90,18 +91,19 @@ of the array to another method; second, remove the first \verb+if+ by
 including the base cases (1 and 2) in the array at initialisation. The
 new code would look like this: 
 
-% TODO: yet another improvement, use a final NOT_USED instead of a
-% magic -1
-
+% Note: verified code
 \begin{verbatim}
     // arrays are 0-based, so F(1) is stored at position 0, etc
     private int[] precalculated = null;
+
+    // Fibonacci number are always positive
+    private static final int UNKNOWN = -1;
 
     public int fib(int n) {
         if (precalculated == null) {
             initPrecalculatedArray(n);
         }
-        if (precalculated[n-1] != -1) {
+        if (precalculated[n-1] != UNKNOWN) {
             return precalculated[n-1];
         } else {
             int result = fib(n-1) + fib(n-2);
@@ -113,7 +115,7 @@ new code would look like this:
     private void initPrecalculatedArray(int size) {
        precalculated = new int[size];
        for (int i = 0; i < precalculated.length; i++) {
-            precalculated[i] = -1; // to indicate "not calculated yet"
+            precalculated[i] = UNKNOWN;
        }
        precalculated[0] = 1; // F(1)
        precalculated[1] = 1; // F(2)
