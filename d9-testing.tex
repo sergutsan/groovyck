@@ -200,7 +200,11 @@ A test program would be a Java class that could look like this:
             String output = p.getInitials(input);
             String expected = "DRY";
             assertEquals(expected, output);
-         }
+       }
+       // In a "real" testing class, there are usually
+       // more methods here, each of them annotated with 
+       // the annotation @Test, each of them testing
+       // a different aspect of the code
     }
 \end{verbatim}
 
