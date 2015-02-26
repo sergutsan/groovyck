@@ -165,6 +165,16 @@ faculty.
 % balance, and see only 100 ---because deposit() had not finished
 % executing yet when you call getBalance()!
 
+% UPDATE: on the other hand, it can be argued that this is irrelevant
+% as it does not affect the user experience. Yes, I can see an invalid
+% number and that can affect my behaviour (e.g. if I see less than 50,
+% I will not withdraw anything), but that can happen even with total
+% synchronisation: A deposits, pause, B sees 100, pause, A changes
+% mind and withdraws, pause, B withdraws even if he does not want to.
+
+% TODO: (maybe) answer this in public by the end of the class, and
+% make them raise their hands for 0, 1, 2, and 3.
+
 \section{Responsive UI}
 \label{sec:responsive-ui}
 
