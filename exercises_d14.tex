@@ -18,28 +18,25 @@ goals:
 
 \section{Memoized Fibonacci}
 
-Write a Java class with a with a static method that calculates 
+Memoization is not always necessary, but in some cases it can really
+speed up computation, as in this exercise. 
+
+Write a Java class with a with a method that calculates 
 the n$^{th}$ element of the Fibonacci sequence as seen in the notes.
+Note: Remember that when a method is a pure function
+without side-effects, it is good practice to make it
+\verb+static+. Does any or both versions of this method qualify?
 
 Do it with and without memoization. Compare
 the time that is needed in each case to find F(40) or F(45). 
 
-\section{Anagrams}
-\label{sec:anagrams}
+What is the maximum Fibonacci number you can calculate in Java using
+\verb+int+? And using \verb+long+? Hint: Remember that both types have
+a maximum value as they are only 32 and 64 bits long. Look at the Java
+documentation to find the maximum value in each case. 
 
-An anagram is a word created by recombination of the letters in
-another words. Some anagrams make sense (``silent'', ``listen'') and
-some do not (``nietsl''). Some people only accepts ``real'' anagrams,
-but in this exercise we will accept them all, even if they do not
-exist as real words. 
-
-Write a class with a static method that takes a String as a parameter
-and returns a list (hint: you can use \verb+List<String>+ and
-\verb+ArrayList<String>+) of strings with all the anagrams that can be
-made with it. 
-
-Is it easy to do this both iteratively and recursively? Is this
-similar to a former exercise?
+% int: answer is fib(45), fib(46) overruns
+% long: haven't done it yet
 
 \section{Hailstone numbers}
 \label{sec:hailstone-numbers}
@@ -100,6 +97,24 @@ in order, maybe you can implement one of the sorting algorithms in the
 following exercises and then use them to order a list of random
 numbers. Remember that you can create a random integer between 0 and
 N-1 with \verb+Math.abs(N * Math.random())+).
+
+\section{Anagrams (*)}
+\label{sec:anagrams}
+
+An anagram is a word created by recombination of the letters in
+another words. Some anagrams make sense (``silent'', ``listen'') and
+some do not (``nietsl''). Some people only accepts ``real'' anagrams,
+but in this exercise we will accept them all, even if they do not
+exist as real words. 
+
+Write a class with a method that takes a String as a parameter
+and returns a list (hint: you can use \verb+List<String>+ and
+\verb+ArrayList<String>+) of strings with all the anagrams that can be
+made with it. Note: Remember that if this method is a pure function
+without side-effects, it is good practice to make it \verb+static+. 
+
+Is it easy to do this both iteratively and recursively? Is this
+similar to a former exercise?
 
 \section{Mergesort}
 \label{sec:mergesort}
@@ -232,6 +247,20 @@ plane usually works with precision up to one milimeter,
 and the measurements for the latests scientific experiments in
 quantum physics require the best precision that is achievable by
 state-of-the-art technology. 
+
+
+\section{Eight Dames (**)}
+\label{sec:eight-dames}
+
+Create a method that calculates the solution to the problem of the
+eight Dames: ``given a chess board, and knowing that the Dame can reach
+any tile horizontally, vertically, or diagonally, place 8 Dames on the
+board so that none of them can reach the others by doing only one
+move''. You can return the solution as an array of 8x8 booleans where
+eight tiles are true (those with the Dames on them) and the others are false. 
+
+For extra complexity, make your method return all the possibilities in
+which the problem can be solved (this may take a long time). 
 
 
 

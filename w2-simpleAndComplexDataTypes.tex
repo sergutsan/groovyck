@@ -1,7 +1,7 @@
 
 
 
-% Notes on style
+% TODO: Notes on style
 %
 % Identation
 % Variable names
@@ -199,9 +199,15 @@ precision limit appropriate for the application (e.g.~1.0E-6), as in
 the example below. Note: Math.abs() returns the absolute value of the
 number inside the brackets, e.g. \verb+Math.abs(-3)+ returns \verb+3+. 
 
+% Example used to be 
+%     double d1 = 2 / 3
+%     double d2 = 2 * 1000 / 9000 * 3
+% but it did not work with Java Decaf. Oliver Smart was helpful in
+% finding a better example. 
+
 \begin{verbatim}
-    double d1 = 2 / 3
-    double d2 = 2 * 1000 / 9000 * 3
+    double d1 = (0.1+0.1)/0.3;
+    double d2 = 2.0* 1000.0/9000.0*3.0;
     // WRONG!
     if (d1 == d2) {
        // this is not printed due due to rounding errors

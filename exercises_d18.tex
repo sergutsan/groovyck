@@ -31,6 +31,7 @@ colleagues. Have you thought of the same examples?
 Modify the code of the exercise ``Text Loops'' from last day to use
 one of the \verb+Executor+ instead of plain threads. 
 
+% TODO: rewrite this exercise and/or add a diagram to make it clearer
 
 \section{Responsive UI (that degrades gracefully)}
 \label{sec:responsive-ui-that}
@@ -73,8 +74,12 @@ Modify your solution of exercise ``Responsive UI'' so that:
 \item It has two classes: one represents the application and one
   represents its users.
 \item The former uses your implementation of \verb+Executor+ with a
-  thread of pools instead of using plain threads.
-\item The latter will use an \verb+Executor+ from Java 
+  pool of threads instead of using plain threads.
+\item The latter will use an \verb+Executor+ from the Java
+  Library\footnote{Any of the provided implementations will be
+    fine. Choose any of them and guess appropriate values for the
+    initialisation parameters. Ask the faculty members if you need
+    help with this.} 
   to have a lot of
   threads representing users, and the threads will programatically
   create new tasks instead of the human user doing it by hand,

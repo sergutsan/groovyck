@@ -1,10 +1,12 @@
 \documentclass{article}
 \usepackage[margin=2cm]{geometry}
 \usepackage[dvips]{graphicx}
-\title{Assignment 2 (v1.1)}
-% \title{Assignment 3 (v1.1)}
 \author{Programming in Java}
-\date{2013--14}
+\title{Assignment 4 (v1.2)}
+\date{2014--15}
+% \title{Assignment 2 (v1.1)}
+% \date{2013--14}
+% \title{Assignment 3 (v1.1)}
 % \date{2012--13}
 \begin{document}
 
@@ -33,12 +35,23 @@ comma-separated values (CSV), or any other format).
 \label{sec:impl-deta}
 
 The program should implement the interfaces
-provided below. Classes that implement an interface should have the same
-name with the ``Impl'' suffix unless there is more than one. For
+provided below. Classes that implement an interface should follow the
+convention of having the same
+name as the interface with the ``Impl'' suffix unless there is more 
+than one. For
 example, if there is only one class that implements
 \verb+ContactManager+, it must be called \verb+ContactManagerImpl+. Be
 careful with this, as it may interfere with automatic tools that will
 analyse your code. 
+
+In order to complete this piece of coursework, you must follow the
+Test Driven Development (TDD) methodology. That is, you must first
+write the interfaces (most of them are already provided below), then
+write the tests, then write the implementation. Your commit history
+should clearly show that you wrote the tests before the implementation
+and not after, and that you added new functionality in small cycles of
+interface--test--implementation and not big chunks of untested code in
+one go. 
 
 \subsection{ContactManager}
 \label{sec:contactmanager}
@@ -323,11 +336,12 @@ The assignment must be pushed to a project called
 \verb+ContactManager+ on your GitHub account. It will be automatically
 cloned on 
 %
-Friday, 24$^{th}$ January at 23h59.59 GMT (full-time students)
+the date specified on the Moodle site at 23h59.59 London time. 
+%Friday, 24$^{th}$ January at 23h59.59 GMT (full-time students)
 %
-or on 
+%or on 
 %
-Friday 7$^{th}$ March at 23h59.59 GMT (part-time students). 
+%Friday 7$^{th}$ March at 23h59.59 GMT (part-time students). 
 %
 You are encouraged to
 leave everything ready well in advance ---both the programming and

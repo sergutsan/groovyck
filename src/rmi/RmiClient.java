@@ -19,7 +19,7 @@ public class RmiClient {
     private void runEcho(String s) {
 	  try {
 		// final String server = "127.0.0.1"; // localhost
-		final String server = "193.61.29.208";
+		final String server = "193.61.29.207";
 		System.out.println("Starting client... No message provided, using '" + DEFAULT_MSG + "'");
 		RmiService service = (RmiService) Naming.lookup("//" + server + ":1099/RmiServer"); // what if name is wrong?
 		String echo = service.echo(s);

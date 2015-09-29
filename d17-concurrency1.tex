@@ -1,6 +1,9 @@
 \section{Concurrency}
 \label{sec:concurrency}
 
+% TODO: add a footnote somewhere that a synchronized block is a bit
+% similar to a transaction. 
+
 Every program that we have written up to now consisted of one single
 thread. The flow of execution started at the beginning of
 the \verb+main+ method and continued line-by-line up the last
@@ -567,7 +570,9 @@ rules must be followed:
   (possible, even if the pointer is \verb+final+).
 \item Do not allow subclasses to override methods. The easiest way to
   achieve this is by declaring the class as \verb+final+.
-\item If instance fields point to mutable objects (e.g.~a String),
+\item If instance fields point to mutable objects (e.g.~a List, 
+  a Map, a Person, etc\footnote{Strings are an exception to this rule
+    because Strings are immutable in Java.}),
   do not share the reference to those objects. 
   \begin{itemize}
   \item Never store references to objects passed in the constructor,

@@ -1,4 +1,4 @@
 grant {
     permission java.net.SocketPermission "127.0.0.1:*", "connect";
-    permission java.net.SocketPermission "193.61.29.208:*", "connect"; // the server
+    permission java.net.SocketPermission "193.61.29.207:*", "connect"; // the server
 };

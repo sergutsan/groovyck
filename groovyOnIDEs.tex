@@ -1,0 +1,75 @@
+
+\section{A note for IDE users}
+\label{sec:note-ide-users}
+
+Some of the readers of this document will desire to use an Integrated
+Development Environment (IDE) while they try to solve the exercises
+described in the preceding 
+pages\footnote{Examples of popular IDEs are Eclipse and IntelliJ. }. 
+This section is for them and for
+them only. Readers that do not want or do not intend to use an IDE can
+safely skip it. 
+
+The notes assume that you, the reader, will use 
+only a simple editor and the command line to run your scripts. 
+\textbf{This is the simplest scenario
+and this is what we recommended.} 
+In that context, using the command
+\verb+System.console().readLine()+ to read a line of text from the
+user will work as described in the notes. However, this is not true if
+you use an IDE for reasons that are a bit complex to explain at this
+basic level.
+
+Once again, our initial advise is to run all your programs from the
+command line. This is usually the simplest route forward for the
+novice programmer. IDEs are extremely useful tools in the hands of a
+seasoned programmer but tend to be distracting and confusing for
+novices, especially in the very early stages, and that is why we
+recommend to avoid them for now. However, if you insist in using an
+IDE, keep reading. 
+
+If you really want to use an IDE to write and execute a program that
+receives input from the user then you will have to use a
+\verb+Scanner+. This is a bit more complex than using
+\verb+System.console().readLine()+ but not that much.
+
+\begin{enumerate}
+\item First, you have to declare and instantiate the scanner at the
+beginning of your program:
+
+\begin{verbatim}
+     Scanner scanner = new java.util.Scanner(System.in);
+\end{verbatim}
+
+\item Then you can use it like this:
+
+\begin{verbatim}
+    /* not exactly equivalent to              */
+    /* System.console().readline, but close enough */
+    String str = scanner.next();
+\end{verbatim}
+
+\end{enumerate}
+
+
+\section{A note for users of the Groovy Console}
+\label{sec:note-ide-console-groovy-users}
+
+Modern installations of Groovy for Windows come with a program called
+something like ``Groovy Console''. We recommend readers of this
+document \textbf{not} to use it and to use the normal windows console (or
+``Command Prompt'') instead. 
+
+Although the Groovy Console is not an IDE, it lacks a console in
+the same way IDEs do, so the command
+\verb+System.console().readLine()+ does not work for reading a line of
+text from the user. In order to make your programs run on the Groovy
+Console, you must use a \verb+Scanner+ as described in
+Section~\ref{sec:note-ide-users}. 
+
+But the best option is ---once again--- not to use the Groovy Console. 
+
+%%% Local Variables:
+%%% TeX-master: "main-aptitude-test-notes"
+%%% End:
+

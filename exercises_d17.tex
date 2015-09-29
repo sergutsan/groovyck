@@ -1,3 +1,13 @@
+% TODO: add an exercise with callbacks
+%    actually, responsive UI is kind-of that already, but maybe
+%    another exercise can be added, or the callback mechanism and the 
+%    synchronous/asynchronous call dychotomy made more obvious
+%
+% TODO: Add one wait()/notifyAll() exercise ... or maybe just remove
+%    the * to the dining philosophers? or provide some UI-app that
+%    they have to write the internals to (I don't know, something with
+%    square balls bouncing inside a box or something)?
+
 \documentclass{article}
 \usepackage[margin=2cm]{geometry}
 \usepackage[dvips]{graphicx}
@@ -155,6 +165,16 @@ faculty.
 % balance, and see only 100 ---because deposit() had not finished
 % executing yet when you call getBalance()!
 
+% UPDATE: on the other hand, it can be argued that this is irrelevant
+% as it does not affect the user experience. Yes, I can see an invalid
+% number and that can affect my behaviour (e.g. if I see less than 50,
+% I will not withdraw anything), but that can happen even with total
+% synchronisation: A deposits, pause, B sees 100, pause, A changes
+% mind and withdraws, pause, B withdraws even if he does not want to.
+
+% TODO: (maybe) answer this in public by the end of the class, and
+% make them raise their hands for 0, 1, 2, and 3.
+
 \section{Responsive UI}
 \label{sec:responsive-ui}
 
@@ -178,10 +198,29 @@ output:
     ...
 \end{verbatim}
 
-Note that several tasks may end in between two user inputs. 
+Note that several tasks may end in between two user inputs. In the
+example provided, tasks 1, 2, 3, and 4 (not in that order) end
+between the moment the user enters ``10'' for task~4 and the moment
+the user enters ``1000'' for task~5. 
+
+Write two versions of your program (on different branches of your
+repo), one of them using Thread.isAlive() and the other without using
+that method. 
+
+\textbf{Note:} Remember that it is bad practice to have static fields if they
+are not \verb+final+. Do not use \verb+static+ fields in this exercise
+(or any other in the future, for that matter).
+
 
 \section{Parallel computation}
 \label{sec:parallel-computation}
+
+% TODO: change this for a MapReduce kind-of thing, e.g. calculate the
+% average of a million numbers, because it is too mathematically
+% complex otherwise.
+% 
+% If average is too simple, and thus fast, maybe you can add some
+% Thread.sleep() around the code, e.g. to read from the array. 
 
 Look at the attached program \verb+ComputationLauncher+ for an example
 of a heavy computation being performed in sequence or in parallel

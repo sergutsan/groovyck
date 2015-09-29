@@ -77,6 +77,10 @@ only my own fault.
 \tableofcontents
 
 % TODO:
+%  - Example-based learning: add pages with several examples so that
+%   students can do EBL. 
+%  - Add exercises on Iterators and for_each
+%  - Add about Inner Classes (and anonymous classes) at some point
 %  - If this is going to be a book, it should have:
 %    - a glossary with the important terms
 %    - a list of rules-of-thumb, pragmatic-programmer style, like 'no
@@ -96,6 +100,19 @@ only my own fault.
 %  - keep the code of the utility class for the pair-exercise under
 %    git
 %  - add some EXTRA notes on flow diagrams and pseudocode
+%  - On the day on Exceptions, the exercise that catches Exception
+%    first and then NullPointerException is not clear. Make Exception
+%    a RuntimeException. Otherwise the compiler reports than "an
+%    Exception is never thrown in the block" and the students are
+%    misled.
+%  - Add some notes somewhere on style. Style is mentioned on Day 1,
+%    but some additional notes (maybe ADDITIONAL) that talk about the
+%    #applebug may be useful. 
+%  - Notes ADVANCED for day 1 (there is a small hint on exercises, 
+%    but more detail would be nice).
+%  - Notes ADVANCED on the Executor from the Executor JavaDoc.
+%  - Basic notes on diamond notation (type inference)
+%  - Use run() instead of launch()? 
 %
 % YET ANOTHER REORGANISATION FOR YEAR-3
 %
@@ -146,6 +163,17 @@ only my own fault.
 %
 % - Not clear where you explain packages. Probably with JUnit4. Needs
 % to be done. 
+% - Modify Recursion-II so that the first example code that is
+% "improved" is improved step by step (or maybe this step-by-step
+% should be done in an appendix? dunno... pros: makes it clear how to
+% refactor for clarity, and makes a point of it being important, cons:
+% takes attention a bit away from recursion). 
+% - Merge "work in pairs" with network programming. This frees up two
+%   days. One of them must be spent on recursion, to introduce agents
+%   and CSP. The other day can be left "free" for e.g. extra day after
+%   pointers for full-timers or "gratuity lecture" for part-timers. 
+% - Add fork/join to Concurrency 2 or Concurrency 3. 
+% 
 %
 % MAJOR REORGANISATION FOR YEAR-2:
 % 
@@ -184,6 +212,7 @@ only my own fault.
 %   D17: concurrency 1: basics: Thread, Runnable, synchronized
 %        ADVANCED: volatile, exist-before relations, etc
 %   D18: concurrency 2: java.concurrent (and fork/join?)
+%           ...aimed at CSP (also see http://pragmatictips.com/150)
 %        ADVANCED: CSP
 %   D19: network 1: RMI
 %        ADVANCED: XML-RPC... or actually, it should be just XML-RPC?

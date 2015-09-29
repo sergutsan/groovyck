@@ -1,0 +1,2 @@
+java -Djava.security.policy=server.policy RmiLauncher
+java -Djava.security.policy=client.policy RmiClient someTextHere

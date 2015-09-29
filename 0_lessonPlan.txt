@@ -1,0 +1,179 @@
+*** Day 1 ***
+* Pre: 
+  Welcome to Programming in Java!
+
+* During:
+
+* Post: 
+
+
+*** Day 2 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 3 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 4 ***
+* Pre: 
+
+* During:
+  Exercise on board about methods.
+
+* Post: 
+
+*** Day 5 ***
+* Pre: 
+  Tell them that recursion is very difficult. 
+
+* During:
+  Live activity: difference between iterative and recursive
+
+  Iterative           vs   Recursive
+   - from "outside"   vs   from "inside"
+   - small stack      vs   high stack
+   - for/while loop   vs   method call and stop condition
+
+
+* Post: 
+
+*** Day 6 ***
+* Pre: 
+  Introducing (real) Java at last. Remind them the transition will happen also on Day 7.  
+
+* During:
+
+* Post: 
+
+
+
+*** Day 7 ***
+* Pre: 
+  - Transition to Java complete! 
+  - Remind them that pointers is very difficult. 
+
+* During:
+  - Ejercise on board about list, adding element, removing element,
+    adding/removing first elemennt and last element
+  - Remember that first element must be added or removed from
+    OUTSIDE the list
+
+* Post: 
+  - We have completed the transition to Java
+  - We have introduced pointers. We have two more days. 
+
+
+*** Day 8 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+
+*** Day 9 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+
+*** Day 10 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 11 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 12 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 13 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 14 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 15 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 16 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 17 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 18 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 19 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 20 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 21 ***
+* Pre: 
+
+* During:
+
+* Post: 
+
+*** Day 22 ***
+* Pre: 
+
+* During:
+
+* Post: 
+

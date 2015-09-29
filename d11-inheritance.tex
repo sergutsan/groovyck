@@ -414,6 +414,9 @@ read Java code, especially if it is old legacy code.
 \subsubsection{Default (i.e.~package)}
 \label{sec:default-i.e.-package}
 
+% TODO: add note about package here, conditional on whether the note
+% on the TDD lecture is before of after
+
 When the visibility of a field or method is not specified, its default
 visibility is ``package-wide'', i.e.~it is visible to other classes in
 the same package. There is not a keyword for declaring ``package''
@@ -650,7 +653,10 @@ to have a fair understanding of the basics.
 
 Inheritance establishes an ``is-a'' relationship (e.g.~a dog is-an 
 animal), and is implemented by
-using the keyword \verb+extends+. When a class extends another class,
+using the keyword \verb+extends+\footnote{We can compare this to
+  interfaces, which define a ``behaves-as-a'' relationship and are
+  implemented by using the keyword \emph{implements}.}. 
+When a class extends another class,
 it gets access to all its public and protected fields and methods. 
 
 Composition establishes a ``has-a'' relationship (e.g.~a dog has a leg

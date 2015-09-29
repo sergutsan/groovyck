@@ -3,6 +3,9 @@
 \usepackage[dvips]{graphicx}
 \begin{document}
 
+% TODO: re-write or even redesign the exercise with the library, some
+% students find it confusing.
+
 \section*{Learning goals}
 \label{sec:learning-goals}
 
@@ -28,13 +31,15 @@ library. The functionality will be described incrementally by
 stages. At every stage, you must follow the following steps:
 
 \begin{enumerate}
-\item Generate the tests for the functionality required for that
-  stage. Check that the new tests fail while the old ones pass. It is
-  a good idea to define the interface of the class before writing the
-  tests (but not the code of the class yet!). 
-\item Generate the minimum code that passes all the new tests. If you
-  wrote an interface, make the class implement the interface
-  (i.e.~public class MyClass \emph{implements} MyInterface, etc). 
+\item Write (or update) the interface(s) for the new functionality
+  required. 
+\item Generate the tests for the functionality required at that
+  stage. The tests may not even compile at this point.
+\item Write the bare minimum code of the classes implementing the
+  interfaces to make the test-class(es) compile. 
+  Check that the new tests fail while the old ones pass. 
+\item Write the minimum code in the methods of the implementing
+  class(es) that makes all the new tests pass.  
 \item Refactor the code to make it clearer, if needed. Your first
   implementation may not be as clear as possible. Think of the next
   programmer that will come after you: will they understand the code
@@ -62,11 +67,13 @@ library-ID (an \verb+int+),
 both of which must be unique in a library. The name is
 set at construction time, but the library-ID is not. 
 The class must implement methods to get the
-name of the person and their ID, and to set the latter. 
+name of the person and their ID, 
+% TODO: Maybe setId() is not needed. Implement this to double-check. 
+and to set the latter. % // User.setId() 
 
 \subsection{}
 
-Extend the class you have just created to allow users to register with
+Expand the class you have just created to allow users to register with
 a library. You will need two methods \verb+register(Library)+
 and \verb+getLibrary()+. The former method is the way to obtain the
 user-ID. 
@@ -104,7 +111,7 @@ method with the same name argument should return the same ID.
 
 \subsection{}
 
-Extend your library class a bit further. Add three new methods: 
+Expand your library class a bit further. Add three new methods: 
 
 \begin{description}
 \item[addBook(String title, String author)] Adds a new book to the
@@ -125,7 +132,7 @@ add the adequate memory structures.
 
 \subsection{}
 
-Extend your library once more to include the following methods: 
+Expand your library once more to include the following methods: 
 
 \begin{description}
 \item[getReaderCount()] returns the number of users registered in this
@@ -142,7 +149,7 @@ titles of all the books they are borrowing at the moment.
 
 \subsection{}
 
-Extend your library class one more time with two methods that return: 
+Expand your library class one more time with two methods that return: 
 
 \begin{itemize}
 \item a list (or an array) with all the users that are borrowing books

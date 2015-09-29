@@ -197,11 +197,90 @@ to understand how it works.
 \subsubsection*{Exercise D}
 
 Write a program that reads a series of numbers from the user, until the
-user enters something that is not a number (like ``END''). The program
+user enters the String ``END''. The program
 should then print how many numbers were positive, negative, or
-zero. Write the program using \texttt{if\ldots else} clauses and using
-the ternary operator. Is there any difference? In which case it is
-easier to write the program? In which case it looks clearer to you? 
+zero. Write the program using (a) \texttt{if\ldots else} clauses first 
+and then using (b) the ternary operator. 
+Is there any difference? In which case it is
+easier to write the program? In which case does it look clearer to you?
+
+\subsection{It's a kind of magic}
+\label{sec:its-kind-magic}
+
+The ternary operator is not the only strange way of making your code
+shorter. Incremental operations are so common that combinations of
+symbols are used ---in a slightly cryptic way--- to make those code
+lines shorter.
+
+Incremental lines are lines in which the value of a variable
+(typically \verb+int+) is incremented by some explicit value or the
+value of another variable, for example: 
+
+\begin{verbatim}
+    time = time + lap;
+    depth = depth + drillDepth;
+\end{verbatim}
+
+This can be written in a shorter way like: 
+
+\begin{verbatim}
+    time += lap;
+    depth += drillDepth;
+\end{verbatim}
+
+The same principle can be applied to most binary operators, including
+subtraction, multiplication, division, and string concatenation; so: 
+
+\begin{verbatim}
+    record = record - difference; 
+    result = result * 2;
+    name = name + newTitle;
+\end{verbatim}
+
+become: 
+
+\begin{verbatim}
+    record -= difference; 
+    result *= 2;
+    name += newTitle;
+\end{verbatim}
+
+A particular example is the increment of integer variable by one or
+minus, used for all sorts of counters:
+
+\begin{verbatim}
+    time = time + 1;
+    count = count + 1;
+    i = i + 1;
+    timesLeft = timesLeft - 1;
+\end{verbatim}
+
+which are most often written much more shortly as: 
+
+\begin{verbatim}
+    time++;
+    ++count;
+    i++;
+    timesLeft--;
+\end{verbatim}
+
+There is a small difference between the line \verb-i++- and the line
+\verb-++i-. The former evaluates the statement and then increases the
+value of \verb+i+ while the later increases the value of \verb+i+ and
+then evaluates the statement. This a subtle difference that you should
+now worry about and should actually avoid in modern code. In other
+words: never write any code that would behave differently if you
+changes all instances of \verb-i++- for \verb-++i+. This is very easy
+to do by just following the following rule: 
+
+\begin{center}
+  \vspace{1em}
+  \textbf{\large If you use i++ or similar, make sure it is the only
+  thing you write in that statement; do not combine it with anything else. }
+  \vspace{1em}
+\end{center}
+
+
 
 
 %%% Local Variables:
