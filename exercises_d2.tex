@@ -1,12 +1,28 @@
 \documentclass{article}
 \usepackage[margin=2cm]{geometry}
-\title{Notes on Git installation}
-\author{Programming in Java}
+\title{Git: installation and exercises}
+%\author{Programming in Java}
 \date{}
 \begin{document}
 \maketitle
 
 \vspace{1cm}
+
+\section*{Learning goals}
+\label{sec:learning-goals}
+
+Before the next day, you should have achieved the following learning
+goals: 
+
+\begin{itemize}
+\item Understand the concept of source code version control.
+\item Use the basic git commands: commit, push, pull, diff, status, log.
+\item Use \verb+github.com+ to create an account, create a repo, clone
+  it, and push changes onto it. 
+\item Understand what an enviroment variable is.
+\item Be able to set and modify an environment variable.
+\item Understand what \verb+PATH+ is for and change or update it.
+\end{itemize}
 
 \section{Install Git in your account}
 \label{sec:install-git-your}
@@ -96,10 +112,9 @@ need to type:
   > path "%PATH%;h:\git\bin"
 \end{verbatim}
 
-
 The inverted commas are only necessary if you have spaces in your PATH.
 
-\subsection{Notes for Unix users}
+\subsection*{Notes for Unix users}
 \label{sec:notes-unix-users}
 
 \begin{itemize}
@@ -109,5 +124,75 @@ The inverted commas are only necessary if you have spaces in your PATH.
   PATH) are accessed using an initial dollar symbol instead of using
   enclosing percents, i.e.~to see your path, type: \verb+echo $PATH+
 \end{itemize}
+
+\section{Basic actions on GitHub}
+\label{sec:basic-steps-with}
+
+Open an account on GitHub. Ask the faculty for the right account name
+to use for ``Programming in Java''. Once your account is open, perform
+the following two tasks: 
+
+\begin{itemize}
+\item Create a new repository names \verb+My first repository+.
+\item Fork the \verb+currency-exchanger+ repository from account
+  \verb+bbk-msccs+ so that you have your own copy.
+\end{itemize}
+
+\section{Basic actions with git}
+\label{sec:basic-actions-with}
+
+\subsection{Working on your own}
+\label{sec:working-your-own}
+
+Clone your own copy of the \verb+currency-exchanger+ repository. This
+will create a local copy of it on your computer. 
+
+Add a few lines of code to the program, or modify some of them, to
+produce a new version. Commit it and write a short message explaining
+your changes. 
+
+Make additional changes and commit them. Write a descriptive message. 
+
+Change to a different folder and clone your repository again. Verify
+that the clone is equal to the original \verb+currency-exchanger+. 
+
+Change to the most up-to-date copy and use \verb+git log+ to see your
+latest changes. Use \verb+git diff+ to see the differences between the
+most recent version you cloned and \verb+HEAD+. 
+
+Push your changes to your copy of \verb+currency-exhanger+.
+
+Change to a different folder once again and clone your repository
+again. Verify that this clone contains all your recent changes to
+\verb+currency-exchanger+.
+
+Make sure you have completed all the former steps before moving on. 
+
+\subsection{Working with others}
+\label{sec:working-with-others}
+
+Talk to one of your colleagues in the lab and get their account name
+and the name they have assigned to their fork of
+\verb+currency-exchanger+. Look at their repository online on GitHub
+to see their changes. 
+
+Pull their repository into your local copy. If the likely case that
+this results in a conflict, resolve the conflict before committing
+again; you can solve the conflict in any way you choose: removing
+their changes, removing your changes, or doing a manual merge of
+both. Once the conflict is solved, commit. 
+
+(If pulling the code did not result in a conflict, pull again from
+other colleagues until you have a conflict. Solve the conflict and
+commit.) 
+
+Push your latest changes to your copy of the repository. Tell your
+colleague to pull from it so that you have the same version. Use your
+web browser to see the changes on GitHub, both yours and your
+colleague's. 
+
+
+
+
 
 \end{document}
