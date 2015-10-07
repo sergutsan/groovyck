@@ -2,6 +2,28 @@
 \usepackage[margin=2cm]{geometry}
 \begin{document}
 
+\section*{Learning goals}
+\label{sec:learning-goals}
+
+Before the next day, you should have achieved the following learning
+goals: 
+
+\begin{itemize}
+\item Be able to create new methods, with or without parameters.
+\item Be able to create new methods, free or inside classes.
+\item Be able to use methods to avoid repeating code.
+\item Understand the scope of a variable in a piece of code. 
+\item Understand how memory changes (both stack and heap) when a
+  method is called and executed, in particular when several methods
+  call each other. 
+\end{itemize}
+
+Remember that star exercises are more difficult. 
+\textbf{Do not try star-exercises unless the other ones are clear to
+  you}.  
+
+
+
 \section{Scope}
 \label{sec:scope}
 
@@ -31,6 +53,8 @@ variables is visible: i, j, newSize, size.
 19    }
 20  }
 \end{verbatim}
+
+Check your answers with the faculty members in the lab. 
 
 \section{Pointer, arrows\ldots}
 \label{sec:pointer-arrowsldots}
@@ -99,6 +123,8 @@ Now do the same for this example code from Day 3:
     println "TEACHER: Who is your mother?"
     println "LITTLE JOHN: " + student.mother.name + ", sir.";
 \end{verbatim}
+
+Check your diagrams with the faculty members in the lab. 
 
 \subsection{Flow of execution}
 \label{sec:flow-execution}
@@ -193,61 +219,6 @@ Hint: all of them start at 40.
 % TODO: put code with repeated code and make them make a version with
 % methods. 
 
-\section{A bit more practice with doubles}
-\label{sec:bit-more-practice}
-
-Write a program that asks the user for the total amount borrowed for a
-mortgage, the number of years to pay it back, and the interest rate
-(in this exercise, we assume it is a fixed 
-rate). The program can then calculate how much must be paid at the end
-
-$$t = c \cdot \left(1+ {r \over 100}\right)$$
-
-where $t$ is the total, $c$ is the cost,
-and $r$ is the rate as a percentage. The program should print: 
-
-\begin{itemize}
-\item The total amount to be paid
-\item The money to be paid every year
-\item The number of years before the interest is paid and only the
-  initial capital remains
-\end{itemize}
-
-Write a method to calculate each piece of data. 
-
-% TODO: think this through
-%
-% \section{A mortgage program with variable rates (*)}
-% \label{sec:bit-more-practice}
-
-% Write a program that asks the user for the total amount borrowed for a
-% mortgage, and the number of years to pay it back. 
-
-% Once this is done, the program must enter a loop in which every
-% iteration is a year. For every year, the program must request the
-% interest rate for that year. 
-%  and the amount payed by the user, and
-% calculate 
-
-% \begin{itemize}
-% \item If the amount if less than the interest to be payed that year,
-%   the program must complain and ask for a higher amount.
-% \item If the amount is exactly the interest to be paid that year,
-%   nothing else happens until next year. 
-% \end{itemize}
-% , and the amount payed every year. The
-% program must 
-
-% Interest on an account
-% Fixed rate Mortgage: calculate number of years, and how much you pay
-%    per month and in total.
-
-
-% (*) Variable rate mortgage: change rate every year and estimate number
-%    of years left, total number of years, and how much you pay per
-%    month, and how much you pay in total.
-
-
 
 \section{Binary and decimal}
 \label{sec:from-10011-19}
@@ -255,15 +226,22 @@ Write a method to calculate each piece of data.
 Create a program in which you define the following methods: 
 
 \begin{description}
-\item[binary2decimal(String):] takes from the user a binary number
+\item[power(int, int): ] Takes a base $b$ and an
+  exponent $e$ from the user, and returns the result of $b^e$.
+\item[power2(int): ] Takes an exponent $e$ from the user and returns the
+  result of $2^e$. This method must call the previous one to find out
+  the result. 
+\item[binary2decimal(String):] Takes from the user a binary number
   (with digits 0 and 1) and returns the corresponding number in
   decimal (base-10, with digits between 0 and 9).  Hint: in the same
   way that you know that $35 = 3 \cdot 10^1 + 5 \cdot 10^0$, you can find that
-  $100011 = 1 \cdot 2^5 + 1 \cdot 2^1 + 1 \cdot 2^0$.
-\item[decimal2binary(int):] the opposite of the previous one: takes a
+  $100011 = 1 \cdot 2^5 + 1 \cdot 2^1 + 1 \cdot 2^0$. This method must
+  call the previous one to find out the result. 
+\item[decimal2binary(int):] The opposite of the previous one: takes a
   decimal number and returns the corresponding binary number.  Hint:
   instead of multiplying by 2, you will need to divide by two this
-  time.
+  time (the quotients and the last remainder will give you the binary
+  number).
 \end{description}
 
 The program must offer a menu to the user with two options. 
@@ -355,5 +333,65 @@ Check that it works by using the following program:
         println("Your toString() method seems to work fine.");
     }
 \end{verbatim}
+
+\section{A bit more practice with doubles}
+\label{sec:bit-more-practice}
+
+The goal of this exercise is providing additional practice with
+double-precision numbers. 
+
+Write a program that asks the user for the total amount borrowed for a
+mortgage, the number of years to pay it back, and the interest rate
+(in this exercise, we assume it is a fixed 
+rate). The program can then calculate how much must be paid at the end
+
+$$t = c \cdot \left(1+ {r \over 100}\right)$$
+
+where $t$ is the total, $c$ is the cost,
+and $r$ is the rate as a percentage. The program should print: 
+
+\begin{itemize}
+\item The total amount to be paid
+\item The money to be paid every year
+\item The number of years before the interest is paid and only the
+  initial capital remains
+\end{itemize}
+
+Write a method to calculate each piece of data. 
+
+% TODO: think this through
+%
+% \section{A mortgage program with variable rates (*)}
+% \label{sec:bit-more-practice}
+
+% Write a program that asks the user for the total amount borrowed for a
+% mortgage, and the number of years to pay it back. 
+
+% Once this is done, the program must enter a loop in which every
+% iteration is a year. For every year, the program must request the
+% interest rate for that year. 
+%  and the amount payed by the user, and
+% calculate 
+
+% \begin{itemize}
+% \item If the amount if less than the interest to be payed that year,
+%   the program must complain and ask for a higher amount.
+% \item If the amount is exactly the interest to be paid that year,
+%   nothing else happens until next year. 
+% \end{itemize}
+% , and the amount payed every year. The
+% program must 
+
+% Interest on an account
+% Fixed rate Mortgage: calculate number of years, and how much you pay
+%    per month and in total.
+
+
+% (*) Variable rate mortgage: change rate every year and estimate number
+%    of years left, total number of years, and how much you pay per
+%    month, and how much you pay in total.
+
+
+
 
 \end{document}
