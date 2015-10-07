@@ -61,13 +61,55 @@ execute it. For example, if the user enters~``3/5'' the program
 outputs~``0.6''; if the user enters~``23~*~4'' the program
 outputs~``92''.
 
-\section{Your change, please}
-\label{sec:your-change-please}
+\section{Distance point--to--point}
+\label{sec:distance-point-point}
 
-Write a program that reads the total cost of a purchase and an amount
-of money that is paid to buy it. Your program should output the
-correct change specifying the amount of notes (50, 20, 10, 5) and
-coins (2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01) needed. 
+Write a program that reads the X and Y coordinates of three points and
+then outputs which of the three are closer. Use the following class
+to store the data for the points: 
+
+\begin{verbatim}
+    class Point {
+      double x;
+      double y;
+    }
+\end{verbatim}
+
+\section{Rectangle}
+\label{sec:rectangle}
+
+Write a program that reads the X and Y coordinates of two points and
+then outputs the area of a rectangle where both points are opposite
+corners. Use the following class
+to store the data for the points: 
+
+\begin{verbatim}
+    class Rectangle {
+      Point upLeft;
+      Point downRight;
+    }
+\end{verbatim}
+
+Your program should calculate (and write on the screen) the perimeter
+and area of the rectangle. 
+
+\section{Inside or outside}
+\label{sec:inside-or-outside}
+
+Write a program that reads the coordinates of the two points defining a
+rectangle and then the coordinates of a third point. The program must
+then determine whether the point falls inside or outside the
+rectangle. 
+
+\section{Overlaps}
+\label{sec:insideinside}
+
+Write a program that reads the coordinates of four point points, the
+former two defining one rectangle and the latter two defining
+another one. The program must read the coordinates of a fifth point and
+say whether the point is inside both rectangles, inside one of them
+only, or out of both. 
+
 
 \section{Line to column}
 \label{sec:line-column}
@@ -118,6 +160,15 @@ such a program (with a rather short and boring text):
     Thank you for your cooperation. Good bye!
 \end{verbatim}
 
+\section{Your change, please}
+\label{sec:your-change-please}
+
+Write a program that reads the total cost of a purchase and an amount
+of money that is paid to buy it. Your program should output the
+correct change specifying the amount of notes (50, 20, 10, 5) and
+coins (2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01) needed. 
+
+
 \section{Palindrome}
 \label{sec:palindrome}
 
@@ -165,55 +216,6 @@ use \verb+Double.parseDouble()+.
 
 If you were writing a simple spreadsheet, you could use this code to
 parse the input in the cells. 
-
-\section{Distance point--to--point}
-\label{sec:distance-point-point}
-
-Write a program that reads the X and Y coordinates of three points and
-then outputs which of the three are closer. Use the following class
-to store the data for the points: 
-
-\begin{verbatim}
-    class Point {
-      double x;
-      double y;
-    }
-\end{verbatim}
-
-\section{Rectangle}
-\label{sec:rectangle}
-
-Write a program that reads the X and Y coordinates of two points and
-then outputs the area of a rectangle where both points are opposite
-corners. Use the following class
-to store the data for the points: 
-
-\begin{verbatim}
-    class Rectangle {
-      Point upLeft;
-      Point downRight;
-    }
-\end{verbatim}
-
-Your program should calculate (and write on the screen) the perimeter
-and area of the rectangle. 
-
-\section{Inside or outside}
-\label{sec:inside-or-outside}
-
-Write a program that reads the coordinates of the two points defining a
-rectangle and then the coordinates of a third point. The program must
-then determine whether the point falls inside or outside the
-rectangle. 
-
-\section{Overlaps}
-\label{sec:insideinside}
-
-Write a program that reads the coordinates of four point points, the
-former two defining one rectangle and the latter two defining
-another one. The program must read the coordinates of a fifth point and
-say whether the point is inside both rectangles, inside one of them
-only, or out of both. 
 
 
 \section{Mail server (*)}
