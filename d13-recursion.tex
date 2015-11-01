@@ -288,158 +288,22 @@ not always). On the other hand, recursive calls make heavy use of the
 stack, which can be an issue in small devices with limited memory. 
 
 As a general rule, you should use whatever you feel is more natural
-for the problem at hand. You should keep in mind that recursive
+for the problem at hand. Sometimes the solution to a problem can be
+naturally thought in terms of “if only I had. . . it would easy
+to. . . ”; for example, if you want to build a wall of 100 bricks, yo
+u can think “if only I had a wall of 99 bricks, it would be easy to
+add the 100th brick”; and if you w anted a wall of 99 bricks, it would
+be easy as long as you had a wall made of 98 bricks, and so on. Th en
+you just need a trivial base case, like “building a wall of 0 bricks”
+and you have a recursive solution to your problem.
+
+You should keep in mind that recursive
 solutions are harder to think, especially when you are not familiar
 with the idea, but easier to read. Code is written once and read many
 times (for maintenance, extension, etc); therefore, it is usually a good
 idea to be a bit biased towards recursive approaches unless the amount
-of memory is really limited (and even in that case, remember that
+of memory is \emph{really} limited (and even in that case, remember that
 memory and computing power grow every year). 
-
-\subsection{Memoization and dynamic programming}
-\label{sec:memo-dynam-progr}
-
-Recursive code tends to be simple and clear, but sometimes it is
-highly inefficient. Think of the method that we wrote before to
-calculate the n$^{th}$ Fibonacci number: 
-
-\begin{verbatim}
-    public static int fib(int n) {
-        if ((n == 1) || (n == 2)) {
-          return 1; 
-        } else {
-            int result = fib(n-1) + fib(n-2);
-            return result;
-        }
-    }
-\end{verbatim}
-
-This methods works fine for small numbers (up to 30), but then it
-becomes extremely expensive to compute and takes a very long to
-provide an answer, as shown in Figure~\ref{fig:fibotime}. Why is this? 
-
-\begin{figure}[hbtp]
-  \centering
-  \input{gfx/fact.tex}
-  \caption{Time used by the method fib(int) depending on the input parameter}
-  \label{fig:fibotime}
-\end{figure}
-
-To understand what is happening here, let's see what the method is
-doing for $n = 4$. As $n$ is not 1, 
-we have to calculate \verb+fib(3)+ and \verb+fib(2)+
-and then add them up. First we calculate the former, \verb+fib(3)+, so
-we calculate \verb+fib(2)+ and \verb+fib(1)+ and add them up; they are both 1, so
-\verb+fib(3)+ is 2. Then we move on to calculate \verb+fib(2)+\ldots
-but wait a second\ldots we are calculating \verb+fib(2)+ again! 
-
-The higher the number, the more calculations we are repeating
-unnecessarily (see Figure~\ref{fig:fibotree}). For every new number of
-Fibonacci, we are roughly duplicating the number of calculations
-needed with respect to the preceding number. This leads to exponential
-growth, which is exactly the behaviour observed in
-Figure~\ref{fig:fibotime}. 
-
-\begin{figure}[hbtp]
-  \centering
-  \includegraphics[width=\textwidth]{gfx/factorial-tree}
-  \caption{Tree of recursive computations for the Fibonacci numbers. It can be observed that there are many repetitions. }
-  \label{fig:fibotree}
-\end{figure}
-
-Not all is lost for recursive computation, however, because we can
-very easily keep track of the values we have already calculated. If we
-store these value in memory for later use we do not need to calculate
-them again. We can use an array for this purpose, created the first
-time the method is called. The resulting method could look like this: 
-
-\begin{verbatim}
-    // arrays are 0-based, so F(1) is stored at position 0, etc
-    private int[] precalculated = null;
-
-    public int fib(int n) {
-        if (precalculated == null) {
-           precalculated = new int[n];
-           for (int i = 0; i < precalculated.length; i++) {
-                precalculated[i] = -1; // to indicate "not calculated yet"
-           }
-        }
-        if ((n == 1) || (n == 2)) {
-          return 1; 
-        } else {
-            if (precalculated[n-1] != -1) {
-                return precalculated[n-1];
-            } else {
-                int result = fib(n-1) + fib(n-2);
-                precalculated[n-1] = result;
-                return result;
-            }
-        }
-    }
-    // ...additional code would go here...
-\end{verbatim}
-
-This is kind of OK, but the clarity of this code could be greatly
-improved with just two small tricks: first, move the initialisation
-of the array to another method; second, remove the first \verb+if+ by
-including the base cases (1 and 2) in the array at initialisation. The
-new code would look like this: 
-
-\begin{verbatim}
-    // arrays are 0-based, so F(1) is stored at position 0, etc
-    private int[] precalculated = null;
-
-    public int fib(int n) {
-        if (precalculated == null) {
-            initPrecalculatedArray(n);
-        }
-        if (precalculated[n-1] != -1) {
-            return precalculated[n-1];
-        } else {
-            int result = fib(n-1) + fib(n-2);
-            precalculated[n-1] = result;
-            return result;
-        }
-    }
-
-    private void initPrecalculatedArray(int size) {
-       precalculated = new int[size];
-       for (int i = 0; i < precalculated.length; i++) {
-            precalculated[i] = -1; // to indicate "not calculated yet"
-       }
-       precalculated[0] = 1; // F(1)
-       precalculated[1] = 1; // F(2)
-    }
-    // ...additional code would go here...
-\end{verbatim}
-
-Now the method \verb+fib(int)+ is much clearer. If the array of
-precalculated values is not initialised (i.e.~it is \verb+null+), we
-initialise it. Then we start calculating smaller Fibonacci numbers and
-storing them in the array. Before we do any calculation, we check the
-array; if it contains the precalculated value, we just use that
-number. There are no repeated calculations in this case. This version of the
-method uses a couple of milliseconds for finding a Fibonacci number,
-even for larger numbers. 
-
-Storing intermediate variables for reusing them is a simple technique
-called \emph{memoization} (not to be confused with memorization),
-sometimes written memo-ization. 
-
-The approach of solving a problem by dividing it into smaller
-sub-problems, and combining the results of the smaller instances to
-find the solution of the bigger one (memoizing intermediate results to
-prevent redundant re-computation), is called \emph{dynamic
-  programming}\footnote{It is important to note that (somewhat
-  confusingly) the term ``dynamic programming'' has nothing to do with
-  writing software, and actually \emph{predates} the appearance of
-  computers and software by many years. 
-  Originally, the term programming in 'dynamic programming'
-  referred to ``program'' in the sense of a military schedule for
-  training not in the sense of a list of instructions to be processed
-  by a computer.}.
-
-
 
 % Recursion
 %   - divide and conquer
