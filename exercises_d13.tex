@@ -32,10 +32,10 @@ What number would the following method print on screen if you called
         if (n <= 0) {
             return;
         }
-        printLine(n);
+        println(n);
         printNumbers(n-2);
         printNumbers(n-3);
-        printLine(n);
+        println(n);
     }
 \end{verbatim}
 
@@ -56,41 +56,6 @@ Do you see anything wrong with the following code? How would you fix it?
     }
 \end{verbatim}
 
-\subsection*{c)}
-\label{sec:b-3}
-
-Do you see anything wrong with the following code? How would you fix it?
-
-\begin{verbatim}
-    String doggyMethod(int n) {
-        String result = doggyMethod(n-3) + n + doggyMethod(n-2);
-        if (n <= 0) {
-            return "";
-        }
-        return result;
-    }
-\end{verbatim}
-
-
-% TODO: Move this to the exercises of Recursion-II
-\subsection*{d) McCarthy's 91 function}
-\label{sec:c}
-
-Calculate the result of calling this method with arguments 50, 73, 
-and~95. Note that the recursion on line 5 is double. 
-
-\begin{verbatim}
-    int mcCarthy91(int n) {
-        if (n > 100) {
-            return n - 10;
-        } else {
-           return mcCarthy91(mcCarthy91(n+11));
-        }
-    }
-\end{verbatim}
-
-(Hint: If you get too confused, maybe writing a slightly modified
-version of this code that prints the numbers on screen can help).
 
 \section{Classics}
 

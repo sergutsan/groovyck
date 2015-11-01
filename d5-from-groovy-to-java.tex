@@ -109,7 +109,7 @@ as a Java programmer.
 
 As we have said, everything is an object in Java. One consequence of
 this is
-that Groovy's \verb+println+ and Java Decaf's \verb+printLine()+
+that Groovy's and Java Decaf's \verb+println()+
 that we have been using are no 
 longer available. Instead, we can use its full object-oriented
 version: 
@@ -119,9 +119,11 @@ version:
 \end{verbatim}
 
 Note that \verb+println+ is just a normal method, called from an
-object with dot-notation and with a list of parameters.
+object with dot-notation and with a list of parameters: \verb+out+ is
+a static object in class \verb+System+, and method \verb+println+ is a
+method of that object.
 Up to now, Groovy and Java Decaf were adding all the additional elements to make our
-lifes easier; but we must do it ourselves in the full Java world. 
+lifes easier; but we must do it ourselves in the (full) Java world. 
 
 \subsection{Semicolons are compulsory}
 \label{sec:semic-are-comp}
