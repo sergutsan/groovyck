@@ -64,31 +64,32 @@ Check your answers with the faculty members in the lab.
 Take the example code from the notes:  
 
 \begin{verbatim}
-    class Point {
-        int x;
-        int y;
-    }
-    // This method increments the int by 1 and 
-    // moves the point to the right
-    void increment(Point point, int n) {
-        n = n + 1;
-        point.x = point.x + 1;
-        point = null;
-        println "  At the end of the method..."
-        println "  The integer is " + n;
-        println "  The point is " + point;
-    }
-    // Program execution starts here
-    Point myPoint = new Point();
-    myPoint.x = 0;
-    myPoint.y = 0;
-    int myInt = 0;
-    println "The integer is now " + myInt;
-    println "The point is now " + myPoint.x + "," + myPoint.y;
-    println "Calling method increment(Point, int)..."
-    increment(myPoint, myInt);
-    println "The integer is now " + myInt;
-    println "The point is now " + myPoint.x + "," + myPoint.y;
+01    Point myPoint = new Point();
+02    myPoint.x = 0;
+03    myPoint.y = 0;
+04    int myInt = 0;
+05    println "The integer is now " + myInt;
+06    println "The point is now " + myPoint.x + "," + myPoint.y;
+07    println "Calling method increment(Point, int)..."
+08    increment(myPoint, myInt);
+09    println "The integer is now " + myInt;
+10    println "The point is now " + myPoint.x + "," + myPoint.y;
+11
+12    class Point {
+13        int x;
+14        int y;
+15    }
+16
+17    // This method increments the int by 1 and 
+18    // moves the point to the right
+19    void increment(Point point, int n) {
+20        n = n + 1;
+21        point.x = point.x + 1;
+22        point = null;
+23        println "  At the end of the method..."
+24        println "  The integer is " + n;
+25        println "  The point is " + point;
+26    }
 \end{verbatim}
 
 Write detailed diagrams that show what variables are there in the
@@ -101,27 +102,28 @@ complex types).
 Now do the same for this example code from Day 3:
 
 \begin{verbatim}
-    class Person {
-        int age;
-        String name;
-        Person father;
-        Person mother;
-    }
-    Person john = new Person();
-    john.name = "John Smith";
-    john.age = 35;
-    Person mary = new Person();
-    mary.name = "Mary Smith";
-    mary.age = 32;
-    Person student = new Person();
-    student.name = "John Smith, Jr.";
-    student.age = 5;
-    student.father = john
-    student.mother = mary
-    println "TEACHER: How old are you, " + student.name + "?"
-    println "LITTLE JOHN: I am " + student.age + " years old, sir.";
-    println "TEACHER: Who is your mother?"
-    println "LITTLE JOHN: " + student.mother.name + ", sir.";
+01    Person john = new Person();
+02    john.name = "John Smith";
+03    john.age = 35;
+04    Person mary = new Person();
+05    mary.name = "Mary Smith";
+06    mary.age = 32;
+07    Person student = new Person();
+08    student.name = "John Smith, Jr.";
+09    student.age = 5;
+10    student.father = john
+11    student.mother = mary
+12    println "TEACHER: How old are you, " + student.name + "?"
+13    println "LITTLE JOHN: I am " + student.age + " years old, sir.";
+14    println "TEACHER: Who is your mother?"
+15    println "LITTLE JOHN: " + student.mother.name + ", sir.";
+16
+17    class Person {
+18        int age;
+19        String name;
+20        Person father;
+21        Person mother;
+22    }
 \end{verbatim}
 
 Check your diagrams with the faculty members in the lab. 
@@ -132,75 +134,74 @@ Check your diagrams with the faculty members in the lab.
 Look at the following code (with line numbers for clarity): 
 
 \begin{verbatim}
- 1   String requestUser() {
- 2       String result = System.console().readLine();
- 3       return result;
- 4   }
- 5   
- 6   void createUser() {
- 7       String user = requestUser();
- 8       while (!isValidUser(user)) {
- 9           println("That name is not valid. Please try again.);
-10           user = requestUser();
-11       }
-12       insertUserInDB(user);
-13   }
-14   
-15   void deleteUser() {
-16       String user = requestUser();
-17       while (!isValidUser(user)) {
-18           println("That name is not valid. Please try again.);
-19           user = requestUser();
-20       }
-21       if (existsInDB(user) {
-22           deleteUserInDB(user);
-23       } else {
-24           println "That user does not exist."
-25       }
-26   }
-27   
-28   void insertUserInDB(String user) {
-29       // do things with DB that we will cover in later weeks
-30   }
-31   
-32   void deleteUserFromDB(String user) {
-33       // do things with DB that we will cover in later weeks
-34   }
-35   
-36   boolean existsInDB(String user) {
-37       // do things with DB that we will cover in later weeks
-38   }
-39   
-40   boolean isValidUser(String login) {
-41       boolean loginIsValid = true;
-42       for (int i = 0; i < login.length(); i++) {
-43           char c = login.charAt(i);
-44           if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
-45               loginIsValid = false;
-46           }
-47       }
-48       return true;
-49   }
-50   
-51   boolean running = true;
-52   while (running) { 
-53       println "What would you like to do?";
-54       println "1 - Enter a new user";
-55       println "2 - Delete a user";
-56       println "0 - Exit";
-57       print   "> ";
-58       String str = System.console().readLine();
-59       int option = Integer.parseInt(str);
-60       switch (option) {
-61       case 0: running = false;
-62               break;
-63       case 1: createUser();
-64               break;
-65       case 2: deleteUser();
-66               break;
-67       default: println "Invalid option. Please try again."
-68       }
-69   }
+01   boolean running = true;
+02   while (running) { 
+03       println "What would you like to do?";
+04       println "1 - Enter a new user";
+05       println "2 - Delete a user";
+06       println "0 - Exit";
+07       print   "> ";
+08       String str = System.console().readLine();
+09       int option = Integer.parseInt(str);
+10       switch (option) {
+11       case 0: running = false;
+12               break;
+13       case 1: createUser();
+14               break;
+15       case 2: deleteUser();
+16               break;
+17       default: println "Invalid option. Please try again."
+18       }
+19   }
+20
+21   String requestUser() {
+22       String result = System.console().readLine();
+23       return result;
+24   }
+25   
+26   void createUser() {
+27       String user = requestUser();
+28       while (!isValidUser(user)) {
+29           println("That name is not valid. Please try again.);
+30           user = requestUser();
+31       }
+32       insertUserInDB(user);
+33   }
+34   
+35   void deleteUser() {
+36       String user = requestUser();
+37       while (!isValidUser(user)) {
+38           println("That name is not valid. Please try again.);
+39           user = requestUser();
+40       }
+41       if (existsInDB(user) {
+42           deleteUserInDB(user);
+43       } else {
+44           println "That user does not exist."
+45       }
+46   }
+47   
+48   void insertUserInDB(String user) {
+49       // do things with DB that we will cover in later weeks
+50   }  
+51   void deleteUserFromDB(String user) {
+52       // do things with DB that we will cover in later weeks
+53   }
+54   
+55   boolean existsInDB(String user) {
+56       // do things with DB that we will cover in later weeks
+57   }
+58   
+59   boolean isValidUser(String login) {
+60       boolean loginIsValid = true;
+61       for (int i = 0; i < login.length(); i++) {
+62           char c = login.charAt(i);
+63           if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
+64               loginIsValid = false;
+65           }
+66       }
+67       return true;
+68   }
 \end{verbatim}
 
 Follow the execution of the code as the user enters the following
@@ -213,8 +214,6 @@ sequences of inputs:
 \item 2, userNotInDB, 0
 \item 1, john, 2, john, 0
 \end{itemize}
-
-Hint: all of them start at 40.
 
 % TODO: put code with repeated code and make them make a version with
 % methods. 
