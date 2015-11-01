@@ -30,36 +30,36 @@
 * Post: 
 
 *** Day 5 ***
-* Pre: 
+* Introduction: 
   Tell them that recursion is very difficult. 
 
-* During:
+* Activity
   Live activity: difference between iterative and recursive
 
+* Conclusion
   Iterative           vs   Recursive
    - from "outside"   vs   from "inside"
    - small stack      vs   high stack
    - for/while loop   vs   method call and stop condition
 
 
-* Post: 
-
 *** Day 6 ***
-* Pre: 
+* Introduction
   Introducing (real) Java at last. Remind them the transition will happen also on Day 7.  
+  Pair programming - session 1
 
-* During:
+* Activity
 
-* Post: 
+* Conclusion: 
 
 
 
 *** Day 7 ***
-* Pre: 
+*  Introduction
   - Transition to Java complete! 
   - Remind them that pointers is very difficult. 
 
-* During:
+* Activity: 
   - Ejercise on board about list, adding element, removing element,
     adding/removing first elemennt and last element
   - Remember that first element must be added or removed from
@@ -72,26 +72,43 @@
 
 *** Day 8 ***
 * Pre: 
+  - Interfaces
+  - More pointers
+  - Pair-programming
 
-* During:
+* Activity: 
+  Live programming of a Queue + 
+  + Live activity implementing a Queue
+  NEED: Numbers printed
 
 * Post: 
 
 
 *** Day 9 ***
-* Pre: 
+* Introduction:
+  - Pointer! Easy by now, right?
 
 * During:
 
-* Post: 
+* Conclusion
+  - Last day of pointers: you have mastered them, right?
+  - Trees are easier recursively than iteratively
 
 
 *** Day 10 ***
 * Pre: 
+Three legs in OOP: 
+  - Encapsulation
+    - Already seen: private fields!
+      - Only exception covered today: "final"
+  - Inheritance
+  - Polymorphism
 
 * During:
 
 * Post: 
+  - Private, package, protected, public
+
 
 *** Day 11 ***
 * Pre: 
