@@ -174,8 +174,8 @@ Look at the following code (with line numbers for clarity):
 38           println("That name is not valid. Please try again.);
 39           user = requestUser();
 40       }
-41       if (existsInDB(user) {
-42           deleteUserInDB(user);
+41       if (existsInDB(user)) {
+42           deleteUserFromDB(user);
 43       } else {
 44           println "That user does not exist."
 45       }
@@ -193,14 +193,14 @@ Look at the following code (with line numbers for clarity):
 57   }
 58   
 59   boolean isValidUser(String login) {
-60       boolean loginIsValid = true;
+60       boolean result = true;
 61       for (int i = 0; i < login.length(); i++) {
 62           char c = login.charAt(i);
 63           if (!Character.isLetter(c) || !Character.isLowerCase(c)) {
-64               loginIsValid = false;
+64               result = false;
 65           }
 66       }
-67       return true;
+67       return result;
 68   }
 \end{verbatim}
 
