@@ -290,6 +290,7 @@ data source. This is easily done with the \verb+close()+ method.
 Alert readers may have noticed that this poses a small problem. Look
 at the following code: 
 
+\label{code:basic-example}
 \begin{verbatim}
 01    File file = new File("file.csv");
 02    try {
@@ -344,6 +345,7 @@ block; if an exception is thrown and caught, the \verb+finally+
 method will be executed after the code in the \verb+catch+ block is
 executed. The resulting code would look like this: 
 
+\label{code:basic-reading-example-with-finally}
 \begin{verbatim}
      File file = new File("file.csv");
      BufferedReader in = null;
@@ -376,6 +378,7 @@ can throw an \verb+IOException+, so it must be called inside another
 make it much clearer by using a private method to hide some of the
 details: 
 
+\label{code:basic-example-with-finally-and-aux-method}
 \begin{verbatim}
      // ... in some method...
          File file = new File("file.csv");
@@ -471,6 +474,73 @@ written on disk, you can use the method \verb+flush()+.
 
 Closing a data sink using \verb+close()+ 
 automatically flushes it before closing to prevent data loss. 
+
+
+\subsection{Try and close in one go: try-with-resources}
+
+Java 7 was not a major change to the language\footnote{The three major
+  changes to the language happened in Java 2 (expansion into
+  enterprise and mobile computing), Java 5 (generics) and Java 8
+  (introduction of functional programming).} but it brought a
+convenient change in the case of I/O: the try-with-resources
+construct.
+
+The try-with-resources construct is nothing more than merging the
+\verb+try+/+\verb+finally* pair into one single entity that is easier to read and easier to write. It makes your code simpler and clearer, so you should always use it for any new code that you write.
+
+In a nutshell, the try-with-resources is nothing more than giving the
+file that you want to use as a parameter to the \verb+try+ block, as
+in the following example:
+
+\begin{verbatim}
+01 File file = new File("file.csv");
+02 try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+03
+04 String line;
+05 while ((line = in.readLine()) != null) {
+06 // ... do things with the data here
+07 }
+08
+09 } catch (FileNotFoundException ex) {
+10 System.out.println("File " + file + " does not exist.");
+11 } catch (IOException ex) {
+12 ex.printStackTrace();
+13 }
+\end{verbatim}
+
+Note that this example is exactly the same as the one on
+page~\pageref{code:basic-example}, with a few significant
+differences. The first and more evident difference is that the
+(buffered) reader is created in the resources section of the
+\verb+try+, not on line~3.  If there was more than one (for example,
+if you wanted to read from one file and write into another file), the
+statements would be separated by semicolons, as in:
+
+\begin{verbatim}
+   try (BufferedReader in = new BufferedReader(new FileReader(inFile));
+        PrintWriter   out = new PrintWriter(outFile)) {
+\end{verbatim}
+
+A second important difference is that there is no need to explicitly
+close the reader on line 8 because Java will close it for you. On the
+one hand, this is convenient because you are not at risk of forgetting
+to close the resources you have opened (a common source of errors,
+including running out of file handles and losing data of unclosed
+channels). On the other hand, you do not need to pollute your code
+with double levels of \verb+try+ / \verb+catch+ like we did on
+page~\pageref{code:basic-reading-example-with-finally}. 
+
+Finally ---and related to the former point--- there is no need to add
+a \verb+finally+ (no pun intended) clause after line 13 like we had to
+do on page~\pageref{code:basic-reading-example-with-finally} for the
+reasons stated above.
+
+You can use the try-with-resources with any resource (class) that
+implements the interface \verb+java.lang.AutoCloseable+. This includes
+the usual suspects like files and database connections, but it may
+include any other object that needs to be closed at some point.
+
+
 
 
 \subsection{Binary files}
