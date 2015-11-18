@@ -16,6 +16,21 @@ goals:
 \item Implement divide-and-conquer solutions to problems. 
 \end{itemize}
 
+% TODO: Add comment to this exercise after pulling
+%
+% What is wrong with 
+%
+% String doggyMethod(int n) {
+%         String result = doggyMethod(n-3) + n + doggyMethod(n-2);
+%         if (n <= 0) {
+%             return "";
+%         }
+%         return result;
+% }
+%
+% Answer: the stop condition is AFTER the recursive call... so the
+%         loop never ends. 
+
 \section{Memoized Fibonacci}
 
 Memoization is not always necessary, but in some cases it can really
