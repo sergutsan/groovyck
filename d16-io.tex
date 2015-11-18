@@ -255,7 +255,7 @@ This repeats the \verb+readLine()+ call, so we may think of using a
 
 \begin{verbatim}
     do {
-        String line = in.readLine());
+        String line = in.readLine();
         // do things here with the line...
     } while (line != null) {
 \end{verbatim}
@@ -530,12 +530,17 @@ to close the resources you have opened (a common source of errors,
 including running out of file handles and losing data of unclosed
 channels). On the other hand, you do not need to pollute your code
 with double levels of \verb+try+ / \verb+catch+ like we did on
-page~\pageref{code:basic-reading-example-with-finally}. 
+page~\pageref{code:basic-reading-example-with-finally}. Your resource
+will be automatically closed when you exit the \verb+try+ clause, both
+in the case that all statements execute correctly and in the case than
+an exception is thrown inside the \verb+try+. 
 
-Finally ---and related to the former point--- there is no need to add
-a \verb+finally+ (no pun intended) clause after line 13 like we had to
-do on page~\pageref{code:basic-reading-example-with-finally} for the
-reasons stated above.
+In other words, there is no need to add
+a \verb+finally+ clause after line 13 like we had to
+do on page~\pageref{code:basic-reading-example-with-finally} because
+the resource (in this case, the \verb+BufferedReader+ \verb+in+) will
+be closed even if an exception is thrown and the normal flow of
+execution is interrupted. 
 
 You can use the try-with-resources with any resource (class) that
 implements the interface \verb+java.lang.AutoCloseable+. This includes
