@@ -493,19 +493,19 @@ file that you want to use as a parameter to the \verb+try+ block, as
 in the following example:
 
 \begin{verbatim}
-01 File file = new File("file.csv");
-02 try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-03
-04 String line;
-05 while ((line = in.readLine()) != null) {
-06 // ... do things with the data here
-07 }
-08
-09 } catch (FileNotFoundException ex) {
-10 System.out.println("File " + file + " does not exist.");
-11 } catch (IOException ex) {
-12 ex.printStackTrace();
-13 }
+01   File file = new File("file.csv");
+02   try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+03     
+04       String line;
+05       while ((line = in.readLine()) != null) {
+06           // ... do things with the data here
+07       }
+08     
+09   } catch (FileNotFoundException ex) {
+10       System.out.println("File " + file + " does not exist.");
+11   } catch (IOException ex) {
+12       ex.printStackTrace();
+13   }
 \end{verbatim}
 
 Note that this example is exactly the same as the one on
@@ -538,7 +538,9 @@ reasons stated above.
 You can use the try-with-resources with any resource (class) that
 implements the interface \verb+java.lang.AutoCloseable+. This includes
 the usual suspects like files and database connections, but it may
-include any other object that needs to be closed at some point.
+include any other object that needs to be closed at some point. If
+your resource does not implement \verb+AutoCloseable+, then you must
+close it yourself using the \verb+try+/\verb+catch+/\verb+finally+ triad. 
 
 
 
@@ -580,8 +582,6 @@ than sleepless nights trying to debug binary data with an
 hexadecimal editor. 
 
 % TODO: preferences
-
-% TODO: try-with-resources
 
 % TODO:  and the new way of doing finally in Java 7
 
