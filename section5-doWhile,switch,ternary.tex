@@ -89,7 +89,8 @@ String with only the character \emph{c} in it.
 \subsubsection{What are \emph{enums}}
 \label{sec:what-types-enum}
 
-Enumerated types are just lists of \emph{tags} that can be useful to
+Enumerated types (usually called \emph{enums}) 
+are just lists of \emph{tags} that can be useful to
 make your program more legible. They can be used to specify constants
 that have some special meaning. Defining an \emph{enum} in Groovy is
 really easy: 
@@ -106,7 +107,15 @@ really easy:
     }
 \end{verbatim}
 
-Now, this new enum can be used in \texttt{switch} (or \texttt{if})
+Once an \emph{enum} is defined, it can be used to declare new variables in
+the same way that we define them as String or int. 
+
+\begin{verbatim}
+    Day dayOfWeek;
+    dayOfWeek = Day.MONDAY;
+\end{verbatim}
+
+Now, an enum can be used in \texttt{switch} (or \texttt{if})
 statements. Compare the clarity of this code:
 
 \begin{verbatim}
@@ -125,10 +134,10 @@ and this code:
 
 \begin{verbatim}
     switch (day) {
-      case MONDAY: 
+      case Day.MONDAY: 
         // do something here for this day
         break;
-      case WEDNESDAY: 
+      case Day.WEDNESDAY: 
         // do something here for this day
         break;
       ...
@@ -145,7 +154,7 @@ There is a general lesson to learn here. What you see in the code
 above is an example of \emph{magic numbers}: numbers that appear in
 your code and have an effect, but is difficult to understand what
 their effect is or why they are what they are (i.e. why a~1~and not
-a~5?). \textbf{Magic number make code harder to read and
+a~5?). \textbf{Magic numbers make code harder to read and
   understand. Never use magic numbers in your code.}
 
 \subsection{The ternary operator}
@@ -270,7 +279,7 @@ value of \verb+i+ while the later increases the value of \verb+i+ and
 then evaluates the statement. This a subtle difference that you should
 now worry about and should actually avoid in modern code. In other
 words: never write any code that would behave differently if you
-changes all instances of \verb-i++- for \verb-++i+. This is very easy
+changes all instances of \verb-i++- for \verb-++i-. This is very easy
 to do by just following the following rule: 
 
 \begin{center}
