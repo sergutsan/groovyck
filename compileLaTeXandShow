@@ -1,0 +1,22 @@
+#!/bin/bash
+usage() {
+    echo "USAGE: compileAndShow <file>"
+    echo "(example: compileAndShow d8)"
+}
+
+
+[ "$1" = "" ] && usage && exit
+
+FILE=$1
+latex $FILE   && \
+  latex $FILE && \
+  latex $FILE && \
+  dvips $FILE.dvi -o && ps2pdf $FILE.ps && \
+  rm $FILE.ps $FILE.dvi && \
+  echo && echo && echo && echo && \
+  echo $FILE.pdf created. && \
+  echo 'Do you want to see it (y/N)?' && \
+  read a && \
+  if [ "$a" = "y" ]; then 
+      evince $FILE.pdf; 
+  fi
