@@ -73,7 +73,12 @@ all these steps, it will complain:
 
 \subsection{How can I check what my PATH is?}
 
-Very easy. Just type 'path' on the command line.
+Very easy. Just type 'echo \%PATH\%' on the command line (on Windows
+systems) or 'echo \$PATH' (on Unix systems: Linux, Max, etc).
+
+You can follow the same procedure to see the value of all other
+environment variables, e.g. echo \%SOME\_VARIABLE\%, echo
+\$SOME\_VARIABLE. 
 
 \subsection{How can I edit the PATH?}
 
@@ -82,37 +87,74 @@ you probably cannot do it in the lab\footnote{But you can try just in
   case\ldots}.  
 You can check online how to do it, it is
 explained in thousands of places (googling "change path windows
-7/Vista/XP/whatever" will probably get you good results).
+7/10/Vista/XP/whatever" will probably get you good results).
 
-In the lab, you have to do it manualy by using the command 'path' that
-you have 
-just used to check your PATH. You can set your PATH by typing:
+In the lab, you have to do it manualy by using the command 'set' (this
+is the same in Windows and in most Unix systems):
 
 \begin{verbatim}
-  > path newPath
+  > set PATH=newPath
 \end{verbatim}
 
+where 'newPath' is the new value that you want for this environment
+variable. 
+This will \emph{overwrite} your PATH in the same way that 
+writing \verb+i=1+ in Java overwrites the value of the 
+variable \verb+i+. 
 
-This will overwrite your PATH. This is usually not what you want: you
-want to add things to your PATH, keeping the old list of folders. This
+Sometimes this is not what you want: you
+want to add things to your PATH, keeping the old list of folders that
+you already had. This
 is easy too; the only thing you have to know is that the old value of
-PATH can be accessed with \%PATH\%. In other words, if you type\ldots
+PATH can be accessed with \%PATH\% (Windows) or \$PATH (Unix). 
+In other words, if you type\ldots
 
 \begin{verbatim}
-  > path %PATH%
+  > set PATH=%PATH%
 \end{verbatim}
 
-\ldots you will have the same path. Now it is easy to add things. You
-have probably noticed that folders are separated by a semicolon (;),
+\ldots you will have the same path (i.e.~you have overwritten it with
+the same value). Now it is easy to add things. You
+have probably noticed that folders are separated by a semicolon (;) if
+you are on a Windows machine and with a colon (:) if you are on a Unix
+machine,
 so if you want to add the folder \verb+h:\git\bin+ to your PATH, you
 only 
 need to type:
 
 \begin{verbatim}
-  > path %PATH%;h:\git\bin
+  > set PATH=%PATH%;h:\git\bin
 \end{verbatim}
 
+or something like:
+
+\begin{verbatim}
+  > set PATH=$PATH;/usr/bin
+\end{verbatim}
+
+on Unix systems. 
+
 %The inverted commas are only necessary if you have spaces in your PATH. % // Not anymore in Windows 7 and it actually gets in the way 
+
+\begin{table}
+  \centering
+  \begin{tabular}[htbp]{|l|c|c|}
+    \hline
+    & Windows & Unix \\
+    \hline
+    Read value & \%VARIABLE\% & \$VARIABLE \\
+    \hline
+    Print value & echo \%VARIABLE\% & echo \$VARIABLE \\
+    \hline
+    Write value & set VARIABLE=... & set VARIABLE=... \\
+    \hline
+    PATH separator & semicolon (;) & colon (:) \\
+    \hline
+  \end{tabular}
+  \caption{Environment variables in Windows and Unix}
+  \label{tab:envvars}
+\end{table}
+
 
 \subsection*{Notes for Unix users}
 \label{sec:notes-unix-users}
