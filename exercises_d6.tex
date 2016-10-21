@@ -25,65 +25,6 @@ You should be able to finish most of non-star exercises in the lab.
 Remember that star exercises are more difficult. 
 \textbf{Do not try them unless the other ones are clear to you}. 
 
-\section{Instance counter}
-\label{sec:instance-counter}
-
-{\bf Note:} This exercise is designed to help you practice the meaning of
-\verb+static+. However, remember that adding static fields to your
-classes is usually a bad idea. Do not do it unless you have a very
-good reason. Hint: never do it in Programming in Java. 
-
-\vspace{1em}
-
-Complete the example given in the notes with a class called
-\verb+Spy+. Your class must have: 
-
-\begin{itemize}
-\item one and only one \verb+static+ variable, and \verb+int+ called
-  \verb+spyCount+.
-\item an instance variable of type \verb+int+ for the spy's ID.
-\item a constructor method that receives
-  the ID of the spy as an argument, increases
-  \verb+spyCount(int)+ by one, 
-  and prints on the screen the ID of this spy plus the total number of
-  spies so far.
-\item a \verb+die()+ method that prints on the screen ``Spy XX has
-  been detected and eliminated'' (where XX is the spy's ID), 
-  decrements the spy counter and prints
-  on the screen the total number of spies so far. 
-\item a main method in which several objects of class \verb+Spy+ are
-  created and some of them killed (their method \verb+die()+ is
-  called). 
-\end{itemize}
-
-Observe how the static variable is accessed by different objects both
-to increment and to decrement it. 
-
-\section{do \{practice\} while (!understood);}
-\label{sec:do-practice-while}
-
-Make a class that implements a method 
-that reads a list of marks between 0 and 100 from the
-user, one per line, and stops when the user introduces a -1. The
-program should output at the end (and only at the end) how many marks
-there were in total, how many were distinctions (70--100), how many
-were passes (50--69), how many failed (0--49), and how many were
-invalid (e.g. 150 or -3). \textbf{Use \texttt{readLine()} exactly once}. The
-output may look similar to this example: 
-
-\begin{verbatim}
-    Input a mark: 13
-    Input a mark: 45
-    Input a mark: 63
-    Input a mark: 73
-    Input a mark: 101
-    Input a mark: 45
-    Input a mark: 18
-    Input a mark: 92
-    Input a mark: -1
-    There are 7 students: 2 distinctions, 1 pass, 4 fails (plus 1 invalid). 
-\end{verbatim}
-
 \section{Singly-linked lists}
 \label{sec:doubly-linked-lists}
 
@@ -101,10 +42,10 @@ of the notes:
   element too. 
 \end{enumerate}
 
-Hint: Note that you cannot delete the first element from inside the
-list because you need to update the pointer
-\verb+patientListStart+. To add or delete the first element of a list,
-you must do it from outside the list. 
+%Hint: Note that you cannot delete the first element from inside the
+%list because you need to update the pointer
+%\verb+patientListStart+. To add or delete the first element of a list,
+%you must do it from outside the list. 
 
 \section{Queue length}
 \label{sec:queue-length}
@@ -113,15 +54,15 @@ Reuse the code of one of the dynamic list in the former exercise, and
 add a method that calculates the length of the list (maybe you have
 done this already). 
 
-Is it easy to do this both iteratively and recursively? Try both ways
-and see which is more natural for you. If one takes too long, try the
-other way. 
+%Is it easy to do this both iteratively and recursively? Try both ways
+%and see which is more natural for you. If one takes too long, try the
+%other way. 
 
 \section{Doubly-linked lists}
 \label{sec:doublyr-linked-lists}
 
 A doubly-linked list is a dynamic list in which each element is
-connected to two other elements instead of just one. The one before
+connected to two other elements instead of just one: the one before
 and the one after it. In this exercise, you must create a
 doubly-linked list using the ``hospital and patients'' example as a
 starting point.
@@ -142,7 +83,7 @@ starting point.
 
 Hint: First you need to add a new field to Patient for the pointer
 going ``backwards''. Then you need to modify the \emph{add} and
-\emph{delete} methods to make sure you do not have loose pointers. 
+\emph{delete} methods to make sure you do not get any loose pointers. 
 
 \section{Circular lists}
 \label{sec:circular-lists}
@@ -250,15 +191,75 @@ could look like this:
 \section{From array to list}
 \label{sec:from-array-string}
 
-Create a static method that takes an array of integers and returns a
+Create a \emph{static} method that takes an array of integers and returns a
 linked list of integers in the same order as the original array. You
-can put this method in a class called \verb+ListUtilities+ so that you
+can put this method in a class called \verb+ArrayUtilities+ so that you
 can easily use it for the following exercises. 
 
-Initialising an array with 15-20 elements is very easy with
-curly-brackets-notation, so it is 
-common to create an array and then convert it into a dynamic structure
-automatically. 
+(Note: This is what the method \verb+Arrays.asList(...)+ from the core
+Java library does (you can look it up!). Class \verb+Arrays+ contains
+several static methods to operate with arrays. Before you can use this
+class properly, we need to learn about generic types (e.g. things that
+look like \verb+<T> List<T>+) and we will do that soon.)
+
+\section{Instance counter}
+\label{sec:instance-counter}
+
+{\bf Note:} This exercise is designed to help you practice the meaning of
+\verb+static+ fields. However, remember that adding static fields to your
+classes is usually a bad idea. Do not do it unless you have a very
+good reason. Hint: \emph{never} do it in Programming in Java. 
+
+\vspace{1em}
+
+Complete the example given in the notes with a class called
+\verb+Spy+. Your class must have: 
+
+\begin{itemize}
+\item one and only one \verb+static+ variable, and \verb+int+ called
+  \verb+spyCount+.
+\item an instance variable of type \verb+int+ for the spy's ID.
+\item a constructor method that receives
+  the ID of the spy as an argument, increases
+  \verb+spyCount(int)+ by one, 
+  and prints on the screen the ID of this spy plus the total number of
+  spies so far.
+\item a \verb+die()+ method that prints on the screen ``Spy XX has
+  been detected and eliminated'' (where XX is the spy's ID), 
+  decrements the spy counter and prints
+  on the screen the total number of spies so far. 
+\item a main method in which several objects of class \verb+Spy+ are
+  created and some of them killed (their method \verb+die()+ is
+  called). 
+\end{itemize}
+
+Observe how the static variable is accessed by different objects both
+to increment and to decrement it. 
+
+\section{do \{practice\} while (!understood);}
+\label{sec:do-practice-while}
+
+Make a class that implements a method 
+that reads a list of marks between 0 and 100 from the
+user, one per line, and stops when the user introduces a -1. The
+program should output at the end (and only at the end) how many marks
+there were in total, how many were distinctions (70--100), how many
+were passes (50--69), how many failed (0--49), and how many were
+invalid (e.g. 150 or -3). \textbf{Use \texttt{readLine()} exactly once}. The
+output may look similar to this example: 
+
+\begin{verbatim}
+    Input a mark: 13
+    Input a mark: 45
+    Input a mark: 63
+    Input a mark: 73
+    Input a mark: 101
+    Input a mark: 45
+    Input a mark: 18
+    Input a mark: 92
+    Input a mark: -1
+    There are 7 students: 2 distinctions, 1 pass, 4 fails (plus 1 invalid). 
+\end{verbatim}
 
 \section{A sorted list}
 \label{sec:sorted-list}
