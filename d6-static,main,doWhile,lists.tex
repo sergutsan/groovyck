@@ -478,12 +478,17 @@ And the hospital program (a different file to \verb+Patient.java+)
 could have an array of patients:  
 
 \begin{verbatim}
-    Patient[] patientArray = new Patient[90];
+    public class HospitalManager { 
+        private Patient[] patientArray = new Patient[90];
+
+        // methods here to add or remove patients, etc
+    }
 \end{verbatim}
 
 But, as we already know, this is limited because the hospital may have
 at a later point more than 90 patients. 
-We can overcome this limitation by using a
+We can overcome this limitation by using a dynamic data structure, a
+structure that can change size after creation, e.g. a 
 linked list. Our list will be composed of objects of a slightly
 modified class \verb+Patient+:
 
@@ -498,57 +503,82 @@ modified class \verb+Patient+:
             this.name = name;
             this.age = age;
             this.illness = illness;
-            this.nextPatient = null;
+            this.nextPatient = null; // Pointer to another patient!
         }
+        //  other methods come here, including getters / setters
+    }
+\end{verbatim}
+
+The only difference (but it is important!) 
+is the pointer to another \verb+Patient+. A linked
+list of patients is nothing more than a sequence of patients in which
+each patient links to the next one, and the last one 
+points to \verb+null+. The starting point of the list will
+appear in the container class as before, but instead of being a
+pointer to an array it will be a pointer to the first element in the
+linked list: 
+
+\begin{verbatim}
+    public class HospitalManager { 
+        private Patient firstPatient = null;
+
         //  other methods come here...
     }
 \end{verbatim}
 
-The only difference is the pointer to another \verb+Patient+. A linked
-list of patients is nothing more than a sequence of patients in which
-each patient links to the next one, and the last one 
-points to \verb+null+. The starting point of the list will
-appear in your main program and probably be initialised in the
-\verb+launch()+ method, while new patients can be added to the list by
-using the following method: 
+
+\paragraph{Operations on linked lists}
+\label{sec:oper-link-lists}
+
+New patients can be added to the list by following the linked list of
+patients until the end, and then adding the new patient there, as
+illustrated by the following method: 
 
 \begin{verbatim}
-    // this is a member method of class Patient
-    public void addPatient(Patient newPatient) {
-        if (this.nextPatient == null) {
-            // this means this is the last patient in the list
-            this.nextPatient = newPatient;
-        } else {
-            this.nextPatient.addPatient(newPatient);
-        }
-    }            
+01    // this is a member method of class HospitalManager
+02    public void addPatient(Patient newPatient) {
+03        Patient current = this.firstPatient;
+04        while (current.getNextPatient() != null) {
+05            // this means we are not yet at the end of the list
+06            current = current.getNextPatient();
+07        } 
+08        // at this point, current points to the last patient
+09        current.setNextPatient(newPatient);
+10    }            
 \end{verbatim}
 
-The method \verb+addPatient(Patient)+ is very simple. It goes through
+The method \verb+addPatient(Patient)+ is very simple. 
+It goes through
 the whole list of patients checking whether the current patient is the
-last one in the list (\emph{this.nextPatient == null}). 
+last one in the list (\verb+current.getNextPatient() != null+). 
 If it is, it adds the last patient at the
 end; if it is not, it moves to the next patient and tries 
-again (\emph{this.nextPatient.addPatient(newPatient)}). 
+again (\verb+current = current.getNextPatient()+). 
+
+\vspace{1cm}
+
+But beware! What happens if the list is empty? If the list is empty,
+we will get a \verb+NullPointerException+ on line 04 when we try to
+call method \verb+getNextPatient()+ on a null pointer
+(\verb+current+). 
+
+In order to avoid this case, we must check first whether the list is
+empty before we add the new patient. If it is, we just make the new
+patient the first patient. 
 
 The list of patients is initialised in the main program with a first
 patient, as shown in the code below (see also Figure~\ref{fig:jkhsdfj}):
 
 \begin{verbatim}
-    public class HospitalManager {
-        private Patient patientListStart = null;
-
-        public static void main(String[] args) {
-           // ...
-           HospitalManager hm = new HospitalManager();
-           // ...
-        }
-
-        // ...inside some method, maybe launch()
-            Patient firstPatient = new Patient("John", 33, "Tuberculosis");
-            patientListStart = firstPatient;
-        // ...
-    }
+01    // this is a member method of class HospitalManager
+02    public void addPatient(Patient newPatient) {
+03          if (firstPatient = null) {
+04              firstPatient = newPatient;
+05              return;
+06          }
+07        Patient current = firstPatient;
+08        while (current.getNextPatient() != null) {
+09            // the rest of the method does not change...
 \end{verbatim}
 
 % TODO: put the full diagram (with the init of the list in the heap,
@@ -569,7 +599,7 @@ method \verb+addPatient(Patient)+ at any point.
 
 \begin{verbatim}
     Patient yetAnotherPatient = new Patient("Mary", 66, "Meningitis");
-    patientListStart.addPatient(yetAnotherPatient);
+    hospital.addPatient(yetAnotherPatient);
 \end{verbatim}
 
 %% TODO: a ppt video about this? an activity in the class?
@@ -582,22 +612,33 @@ Figures~\ref{fig:deletelinklist},~\ref{fig:deletelinklist2},
 and~\ref{fig:deletelinklist3}):
 
 \begin{verbatim}
-    // this is a member method of class Patient
-    // returns true if the patient was found and removed, false otherwise
-    public boolean deletePatient(Patient patient) {
-        if (this.nextPatient == null) {
-            // patient to remove was not found
-            return false;
-        } else if (this.nextPatient.name.equals(patient.name)) {
-            // We found it! It is the next one!
-            // Now link this patient to the one after the next 
-            this.nextPatient = nextPatient.nextPatient;
-            return true;
-        } else {
-            return this.nextPatient.deletePatient(patient);
-        }
-    }    
+01    // this is a member method of class HospitalManager
+02    // returns true if the patient was found and removed, false otherwise
+03    public boolean deletePatient(String name) {
+04        if (firstPatient == null) {
+05            // list is empty, nothing to remove
+06            return false;
+07        }
+08        if (firstPatient.getName().equals(name)) {
+09            // first patient in the list must be removed
+10            firstPatient = firstPatient.getNextPatient();
+11            return true;
+12        }
+13        Patient current = firstPatient;
+14        while (current.getNextPatient() != null) {
+15            if (current.getNextPatient().getName().equals(name)) {
+16                // We found it! It is the next one!
+17                // Now link this patient to the one after the next 
+18                current.setNextPatient(current.getNextPatient().getNextPatient());
+19                return true;
+20            }
+21            current = current.getNextPatient();
+22        } 
+23        return false;
+24    }    
 \end{verbatim}
+
+Read this method carefully. There are three parts in there: 
 
 \begin{figure}[p]
   \centering
@@ -630,6 +671,26 @@ and~\ref{fig:deletelinklist3}):
     (Note: simplified diagram.)}
   \label{fig:deletelinklist3}
 \end{figure}
+
+\begin{enumerate}
+\item Checking whether the list is empty. If it is, we cannot delete
+  any element.
+\item Checking whether the first element is the element we want to
+  delete. If it is, we just move the pointer to the first element in
+  the list to point to the second element in the list (that becomes
+  the new ``first'').
+\item The third scenario is where we have to move through the list to
+  delete the right element. We delete an element by making the
+  ``next'' pointer from the element before point to the element after,
+  making the element unreachable. We have to be careful because we
+  cannot move ``backwards'' in the list ---we can only move
+  forward\footnote{A doubly-linked list, with pointer both to the next
+  and to the previous element, solves this problem. You will create
+  one in the exercises for today.}---
+  so we have to delete an element while \verb+current+ points to the
+  element \emph{before} the one we want to delete (line 18).
+\end{enumerate}
+
 
 When we delete an element from a dynamic linked list, it is left
 ``hanging around'' without any pointer that links to it. This will be
