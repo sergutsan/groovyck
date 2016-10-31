@@ -52,7 +52,23 @@ to perform exact division.
 Write a small Groovy or Java Decaf program that uses all the methods of
 \verb+Calculator+.
 
+\section{Checking arrays}
+\label{sec:checking-arrays}
 
+Create a new Java class called \verb+ArrayChecker+ with two  methods: 
+
+\begin{description}
+\item[isSymetrical(int[]): ] a method that returns true if the array of
+  \verb+int+ provided as argument is symmetrical and false otherwise.
+\item[reverse(int[]): ] a method that takes an array of \verb+int+ and
+  returns another array of \verb+int+ of the same size and with the
+  same numbers, but in opposite order.
+\end{description}
+
+Write a Groovy script that
+creates an object of class \verb+ArrayChecker+ and uses its methods
+to check whether a few arrays are symmetrical and, if they are not,
+reverses them. 
 
 \section{Copying arrays}
 \label{sec:copying-arrays}
@@ -67,7 +83,8 @@ If the second array is smaller, then only those elements that fit will
 be copied. If the second array is larger, it will be filled with
 zeroes. 
 
-Write a program that creates an object of this class and uses this
+Write a Groovy script that
+creates an object of class \verb+ArrayCopier+ and uses its \verb+copy+
 method to copy some arrays in all three cases: 
 
 \begin{itemize}
