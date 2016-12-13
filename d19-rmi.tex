@@ -30,11 +30,12 @@ of having a bigger, broader, more powerful computer running the whole
 program. 
 
 In this section we will learn how to create programs that run in more
-than one computer, different objects of the same program communicating
+than one computer; we will have 
+different objects of the same program communicating
 with each other through the network, even if they live on different
 machines. Although the topic of network programming is very broad and
 exceeds the scope of this module, the main concepts that we
-will learn are common to several different technologies. 
+will learn are common to most network technologies. 
 
 \subsection{The basics}
 \label{sec:basics}
@@ -49,7 +50,7 @@ services.  \emph{Clients} run on different computers and use the
 services provided by the server. Attentive readers may have noticed
 that this looks similar to classes calling methods of other classes,
 and this is actually the way in which it is modelled in many
-object-oriented languages as we will see later.
+object-oriented programming languages as we will see later.
 
 Depending on the application, the server and the client can be
 perceived as the same program or as two different programs. 
@@ -57,7 +58,8 @@ For example, web servers (like
 Apache) and web browsers (like Mozilla Firefox or Google Chrome) are
 seen as different programs, and actually they are developed by
 different teams of people. On the other hand, the clients and the
-servers of games like World of Warcraft are considered to be part of
+servers of applications like Dropbox or of games 
+like World of Warcraft are considered to be part of
 the same program. This is only a matter of perception: at a technical
 level, client and server are always two different processes with two
 different and unrelated memory spaces (stack and heap), usually on two
@@ -65,7 +67,8 @@ different machines\footnote{Some applications, including databases and
 email programs, have different client and server processes running on
 the same machine.}. 
 
-By metonymy, the words client and server are commonly used to refer to
+By metonymy, the words ``client'' and ``server'' 
+are commonly used to refer to
 the machines where the server or the clients run. For example,
 depending on the context, the term ``web server'' may refer to the
 program that serves web pages (like Apache) or a physical computer
@@ -145,34 +148,34 @@ looks (almost) like a normal method call.
   \label{fig:rmiflow3}
 \end{figure}
 
-\subsection{Security issues}
-\label{sec:security}
+% \subsection{Security issues}
+% \label{sec:security}
 
-When computation is distributed among different machines there are
-security concerns to address. Who can access the machine? For what
-purpose? 
+% When computation is distributed among different machines there are
+% security concerns to address. Who can access the machine? For what
+% purpose? 
 
-Security issues are handled in RMI (and Java, in general) by means of security
-policies. Although a full revision of security policies in Java goes
-beyond of the scope of this section, the basic concepts that we need
-for running simple RMI applications are simple to grasp. 
+% Security issues are handled in RMI (and Java, in general) by means of security
+% policies. Although a full revision of security policies in Java goes
+% beyond of the scope of this section, the basic concepts that we need
+% for running simple RMI applications are simple to grasp. 
 
-Security policies are defined in text files, usually in the same
-folder as the main class is. A basic example of such a file would
-have the following aspect: 
+% Security policies are defined in text files, usually in the same
+% folder as the main class is. A basic example of such a file would
+% have the following aspect: 
 
-\begin{verbatim}
-   grant {
-     permission java.net.SocketPermission "127.0.0.1:*", "accept,connect";
-     permission java.net.SocketPermission "192.168.0.1:80", "connect";
-   };
-\end{verbatim}
+% \begin{verbatim}
+%    grant {
+%      permission java.net.SocketPermission "127.0.0.1:*", "accept,connect";
+%      permission java.net.SocketPermission "192.168.0.1:80", "connect";
+%    };
+% \end{verbatim}
 
-This file would allow code on this machine to accept connections from
-machines ``127.0.0.1'' (which
-means \emph{localhost}, i.e.~the machine the program is running on) on
-any port, and to connect to machine ``127.0.0.1'' on any port or to
-machine ``192.168.0.1'' on port 80. 
+% This file would allow code on this machine to accept connections from
+% machines ``127.0.0.1'' (which
+% means \emph{localhost}, i.e.~the machine the program is running on) on
+% any port, and to connect to machine ``127.0.0.1'' on any port or to
+% machine ``192.168.0.1'' on port 80. 
 
 % TODO: maybe a little more explanation here would be good?
 
@@ -240,12 +243,13 @@ import java.rmi.server.UnicastRemoteObject;
 public class EchoServer extends UnicastRemoteObject implements EchoService {
 
     public EchoServer() throws RemoteException {
-        // nothing to initialise for this server
+        // nothing to initialise for this server, but it is important 
+        // to declare that the constructor throws RemoteException
     }
 
     @Override
     public String echo(String s) {
-        // This println is not necessary, but helps verifying whether 
+        // This println() is not necessary, but helps verifying whether 
         // the server has received the call or not on the remote machine 
         System.out.println("Replied to some client saying '" + s + "'");
         return s;
@@ -260,17 +264,26 @@ clients. Compiling the server requires a normal Java compilation:
     javac EchoServer.java
 \end{verbatim}
 
-This will produce an \verb+EchoServer.class+ file, as we know. To
-create the stub, we must use the RMI compiler \verb+rmic+ 
-on the class file (not the source file):
+This will produce an \verb+EchoServer.class+ file, as we know. 
 
-\begin{verbatim}
-    rmic EchoServer
-\end{verbatim}
+From Java~8 on, we do not need to do anything special to create the
+stubs that implement the communication between server and
+client. These are generated on demand by Java\footnote{If you work in
+  the future with Java~7 (or earlier) codebases that use RMI you will
+  learn to use a program called 'rmic'. It is not difficult
+  with your Java current knowledge, only a bit cumbersome.}.
 
-This will produce an \verb+EchoServer_stub.class+ file. We do not need
-to do anything special with it apart from generating it. RMI takes
-care of sending it to interested clients. 
+% To
+% create the stub, we must use the RMI compiler \verb+rmic+ 
+% on the class file (not the source file):
+
+% \begin{verbatim}
+%     rmic EchoServer
+% \end{verbatim}
+
+% This will produce an \verb+EchoServer_stub.class+ file. We do not need
+% to do anything special with it apart from generating it. RMI takes
+% care of sending it to interested clients. 
 
 \subsection{Launching the server}
 \label{sec:launching-server}
@@ -281,20 +294,17 @@ different class, maybe in a file called \verb+EchoServerLauncher.java+):
 
 \begin{verbatim}
     private void launch() {
-        // 1. If there is no security manager, start one
-        if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new RMISecurityManager());
-        }
         try {
-            // 2. Create the registry if there is not one
+            // 1. Create the registry if there is not one
             LocateRegistry.createRegistry(1099);
-            // 3. Create the server object
+            // 2. Create the server object
             EchoServer server = new EchoServer();
-            // 4. Register (bind) the server object on the registy. 
+            // 3. Register (bind) the server object on the registy. 
             //    The registry may be on a different machine
-            String registryHost = "//localhost/";
+            String registryAddress = "localhost";
+            String registryUrl = "//" + registryAddress + "/";
             String serviceName = "echo";
-            Naming.rebind(registryHost + serviceName, server);
+            Naming.rebind(registryUrl + serviceName, server);
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         } catch (RemoteException ex) {
@@ -303,33 +313,36 @@ different class, maybe in a file called \verb+EchoServerLauncher.java+):
     }
 \end{verbatim}
 
-If the security manager or the registry are not running, they must be
-started. The registry will listen on port~1099 by default, but this
+%If the security manager or the registry are not running, they must be
+%started. 
+The registry will listen on port~1099 by default, but this
 can be changed (e.g.~to pass through a firewall that forbids use of
 port~1099). Then an instance of the server class is created and
 registered (i.e.~bound) with a given name. This name must be known by
 clients that want to use the services offered by the server.
 
-The server can be launched by specifying the security policy (i.e. a
-file like described on Section~\ref{sec:security}) on the
-command line: 
+% The server can be launched by specifying the security policy (i.e. a
+% file like described on Section~\ref{sec:security}) on the
+% command line: 
 
-\begin{verbatim}
-    java -Djava.security.policy=server.policy EchoLauncher
-\end{verbatim}
+% \begin{verbatim}
+%     java -Djava.security.policy=server.policy EchoLauncher
+% \end{verbatim}
 
 \subsection{Using the services from the client}
 \label{sec:using-services-from}
 
 We are almost there. The only piece missing is the client! 
 
-After setting up the security manager (using the same code as the
-server), the first thing that the client needs to do is to find a
+% After setting up the security manager (using the same code as the
+% server), the 
+The first thing that the client needs to do is to find a
 reference to the remote server object. It can do so by asking the
 registry:
 
 \begin{verbatim}
-    Remote service = Naming.lookup("//127.0.0.1:1099/echo"); 
+    String registryAdress = "127.0.0.1";
+    Remote service = Naming.lookup("//" + registryAddress + ":1099/echo"); 
     EchoService echoService = (EchoService) service;
 \end{verbatim}
 
@@ -355,17 +368,21 @@ the return value to the client, who will store it in variable
 \verb+receivedEcho+. If anything goes wrong at any point, a
 \verb+RemoteException+ will be thrown. 
 
-The client can be launched like the server, specifying the security
-policy (usually different) on the command line: 
+% The client can be launched like the server, specifying the security
+% policy (usually different) on the command line: 
 
-\begin{verbatim}
-    java -Djava.security.policy=client.policy EchoClient <someTextHere>
-\end{verbatim}
+% \begin{verbatim}
+%     java -Djava.security.policy=client.policy EchoClient <someTextHere>
+% \end{verbatim}
 
 The client must have access (on its CLASSPATH) to the classes needed
 to serialize and marshall the objects sent and received to the
-server. This includes the stub and those classes used for parameters
-and return values. 
+server. This includes % the stub and
+those classes used for parameters and return values\footnote{If the
+  client does not have access to all the classes required for the
+  service, and need to download new classes from the server, this can
+  constitute a security hazard. In these cases, a security policy must
+  be set up. This goes beyond the scope of these notes.}.
 
 \subsection{Summary}
 \label{sec:summary}
@@ -376,7 +393,7 @@ The steps to be followed on the server side are:
 \item Define the interface of the service.
 \item Implement the service.
 \item Compile the server.
-\item Compile the stub with \verb+rmic+
+%\item Compile the stub with \verb+rmic+
 \item Write a launcher that binds the server to the registry, and
   execute it. 
 \end{enumerate}
@@ -389,8 +406,8 @@ the methods in the interface like it was a local object.
 \label{sec:conclusion}
 
 In the modern world, programs are no longer confined to a single
-machine, and many program actually run on several machines at the same
-time. Some popular examples include web servers and web browser,
+machine, and many programs actually run on several machines at the same
+time. Some popular examples include web servers and web browsers,
 bitTorrent programs, distributed storage programs, and version control
 programs like Git. 
 
@@ -403,9 +420,12 @@ pushing the latests commits.
 We have seen how RMI works. RMI is a specific Java technology that we
 have chosen because it is a core Java component (i.e.~it does not need
 external libraries) and it suffices to illustrate most of the main
-networking concepts. The concepts we have learned are common to any
+networking concepts. It is also important because many other Java
+network technologies are built on top of RMI. 
+
+The concepts we have learned are common to any
 network technology you will use in the future: client, server,
-registry, remote method invocation, security policy. Understanding how
+registry, and remote method invocation. Understanding how
 to implement these concepts in RMI will make it easy to learn and use
 other technologies in the future, such as REST and web services.
 
