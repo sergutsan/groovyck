@@ -20,7 +20,7 @@ Before the next day, you should have achieved the following learning
 goals: 
 
 \begin{itemize}
-\item Launching different thread in a program
+\item Launching different threads in a program
 \item Having a general understanding of how a non-deterministic program
   works. 
 \item Synchronising access to shared resources
@@ -74,6 +74,57 @@ Compile and execute this code several times. Do you get the result you
 expected? Run it several times. Do you always get the same result in
 'mode~0'? And in mode~1?
 
+\section{Sleeping}
+\label{sec:sleeping}
+
+\subsection{a) }
+
+Modify the code of exercise \ref{sec:text-loops} so that method
+\verb+run()+ looks like this:
+
+\begin{verbatim}
+      @Override
+      public void run() {
+          for (int i = 0; i < COUNT; i++) {
+              sleep();
+          }
+      }
+
+      private void sleep() {
+          try {
+              Thread.sleep(1000); // Sleep one second
+          } catch (InterruptedException ex) {
+              ex.printStackTrace(); // Nothing to do, sleep a bit less
+          }
+      }
+\end{verbatim}
+
+What differences do you expect between the two behaviours of the
+program (mode 0, mode 1)? Run the code to check whether your
+hypothesis holds true. 
+
+\subsection{b)}
+\label{sec:b-1}
+
+Now change the behaviour of method \verb+sleep()+ so that it is a
+little more verbose. 
+
+\begin{verbatim}
+      private void sleep() {
+          try { 
+              System.out.print("Sleeping for a second");
+              for (int i = 0; i < 5; i++) {
+                  Thread.sleep(200); 
+                  System.out.print(".");
+              }
+              System.out.println("done!");
+	    } catch (InterruptedException ex) {
+             ex.printStackTrace(); // Nothing to do, sleep a bit less
+          }
+      }
+\end{verbatim}
+
+
 \section{Counting}
 \label{sec:counter}
 
@@ -105,7 +156,7 @@ counter at the end of its execution (comments ommitted for brevity)?
           System.out.println("Stopping at " + c.getCount());
        }
     }
-    
+
     public class Counter {
        private int n = 0;
        public void increase() {
