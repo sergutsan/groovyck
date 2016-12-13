@@ -12,10 +12,6 @@ public class RmiClient {
 		rc.showUsage();
 		return;
 	  }
-	  if (System.getSecurityManager() == null && false) {
-		System.setSecurityManager(new RMISecurityManager());
-		System.out.println("New security manager... ready!");
-	  }
 	  String message = args[1];
 	  String address = args[0];
 	  rc.runEcho(message, address);
@@ -23,14 +19,14 @@ public class RmiClient {
     
     private void runEcho(String msg, final String server) {
 	  try {
-		// final String server = "127.0.0.1"; // localhost
-		// final String server = "193.61.29.207";
-		// System.out.println("Starting client... No message provided, using '" + DEFAULT_MSG + "'");
-		String lookupAddress = "//" + server + ":1099/RmiServer"; // what if name is wrong?
-		RmiService service = (RmiService) Naming.lookup(lookupAddress);
+		String genericAddress = "//" + server + ":1099/";
+		String echoServiceAddress = genericAddress + "EchoServer"; // what if name is wrong?
+		String boxServiceAddress = genericAddress + "BoxServer"; // what if name is wrong?
+		EchoService service = (EchoService) Naming.lookup(echoServiceAddress);
+		System.out.println("Sending message to server: " + msg);
 		String echo = service.echo(msg);
 		System.out.println("Server (" + server + ") replied: '" + echo + "'");
-		service.giveCar();
+		
 	  } catch (MalformedURLException e) {
 		e.printStackTrace();
 	  } catch (RemoteException e) {

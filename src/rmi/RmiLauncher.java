@@ -5,25 +5,32 @@ import java.net.*;
 
 public class RmiLauncher {
 
+    private static final String HOSTNAME = "127.0.0.1";
+    
     public static void main(String args[]) throws RemoteException {
+	  if (args.length != 1) {
+		System.out.println("USAGE: server <text>");
+		System.out.println("(example: server 'I am a talking box!')'");
+		return;
+	  }
 	  RmiLauncher rl = new RmiLauncher();
-	  rl.launch();
+	  rl.launch(args[0]);
     }
 
-    private void launch() {
-	  //final String hostname = "193.61.29.207";
-	  final String hostname = "127.0.0.1";
-	  if (System.getSecurityManager() == null && false) {
-		System.setSecurityManager(new RMISecurityManager());
-		System.out.println("Launched a new security manager.");
-	  }
+    private void launch(String boxMsg) {
 	  try {
 		LocateRegistry.createRegistry(1099);
 		System.out.println("Registry created.");
-		RmiServer server = new RmiServer();
-		System.out.println("Server instantiated.");
-		Naming.rebind("//" + hostname + "/RmiServer", server);
-		System.out.println("Service bound.");
+		EchoServer echoServer = new EchoServer();
+		TalkingBoxServer boxServer = new TalkingBoxServer(boxMsg);
+		System.out.println("Servers instantiated.");
+		String genericAddress = "//" + HOSTNAME + "/";
+		String echoServerAddress = genericAddress + "EchoServer";
+		Naming.rebind(echoServerAddress, echoServer);
+		System.out.println("Echo service bound at " + echoServerAddress);
+		String boxServerAddress = genericAddress + "BoxServer";
+		Naming.rebind(boxServerAddress, boxServer);
+		System.out.println("Talking box service bound at " + boxServerAddress);
 	  } catch (MalformedURLException ex) {
 		ex.printStackTrace();
 	  } catch (RemoteException ex) {
