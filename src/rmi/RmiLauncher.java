@@ -13,7 +13,7 @@ public class RmiLauncher {
     private void launch() {
 	  //final String hostname = "193.61.29.207";
 	  final String hostname = "127.0.0.1";
-	  if (System.getSecurityManager() == null) {
+	  if (System.getSecurityManager() == null && false) {
 		System.setSecurityManager(new RMISecurityManager());
 		System.out.println("Launched a new security manager.");
 	  }

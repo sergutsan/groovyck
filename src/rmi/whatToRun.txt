@@ -1,2 +1,10 @@
+
+BEFORE JAVA 8 MADE THE RMI_SECURITY_MANAGER OBSOLETE
 java -Djava.security.policy=server.policy RmiLauncher
 java -Djava.security.policy=client.policy RmiClient someTextHere
+
+
+AFTER JAVA 8
+java RmiLauncher "Hey there!"
+java RmiClient 193.61.29.158 "Hello world!"
+
