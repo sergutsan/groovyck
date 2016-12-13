@@ -26,13 +26,19 @@ public class RmiClient {
 		System.out.println("Sending message to server: " + msg);
 		String echo = service.echo(msg);
 		System.out.println("Server (" + server + ") replied: '" + echo + "'");
-		
+		System.out.print("Getting talking box from server...");
+		TalkingBoxService boxService = (TalkingBoxService) Naming.lookup(boxServiceAddress);
+		TalkingBox box = boxService.getTalkingBox();
+		System.out.println("done.");
+		System.out.println("The box says: '" + box.talk() + "'.");
 	  } catch (MalformedURLException e) {
 		e.printStackTrace();
 	  } catch (RemoteException e) {
 		e.printStackTrace();
+		System.out.println("ERROR: could not execute remote method (incorrect address?).");
 	  } catch (NotBoundException e) {
-		System.out.println("Sorry, service is not available.");
+		e.printStackTrace();
+		System.out.println("ERROR: service is not available (incorrect name?).");
 	  }
     }
 
