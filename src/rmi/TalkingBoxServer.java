@@ -1,7 +1,7 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class TalkingBoxServer extends UnicastRemoteObject implements RmiService {
+public class TalkingBoxServer extends UnicastRemoteObject implements TalkingBoxService {
 
     private String msg = null;
     
